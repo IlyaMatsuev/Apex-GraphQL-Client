@@ -1,12 +1,12 @@
 {
   "packageDirectories": [
     {
-      "path": "force-app",
+      "path": "src",
       "default": true
     }
   ],
   "name": "sf-graphql-client",
   "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sfdcLoginUrl": "https://test.salesforce.com",
   "sourceApiVersion": "52.0"
 }
