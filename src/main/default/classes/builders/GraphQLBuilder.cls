@@ -1,34 +1,31 @@
-public abstract class GraphQLBuilder extends GraphQLNode implements IGraphQLBuilder {
+public virtual class GraphQLBuilder extends GraphQLNode implements IGraphQLBuilder {
 
-    public GraphQLRequestType requestType { get; private set; }
-
-    public GraphQLBuilder() {
-        this(GraphQLRequestType.Query);
+    private IGraphQLRequestBuilderFactory requestBuilderFactory {
+        get {
+            if (requestBuilderFactory == null) {
+                requestBuilderFactory = new GraphQLRequestBuilderFactory();
+            }
+            return requestBuilderFactory;
+        }
+        set;
     }
 
-    public GraphQLBuilder(List<GraphQLNode> nodes) {
-        this(GraphQLRequestType.Query, nodes);
+    public GraphQLBuilder(String name) {
+        this(name, new List<GraphQLNode>());
     }
 
-    protected GraphQLBuilder(GraphQLRequestType requestType) {
-        this(requestType, new List<GraphQLNode>());
+    public GraphQLBuilder(String name, List<GraphQLNode> nodes) {
+        super(name, nodes);
     }
 
-    protected GraphQLBuilder(GraphQLRequestType requestType, List<GraphQLNode> nodes) {
-        super(requestType.name().toLowerCase(), nodes);
-        this.requestType = requestType;
-    }
 
     public virtual GraphQLBuilder withField(String field) {
-        return withNode(new GraphQLNode(field));
+        return withFields(new String[] { field });
     }
 
     public virtual GraphQLBuilder withFields(String[] fields) {
-        List<GraphQLNode> nodes = new List<GraphQLNode>();
-        for (String field : fields) {
-            nodes.add(new GraphQLNode(field));
-        }
-        return withNodes(nodes);
+        addFields(fields);
+        return this;
     }
 
     public virtual GraphQLBuilder withNode(GraphQLNode node) {
@@ -36,11 +33,38 @@ public abstract class GraphQLBuilder extends GraphQLNode implements IGraphQLBuil
     }
 
     public virtual GraphQLBuilder withNodes(GraphQLNode[] nodes) {
-        add(nodes);
+        addNodes(nodes);
         return this;
     }
 
-    public GraphQLRequest build() {
-        return new GraphQLRequest(requestType, this);
+    public virtual GraphQLBuilder withArgument(String key, Object value) {
+        return withArgument(new GraphQLArgument(key, value));
+    }
+
+    public virtual GraphQLBuilder withArgument(GraphQLArgument argument) {
+        return withArguments(new GraphQLArgument[] { argument });
+    }
+
+    public virtual GraphQLBuilder withArguments(GraphQLArgument[] arguments) {
+        addArguments(arguments);
+        return this;
+    }
+
+    public GraphQLQueryBuilder asQuery() {
+        if (this instanceof GraphQLQueryBuilder) {
+            return (GraphQLQueryBuilder) this;
+        }
+        return (GraphQLQueryBuilder) requestBuilderFactory.create(GraphQLOperation.Query, this);
+    }
+
+    public GraphQLMutationBuilder asMutation() {
+        if (this instanceof GraphQLMutationBuilder) {
+            return (GraphQLMutationBuilder) this;
+        }
+        return (GraphQLMutationBuilder) requestBuilderFactory.create(GraphQLOperation.Mutation, this);
+    }
+
+    public GraphQLNode buildNode() {
+        return this;
     }
 }

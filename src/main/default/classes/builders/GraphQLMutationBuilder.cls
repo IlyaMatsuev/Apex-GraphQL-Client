@@ -1,10 +1,13 @@
-public class GraphQLMutationBuilder extends GraphQLBuilder {
+public class GraphQLMutationBuilder extends GraphQLBuilder implements IGraphQLRequestBuilder {
 
-    public GraphQLMutationBuilder() {
-        this(new List<GraphQLNode>());
+    public GraphQLMutationBuilder(GraphQLNode rootNode) {
+        super(
+            GraphQLOperation.Mutation.name().toLowerCase() + CommonConstants.SPACE + rootNode.name,
+            rootNode.nodes
+        );
     }
 
-    public GraphQLMutationBuilder(List<GraphQLNode> nodes) {
-        super(GraphQLRequestType.Mutation, nodes);
+    public GraphQLRequest buildRequest() {
+        return new GraphQLRequest(GraphQLOperation.Mutation, this);
     }
 }

@@ -1,3 +1,3 @@
 public interface IGraphQLBuilder {
-    GraphQLRequest build();
+    GraphQLNode buildNode();
 }

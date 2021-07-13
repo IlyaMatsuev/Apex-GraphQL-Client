@@ -1,19 +1,36 @@
 public class GraphQLRequest {
 
-    public GraphQLRequestType type { get; private set; }
-    private GraphQLNode root { get; set; }
-    private GraphQLRequestGenerator generator {
-        get {
-            if (generator == null) {
-                generator = new GraphQLRequestGenerator(root);
+    public GraphQLOperation operation { get; private set; }
+
+    private GraphQLNode root;
+
+    private String stringRequest {
+        get;
+        set {
+            if (String.isNotBlank(value)) {
+                GraphQLRequest request = parser.fromString(stringRequest);
+                this.operation = request?.operation;
+                this.root = request?.root;
             }
-            return generator;
+        }
+    }
+
+    private GraphQLRequestParser parser {
+        get {
+            if (parser == null) {
+                parser = new GraphQLRequestParser(root);
+            }
+            return parser;
         }
         set;
     }
 
-    public GraphQLRequest(GraphQLRequestType type, GraphQLNode root) {
-        this.type = type;
+    public GraphQLRequest(String stringRequest) {
+        this.stringRequest = stringRequest;
+    }
+
+    public GraphQLRequest(GraphQLOperation operation, GraphQLNode root) {
+        this.operation = operation == null ? GraphQLOperation.Query : operation;
         this.root = root;
     }
 
@@ -26,6 +43,9 @@ public class GraphQLRequest {
     }
 
     public String asString(Boolean pretty) {
-        return generator.generate(pretty);
+        if (String.isNotBlank(stringRequest)) {
+            return stringRequest;
+        }
+        return parser.toString(pretty);
     }
 }

@@ -1,10 +1,13 @@
-public class GraphQLQueryBuilder extends GraphQLBuilder {
+public class GraphQLQueryBuilder extends GraphQLBuilder implements IGraphQLRequestBuilder {
 
-    public GraphQLQueryBuilder() {
-        this(new List<GraphQLNode>());
+    public GraphQLQueryBuilder(GraphQLNode rootNode) {
+        super(
+            GraphQLOperation.Query.name().toLowerCase() + CommonConstants.SPACE + rootNode.name,
+            rootNode.nodes
+        );
     }
 
-    public GraphQLQueryBuilder(List<GraphQLNode> nodes) {
-        super(GraphQLRequestType.Query, nodes);
+    public GraphQLRequest buildRequest() {
+        return new GraphQLRequest(GraphQLOperation.Query, this);
     }
 }

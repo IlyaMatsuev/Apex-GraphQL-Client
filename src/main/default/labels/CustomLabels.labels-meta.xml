@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>MaxRequestDepthError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MaxRequestDepthError</shortDescription>
+        <value>Maximum request depth level is {0}</value>
+    </labels>
+    <labels>
+        <fullName>NoRequestBuilderImplError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoRequestBuilderImplError</shortDescription>
+        <value>There is no request builder implementation for the type "{0}"</value>
+    </labels>
+    <labels>
+        <fullName>ArgumentTypeNotSupportedError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ArgumentTypeNotSupportedError</shortDescription>
+        <value>The argument type "{0}" is not supported yet</value>
+    </labels>
+</CustomLabels>
