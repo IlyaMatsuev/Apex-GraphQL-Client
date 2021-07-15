@@ -9,19 +9,27 @@
         <value>Maximum request depth level is {0}</value>
     </labels>
     <labels>
-        <fullName>NoRequestBuilderImplError</fullName>
-        <categories>GraphQLClient</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>NoRequestBuilderImplError</shortDescription>
-        <value>There is no request builder implementation for the type "{0}"</value>
-    </labels>
-    <labels>
         <fullName>ArgumentTypeNotSupportedError</fullName>
         <categories>GraphQLClient</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>ArgumentTypeNotSupportedError</shortDescription>
         <value>The argument type "{0}" is not supported yet</value>
+    </labels>
+    <labels>
+        <fullName>RequestNodeOfIncorrectTypeError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RequestNodeOfIncorrectTypeError</shortDescription>
+        <value>The root should be an instance of IGraphQLRequestBuilder</value>
+    </labels>
+    <labels>
+        <fullName>EmptyNodeError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>EmptyNodeError</shortDescription>
+        <value>Cannot parse an empty node without any child nodes</value>
     </labels>
 </CustomLabels>

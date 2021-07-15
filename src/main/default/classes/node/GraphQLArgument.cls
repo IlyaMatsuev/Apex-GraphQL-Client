@@ -51,7 +51,7 @@ public class GraphQLArgument {
                         .replaceAll(REPLACE_JSON_PROPS_REGEXP, ESCAPED_PROP_NAME_EXP);
             }
             when else {
-                throw new GraphQLBuilderException(
+                throw new GraphQLArgumentException(
                     Label.ArgumentTypeNotSupportedError.replace(
                         CommonConstants.FIRST_FORMAT_PARAM,
                         type.name()

@@ -1,51 +1,26 @@
 public class GraphQLRequest {
 
-    public GraphQLOperation operation { get; private set; }
+    public final GraphQLOperation operation;
+    private GraphQLNodeBase root;
 
-    private GraphQLNode root;
-
-    private String stringRequest {
-        get;
-        set {
-            if (String.isNotBlank(value)) {
-                GraphQLRequest request = parser.fromString(stringRequest);
-                this.operation = request?.operation;
-                this.root = request?.root;
-            }
-        }
+    public GraphQLRequest(GraphQLNodeBase root) {
+        this(null, root);
     }
 
-    private GraphQLRequestParser parser {
-        get {
-            if (parser == null) {
-                parser = new GraphQLRequestParser(root);
-            }
-            return parser;
-        }
-        set;
-    }
-
-    public GraphQLRequest(String stringRequest) {
-        this.stringRequest = stringRequest;
-    }
-
-    public GraphQLRequest(GraphQLOperation operation, GraphQLNode root) {
+    public GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase root) {
         this.operation = operation == null ? GraphQLOperation.Query : operation;
         this.root = root;
-    }
 
-    public GraphQLNode asNode() {
-        return root;
-    }
-
-    public String asString() {
-        return asString(false);
-    }
-
-    public String asString(Boolean pretty) {
-        if (String.isNotBlank(stringRequest)) {
-            return stringRequest;
+        if (!(root instanceof IGraphQLRequestBuilder)) {
+            throw new GraphQLRequestException(Label.RequestNodeOfIncorrectTypeError);
         }
-        return parser.toString(pretty);
+    }
+
+    public override String toString() {
+        return toString(false);
+    }
+
+    public String toString(Boolean pretty) {
+        return root.build(pretty);
     }
 }
