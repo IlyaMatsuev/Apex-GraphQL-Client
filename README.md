@@ -41,7 +41,7 @@ cd ./sf-graphql-client
 3. If you want to deploy the project to a dev org or an existing scratch org you should use this:
 
 ```bash
-./scripts/sh/update-org.sh <ORG_ALIAS>
+./scripts/sh/update-org.sh {ORG_ALIAS}
 ```
 
 If you upload sources to a new scratch org, then run init script with such parameters as scratch alias, dev hub alias and amount of days the scratch will expire (optional).
@@ -61,9 +61,79 @@ The package can be used for the following:
 
 ... All other stuff is coming soon
 
+### Generate a GraphQL node
+
+What we want:
+
+```bash
+continents {
+  name
+  countries {
+    name
+    capital
+    currency
+  }
+}
+```
+
+How to get it:
+
+```java
+GraphQLNode continentsNode = new GraphQLNode('continents')
+    .withField('name')
+    .withNode(new GraphQLNode(
+        'countries',
+        new List<String> { 'name', 'capital', 'currency' }
+    ));
+
+// Will print a well-formatted node
+System.debug(continentsNode.build(true));
+```
+
+### Create a query GraphQL request
+
+What we want:
+
+```bash
+query {
+  countries(filter: "Berlin", count: 1) {
+    name
+    capital
+    currency
+  }
+  continents {
+    name
+  }
+}
+```
+
+How to get it:
+
+```java
+GraphQLNode countriesNode = new GraphQLNode(
+    'countries',
+    new List<String> { 'name', 'capital', 'currency' }
+)
+    .withArgument('filter', 'Berlin')
+    .withArgument('count', 1);
+
+GraphQLNode continentsNode = new GraphQLNode(
+    'continents',
+    new List<String> { 'name' }
+);
+
+GraphQLQueryNode query = new GraphQLQueryNode(
+    new List<GraphQLNode> { countriesNode, continentsNode }
+);
+
+System.debug(query.build(true));
+```
+
+All examples can be found [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/docs/examples).
+
 ## Documentation
 
-The documentation describes all Apex types and usage cases for them. Please see it [here]().
+The documentation describes all Apex types and usage cases for them. Please see it [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/docs/documentation/README.md).
 
 ## Contributing
 
