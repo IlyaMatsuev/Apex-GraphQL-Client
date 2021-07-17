@@ -44,20 +44,20 @@ cd ./sf-graphql-client
 ./scripts/sh/update-org.sh {ORG_ALIAS}
 ```
 
-If you upload sources to a new scratch org, then run init script with such parameters as scratch alias, dev hub alias and amount of days the scratch will expire (optional).
+If you upload sources to a new scratch org, then run init script with such parameters as scratch alias, dev hub alias, and amount of days the scratch will expire (optional).
 
 ```bash
 ./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS}
 ```
 
-4. Follow the instructions in script (if there are)
+4. Follow the instructions in the script (if there are)
 
 ## Usage
 
 The package can be used for the following:
 
 - Generate string GraphQL nodes, queries, mutations, etc
-- Send GraphQL requests with pre-build GraphQL serice
+- Send GraphQL requests with GraphQL HTTP service
 
 ... All other stuff is coming soon
 
