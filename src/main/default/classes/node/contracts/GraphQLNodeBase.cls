@@ -1,8 +1,8 @@
-public abstract class GraphQLNodeBase {
+global abstract class GraphQLNodeBase {
 
-    public final String name;
-    public final List<GraphQLNode> nodes = new List<GraphQLNode>();
-    public final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
+    global final String name;
+    global final List<GraphQLNode> nodes = new List<GraphQLNode>();
+    global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
 
     private IGraphQLNodeParser parser {
         get {
@@ -53,11 +53,11 @@ public abstract class GraphQLNodeBase {
         }
     }
 
-    public virtual Boolean hasNode(GraphQLNode node) {
+    global virtual Boolean hasNode(GraphQLNode node) {
         return hasNodes(new GraphQLNode[] { node });
     }
 
-    public virtual Boolean hasNodes(GraphQLNode[] nodes) {
+    global virtual Boolean hasNodes(GraphQLNode[] nodes) {
         for (GraphQLNode existingNode : this.nodes) {
             for (GraphQLNode node : nodes) {
                 if (existingNode.name == node.name) {
@@ -68,11 +68,11 @@ public abstract class GraphQLNodeBase {
         return false;
     }
 
-    public virtual Boolean hasNodes() {
+    global virtual Boolean hasNodes() {
         return !nodes.isEmpty();
     }
 
-    public virtual Boolean hasArguments() {
+    global virtual Boolean hasArguments() {
         return !arguments.isEmpty();
     }
 
@@ -116,11 +116,11 @@ public abstract class GraphQLNodeBase {
         return this;
     }
 
-    public String build() {
+    global String build() {
         return build(false);
     }
 
-    public String build(Boolean pretty) {
+    global String build(Boolean pretty) {
         return parser.toString(pretty);
     }
 }

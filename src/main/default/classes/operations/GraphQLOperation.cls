@@ -1,4 +1,4 @@
-public enum GraphQLOperation {
+global enum GraphQLOperation {
     Query,
     Mutation,
     Subscription

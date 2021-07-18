@@ -1,13 +1,13 @@
-public class GraphQLRequest {
+global class GraphQLRequest {
 
-    public final GraphQLOperation operation;
+    global final GraphQLOperation operation;
     private GraphQLNodeBase root;
 
-    public GraphQLRequest(GraphQLNodeBase root) {
+    global GraphQLRequest(GraphQLNodeBase root) {
         this(null, root);
     }
 
-    public GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase root) {
+    global GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase root) {
         this.operation = operation == null ? GraphQLOperation.Query : operation;
         this.root = root;
 
@@ -16,11 +16,13 @@ public class GraphQLRequest {
         }
     }
 
-    public override String toString() {
+    global override String toString() {
         return toString(false);
     }
 
-    public String toString(Boolean pretty) {
+    global String toString(Boolean pretty) {
         return root.build(pretty);
     }
+
+    private class GraphQLRequestException extends Exception {}
 }

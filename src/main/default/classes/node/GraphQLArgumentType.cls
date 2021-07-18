@@ -1,4 +1,4 @@
-public enum GraphQLArgumentType {
+global enum GraphQLArgumentType {
     x_Integer,
     x_Float,
     x_String,

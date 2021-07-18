@@ -1,14 +1,13 @@
-public class GraphQLArgument {
+global class GraphQLArgument {
+
     // Searches for all JSON property names. Needed to escape properties' double quotes
-    @TestVisible
     private static final String REPLACE_JSON_PROPS_REGEXP = '"(\\w+)"\\s*:';
     // Takes the first match from the regex
-    @TestVisible
     private static final String ESCAPED_PROP_NAME_EXP = '$1:';
 
-    public final String key;
-    public final Object value;
-    public GraphQLArgumentType type {
+    global final String key;
+    global final Object value;
+    global GraphQLArgumentType type {
         get {
             if (type == null) {
                 type = getArgumentTypeByValue(value);
@@ -18,12 +17,12 @@ public class GraphQLArgument {
         private set;
     }
 
-    public GraphQLArgument(String key, Object value) {
+    global GraphQLArgument(String key, Object value) {
         this.key = key;
         this.value = value;
     }
 
-    public override String toString() {
+    global override String toString() {
         switch on type {
             when x_Integer, x_Float, x_Boolean {
                 return String.valueOf(value);
@@ -79,4 +78,6 @@ public class GraphQLArgument {
             return GraphQLArgumentType.x_Object;
         }
     }
+
+    private class GraphQLArgumentException extends Exception {}
 }

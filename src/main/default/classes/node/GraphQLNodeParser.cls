@@ -91,4 +91,6 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
     private String getIndent(Integer depth) {
         return CommonConstants.SPACE.repeat(depth * DEFAULT_INDENT);
     }
+
+    private class GraphQLNodeParserException extends Exception {}
 }
