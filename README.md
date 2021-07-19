@@ -133,7 +133,7 @@ All examples can be found [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Clien
 
 ## Documentation
 
-The documentation describes all Apex types and usage cases for them. Please see it [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/docs/documentation/README.md).
+The documentation describes all Apex types and usage cases for them. Please see it [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/docs).
 
 ## Contributing
 
