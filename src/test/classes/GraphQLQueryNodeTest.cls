@@ -1,8 +1,147 @@
 @IsTest(IsParallel = true)
-public class GraphQLQueryNodeTest {
+private class GraphQLQueryNodeTest {
 
     @IsTest
-    public static void buildQueryPositiveTest() {
+    private static void emptyQueryTest() {
+        GraphQLQueryNode node = new GraphQLQueryNode();
+
+        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), node.name);
+        System.assertEquals(0, node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void namedQueryTest() {
+        String nodeName = 'Test';
+
+        GraphQLQueryNode node = new GraphQLQueryNode(nodeName);
+
+        System.assertEquals(
+            GraphQLOperation.Query.name().toLowerCase() + CommonConstants.SPACE + nodeName,
+            node.name
+        );
+        System.assertEquals(0, node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void emptyQueryWithChildNodesTest() {
+        List<GraphQLNode> childNodes = new List<GraphQLNode> {
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLQueryNode node = new GraphQLQueryNode(childNodes);
+
+        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), node.name);
+        System.assertEquals(childNodes.size(), node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void namedQueryWithChildNodesTest() {
+        String nodeName = 'Test';
+        List<GraphQLNode> childNodes = new List<GraphQLNode> {
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLQueryNode node = new GraphQLQueryNode(nodeName, childNodes);
+
+        System.assertEquals(
+            GraphQLOperation.Query.name().toLowerCase() + CommonConstants.SPACE + nodeName,
+            node.name
+        );
+        System.assertEquals(childNodes.size(), node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void emptyQueryWithFieldsTest() {
+        List<String> fields = new List<String> { 'field1', 'field2' };
+
+        GraphQLQueryNode node = new GraphQLQueryNode(fields);
+
+        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), node.name);
+        System.assertEquals(fields.size(), node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void namedQueryWithFieldsTest() {
+        String nodeName = 'node';
+        List<String> fields = new List<String> { 'field1', 'field2' };
+
+        GraphQLQueryNode node = new GraphQLQueryNode(nodeName, fields);
+
+        System.assertEquals(
+            GraphQLOperation.Query.name().toLowerCase() + CommonConstants.SPACE + nodeName,
+            node.name
+        );
+        System.assertEquals(fields.size(), node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void queryWithFieldTest() {
+        String fieldName = 'field1';
+
+        GraphQLQueryNode node = new GraphQLQueryNode().withField(fieldName);
+
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(fieldName, node.nodes.get(0).name);
+    }
+
+    @IsTest
+    private static void queryWithFieldsTest() {
+        List<String> fields = new List<String> { 'field1', 'field2' };
+
+        GraphQLQueryNode node = new GraphQLQueryNode().withFields(fields);
+
+        System.assertEquals(fields.size(), node.nodes.size());
+        System.assertEquals('field1', node.nodes.get(0).name);
+        System.assertEquals('field2', node.nodes.get(1).name);
+    }
+
+    @IsTest
+    private static void queryWithNodeTest() {
+        String nodeName = 'node1';
+
+        GraphQLQueryNode node = new GraphQLQueryNode().withNode(new GraphQLNode(nodeName));
+
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(nodeName, node.nodes.get(0).name);
+    }
+
+    @IsTest
+    private static void queryWithNodesTest() {
+        List<GraphQLNode> nodes = new List<GraphQLNode> {
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLQueryNode node = new GraphQLQueryNode().withNodes(nodes);
+
+        System.assertEquals(nodes.size(), node.nodes.size());
+        System.assertEquals('node1', node.nodes.get(0).name);
+        System.assertEquals('node2', node.nodes.get(1).name);
+    }
+
+    @IsTest
+    private static void queryBuildRequestTest() {
+        GraphQLRequest request = new GraphQLQueryNode(new List<String> { 'field1' }).buildRequest();
+
+        System.assertEquals(GraphQLOperation.Query, request.operation);
+        System.assertEquals('query{field1}', request.toString());
+        System.assertEquals('query {\n  field1\n}', request.toString(true));
+    }
+
+    /**
+     * E2E tests below
+     */
+
+    @IsTest
+    private static void buildQueryPositiveTest() {
         List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('field1'), new GraphQLNode('field2') };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
@@ -23,7 +162,7 @@ public class GraphQLQueryNodeTest {
     }
 
     @IsTest
-    public static void buildQueryWithChildNodesPositiveTest() {
+    private static void buildQueryWithChildNodesPositiveTest() {
         List<GraphQLNode> nodes = new List<GraphQLNode> {
             new GraphQLNode('field1'),
             new GraphQLNode('field2', new List<GraphQLNode> { new GraphQLNode('field21'), new GraphQLNode('field22') }),

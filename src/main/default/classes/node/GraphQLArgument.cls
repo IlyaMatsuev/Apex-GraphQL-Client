@@ -35,7 +35,7 @@ global class GraphQLArgument {
             // TODO: Move formatting to Custom Metadata configuration
             when x_DateTime {
                 return CommonConstants.DOUBLE_QUOTES
-                        + String.valueOf(value)
+                        + String.valueOf((DateTime) value)
                         + CommonConstants.DOUBLE_QUOTES;
             }
             // TODO: Move formatting to Custom Metadata configuration
@@ -44,18 +44,10 @@ global class GraphQLArgument {
                         + ((Date) value).format()
                         + CommonConstants.DOUBLE_QUOTES;
             }
-            when x_Object {
+            when else {
                 // TODO: support pretty formatting for objects in arguments
                 return JSON.serialize(value)
                         .replaceAll(REPLACE_JSON_PROPS_REGEXP, ESCAPED_PROP_NAME_EXP);
-            }
-            when else {
-                throw new GraphQLArgumentException(
-                    Label.ArgumentTypeNotSupportedError.replace(
-                        CommonConstants.FIRST_FORMAT_PARAM,
-                        type.name()
-                    )
-                );
             }
         }
     }

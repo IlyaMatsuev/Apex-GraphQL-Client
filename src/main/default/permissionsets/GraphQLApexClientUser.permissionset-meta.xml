@@ -9,6 +9,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GraphQLArgumentTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GraphQLArgumentType</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -50,6 +54,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GraphQLRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GraphQLRequestTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

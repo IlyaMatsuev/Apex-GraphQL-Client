@@ -14,24 +14,12 @@ global abstract class GraphQLNodeBase {
         set;
     }
 
-    protected GraphQLNodeBase() {
-        this(CommonConstants.EMPTY);
-    }
-
-    protected GraphQLNodeBase(String name) {
-        this(name, new List<GraphQLNode>());
-    }
-
     protected GraphQLNodeBase(String name, List<String> fields) {
         this(name, new List<GraphQLNode>(), fields, new Map<String, GraphQLArgument>());
     }
 
     protected GraphQLNodeBase(String name, List<GraphQLNode> nodes) {
         this(name, nodes, new Map<String, GraphQLArgument>());
-    }
-
-    protected GraphQLNodeBase(String name, List<String> fields, Map<String, GraphQLArgument> arguments) {
-        this(name, new List<GraphQLNode>(), fields, arguments);
     }
 
     protected GraphQLNodeBase(String name, List<GraphQLNode> nodes, Map<String, GraphQLArgument> arguments) {
@@ -76,20 +64,12 @@ global abstract class GraphQLNodeBase {
         return !arguments.isEmpty();
     }
 
-    protected virtual GraphQLNodeBase addField(String field) {
-        return addFields(new String[] { field });
-    }
-
     protected virtual GraphQLNodeBase addFields(String[] fields) {
         List<GraphQLNode> nodes = new List<GraphQLNode>();
         for (String field : fields) {
             nodes.add(new GraphQLNode(field));
         }
         return addNodes(nodes);
-    }
-
-    protected virtual GraphQLNodeBase addNode(GraphQLNode node) {
-        return addNodes(new GraphQLNode[] { node });
     }
 
     protected virtual GraphQLNodeBase addNodes(GraphQLNode[] nodes) {
@@ -99,14 +79,6 @@ global abstract class GraphQLNodeBase {
             }
         }
         return this;
-    }
-
-    protected virtual GraphQLNodeBase addArgument(String key, Object value) {
-        return addArgument(new GraphQLArgument(key, value));
-    }
-
-    protected virtual GraphQLNodeBase addArgument(GraphQLArgument argument) {
-        return addArguments(new GraphQLArgument[] { argument });
     }
 
     protected virtual GraphQLNodeBase addArguments(GraphQLArgument[] arguments) {

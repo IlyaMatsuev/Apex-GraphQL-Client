@@ -9,14 +9,6 @@
         <value>Maximum request depth level is {0}</value>
     </labels>
     <labels>
-        <fullName>ArgumentTypeNotSupportedError</fullName>
-        <categories>GraphQLClient</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>ArgumentTypeNotSupportedError</shortDescription>
-        <value>The argument type "{0}" is not supported yet</value>
-    </labels>
-    <labels>
         <fullName>RequestNodeOfIncorrectTypeError</fullName>
         <categories>GraphQLClient</categories>
         <language>en_US</language>

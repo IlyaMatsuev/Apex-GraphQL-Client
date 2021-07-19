@@ -1,8 +1,153 @@
 @IsTest(IsParallel = true)
-public class GraphQLNodeTest {
+private class GraphQLNodeTest {
 
     @IsTest
-    public static void buildNodePositiveTest() {
+    private static void emptyNodeTest() {
+        GraphQLNode node = new GraphQLNode();
+
+        System.assertEquals(CommonConstants.EMPTY, node.name);
+        System.assertEquals(0, node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void namedNodeTest() {
+        String nodeName = 'node';
+
+        GraphQLNode node = new GraphQLNode(nodeName);
+
+        System.assertEquals(nodeName, node.name);
+        System.assertEquals(0, node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void emptyNodeWithChildNodesTest() {
+        List<GraphQLNode> childNodes = new List<GraphQLNode> {
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLNode node = new GraphQLNode(childNodes);
+
+        System.assertEquals(CommonConstants.EMPTY, node.name);
+        System.assertEquals(childNodes.size(), node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+        System.assert(node.hasNode(childNodes.get(0)));
+        System.assert(!node.hasNode(new GraphQLNode('node3')));
+    }
+
+    @IsTest
+    private static void namedNodeWithChildNodesTest() {
+        String nodeName = 'node';
+        List<GraphQLNode> childNodes = new List<GraphQLNode> {
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLNode node = new GraphQLNode(nodeName, childNodes);
+
+        System.assertEquals(nodeName, node.name);
+        System.assertEquals(childNodes.size(), node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void emptyNodeWithFieldsTest() {
+        List<String> fields = new List<String> { 'field1', 'field2' };
+
+        GraphQLNode node = new GraphQLNode(fields);
+
+        System.assertEquals(CommonConstants.EMPTY, node.name);
+        System.assertEquals(fields.size(), node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void namedNodeWithFieldsTest() {
+        String nodeName = 'node';
+        List<String> fields = new List<String> { 'field1', 'field2' };
+
+        GraphQLNode node = new GraphQLNode(nodeName, fields);
+
+        System.assertEquals(nodeName, node.name);
+        System.assertEquals(fields.size(), node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
+    private static void nodeWithFieldTest() {
+        String fieldName = 'field1';
+
+        GraphQLNode node = new GraphQLNode().withField(fieldName);
+
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(fieldName, node.nodes.get(0).name);
+    }
+
+    @IsTest
+    private static void nodeWithFieldsTest() {
+        List<String> fields = new List<String> { 'field1', 'field2' };
+
+        GraphQLNode node = new GraphQLNode().withFields(fields);
+
+        System.assertEquals(fields.size(), node.nodes.size());
+        System.assertEquals('field1', node.nodes.get(0).name);
+        System.assertEquals('field2', node.nodes.get(1).name);
+    }
+
+    @IsTest
+    private static void nodeWithNodeTest() {
+        String nodeName = 'node1';
+
+        GraphQLNode node = new GraphQLNode().withNode(new GraphQLNode(nodeName));
+
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(nodeName, node.nodes.get(0).name);
+    }
+
+    @IsTest
+    private static void nodeWithNodesTest() {
+        List<GraphQLNode> nodes = new List<GraphQLNode> {
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLNode node = new GraphQLNode().withNodes(nodes);
+
+        System.assertEquals(nodes.size(), node.nodes.size());
+        System.assertEquals('node1', node.nodes.get(0).name);
+        System.assertEquals('node2', node.nodes.get(1).name);
+    }
+
+    @IsTest
+    private static void nodeWithArgumentTest() {
+        GraphQLNode node = new GraphQLNode().withArgument('key', 'value');
+
+        System.assertEquals(1, node.arguments.size());
+        System.assertEquals('value', node.arguments.get('key').value);
+    }
+
+    @IsTest
+    private static void nodeWithArgumentsTest() {
+        List<GraphQLArgument> arguments = new List<GraphQLArgument> {
+            new GraphQLArgument('key1', 'value1'),
+            new GraphQLArgument('key2', 'value2')
+        };
+
+        GraphQLNode node = new GraphQLNode().withArguments(arguments);
+
+        System.assertEquals(arguments.size(), node.arguments.size());
+        System.assertEquals('value1', node.arguments.get('key1').value);
+        System.assertEquals('value2', node.arguments.get('key2').value);
+    }
+
+    /**
+     * E2E tests below
+     */
+
+    @IsTest
+    private static void buildNodePositiveTest() {
         List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
         GraphQLNode node = new GraphQLNode().withFields(fields);
@@ -15,7 +160,7 @@ public class GraphQLNodeTest {
     }
 
     @IsTest
-    public static void buildNodeWithChildrenPositiveTest() {
+    private static void buildNodeWithChildrenPositiveTest() {
         String firstMethodName = 'testMethod1';
         String secondMethodName = 'testMethod2';
         List<String> firstMethodFields = new List<String> { 'field1', 'field2' };
@@ -52,7 +197,7 @@ public class GraphQLNodeTest {
     }
 
     @IsTest
-    public static void buildNodeWithArgumentsPositiveTest() {
+    private static void buildNodeWithArgumentsPositiveTest() {
         String nodeName = 'testMethod';
         List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
         
@@ -75,5 +220,51 @@ public class GraphQLNodeTest {
             'root {\n  testMethod(var1: "test1", var2: 1, var3: {f2:"2",f1:1}) {\n    field1\n    field2\n    field3\n  }\n}',
             rootNode.build(true)
         );
+    }
+
+    @IsTest
+    private static void buildNodeWithDeepNestingNegativeTest() {
+        Integer depthLevel = 20;
+        GraphQLNode node = new GraphQLNode();
+        GraphQLNode prevNode;
+        for (Integer i = 0; i < depthLevel; i++) {
+            GraphQLNode newNode = new GraphQLNode('node' + i);
+            if (prevNode == null) {
+                prevNode = node;
+            }
+            prevNode.withNode(newNode);
+            prevNode = newNode;
+        }
+
+        Exception error;
+        try {
+            node.build();
+        } catch(Exception err) {
+            error = err;
+        }
+
+        System.assert(error != null);
+        System.assertEquals(
+            Label.MaxRequestDepthError.replace(
+                CommonConstants.FIRST_FORMAT_PARAM,
+                String.valueOf(GraphQLNodeParser.MAX_QUERY_DEPTH)
+            ),
+            error.getMessage()
+        );
+    }
+
+    @IsTest
+    private static void buildEmptyNodeWithoutChildrenNegativeTest() {
+        GraphQLNode node = new GraphQLNode();
+
+        Exception error;
+        try {
+            node.build();
+        } catch(Exception err) {
+            error = err;
+        }
+
+        System.assert(error != null);
+        System.assertEquals(Label.EmptyNodeError, error.getMessage());
     }
 }
