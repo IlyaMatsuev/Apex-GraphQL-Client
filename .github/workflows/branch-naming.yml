@@ -10,8 +10,8 @@ jobs:
   validate-branch-name:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate a branch name
-      uses: deepakputhraya/action-branch-name@master
-      with:
-        regex: '([a-z])+\/([a-z])+'
-        min_length: 6
+      - name: 'Validate a branch name'
+        uses: deepakputhraya/action-branch-name@master
+        with:
+          regex: '([a-z])+\/([a-z])+'
+          min_length: 6
