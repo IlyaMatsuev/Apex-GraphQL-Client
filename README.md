@@ -40,11 +40,27 @@ cd ./sf-graphql-client
 
 3. If you want to deploy the project to a dev org or an existing scratch org you should use this:
 
+Windows:
+
 ```bash
 ./scripts/sh/update-org.sh {ORG_ALIAS}
 ```
 
+MacOS/Linux:
+
+```bash
+sh ./scripts/sh/update-org.sh {ORG_ALIAS}
+```
+
 If you upload sources to a new scratch org, then run init script with such parameters as scratch alias, dev hub alias, and amount of days the scratch will expire (optional).
+
+Windows:
+
+```bash
+./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS}
+```
+
+MacOS/Linux:
 
 ```bash
 ./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS}

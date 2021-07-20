@@ -16,5 +16,9 @@ echo "Deploying to $org_alias..."
 sfdx force:source:deploy -u "$org_alias" -p ./src
 
 echo
+echo "Assigning permissions..."
+sfdx force:user:permset:assign -n GraphQLApexClientUser -u "$scratch_alias"
+
+echo
 echo "Deployment has been finished."
 echo "Open the org with 'sfdx force:org:open -u $org_alias'"
