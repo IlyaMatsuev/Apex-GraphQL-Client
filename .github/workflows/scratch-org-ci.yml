@@ -52,7 +52,7 @@ jobs:
       - name: 'Populate auth file with DEVHUB_SFDX_URL secret'
         shell: bash
         run: |
-          echo ${{ secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt
+          echo ${{ secrets.DEVHUB_SFDX_URL }} > ./DEVHUB_SFDX_URL.txt
           secretFileSize=$(wc -c "./DEVHUB_SFDX_URL.txt" | awk '{print $1}')
           if [ $secretFileSize == 1 ]; then
             echo "Missing DEVHUB_SFDX_URL secret. Is this workflow running on a fork?";
@@ -73,6 +73,14 @@ jobs:
 
       - name: 'Run Apex tests'
         run: sfdx force:apex:test:run -c -r human -d ./tests/apex -w 20
+
+      - name: 'Upload code coverage for Apex to Codecov.io'
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          flags: Apex
+          verbose: true
 
       - name: 'Delete scratch org'
         if: always()
