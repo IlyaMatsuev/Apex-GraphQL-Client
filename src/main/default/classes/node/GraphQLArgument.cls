@@ -1,5 +1,4 @@
 global class GraphQLArgument {
-
     // Searches for all JSON property names. Needed to escape properties' double quotes
     private static final String REPLACE_JSON_PROPS_REGEXP = '"(\\w+)"\\s*:';
     // Takes the first match from the regex
@@ -28,26 +27,24 @@ global class GraphQLArgument {
                 return String.valueOf(value);
             }
             when x_String {
-                return CommonConstants.DOUBLE_QUOTES
-                        + value
-                        + CommonConstants.DOUBLE_QUOTES;
+                return CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES;
             }
             // TODO: Move formatting to Custom Metadata configuration
             when x_DateTime {
-                return CommonConstants.DOUBLE_QUOTES
-                        + String.valueOf((DateTime) value)
-                        + CommonConstants.DOUBLE_QUOTES;
+                return CommonConstants.DOUBLE_QUOTES +
+                    String.valueOf((DateTime) value) +
+                    CommonConstants.DOUBLE_QUOTES;
             }
             // TODO: Move formatting to Custom Metadata configuration
             when x_Date {
-                return CommonConstants.DOUBLE_QUOTES
-                        + ((Date) value).format()
-                        + CommonConstants.DOUBLE_QUOTES;
+                return CommonConstants.DOUBLE_QUOTES +
+                    ((Date) value).format() +
+                    CommonConstants.DOUBLE_QUOTES;
             }
             when else {
                 // TODO: support pretty formatting for objects in arguments
                 return JSON.serialize(value)
-                        .replaceAll(REPLACE_JSON_PROPS_REGEXP, ESCAPED_PROP_NAME_EXP);
+                    .replaceAll(REPLACE_JSON_PROPS_REGEXP, ESCAPED_PROP_NAME_EXP);
             }
         }
     }
@@ -71,5 +68,6 @@ global class GraphQLArgument {
         }
     }
 
-    private class GraphQLArgumentException extends Exception {}
+    private class GraphQLArgumentException extends Exception {
+    }
 }

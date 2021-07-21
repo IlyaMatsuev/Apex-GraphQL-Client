@@ -1,12 +1,12 @@
 {
-  "packageDirectories": [
-    {
-      "path": "src",
-      "default": true
-    }
-  ],
-  "name": "sf-graphql-client",
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "52.0"
+    "packageDirectories": [
+        {
+            "path": "src",
+            "default": true
+        }
+    ],
+    "name": "sf-graphql-client",
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "52.0"
 }

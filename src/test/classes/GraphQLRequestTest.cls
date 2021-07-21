@@ -1,9 +1,8 @@
-@IsTest(IsParallel = true)
+@IsTest(IsParallel=true)
 private class GraphQLRequestTest {
-    
     @IsTest
     private static void requestWithoutOperationTest() {
-        GraphQLQueryNode node = new GraphQLQueryNode(new List<String> { 'field1', 'field2' });
+        GraphQLQueryNode node = new GraphQLQueryNode(new List<String>{ 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node);
 
@@ -17,7 +16,7 @@ private class GraphQLRequestTest {
         Exception error;
         try {
             new GraphQLRequest(new GraphQLNode());
-        } catch(Exception err) {
+        } catch (Exception err) {
             error = err;
         }
 
@@ -28,7 +27,7 @@ private class GraphQLRequestTest {
     @IsTest
     private static void requestWithOperationTest() {
         GraphQLOperation operation = GraphQLOperation.Mutation;
-        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
+        GraphQLMutationNode node = new GraphQLMutationNode(new List<String>{ 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(operation, node);
 

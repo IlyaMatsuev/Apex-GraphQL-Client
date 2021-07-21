@@ -1,5 +1,4 @@
 global class GraphQLRequest {
-
     global final GraphQLOperation operation;
     private GraphQLNodeBase root;
 
@@ -24,5 +23,6 @@ global class GraphQLRequest {
         return root.build(pretty);
     }
 
-    private class GraphQLRequestException extends Exception {}
+    private class GraphQLRequestException extends Exception {
+    }
 }

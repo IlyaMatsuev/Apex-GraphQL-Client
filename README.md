@@ -4,11 +4,11 @@ This is a package for Salesforce which aimed to provide a convenient way for com
 
 ### Content:
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Documentaiton](#documentation)
-- [Contributing](#contributing)
-- [License](#license)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Documentaiton](#documentation)
+-   [Contributing](#contributing)
+-   [License](#license)
 
 ## Installation
 
@@ -72,8 +72,8 @@ MacOS/Linux:
 
 The package can be used for the following:
 
-- Generate string GraphQL nodes, queries, mutations, etc
-- Send GraphQL requests with GraphQL HTTP service
+-   Generate string GraphQL nodes, queries, mutations, etc
+-   Send GraphQL requests with GraphQL HTTP service
 
 ... All other stuff is coming soon
 

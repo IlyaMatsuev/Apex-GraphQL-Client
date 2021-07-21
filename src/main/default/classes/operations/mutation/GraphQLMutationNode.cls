@@ -1,5 +1,4 @@
 global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequestBuilder {
-
     private static final GraphQLOperation Operation = GraphQLOperation.Mutation;
 
     global GraphQLMutationNode() {
@@ -26,9 +25,8 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
         super(getNodeName(Operation, alias), nodes);
     }
 
-
     global GraphQLMutationNode withField(String field) {
-        return withFields(new String[] { field });
+        return withFields(new List<String>{ field });
     }
 
     global GraphQLMutationNode withFields(String[] fields) {
@@ -37,7 +35,7 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
     }
 
     global GraphQLMutationNode withNode(GraphQLNode node) {
-        return withNodes(new GraphQLNode[] { node });
+        return withNodes(new List<GraphQLNode>{ node });
     }
 
     global GraphQLMutationNode withNodes(GraphQLNode[] nodes) {
@@ -48,7 +46,6 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
     global GraphQLRequest buildRequest() {
         return new GraphQLRequest(Operation, this);
     }
-
 
     private static String getNodeName(GraphQLOperation operation, String alias) {
         if (String.isBlank(alias)) {

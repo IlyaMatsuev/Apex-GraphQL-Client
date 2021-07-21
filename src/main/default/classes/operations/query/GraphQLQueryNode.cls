@@ -1,5 +1,4 @@
 global class GraphQLQueryNode extends GraphQLNodeBase implements IGraphQLRequestBuilder {
-
     private static final GraphQLOperation Operation = GraphQLOperation.Query;
 
     global GraphQLQueryNode() {
@@ -26,9 +25,8 @@ global class GraphQLQueryNode extends GraphQLNodeBase implements IGraphQLRequest
         super(getNodeName(Operation, alias), nodes);
     }
 
-
     global GraphQLQueryNode withField(String field) {
-        return withFields(new String[] { field });
+        return withFields(new List<String>{ field });
     }
 
     global GraphQLQueryNode withFields(String[] fields) {
@@ -37,7 +35,7 @@ global class GraphQLQueryNode extends GraphQLNodeBase implements IGraphQLRequest
     }
 
     global GraphQLQueryNode withNode(GraphQLNode node) {
-        return withNodes(new GraphQLNode[] { node });
+        return withNodes(new List<GraphQLNode>{ node });
     }
 
     global GraphQLQueryNode withNodes(GraphQLNode[] nodes) {
@@ -48,7 +46,6 @@ global class GraphQLQueryNode extends GraphQLNodeBase implements IGraphQLRequest
     global GraphQLRequest buildRequest() {
         return new GraphQLRequest(Operation, this);
     }
-
 
     private static String getNodeName(GraphQLOperation operation, String alias) {
         if (String.isBlank(alias)) {

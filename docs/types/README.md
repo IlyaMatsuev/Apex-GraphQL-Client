@@ -4,13 +4,13 @@ This unit describes the Apex classes of the package that can be used for working
 
 ### Content:
 
-- [GraphQLNode](#graphqlnode)
-- [GraphQLQueryNode](#graphqlquerynode)
-- [GraphQLMutationNode](#graphqlmutationnode)
-- [GraphQLArgument](#graphqlargument)
-- [GraphQLArgumentType (enum)](#graphqlargumenttype)
-- [GraphQLRequest](#graphqlrequest)
-- [GraphQLOperation (enum)](#graphqloperation)
+-   [GraphQLNode](#graphqlnode)
+-   [GraphQLQueryNode](#graphqlquerynode)
+-   [GraphQLMutationNode](#graphqlmutationnode)
+-   [GraphQLArgument](#graphqlargument)
+-   [GraphQLArgumentType (enum)](#graphqlargumenttype)
+-   [GraphQLRequest](#graphqlrequest)
+-   [GraphQLOperation (enum)](#graphqloperation)
 
 ## GraphQLNode
 
