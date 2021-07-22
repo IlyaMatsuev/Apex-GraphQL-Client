@@ -20,7 +20,20 @@ global class GraphQLRequest {
     }
 
     global String toString(Boolean pretty) {
-        return root.build(pretty);
+        RequestJsonWrapper wrapper = new RequestJsonWrapper(root.build(pretty));
+        if (pretty) {
+            return JSON.serializePretty(wrapper);
+        }
+        return JSON.serialize(wrapper);
+    }
+
+    private class RequestJsonWrapper {
+        private final String query;
+
+        // TODO: Add variables support
+        public RequestJsonWrapper(String query) {
+            this.query = query;
+        }
     }
 
     private class GraphQLRequestException extends Exception {
