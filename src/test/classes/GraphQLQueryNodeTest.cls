@@ -26,6 +26,17 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
+    private static void emptyQueryWithChildNodeTest() {
+        GraphQLNode childNode = new GraphQLNode('node1');
+
+        GraphQLQueryNode node = new GraphQLQueryNode(childNode);
+
+        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), node.name);
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
     private static void emptyQueryWithChildNodesTest() {
         List<GraphQLNode> childNodes = new List<GraphQLNode>{
             new GraphQLNode('node1'),
@@ -137,8 +148,8 @@ private class GraphQLQueryNodeTest {
         GraphQLRequest request = new GraphQLQueryNode(new List<String>{ 'field1' }).buildRequest();
 
         System.assertEquals(GraphQLOperation.Query, request.operation);
-        System.assertEquals('query{field1}', request.toString());
-        System.assertEquals('query {\n  field1\n}', request.toString(true));
+        System.assertEquals('{"query":"query{field1}"}', request.toString());
+        System.assertEquals('{\n  "query" : "query {\\n  field1\\n}"\n}', request.toString(true));
     }
 
     /**

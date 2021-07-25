@@ -26,6 +26,17 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
+    private static void emptyMutationWithChildNodeTest() {
+        GraphQLNode childNode = new GraphQLNode('node1');
+
+        GraphQLMutationNode node = new GraphQLMutationNode(childNode);
+
+        System.assertEquals(GraphQLOperation.Mutation.name().toLowerCase(), node.name);
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
     private static void emptyMutationWithChildNodesTest() {
         List<GraphQLNode> childNodes = new List<GraphQLNode>{
             new GraphQLNode('node1'),
@@ -138,8 +149,11 @@ private class GraphQLMutationNodeTest {
             .buildRequest();
 
         System.assertEquals(GraphQLOperation.Mutation, request.operation);
-        System.assertEquals('mutation{field1}', request.toString());
-        System.assertEquals('mutation {\n  field1\n}', request.toString(true));
+        System.assertEquals('{"query":"mutation{field1}"}', request.toString());
+        System.assertEquals(
+            '{\n  "query" : "mutation {\\n  field1\\n}"\n}',
+            request.toString(true)
+        );
     }
 
     /**

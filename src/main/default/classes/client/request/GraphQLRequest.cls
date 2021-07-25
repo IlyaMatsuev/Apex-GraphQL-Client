@@ -1,5 +1,6 @@
 global class GraphQLRequest {
     global final GraphQLOperation operation;
+    global final Map<String, String> customHeaders = new Map<String, String>();
     private GraphQLNodeBase root;
 
     global GraphQLRequest(GraphQLNodeBase root) {
@@ -13,6 +14,15 @@ global class GraphQLRequest {
         if (!(root instanceof IGraphQLRequestBuilder)) {
             throw new GraphQLRequestException(Label.RequestNodeOfIncorrectTypeError);
         }
+    }
+
+    global GraphQLRequest withHeader(String key, String value) {
+        return withHeaders(new Map<String, String>{ key => value });
+    }
+
+    global GraphQLRequest withHeaders(Map<String, String> headers) {
+        customHeaders.putAll(headers);
+        return this;
     }
 
     global override String toString() {
