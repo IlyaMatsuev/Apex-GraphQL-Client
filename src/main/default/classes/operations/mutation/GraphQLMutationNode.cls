@@ -9,6 +9,10 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
         this(alias, new List<String>());
     }
 
+    global GraphQLMutationNode(GraphQLNode node) {
+        this(new List<GraphQLNode>{ node });
+    }
+
     global GraphQLMutationNode(List<String> fields) {
         this(null, fields);
     }

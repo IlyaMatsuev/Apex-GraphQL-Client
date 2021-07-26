@@ -4,9 +4,10 @@ public class CommonConstants {
     public static final String COMMA = ',';
     public static final String COLON = ':';
     public static final String SEMICOLON = ';';
-    public static final String DOUBLE_QUOTES = '"';
+    public static final String DOUBLE_QUOTES = '\"';
     public static final String SPACE = ' ';
     public static final String LINE_BREAK = '\n';
+    public static final String UNDERSCORE = '_';
 
     public static final String BRACE_LEFT = '{';
     public static final String BRACE_RIGHT = '}';

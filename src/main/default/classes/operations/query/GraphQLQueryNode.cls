@@ -9,6 +9,10 @@ global class GraphQLQueryNode extends GraphQLNodeBase implements IGraphQLRequest
         this(alias, new List<String>());
     }
 
+    global GraphQLQueryNode(GraphQLNode node) {
+        this(new List<GraphQLNode>{ node });
+    }
+
     global GraphQLQueryNode(List<String> fields) {
         this(null, fields);
     }

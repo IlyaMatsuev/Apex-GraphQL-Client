@@ -8,13 +8,7 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
     @TestVisible
     private static final Integer DEFAULT_INDENT = 2;
 
-    private GraphQLNodeBase node;
-
-    public GraphQLNodeParser(GraphQLNodeBase node) {
-        this.node = node;
-    }
-
-    public String toString(Boolean pretty) {
+    public String toString(GraphQLNodeBase node, Boolean pretty) {
         return generate(node, INITIAL_DEPTH, pretty);
     }
 
