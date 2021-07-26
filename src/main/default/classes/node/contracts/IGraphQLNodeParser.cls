@@ -1,3 +1,3 @@
 global interface IGraphQLNodeParser {
-    String toString(Boolean pretty);
+    String toString(GraphQLNodeBase node, Boolean pretty);
 }

@@ -73,13 +73,11 @@ MacOS/Linux:
 The package can be used for the following:
 
 -   Generate string GraphQL nodes, queries, mutations, etc
--   Send GraphQL requests with GraphQL HTTP service
-
-... All other stuff is coming soon
+-   Send GraphQL requests with the GraphQL HTTP client
 
 ### Generate a GraphQL node
 
-What we want:
+GraphQL node statement:
 
 ```bash
 continents {
@@ -92,7 +90,7 @@ continents {
 }
 ```
 
-How to get it:
+Equivalent Apex code:
 
 ```java
 GraphQLNode continentsNode = new GraphQLNode('continents')
@@ -102,13 +100,13 @@ GraphQLNode continentsNode = new GraphQLNode('continents')
         new List<String> { 'name', 'capital', 'currency' }
     ));
 
-// Will print a well-formatted node
+// Will print a well-formatted node just like on the example above
 System.debug(continentsNode.build(true));
 ```
 
 ### Create a query GraphQL request
 
-What we want:
+GraphQL query statement:
 
 ```bash
 query {
@@ -123,7 +121,7 @@ query {
 }
 ```
 
-How to get it:
+Equivalent Apex code:
 
 ```java
 GraphQLNode countriesNode = new GraphQLNode(
@@ -143,6 +141,30 @@ GraphQLQueryNode query = new GraphQLQueryNode(
 );
 
 System.debug(query.build(true));
+```
+
+After you created a query or mutation you can send it to the GraphQL endpoint:
+
+```java
+...
+GraphQLRequest request = query.buildRequest();
+
+// Add custom header if needed
+request.withHeader('Authorization', 'Bearer token');
+
+// Provide a GraphQL endpoint to the client
+GraphQLHttpClient client = new GraphQLHttpClient('https://gql-endpoint.com/graphql');
+
+GraphQLResponse response = client.send(request);
+
+// Check if there are any errors and data
+System.debug(response.hasErrors());
+System.debug(response.hasData());
+
+List<GraphQLResponseError> errors = response.getErrors();
+Map<String, Object> dataAsMap = response.getData();
+// It's also possible to get data as any Apex class type
+SomeWrapper dataAsWrapper = (SomeWrapper) response.getDataAs(SomeWrapper.class);
 ```
 
 All examples can be found [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/docs/examples).

@@ -6,7 +6,7 @@ global abstract class GraphQLNodeBase {
     private IGraphQLNodeParser parser {
         get {
             if (parser == null) {
-                parser = new GraphQLNodeParser(this);
+                parser = new GraphQLNodeParser();
             }
             return parser;
         }
@@ -96,6 +96,6 @@ global abstract class GraphQLNodeBase {
     }
 
     global String build(Boolean pretty) {
-        return parser.toString(pretty);
+        return parser.toString(this, pretty);
     }
 }
