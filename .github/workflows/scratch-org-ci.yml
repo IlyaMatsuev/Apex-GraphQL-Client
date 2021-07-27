@@ -72,14 +72,15 @@ jobs:
         run: sfdx force:user:permset:assign -n GraphQLApexClientUser
 
       - name: 'Run Apex tests'
-        run: sfdx force:apex:test:run -c -r human -d ./tests/apex -w 20
+        run: sfdx force:apex:test:run -c -r human -d ./coverage/apex -w 20
 
       - name: 'Upload code coverage for Apex to Codecov.io'
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage/apex/
           fail_ci_if_error: true
-          flags: Apex
+          flags: Apex,unittests
           verbose: true
 
       - name: 'Delete scratch org'
