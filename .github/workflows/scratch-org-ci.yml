@@ -78,7 +78,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./coverage/apex/
+          files: ./coverage/apex/test-result-codecoverage.json
           fail_ci_if_error: true
           flags: Apex,unittests
           verbose: true
