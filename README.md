@@ -19,12 +19,12 @@ There are a few options for you to deploy/download the project
 
 ### Download a package
 
-This project is available as a Salesforce package. So, you can just install it following [the link](/packaging/installPackage.apexp?p0=<package_id>).
+This project is available as a Salesforce package. So, you can just install it following [the link](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001ELWxQAO).
 
 If you prefer using salesforce CLI you can simply run:
 
 ```bash
-sfdx force:package:install --wait 10 --publishwait 10 --package <package_id> --noprompt -u {ORG_ALIAS}
+sfdx force:package:install --wait 10 --publishwait 10 --package gql-apex-client@0.0.0-1 --noprompt -u {ORG_ALIAS}
 ```
 
 ### Deploy from source
@@ -66,7 +66,7 @@ Windows:
 MacOS/Linux:
 
 ```bash
-./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS}
+sh ./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS}
 ```
 
 4. Follow the instructions in the script (if there are)
