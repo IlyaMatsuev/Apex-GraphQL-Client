@@ -27,7 +27,7 @@ private class GraphQLResponseTest {
         System.assert(response.hasData());
 
         Map<String, Object> responseData = response.getData();
-        Map<String, Object> hero = response.getDataNode('hero');
+        Map<String, Object> hero = (Map<String, Object>) response.getDataNode('hero');
         List<GraphQLResponseError> responseErrors = response.getErrors();
         System.assertEquals(1, responseErrors.size());
         System.assert(responseData.containsKey('hero'));

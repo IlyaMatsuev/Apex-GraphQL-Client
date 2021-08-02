@@ -38,8 +38,8 @@ global class GraphQLResponse {
         return getDataAs(responseJson.get(DATA_FIELD), type);
     }
 
-    global Map<String, Object> getDataNode(String nodeName) {
-        return (Map<String, Object>) getData()?.get(nodeName);
+    global Object getDataNode(String nodeName) {
+        return getData()?.get(nodeName);
     }
 
     global Object getDataNodeAs(String nodeName, Type type) {

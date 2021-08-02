@@ -51,6 +51,22 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
+    private static void namedMutationWithChildNodeTest() {
+        String nodeName = 'Test';
+
+        GraphQLMutationNode node = new GraphQLMutationNode(nodeName, new GraphQLNode('node1'));
+
+        System.assertEquals(
+            GraphQLOperation.Mutation.name().toLowerCase() +
+            CommonConstants.SPACE +
+            nodeName,
+            node.name
+        );
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
     private static void namedMutationWithChildNodesTest() {
         String nodeName = 'Test';
         List<GraphQLNode> childNodes = new List<GraphQLNode>{

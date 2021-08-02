@@ -1,5 +1,5 @@
 global class GraphQLHttpClient implements IGraphQLClient {
-    private static final Integer DEFAULT_REQUEST_TIMEOUT = 120;
+    private static final Integer DEFAULT_REQUEST_TIMEOUT = 120000;
 
     private final String endpoint;
 
@@ -9,6 +9,16 @@ global class GraphQLHttpClient implements IGraphQLClient {
     }
 
     global GraphQLResponse send(GraphQLRequest request) {
+        return send(new RequestWrapper(request));
+    }
+
+    global Id sendAsync(GraphQLRequest request, IGraphQLResponseCallback callback) {
+        return System.enqueueJob(
+            new QueuableRequestWrapper(this, new RequestWrapper(request), callback)
+        );
+    }
+
+    private GraphQLResponse send(RequestWrapper request) {
         HttpResponse httpResponse = new Http().send(prepareRequest(request));
         GraphQLResponse gqlResponse;
         try {
@@ -29,11 +39,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
         return gqlResponse;
     }
 
-    global Id sendAsync(GraphQLRequest request, IGraphQLResponseCallback callback) {
-        return System.enqueueJob(new QueuableRequestWrapper(this, request, callback));
-    }
-
-    private HttpRequest prepareRequest(GraphQLRequest gqlRequest) {
+    private HttpRequest prepareRequest(RequestWrapper gqlRequest) {
         HttpRequest request = new HttpRequest();
         request.setEndpoint(endpoint);
         request.setMethod(HttpConstants.METHOD_POST);
@@ -45,13 +51,17 @@ global class GraphQLHttpClient implements IGraphQLClient {
             HttpConstants.HEADER_NAME_CONTENT_TYPE,
             HttpConstants.HEADER_VALUE_MIMETYPE_JSON
         );
+        request.setHeader(
+            HttpConstants.HEADER_NAME_ACCEPT,
+            HttpConstants.HEADER_VALUE_MIMETYPE_JSON
+        );
 
-        for (String header : gqlRequest.customHeaders.keySet()) {
-            request.setHeader(header, gqlRequest.customHeaders.get(header));
+        for (String header : gqlRequest.headers.keySet()) {
+            request.setHeader(header, gqlRequest.headers.get(header));
         }
 
         // TODO: Configure from Custom Metadata how to send request (pretty or not)
-        request.setBody(gqlRequest.toString());
+        request.setBody(gqlRequest.body);
         return request;
     }
 
@@ -65,14 +75,25 @@ global class GraphQLHttpClient implements IGraphQLClient {
         return new GraphQLResponseError(message);
     }
 
+    // This wrapper is needed because of the "Processing" issue with the Queueable job
+    private class RequestWrapper {
+        public Map<String, String> headers;
+        public String body;
+
+        public RequestWrapper(GraphQLRequest request) {
+            this.headers = request.customHeaders;
+            this.body = request.toString();
+        }
+    }
+
     private class QueuableRequestWrapper implements Queueable, Database.AllowsCallouts {
-        private IGraphQLClient client;
-        private GraphQLRequest request;
-        private IGraphQLResponseCallback callback;
+        private final GraphQLHttpClient client;
+        private final RequestWrapper request;
+        private final IGraphQLResponseCallback callback;
 
         public QueuableRequestWrapper(
-            IGraphQLClient client,
-            GraphQLRequest request,
+            GraphQLHttpClient client,
+            RequestWrapper request,
             IGraphQLResponseCallback callback
         ) {
             this.client = client;

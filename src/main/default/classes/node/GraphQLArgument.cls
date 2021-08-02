@@ -43,7 +43,7 @@ global class GraphQLArgument {
             }
             when else {
                 // TODO: support pretty formatting for objects in arguments
-                return JSON.serialize(value)
+                return JSON.serialize(value, true)
                     .replaceAll(REPLACE_JSON_PROPS_REGEXP, ESCAPED_PROP_NAME_EXP);
             }
         }

@@ -270,7 +270,7 @@ This is a wrapper for the GraphQL response. It will be utilized for receiving er
 
 `Object getDataAs(Type type)` - Returns a data field from the response as an object casted to the type provided in the parameter.
 
-`Map<String, Object> getDataNode(String nodeName)` - Returns a specific data field's node as a Map with generic object as a value.
+`Object getDataNode(String nodeName)` - Returns a specific data node as a generic object which can be casted to Map<String, Object> or List<Object> depending on what the response node is.
 
 `Object getDataNodeAs(String nodeName, Type type)` - Returns a specific data field's node as an object casted to the type provided in the second parameter.
 

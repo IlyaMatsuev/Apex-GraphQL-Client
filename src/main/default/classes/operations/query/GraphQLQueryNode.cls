@@ -21,12 +21,16 @@ global class GraphQLQueryNode extends GraphQLNodeBase implements IGraphQLRequest
         this(null, nodes);
     }
 
+    global GraphQLQueryNode(String alias, GraphQLNode node) {
+        this(alias, new List<GraphQLNode>{ node });
+    }
+
     global GraphQLQueryNode(String alias, List<String> fields) {
-        super(getNodeName(Operation, alias), fields);
+        super(getNodeName(alias), fields);
     }
 
     global GraphQLQueryNode(String alias, List<GraphQLNode> nodes) {
-        super(getNodeName(Operation, alias), nodes);
+        super(getNodeName(alias), nodes);
     }
 
     global GraphQLQueryNode withField(String field) {
@@ -51,10 +55,10 @@ global class GraphQLQueryNode extends GraphQLNodeBase implements IGraphQLRequest
         return new GraphQLRequest(Operation, this);
     }
 
-    private static String getNodeName(GraphQLOperation operation, String alias) {
+    private static String getNodeName(String alias) {
         if (String.isBlank(alias)) {
-            return operation.name().toLowerCase();
+            return Operation.name().toLowerCase();
         }
-        return operation.name().toLowerCase() + CommonConstants.SPACE + alias;
+        return Operation.name().toLowerCase() + CommonConstants.SPACE + alias;
     }
 }

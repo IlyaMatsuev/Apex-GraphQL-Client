@@ -51,6 +51,22 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
+    private static void namedQueryWithChildNodeTest() {
+        String nodeName = 'Test';
+
+        GraphQLQueryNode node = new GraphQLQueryNode(nodeName, new GraphQLNode('node1'));
+
+        System.assertEquals(
+            GraphQLOperation.Query.name().toLowerCase() +
+            CommonConstants.SPACE +
+            nodeName,
+            node.name
+        );
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(0, node.arguments.size());
+    }
+
+    @IsTest
     private static void namedQueryWithChildNodesTest() {
         String nodeName = 'Test';
         List<GraphQLNode> childNodes = new List<GraphQLNode>{
