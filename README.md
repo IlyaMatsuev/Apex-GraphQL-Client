@@ -10,6 +10,7 @@ This is a package for Salesforce which aimed to provide a convenient way for com
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [Documentaiton](#documentation)
+-   [Questions](#questions)
 -   [Contributing](#contributing)
 -   [License](#license)
 
@@ -175,6 +176,10 @@ All examples can be found [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Clien
 ## Documentation
 
 The documentation describes all Apex types and usage cases for them. Please see it [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/docs).
+
+## Questions
+
+If you have any question you can start a discussion. If you think something works not as expected you can create an issue.
 
 ## Contributing
 
