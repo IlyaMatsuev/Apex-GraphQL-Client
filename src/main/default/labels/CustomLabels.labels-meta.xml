@@ -24,4 +24,36 @@
         <shortDescription>EmptyNodeError</shortDescription>
         <value>Cannot parse an empty node without any child nodes</value>
     </labels>
+    <labels>
+        <fullName>UnexpectedResponseFormatError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnexpectedResponseFormatError</shortDescription>
+        <value>Got invalid response format from the server</value>
+    </labels>
+    <labels>
+        <fullName>UnexpectedClientError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnexpectedClientError</shortDescription>
+        <value>Something went wrong with the client. See debug logs for details</value>
+    </labels>
+    <labels>
+        <fullName>NoTestJsonLoadedError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoTestJsonLoadedError</shortDescription>
+        <value>There is no .json file with the name: {0}</value>
+    </labels>
+    <labels>
+        <fullName>InvalidGraphQLResponseError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvalidGraphQLResponseError</shortDescription>
+        <value>GraphQL response must have at least "errors" or "data" fields</value>
+    </labels>
 </CustomLabels>

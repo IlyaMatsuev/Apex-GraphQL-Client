@@ -1,5 +1,4 @@
 global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequestBuilder {
-
     private static final GraphQLOperation Operation = GraphQLOperation.Mutation;
 
     global GraphQLMutationNode() {
@@ -10,6 +9,10 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
         this(alias, new List<String>());
     }
 
+    global GraphQLMutationNode(GraphQLNode node) {
+        this(new List<GraphQLNode>{ node });
+    }
+
     global GraphQLMutationNode(List<String> fields) {
         this(null, fields);
     }
@@ -18,17 +21,20 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
         this(null, nodes);
     }
 
+    global GraphQLMutationNode(String alias, GraphQLNode node) {
+        this(alias, new List<GraphQLNode>{ node });
+    }
+
     global GraphQLMutationNode(String alias, List<String> fields) {
-        super(getNodeName(Operation, alias), fields);
+        super(getNodeName(alias), fields);
     }
 
     global GraphQLMutationNode(String alias, List<GraphQLNode> nodes) {
-        super(getNodeName(Operation, alias), nodes);
+        super(getNodeName(alias), nodes);
     }
 
-
     global GraphQLMutationNode withField(String field) {
-        return withFields(new String[] { field });
+        return withFields(new List<String>{ field });
     }
 
     global GraphQLMutationNode withFields(String[] fields) {
@@ -37,7 +43,7 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
     }
 
     global GraphQLMutationNode withNode(GraphQLNode node) {
-        return withNodes(new GraphQLNode[] { node });
+        return withNodes(new List<GraphQLNode>{ node });
     }
 
     global GraphQLMutationNode withNodes(GraphQLNode[] nodes) {
@@ -49,11 +55,10 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
         return new GraphQLRequest(Operation, this);
     }
 
-
-    private static String getNodeName(GraphQLOperation operation, String alias) {
+    private static String getNodeName(String alias) {
         if (String.isBlank(alias)) {
-            return operation.name().toLowerCase();
+            return Operation.name().toLowerCase();
         }
-        return operation.name().toLowerCase() + CommonConstants.SPACE + alias;
+        return Operation.name().toLowerCase() + CommonConstants.SPACE + alias;
     }
 }

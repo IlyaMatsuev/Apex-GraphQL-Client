@@ -1,5 +1,4 @@
 global class GraphQLNode extends GraphQLNodeBase {
-
     global GraphQLNode() {
         this(CommonConstants.EMPTY);
     }
@@ -24,9 +23,8 @@ global class GraphQLNode extends GraphQLNodeBase {
         super(name, fields);
     }
 
-
     global GraphQLNode withField(String field) {
-        return withFields(new String[] { field });
+        return withFields(new List<String>{ field });
     }
 
     global GraphQLNode withFields(String[] fields) {
@@ -35,7 +33,7 @@ global class GraphQLNode extends GraphQLNodeBase {
     }
 
     global GraphQLNode withNode(GraphQLNode node) {
-        return withNodes(new GraphQLNode[] { node });
+        return withNodes(new List<GraphQLNode>{ node });
     }
 
     global GraphQLNode withNodes(GraphQLNode[] nodes) {
@@ -48,7 +46,7 @@ global class GraphQLNode extends GraphQLNodeBase {
     }
 
     global GraphQLNode withArgument(GraphQLArgument argument) {
-        return withArguments(new GraphQLArgument[] { argument });
+        return withArguments(new List<GraphQLArgument>{ argument });
     }
 
     global GraphQLNode withArguments(GraphQLArgument[] arguments) {

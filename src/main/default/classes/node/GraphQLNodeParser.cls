@@ -1,5 +1,4 @@
 public class GraphQLNodeParser implements IGraphQLNodeParser {
-
     @TestVisible
     private static final Integer INITIAL_DEPTH = 0;
     // TODO: Move to Custom Metadata configuration
@@ -9,13 +8,7 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
     @TestVisible
     private static final Integer DEFAULT_INDENT = 2;
 
-    private GraphQLNodeBase node;
-
-    public GraphQLNodeParser(GraphQLNodeBase node) {
-        this.node = node;
-    }
-
-    public String toString(Boolean pretty) {        
+    public String toString(GraphQLNodeBase node, Boolean pretty) {
         return generate(node, INITIAL_DEPTH, pretty);
     }
 
@@ -53,16 +46,16 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
             if (pretty) {
                 arg += CommonConstants.SPACE;
             }
-            arg += node.arguments.get(key) ;
+            arg += node.arguments.get(key);
 
             rawArguments.add(arg);
         }
-        return CommonConstants.PARENTHESE_LEFT
-                + String.join(
-                    rawArguments,
-                    CommonConstants.COMMA + (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY)
-                )
-                + CommonConstants.PARENTHESE_RIGHT;
+        return CommonConstants.PARENTHESE_LEFT +
+            String.join(
+                rawArguments,
+                CommonConstants.COMMA + (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY)
+            ) +
+            CommonConstants.PARENTHESE_RIGHT;
     }
 
     private String generateChildNodes(GraphQLNodeBase node, Integer depth, Boolean pretty) {
@@ -72,7 +65,9 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
             rawNodes.add(generate(n, depth + 1, pretty));
         }
 
-        childNodes += (pretty && String.isNotBlank(node.name)) ? CommonConstants.SPACE : CommonConstants.EMPTY;
+        childNodes += (pretty && String.isNotBlank(node.name))
+            ? CommonConstants.SPACE
+            : CommonConstants.EMPTY;
         childNodes += CommonConstants.BRACE_LEFT;
         childNodes += pretty ? CommonConstants.LINE_BREAK : CommonConstants.EMPTY;
 
@@ -82,7 +77,9 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         );
 
         // Because when a brace closes we should get back by one indent level
-        childNodes += pretty ? (CommonConstants.LINE_BREAK + getIndent(depth)) : CommonConstants.EMPTY;
+        childNodes += pretty
+            ? (CommonConstants.LINE_BREAK + getIndent(depth))
+            : CommonConstants.EMPTY;
         childNodes += CommonConstants.BRACE_RIGHT;
 
         return childNodes;
@@ -92,5 +89,6 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         return CommonConstants.SPACE.repeat(depth * DEFAULT_INDENT);
     }
 
-    private class GraphQLNodeParserException extends Exception {}
+    private class GraphQLNodeParserException extends Exception {
+    }
 }

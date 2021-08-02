@@ -27,5 +27,9 @@ echo "Deploying to $scratch_alias..."
 sfdx force:source:push -u "$scratch_alias"
 
 echo
+echo "Assigning permissions..."
+sfdx force:user:permset:assign -n GraphQLApexClientUser -u "$scratch_alias"
+
+echo
 echo "Deployment has been finished."
 echo "Open the scratch with 'sfdx force:org:open -u $scratch_alias'"
