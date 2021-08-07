@@ -1,7 +1,7 @@
-# Saleforce GraphQL Client
+# Saleforce Apex GraphQL Client
 
-[![CI](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/actions/workflows/scratch-org-ci.yml/badge.svg?branch=dev)](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/actions/workflows/scratch-org-ci.yml)
-[![codecov](https://codecov.io/gh/IlyaMatsuev/Sf-GraphQL-Client/branch/main/graph/badge.svg?token=ZOSPAKZTGC)](https://codecov.io/gh/IlyaMatsuev/Sf-GraphQL-Client)
+[![CI](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml/badge.svg?branch=dev)](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml)
+[![codecov](https://codecov.io/gh/IlyaMatsuev/Apex-GraphQL-Client/branch/main/graph/badge.svg?token=ZOSPAKZTGC)](https://codecov.io/gh/IlyaMatsuev/Apex-GraphQL-Client)
 
 This is a package for Salesforce that aimed to provide a convenient way to communicate with a GraphQL server via Apex.
 
@@ -39,7 +39,7 @@ git clone https://github.com/IlyaMatsuev/Sf-GraphQL-Client.git
 2. Go to the root project directory
 
 ```bash
-cd ./sf-graphql-client
+cd ./apex-graphql-client
 ```
 
 3. If you want to deploy the project to a dev org or an existing scratch org you should use this:
@@ -171,11 +171,11 @@ Map<String, Object> dataAsMap = response.getData();
 SomeWrapper dataAsWrapper = (SomeWrapper) response.getDataAs(SomeWrapper.class);
 ```
 
-All examples can be found [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/docs/examples).
+All examples can be found [here](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/docs/examples).
 
 ## Documentation
 
-The documentation describes all Apex types and usage cases for them. Please see it [here](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/docs).
+The documentation describes all Apex types and usage cases for them. Please see it [here](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/docs).
 
 ## Questions
 
@@ -188,4 +188,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-[MIT](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/blob/main/LICENSE)
+[MIT](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/LICENSE)
