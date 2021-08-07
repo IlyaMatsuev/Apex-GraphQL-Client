@@ -3,7 +3,7 @@
 [![CI](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/actions/workflows/scratch-org-ci.yml/badge.svg?branch=dev)](https://github.com/IlyaMatsuev/Sf-GraphQL-Client/actions/workflows/scratch-org-ci.yml)
 [![codecov](https://codecov.io/gh/IlyaMatsuev/Sf-GraphQL-Client/branch/main/graph/badge.svg?token=ZOSPAKZTGC)](https://codecov.io/gh/IlyaMatsuev/Sf-GraphQL-Client)
 
-This is a package for Salesforce which aimed to provide a convenient way for communicating with a GraphQL API via Apex.
+This is a package for Salesforce that aimed to provide a convenient way to communicate with a GraphQL server via Apex.
 
 ### Content:
 
@@ -179,7 +179,7 @@ The documentation describes all Apex types and usage cases for them. Please see 
 
 ## Questions
 
-If you have any question you can start a discussion. If you think something works not as expected you can create an issue.
+If you have any questions you can start a discussion. If you think something works not as expected you can create an issue. If you want to request a new feature you can create an issue with the appropriate template selected.
 
 ## Contributing
 

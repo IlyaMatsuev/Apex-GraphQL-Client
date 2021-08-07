@@ -1,5 +1,8 @@
+default_scratch_duration=7
+
 scratch_alias=$1
 dev_hub_alias=$2
+days=${3:-$default_scratch_duration}
 
 if [[ -z "$scratch_alias" ]]
 then
@@ -20,7 +23,7 @@ sfdx force:auth:web:login -a "$dev_hub_alias"
 
 echo
 echo "Creating scratch..."
-sfdx force:org:create -f ./config/project-scratch-def.json -a "$scratch_alias" -v "$dev_hub_alias"
+sfdx force:org:create -f ./config/project-scratch-def.json -a "$scratch_alias" -v "$dev_hub_alias" -d "$days"
 
 echo
 echo "Deploying to $scratch_alias..."
