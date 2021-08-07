@@ -33,7 +33,7 @@ sfdx force:package:install --wait 10 --publishwait 10 --package gql-apex-client@
 1. Clone the project
 
 ```bash
-git clone https://github.com/IlyaMatsuev/Sf-GraphQL-Client.git
+git clone https://github.com/IlyaMatsuev/Apex-GraphQL-Client.git
 ```
 
 2. Go to the root project directory
