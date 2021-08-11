@@ -56,4 +56,12 @@
         <shortDescription>InvalidGraphQLResponseError</shortDescription>
         <value>GraphQL response must have at least "errors" or "data" fields</value>
     </labels>
+    <labels>
+        <fullName>VariableNotAllowedInputTypeError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VariableNotAllowedInputTypeError</shortDescription>
+        <value>Use another overloading of this method to define variable of your input type</value>
+    </labels>
 </CustomLabels>

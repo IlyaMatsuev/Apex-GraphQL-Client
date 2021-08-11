@@ -21,13 +21,19 @@ global class GraphQLArgument {
         this.value = value;
     }
 
+    global Boolean isVariable() {
+        return value instanceof String && ((String) value).startsWith(CommonConstants.DOLLAR);
+    }
+
     global override String toString() {
         switch on type {
             when x_Integer, x_Float, x_Boolean {
                 return String.valueOf(value);
             }
             when x_String {
-                return CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES;
+                return isVariable()
+                    ? (String) value
+                    : CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES;
             }
             // TODO: Move formatting to Custom Metadata configuration
             when x_DateTime {
@@ -50,7 +56,7 @@ global class GraphQLArgument {
     }
 
     // There is no way to get an object's type yet
-    private static GraphQLArgumentType getArgumentTypeByValue(Object value) {
+    private GraphQLArgumentType getArgumentTypeByValue(Object value) {
         if (value instanceof Integer || value instanceof Long) {
             return GraphQLArgumentType.x_Integer;
         } else if (value instanceof String || value instanceof Blob || value instanceof Id) {

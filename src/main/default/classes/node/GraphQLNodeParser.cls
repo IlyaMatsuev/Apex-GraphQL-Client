@@ -23,8 +23,11 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         }
 
         String rawNode = generateNodeName(node, depth, pretty);
+        if (!node.variables.isEmpty()) {
+            rawNode += generateVariables(node, pretty);
+        }
         if (node.hasArguments()) {
-            rawNode += generateArguments(node, depth, pretty);
+            rawNode += generateArguments(node, pretty);
         }
         if (node.hasNodes()) {
             rawNode += generateChildNodes(node, depth, pretty);
@@ -39,7 +42,25 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         return (pretty ? getIndent(depth) : CommonConstants.EMPTY) + node.name;
     }
 
-    private String generateArguments(GraphQLNodeBase node, Integer depth, Boolean pretty) {
+    private String generateVariables(GraphQLNodeBase node, Boolean pretty) {
+        List<String> rawVariableDefinitions = new List<String>();
+        for (String name : node.variables.keySet()) {
+            String variableDefinition = CommonConstants.DOLLAR + name + CommonConstants.COLON;
+            if (pretty) {
+                variableDefinition += CommonConstants.SPACE;
+            }
+            variableDefinition += node.variables.get(name);
+            rawVariableDefinitions.add(variableDefinition);
+        }
+        return CommonConstants.PARENTHESE_LEFT +
+            String.join(
+                rawVariableDefinitions,
+                CommonConstants.COMMA + (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY)
+            ) +
+            CommonConstants.PARENTHESE_RIGHT;
+    }
+
+    private String generateArguments(GraphQLNodeBase node, Boolean pretty) {
         List<String> rawArguments = new List<String>();
         for (String key : node.arguments.keySet()) {
             String arg = key + CommonConstants.COLON;
@@ -47,7 +68,6 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
                 arg += CommonConstants.SPACE;
             }
             arg += node.arguments.get(key);
-
             rawArguments.add(arg);
         }
         return CommonConstants.PARENTHESE_LEFT +
@@ -65,9 +85,10 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
             rawNodes.add(generate(n, depth + 1, pretty));
         }
 
-        childNodes += (pretty && String.isNotBlank(node.name))
-            ? CommonConstants.SPACE
-            : CommonConstants.EMPTY;
+        if (pretty && String.isNotBlank(node.name)) {
+            childNodes += CommonConstants.SPACE;
+        }
+
         childNodes += CommonConstants.BRACE_LEFT;
         childNodes += pretty ? CommonConstants.LINE_BREAK : CommonConstants.EMPTY;
 

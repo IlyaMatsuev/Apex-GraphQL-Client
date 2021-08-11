@@ -1,7 +1,8 @@
 global class GraphQLRequest {
     global final GraphQLOperation operation;
     global final Map<String, String> customHeaders = new Map<String, String>();
-    private GraphQLNodeBase root;
+    private final GraphQLNodeBase root;
+    private Map<String, Object> variables;
 
     global GraphQLRequest(GraphQLNodeBase root) {
         this(null, root);
@@ -25,24 +26,37 @@ global class GraphQLRequest {
         return this;
     }
 
+    global GraphQLRequest withVariable(String name, Object value) {
+        return withVariables(new Map<String, Object>{ name => value });
+    }
+
+    global GraphQLRequest withVariables(Map<String, Object> variables) {
+        if (this.variables == null) {
+            this.variables = new Map<String, Object>();
+        }
+        this.variables.putAll(variables);
+        return this;
+    }
+
     global override String toString() {
         return toString(false);
     }
 
     global String toString(Boolean pretty) {
-        RequestJsonWrapper wrapper = new RequestJsonWrapper(root.build(pretty));
+        RequestJsonWrapper wrapper = new RequestJsonWrapper(root.build(pretty), variables);
         if (pretty) {
-            return JSON.serializePretty(wrapper);
+            return JSON.serializePretty(wrapper, true);
         }
-        return JSON.serialize(wrapper);
+        return JSON.serialize(wrapper, true);
     }
 
     private class RequestJsonWrapper {
-        private final String query;
+        public final String query;
+        public final Map<String, Object> variables;
 
-        // TODO: Add variables support
-        public RequestJsonWrapper(String query) {
+        public RequestJsonWrapper(String query, Map<String, Object> variables) {
             this.query = query;
+            this.variables = variables;
         }
     }
 

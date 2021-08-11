@@ -116,6 +116,8 @@ This class is only used for building queries.
 
 GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
 
+`Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
+
 ---
 
 ### Methods
@@ -135,6 +137,8 @@ GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) cl
 `GraphQLQueryNode withNode(GraphQLNode node)` - Adds a new child node to the current node. Accepts one parameter of type [`GraphQLNode`](#graphqlnode). Returns the current node instance.
 
 `GraphQLQueryNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
+
+`GraphQLQueryNode withVariable(String name, String typeDefinition)` - Defines a new variable for the query with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -170,6 +174,8 @@ This class is only used for building mutations.
 
 GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
 
+`Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
+
 ---
 
 ### Methods
@@ -189,6 +195,8 @@ GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode)
 `GraphQLMutationNode withNode(GraphQLNode node)` - Adds a new child node to the current node. Accepts one parameter of type [`GraphQLNode`](#graphqlnode). Returns the current node instance.
 
 `GraphQLMutationNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
+
+`GraphQLMutationNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -222,6 +230,8 @@ This class is used for passing arguments to GraphQL nodes.
 
 `override String toString()` - Returns a string equivalent of the argument according to its value's type. For example, if the value is an instance of a class it will be serialized with JSON.
 
+`Boolean isVariable()` - Returns true if the value of the argument references a variable. Otherwise, returns false. The value is considered as a variable if it starts with the dollar `$` sign.
+
 ---
 
 ## GraphQLRequest
@@ -249,6 +259,10 @@ This is a wrapper for the GraphQL request. It will be utilized for sending an HT
 `GraphQLRequest withHeader(String key, String value)` - Adds a new custom header to the request. Returns the current instance.
 
 `GraphQLRequest withHeaders(Map<String, String> headers)` - Adds multiple custom headers to the request. Returns the current instance.
+
+`GraphQLRequest withVariable(String name, Object value)` - Assigns a value to a variable from query/mutation by its name.
+
+`GraphQLRequest withVariables(Map<String, Object> variables)` - Assigns multiple values to variables from query/mutation by a map with their names as keys.
 
 `override String toString()` - Returns a GraphQL request as a JSON for an HTTP request.
 

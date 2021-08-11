@@ -160,6 +160,15 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
+    private static void queryWithVariableTest() {
+        GraphQLQueryNode node = new GraphQLQueryNode()
+            .withNode(new GraphQLNode('node'))
+            .withVariable('newVariable', '[Int]! = 0');
+
+        System.assertEquals(1, node.variables.size());
+    }
+
+    @IsTest
     private static void queryBuildRequestTest() {
         GraphQLRequest request = new GraphQLQueryNode(new List<String>{ 'field1' }).buildRequest();
 
@@ -192,6 +201,33 @@ private class GraphQLQueryNodeTest {
         System.assertEquals('query{field1,field2,field3,field4}', query.build());
         System.assertEquals(
             'query {\n  field1\n  field2\n  field3\n  field4\n}',
+            query.build(true)
+        );
+    }
+
+    @IsTest
+    private static void buildQueryWithVariablesPositiveTest() {
+        List<GraphQLNode> nodes = new List<GraphQLNode>{
+            new GraphQLNode('node1').withArgument('arg', '$param1'),
+            new GraphQLNode('node2')
+        };
+        List<String> fields = new List<String>{ 'field3', 'field4' };
+
+        GraphQLQueryNode query = new GraphQLQueryNode()
+            .withNodes(nodes)
+            .withFields(fields)
+            .withVariable('param1', 'Int!')
+            .withVariable('param2', 'String');
+
+        System.assert(query != null);
+        System.assertEquals('query', query.name);
+        System.assertEquals(nodes.size() + fields.size(), query.nodes.size());
+        System.assertEquals(
+            'query($param1:Int!,$param2:String){node1(arg:$param1),node2,field3,field4}',
+            query.build()
+        );
+        System.assertEquals(
+            'query($param1: Int!, $param2: String) {\n  node1(arg: $param1)\n  node2\n  field3\n  field4\n}',
             query.build(true)
         );
     }
