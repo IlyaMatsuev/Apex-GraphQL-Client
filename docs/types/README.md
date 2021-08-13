@@ -7,6 +7,7 @@ This unit describes the Apex classes of the package that can be used for working
 -   [GraphQLNode](#graphqlnode)
 -   [GraphQLQueryNode](#graphqlquerynode)
 -   [GraphQLMutationNode](#graphqlmutationnode)
+-   [GraphQLSubscriptionNode](#graphqlsubscriptionnode)
 -   [GraphQLArgument](#graphqlargument)
 -   [GraphQLRequest](#graphqlrequest)
 -   [GraphQLResponse](#graphqlresponse)
@@ -199,6 +200,62 @@ GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode)
 `GraphQLMutationNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
+
+`String build()` - Builds a non-formatted string representation of the current node.
+
+`String build(Boolean pretty)` - Builds a string representation of the current node. The result string can be formatted depending on the provided boolean flag `pretty`.
+
+---
+
+## GraphQLSubscriptionNode
+
+This class is only used for building subscriptions. It's not possible yet to execute subscription requests due to Apex limitations (Apex doesn't support WebSocket protocol). However, you can build your subscription queries as strings and, for example, send it to LWC in order to execute that subscription from Java Script.
+
+### Constructors
+
+`GraphQLSubscriptionNode()` - Creates a new instance of the GraphQLSubscriptionNode.
+
+`GraphQLSubscriptionNode(String alias)` - Creates a new instance of the GraphQLSubscriptionNode with the provided alias.
+
+`GraphQLSubscriptionNode(GraphQLNode node)` - Creates a new instance of the GraphQLSubscriptionNode with the provided child node.
+
+`GraphQLSubscriptionNode(List<GraphQLNode> nodes)` - Creates a new instance of the GraphQLSubscriptionNode with the provided child nodes.
+
+`GraphQLSubscriptionNode(List<String> fields)` - Creates a new instance of the GraphQLSubscriptionNode with the provided fields.
+
+`GraphQLSubscriptionNode(String alias, List<GraphQLNode> nodes)` - Creates a new instance of the GraphQLSubscriptionNode with the provided alias and child nodes.
+
+`GraphQLSubscriptionNode(String alias, List<String> fields)` - Creates a new instance of the GraphQLSubscriptionNode with the provided alias and fields.
+
+---
+
+### Properties
+
+GraphQLSubscriptionNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
+
+`Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
+
+---
+
+### Methods
+
+`Boolean hasNode(GraphQLNode node)` - Returns true if there is a node with the same name from the parameter. Otherwise returns false.
+
+`Boolean hasNodes(GraphQLNode[] nodes)` - Returns true if there is at least one node from the provided array. Otherwise returns false.
+
+`Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
+
+`Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+
+`GraphQLSubscriptionNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
+
+`GraphQLSubscriptionNode withFields(String[] fields)` - Adds new fields to the current node. Returns the current node instance.
+
+`GraphQLSubscriptionNode withNode(GraphQLNode node)` - Adds a new child node to the current node. Accepts one parameter of type [`GraphQLNode`](#graphqlnode). Returns the current node instance.
+
+`GraphQLSubscriptionNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
+
+`GraphQLSubscriptionNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
 `String build()` - Builds a non-formatted string representation of the current node.
 

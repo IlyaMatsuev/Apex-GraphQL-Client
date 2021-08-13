@@ -7,4 +7,5 @@
     <testClassName>GraphQLRequestTest</testClassName>
     <testClassName>GraphQLResponseTest</testClassName>
     <testClassName>GraphQLHttpClientTest</testClassName>
+    <testClassName>GraphQLSubscriptionNodeTest</testClassName>
 </ApexTestSuite>
