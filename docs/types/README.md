@@ -89,6 +89,12 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `String build(Boolean pretty)` - Builds a string representation of the current node. The result string can be formatted depending on the provided boolean flag `pretty`.
 
+`GraphQLQueryNode asQuery()` - Wraps the current node and returns a new instance of [`GraphQLQueryNode`](#graphqlquerynode) with the same node name and child nodes. Arguments are not passing to a new query node since they are not supported for the type [`GraphQLQueryNode`](#graphqlquerynode).
+
+`GraphQLMutationNode asMutation()` - Wraps the current node and returns a new instance of [`GraphQLMutationNode`](#graphqlmutationnode) with the same node name and child nodes. Arguments are not passing to a new mutation node since they are not supported for the type [`GraphQLMutationNode`](#graphqlmutationnode).
+
+`GraphQLSubscriptionNode asSubscription()` - Wraps the current node and returns a new instance of [`GraphQLSubscriptionNode`](#graphqlsubscriptionnode) with the same node name and child nodes. Arguments are not passing to a new query node since they are not supported for the type [`GraphQLSubscriptionNode`](#graphqlsubscriptionnode).
+
 ---
 
 ## GraphQLQueryNode
