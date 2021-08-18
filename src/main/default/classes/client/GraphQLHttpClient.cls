@@ -1,9 +1,23 @@
 global class GraphQLHttpClient implements IGraphQLClient {
-    private static final Integer DEFAULT_REQUEST_TIMEOUT = 120000;
-
     private final String endpoint;
 
-    // TODO: Take a default endpoint from the Custom Metadata if it's not specified
+    private static final Integer REQUEST_TIMEOUT = GraphQLConfigurationManager.getConfigurationAsInt(
+        GraphQLConfiguration.RequestTimeout
+    );
+
+    private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigurationManager.getConfigurationAsBool(
+        GraphQLConfiguration.SendPrettyQuery
+    );
+
+    global GraphQLHttpClient() {
+        this.endpoint = GraphQLConfigurationManager.getConfiguration(
+            GraphQLConfiguration.DefaultGraphQLEndpoint
+        );
+        if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
+            throw new GraphQLHttpClientException(Label.NoEndpointProvidedError);
+        }
+    }
+
     global GraphQLHttpClient(String endpoint) {
         this.endpoint = endpoint;
     }
@@ -44,8 +58,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
         request.setEndpoint(endpoint);
         request.setMethod(HttpConstants.METHOD_POST);
 
-        // TODO: Take from Custom Metadata
-        request.setTimeout(DEFAULT_REQUEST_TIMEOUT);
+        request.setTimeout(REQUEST_TIMEOUT);
 
         request.setHeader(
             HttpConstants.HEADER_NAME_CONTENT_TYPE,
@@ -60,7 +73,6 @@ global class GraphQLHttpClient implements IGraphQLClient {
             request.setHeader(header, gqlRequest.headers.get(header));
         }
 
-        // TODO: Configure from Custom Metadata how to send request (pretty or not)
         request.setBody(gqlRequest.body);
         return request;
     }
@@ -82,7 +94,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
 
         public RequestWrapper(GraphQLRequest request) {
             this.headers = request.customHeaders;
-            this.body = request.toString();
+            this.body = request.toString(SEND_PRETTY_REQUEST);
         }
     }
 
@@ -107,5 +119,8 @@ global class GraphQLHttpClient implements IGraphQLClient {
                 callback.received(response);
             }
         }
+    }
+
+    private class GraphQLHttpClientException extends Exception {
     }
 }

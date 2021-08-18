@@ -160,6 +160,15 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
+    private static void mutationWithVariableTest() {
+        GraphQLMutationNode node = new GraphQLMutationNode()
+            .withNode(new GraphQLNode('node'))
+            .withVariable('var', '[String!]');
+
+        System.assertEquals(1, node.variables.size());
+    }
+
+    @IsTest
     private static void mutationBuildRequestTest() {
         GraphQLRequest request = new GraphQLMutationNode(new List<String>{ 'field1' })
             .buildRequest();
@@ -196,6 +205,32 @@ private class GraphQLMutationNodeTest {
         System.assertEquals('mutation{field1,field2,field3,field4}', mutation.build());
         System.assertEquals(
             'mutation {\n  field1\n  field2\n  field3\n  field4\n}',
+            mutation.build(true)
+        );
+    }
+
+    @IsTest
+    private static void buildMutationWithVariablePositiveTest() {
+        List<GraphQLNode> nodes = new List<GraphQLNode>{
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+        List<String> fields = new List<String>{ 'field3', 'field4' };
+
+        GraphQLMutationNode mutation = new GraphQLMutationNode()
+            .withNodes(nodes)
+            .withFields(fields)
+            .withVariable('model', 'InputType!');
+
+        System.assert(mutation != null);
+        System.assertEquals('mutation', mutation.name);
+        System.assertEquals(nodes.size() + fields.size(), mutation.nodes.size());
+        System.assertEquals(
+            'mutation($model:InputType!){node1,node2,field3,field4}',
+            mutation.build()
+        );
+        System.assertEquals(
+            'mutation($model: InputType!) {\n  node1\n  node2\n  field3\n  field4\n}',
             mutation.build(true)
         );
     }

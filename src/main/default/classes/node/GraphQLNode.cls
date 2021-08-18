@@ -53,4 +53,16 @@ global class GraphQLNode extends GraphQLNodeBase {
         addArguments(arguments);
         return this;
     }
+
+    global GraphQLQueryNode asQuery() {
+        return new GraphQLQueryNode(this.name, this.nodes);
+    }
+
+    global GraphQLMutationNode asMutation() {
+        return new GraphQLMutationNode(this.name, this.nodes);
+    }
+
+    global GraphQLSubscriptionNode asSubscription() {
+        return new GraphQLSubscriptionNode(this.name, this.nodes);
+    }
 }

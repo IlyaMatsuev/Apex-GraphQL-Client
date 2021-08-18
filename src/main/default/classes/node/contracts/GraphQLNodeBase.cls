@@ -2,11 +2,15 @@ global abstract class GraphQLNodeBase {
     global final String name;
     global final List<GraphQLNode> nodes = new List<GraphQLNode>();
     global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
+    public final Map<String, String> variables = new Map<String, String>();
 
     private IGraphQLNodeParser parser {
         get {
             if (parser == null) {
-                parser = new GraphQLNodeParser();
+                String parserImplTypeName = GraphQLConfigurationManager.getConfiguration(
+                    GraphQLConfiguration.NodeParserImplementation
+                );
+                parser = (IGraphQLNodeParser) Type.forName(parserImplTypeName)?.newInstance();
             }
             return parser;
         }
@@ -91,11 +95,19 @@ global abstract class GraphQLNodeBase {
         return this;
     }
 
+    protected virtual GraphQLNodeBase addVariable(String name, String typeDefinition) {
+        this.variables.put(name, typeDefinition);
+        return this;
+    }
+
     global String build() {
         return build(false);
     }
 
     global String build(Boolean pretty) {
         return parser.toString(this, pretty);
+    }
+
+    private class GraphQLNodeBaseException extends Exception {
     }
 }

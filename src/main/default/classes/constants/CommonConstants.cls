@@ -8,6 +8,8 @@ public class CommonConstants {
     public static final String SPACE = ' ';
     public static final String LINE_BREAK = '\n';
     public static final String UNDERSCORE = '_';
+    public static final String EXCLAMATION = '!';
+    public static final String DOLLAR = '$';
 
     public static final String BRACE_LEFT = '{';
     public static final String BRACE_RIGHT = '}';

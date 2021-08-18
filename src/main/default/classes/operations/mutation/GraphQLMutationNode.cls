@@ -51,6 +51,11 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
         return this;
     }
 
+    global GraphQLMutationNode withVariable(String name, String typeDefinition) {
+        addVariable(name, typeDefinition);
+        return this;
+    }
+
     global GraphQLRequest buildRequest() {
         return new GraphQLRequest(Operation, this);
     }

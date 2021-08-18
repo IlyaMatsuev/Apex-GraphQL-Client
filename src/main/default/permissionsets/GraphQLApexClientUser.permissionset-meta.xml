@@ -17,6 +17,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GraphQLConfiguration</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GraphQLConfigurationManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GraphQLConfigurationManagerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GraphQLHttpClient</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -81,6 +93,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GraphQLSubscriptionNode</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GraphQLSubscriptionNodeTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HttpConstants</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -100,6 +120,10 @@
         <apexClass>IGraphQLResponseCallback</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>GraphQLClientConfiguration__mdt</name>
+    </customMetadataTypeAccesses>
     <description>Permission set with all components for Apex GraphQL client package</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>GraphQL Apex Client User</label>

@@ -3,8 +3,8 @@
         {
             "path": "./src",
             "package": "gql-apex-client",
-            "versionName": "Version 0.0.0.1",
-            "versionNumber": "0.0.0.1",
+            "versionName": "Version 0.0",
+            "versionNumber": "0.0.0.NEXT",
             "default": true
         }
     ],
@@ -14,6 +14,9 @@
     "sourceApiVersion": "52.0",
     "packageAliases": {
         "gql-apex-client": "0Ho5Y000000Kz1SSAS",
-        "gql-apex-client@0.0.0-1": "04t5Y000001ELXvQAO"
+        "gql-apex-client@0.0.0-1": "04t5Y000001ELXvQAO",
+        "gql-apex-client@0.0.0-2": "04t5Y000001ELYZQA4",
+        "gql-apex-client@0.0.0-3": "04t5Y000001ELb4QAG",
+        "gql-apex-client@0.0.0-4": "04t5Y000001ELb9QAG"
     }
 }

@@ -141,6 +141,54 @@ private class GraphQLNodeTest {
         System.assertEquals('value2', node.arguments.get('key2').value);
     }
 
+    @IsTest
+    private static void nodeAsQueryTest() {
+        List<GraphQLNode> nodes = new List<GraphQLNode>{
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLQueryNode query = new GraphQLNode('Test', nodes).asQuery();
+
+        System.assertEquals('query Test', query.name);
+        System.assertEquals(nodes.size(), query.nodes.size());
+        System.assertEquals(0, query.arguments.size());
+        System.assertEquals(0, query.variables.size());
+        System.assertEquals('query Test{node1,node2}', query.build());
+    }
+
+    @IsTest
+    private static void nodeAsMutationTest() {
+        List<GraphQLNode> nodes = new List<GraphQLNode>{
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLMutationNode mutation = new GraphQLNode('Test', nodes).asMutation();
+
+        System.assertEquals('mutation Test', mutation.name);
+        System.assertEquals(nodes.size(), mutation.nodes.size());
+        System.assertEquals(0, mutation.arguments.size());
+        System.assertEquals(0, mutation.variables.size());
+        System.assertEquals('mutation Test{node1,node2}', mutation.build());
+    }
+
+    @IsTest
+    private static void nodeAsSubscriptionTest() {
+        List<GraphQLNode> nodes = new List<GraphQLNode>{
+            new GraphQLNode('node1'),
+            new GraphQLNode('node2')
+        };
+
+        GraphQLSubscriptionNode subscription = new GraphQLNode('Test', nodes).asSubscription();
+
+        System.assertEquals('subscription Test', subscription.name);
+        System.assertEquals(nodes.size(), subscription.nodes.size());
+        System.assertEquals(0, subscription.arguments.size());
+        System.assertEquals(0, subscription.variables.size());
+        System.assertEquals('subscription Test{node1,node2}', subscription.build());
+    }
+
     /**
      * E2E tests below
      */
@@ -156,6 +204,60 @@ private class GraphQLNodeTest {
         System.assertEquals(fields.size(), node.nodes.size());
         System.assertEquals('{field1,field2,field3}', node.build());
         System.assertEquals('{\n  field1\n  field2\n  field3\n}', node.build(true));
+    }
+
+    @IsTest
+    private static void buildNodeAsQueryPositiveTest() {
+        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+
+        GraphQLQueryNode query = new GraphQLNode()
+            .withFields(fields)
+            .withArgument('arg', 'value')
+            .asQuery();
+
+        System.assert(query != null);
+        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), query.name);
+        System.assertEquals(fields.size(), query.nodes.size());
+        System.assertEquals(0, query.arguments.size());
+        System.assertEquals('query{field1,field2,field3}', query.build());
+        System.assertEquals('query {\n  field1\n  field2\n  field3\n}', query.build(true));
+    }
+
+    @IsTest
+    private static void buildNodeAsMutationPositiveTest() {
+        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+
+        GraphQLMutationNode mutation = new GraphQLNode()
+            .withFields(fields)
+            .withArgument('arg', 'value')
+            .asMutation();
+
+        System.assert(mutation != null);
+        System.assertEquals(GraphQLOperation.Mutation.name().toLowerCase(), mutation.name);
+        System.assertEquals(fields.size(), mutation.nodes.size());
+        System.assertEquals(0, mutation.arguments.size());
+        System.assertEquals('mutation{field1,field2,field3}', mutation.build());
+        System.assertEquals('mutation {\n  field1\n  field2\n  field3\n}', mutation.build(true));
+    }
+
+    @IsTest
+    private static void buildNodeAsSubscriptionPositiveTest() {
+        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+
+        GraphQLSubscriptionNode subscription = new GraphQLNode()
+            .withFields(fields)
+            .withArgument('arg', 'value')
+            .asSubscription();
+
+        System.assert(subscription != null);
+        System.assertEquals(GraphQLOperation.Subscription.name().toLowerCase(), subscription.name);
+        System.assertEquals(fields.size(), subscription.nodes.size());
+        System.assertEquals(0, subscription.arguments.size());
+        System.assertEquals('subscription{field1,field2,field3}', subscription.build());
+        System.assertEquals(
+            'subscription {\n  field1\n  field2\n  field3\n}',
+            subscription.build(true)
+        );
     }
 
     @IsTest
@@ -243,13 +345,7 @@ private class GraphQLNodeTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(
-            Label.MaxRequestDepthError.replace(
-                CommonConstants.FIRST_FORMAT_PARAM,
-                String.valueOf(GraphQLNodeParser.MAX_QUERY_DEPTH)
-            ),
-            error.getMessage()
-        );
+        System.assert(error.getMessage().startsWith('Maximum request depth level is'));
     }
 
     @IsTest

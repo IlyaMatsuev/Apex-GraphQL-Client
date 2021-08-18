@@ -56,4 +56,28 @@
         <shortDescription>InvalidGraphQLResponseError</shortDescription>
         <value>GraphQL response must have at least "errors" or "data" fields</value>
     </labels>
+    <labels>
+        <fullName>VariableNotAllowedInputTypeError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VariableNotAllowedInputTypeError</shortDescription>
+        <value>Use another overloading of this method to define variable of your input type</value>
+    </labels>
+    <labels>
+        <fullName>NoCustomMetadataConfigError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoCustomMetadataConfigError</shortDescription>
+        <value>There is no such configuration entry: {0}</value>
+    </labels>
+    <labels>
+        <fullName>NoEndpointProvidedError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoEndpointProvidedError</shortDescription>
+        <value>GraphQL endpoint cannot be empty. Use another constructor or specify default endpoint in the custom metadata</value>
+    </labels>
 </CustomLabels>

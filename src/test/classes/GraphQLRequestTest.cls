@@ -52,4 +52,17 @@ private class GraphQLRequestTest {
         System.assertEquals(1, request.customHeaders.size());
         System.assertEquals('token', request.customHeaders.get('Authorization'));
     }
+
+    @IsTest
+    private static void requestWithVariableTest() {
+        GraphQLOperation operation = GraphQLOperation.Mutation;
+        GraphQLMutationNode node = new GraphQLMutationNode(new List<String>{ 'field1', 'field2' });
+
+        GraphQLRequest request = new GraphQLRequest(node).withVariable('param', 'value');
+
+        System.assertEquals(
+            '{"variables":{"param":"value"},"query":"mutation{field1,field2}"}',
+            request.toString()
+        );
+    }
 }

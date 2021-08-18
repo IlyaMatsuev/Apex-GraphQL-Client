@@ -7,6 +7,7 @@ This unit describes the Apex classes of the package that can be used for working
 -   [GraphQLNode](#graphqlnode)
 -   [GraphQLQueryNode](#graphqlquerynode)
 -   [GraphQLMutationNode](#graphqlmutationnode)
+-   [GraphQLSubscriptionNode](#graphqlsubscriptionnode)
 -   [GraphQLArgument](#graphqlargument)
 -   [GraphQLRequest](#graphqlrequest)
 -   [GraphQLResponse](#graphqlresponse)
@@ -88,6 +89,12 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `String build(Boolean pretty)` - Builds a string representation of the current node. The result string can be formatted depending on the provided boolean flag `pretty`.
 
+`GraphQLQueryNode asQuery()` - Wraps the current node and returns a new instance of [`GraphQLQueryNode`](#graphqlquerynode) with the same node name and child nodes. Arguments are not passing to a new query node since they are not supported for the type [`GraphQLQueryNode`](#graphqlquerynode).
+
+`GraphQLMutationNode asMutation()` - Wraps the current node and returns a new instance of [`GraphQLMutationNode`](#graphqlmutationnode) with the same node name and child nodes. Arguments are not passing to a new mutation node since they are not supported for the type [`GraphQLMutationNode`](#graphqlmutationnode).
+
+`GraphQLSubscriptionNode asSubscription()` - Wraps the current node and returns a new instance of [`GraphQLSubscriptionNode`](#graphqlsubscriptionnode) with the same node name and child nodes. Arguments are not passing to a new query node since they are not supported for the type [`GraphQLSubscriptionNode`](#graphqlsubscriptionnode).
+
 ---
 
 ## GraphQLQueryNode
@@ -116,6 +123,8 @@ This class is only used for building queries.
 
 GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
 
+`Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
+
 ---
 
 ### Methods
@@ -135,6 +144,8 @@ GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) cl
 `GraphQLQueryNode withNode(GraphQLNode node)` - Adds a new child node to the current node. Accepts one parameter of type [`GraphQLNode`](#graphqlnode). Returns the current node instance.
 
 `GraphQLQueryNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
+
+`GraphQLQueryNode withVariable(String name, String typeDefinition)` - Defines a new variable for the query with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -170,6 +181,8 @@ This class is only used for building mutations.
 
 GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
 
+`Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
+
 ---
 
 ### Methods
@@ -190,7 +203,65 @@ GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode)
 
 `GraphQLMutationNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
+`GraphQLMutationNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
+
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
+
+`String build()` - Builds a non-formatted string representation of the current node.
+
+`String build(Boolean pretty)` - Builds a string representation of the current node. The result string can be formatted depending on the provided boolean flag `pretty`.
+
+---
+
+## GraphQLSubscriptionNode
+
+This class is only used for building subscriptions. It's not possible yet to execute subscription requests due to Apex limitations (Apex doesn't support WebSocket protocol). However, you can build your subscription queries as strings and, for example, send it to LWC in order to execute that subscription from Java Script.
+
+### Constructors
+
+`GraphQLSubscriptionNode()` - Creates a new instance of the GraphQLSubscriptionNode.
+
+`GraphQLSubscriptionNode(String alias)` - Creates a new instance of the GraphQLSubscriptionNode with the provided alias.
+
+`GraphQLSubscriptionNode(GraphQLNode node)` - Creates a new instance of the GraphQLSubscriptionNode with the provided child node.
+
+`GraphQLSubscriptionNode(List<GraphQLNode> nodes)` - Creates a new instance of the GraphQLSubscriptionNode with the provided child nodes.
+
+`GraphQLSubscriptionNode(List<String> fields)` - Creates a new instance of the GraphQLSubscriptionNode with the provided fields.
+
+`GraphQLSubscriptionNode(String alias, List<GraphQLNode> nodes)` - Creates a new instance of the GraphQLSubscriptionNode with the provided alias and child nodes.
+
+`GraphQLSubscriptionNode(String alias, List<String> fields)` - Creates a new instance of the GraphQLSubscriptionNode with the provided alias and fields.
+
+---
+
+### Properties
+
+GraphQLSubscriptionNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
+
+`Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
+
+---
+
+### Methods
+
+`Boolean hasNode(GraphQLNode node)` - Returns true if there is a node with the same name from the parameter. Otherwise returns false.
+
+`Boolean hasNodes(GraphQLNode[] nodes)` - Returns true if there is at least one node from the provided array. Otherwise returns false.
+
+`Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
+
+`Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+
+`GraphQLSubscriptionNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
+
+`GraphQLSubscriptionNode withFields(String[] fields)` - Adds new fields to the current node. Returns the current node instance.
+
+`GraphQLSubscriptionNode withNode(GraphQLNode node)` - Adds a new child node to the current node. Accepts one parameter of type [`GraphQLNode`](#graphqlnode). Returns the current node instance.
+
+`GraphQLSubscriptionNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
+
+`GraphQLSubscriptionNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
 `String build()` - Builds a non-formatted string representation of the current node.
 
@@ -222,6 +293,8 @@ This class is used for passing arguments to GraphQL nodes.
 
 `override String toString()` - Returns a string equivalent of the argument according to its value's type. For example, if the value is an instance of a class it will be serialized with JSON.
 
+`Boolean isVariable()` - Returns true if the value of the argument references a variable. Otherwise, returns false. The value is considered as a variable if it starts with the dollar `$` sign.
+
 ---
 
 ## GraphQLRequest
@@ -249,6 +322,10 @@ This is a wrapper for the GraphQL request. It will be utilized for sending an HT
 `GraphQLRequest withHeader(String key, String value)` - Adds a new custom header to the request. Returns the current instance.
 
 `GraphQLRequest withHeaders(Map<String, String> headers)` - Adds multiple custom headers to the request. Returns the current instance.
+
+`GraphQLRequest withVariable(String name, Object value)` - Assigns a value to a variable from query/mutation by its name.
+
+`GraphQLRequest withVariables(Map<String, Object> variables)` - Assigns multiple values to variables from query/mutation by a map with their names as keys.
 
 `override String toString()` - Returns a GraphQL request as a JSON for an HTTP request.
 

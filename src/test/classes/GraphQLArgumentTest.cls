@@ -10,14 +10,13 @@ private class GraphQLArgumentTest {
 
         System.assertEquals(key, argument.key);
         System.assertEquals(value, argument.value);
-        System.assertEquals(type, type);
+        System.assertEquals(type, argument.type);
     }
 
     @IsTest
     private static void stringifyIntegerArgumentTest() {
         String key = 'key';
         Integer value = 111;
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -28,7 +27,6 @@ private class GraphQLArgumentTest {
     private static void stringifyLongArgumentTest() {
         String key = 'key';
         Long value = 1111111111;
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -39,7 +37,6 @@ private class GraphQLArgumentTest {
     private static void stringifyDecimalArgumentTest() {
         String key = 'key';
         Decimal value = 111.11;
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -50,7 +47,6 @@ private class GraphQLArgumentTest {
     private static void stringifyDoubleArgumentTest() {
         String key = 'key';
         Double value = 111.11;
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -61,7 +57,6 @@ private class GraphQLArgumentTest {
     private static void stringifyBooleanArgumentTest() {
         String key = 'key';
         Boolean value = true;
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -72,7 +67,6 @@ private class GraphQLArgumentTest {
     private static void stringifyStringArgumentTest() {
         String key = 'key';
         String value = 'qqqq';
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -85,10 +79,19 @@ private class GraphQLArgumentTest {
     }
 
     @IsTest
+    private static void stringifyVariableArgumentTest() {
+        String key = 'key';
+        String value = '$variableName';
+
+        GraphQLArgument argument = new GraphQLArgument(key, value);
+
+        System.assertEquals(value, argument.toString());
+    }
+
+    @IsTest
     private static void stringifyIdArgumentTest() {
         String key = 'key';
         Id value = UserInfo.getUserId();
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -104,7 +107,6 @@ private class GraphQLArgumentTest {
     private static void stringifyBlobArgumentTest() {
         String key = 'key';
         Blob value = Blob.valueOf('qqqq');
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -120,13 +122,13 @@ private class GraphQLArgumentTest {
     private static void stringifyDateArgumentTest() {
         String key = 'key';
         Date value = Date.today();
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
+        DateTime dateValue = DateTime.newInstance(value.year(), value.month(), value.day());
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
         System.assertEquals(
             CommonConstants.DOUBLE_QUOTES +
-            value.format() +
+            dateValue.format('MM/dd/yyyy') +
             CommonConstants.DOUBLE_QUOTES,
             argument.toString()
         );
@@ -136,7 +138,6 @@ private class GraphQLArgumentTest {
     private static void stringifyDateTimeArgumentTest() {
         String key = 'key';
         DateTime value = DateTime.now();
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
@@ -152,7 +153,6 @@ private class GraphQLArgumentTest {
     private static void stringifyObjectArgumentTest() {
         String key = 'key';
         Map<String, Object> value = new Map<String, Object>{ 'key1' => 'value', 'key2' => 2 };
-        GraphQLArgumentType type = GraphQLArgumentType.x_String;
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 

@@ -51,6 +51,11 @@ global class GraphQLQueryNode extends GraphQLNodeBase implements IGraphQLRequest
         return this;
     }
 
+    global GraphQLQueryNode withVariable(String name, String typeDefinition) {
+        addVariable(name, typeDefinition);
+        return this;
+    }
+
     global GraphQLRequest buildRequest() {
         return new GraphQLRequest(Operation, this);
     }
