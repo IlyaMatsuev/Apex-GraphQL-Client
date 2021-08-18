@@ -1,12 +1,13 @@
 public class GraphQLNodeParser implements IGraphQLNodeParser {
-    @TestVisible
     private static final Integer INITIAL_DEPTH = 0;
-    // TODO: Move to Custom Metadata configuration
-    @TestVisible
-    private static final Integer MAX_QUERY_DEPTH = 10;
-    // TODO: Move to Custom Metadata configuration
-    @TestVisible
-    private static final Integer DEFAULT_INDENT = 2;
+
+    private static final Integer MAX_QUERY_DEPTH = GraphQLConfigurationManager.getConfigurationAsInt(
+        GraphQLConfiguration.MaxQueryDepth
+    );
+
+    private static final Integer DEFAULT_INDENT = GraphQLConfigurationManager.getConfigurationAsInt(
+        GraphQLConfiguration.QueryIndentSize
+    );
 
     public String toString(GraphQLNodeBase node, Boolean pretty) {
         return generate(node, INITIAL_DEPTH, pretty);

@@ -345,13 +345,7 @@ private class GraphQLNodeTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(
-            Label.MaxRequestDepthError.replace(
-                CommonConstants.FIRST_FORMAT_PARAM,
-                String.valueOf(GraphQLNodeParser.MAX_QUERY_DEPTH)
-            ),
-            error.getMessage()
-        );
+        System.assert(error.getMessage().startsWith('Maximum request depth level is'));
     }
 
     @IsTest

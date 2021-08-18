@@ -4,11 +4,13 @@ global abstract class GraphQLNodeBase {
     global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
     public final Map<String, String> variables = new Map<String, String>();
 
-    // TODO: have opportunity to change implementation from Custom Metadata
     private IGraphQLNodeParser parser {
         get {
             if (parser == null) {
-                parser = new GraphQLNodeParser();
+                String parserImplTypeName = GraphQLConfigurationManager.getConfiguration(
+                    GraphQLConfiguration.NodeParserImplementation
+                );
+                parser = (IGraphQLNodeParser) Type.forName(parserImplTypeName)?.newInstance();
             }
             return parser;
         }

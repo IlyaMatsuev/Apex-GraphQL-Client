@@ -2,6 +2,21 @@
 private class GraphQLHttpClientTest {
     private static final String TEST_GQL_ENDPOINT = 'https://test.gql.endpoint.com';
 
+    @IsTest
+    private static void createClientWithoutEndpointNegativeTest() {
+        IGraphQLClient client;
+        Exception error;
+        try {
+            client = new GraphQLHttpClient();
+        } catch (Exception ex) {
+            error = ex;
+        }
+
+        System.assert(client == null);
+        System.assert(error != null);
+        System.assertEquals(Label.NoEndpointProvidedError, error.getMessage());
+    }
+
     /**
      * E2E tests below
      */

@@ -122,12 +122,13 @@ private class GraphQLArgumentTest {
     private static void stringifyDateArgumentTest() {
         String key = 'key';
         Date value = Date.today();
+        DateTime dateValue = DateTime.newInstance(value.year(), value.month(), value.day());
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
         System.assertEquals(
             CommonConstants.DOUBLE_QUOTES +
-            value.format() +
+            dateValue.format('MM/dd/yyyy') +
             CommonConstants.DOUBLE_QUOTES,
             argument.toString()
         );

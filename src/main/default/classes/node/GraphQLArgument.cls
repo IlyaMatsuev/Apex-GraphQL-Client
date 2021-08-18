@@ -4,6 +4,18 @@ global class GraphQLArgument {
     // Takes the first match from the regex
     private static final String ESCAPED_PROP_NAME_EXP = '$1:';
 
+    private static final String DATE_VALUE_FORMAT = GraphQLConfigurationManager.getConfiguration(
+        GraphQLConfiguration.DateArgumentFormat
+    );
+
+    private static final String DATE_TIME_VALUE_FORMAT = GraphQLConfigurationManager.getConfiguration(
+        GraphQLConfiguration.DateTimeArgumentFormat
+    );
+
+    private static final Boolean SUPPRESS_NULLS = GraphQLConfigurationManager.getConfigurationAsBool(
+        GraphQLConfiguration.SupressNullsForObjectArguments
+    );
+
     global final String key;
     global final Object value;
     global GraphQLArgumentType type {
@@ -35,21 +47,18 @@ global class GraphQLArgument {
                     ? (String) value
                     : CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES;
             }
-            // TODO: Move formatting to Custom Metadata configuration
             when x_DateTime {
                 return CommonConstants.DOUBLE_QUOTES +
-                    String.valueOf((DateTime) value) +
+                    ((DateTime) value).format(DATE_TIME_VALUE_FORMAT) +
                     CommonConstants.DOUBLE_QUOTES;
             }
-            // TODO: Move formatting to Custom Metadata configuration
             when x_Date {
                 return CommonConstants.DOUBLE_QUOTES +
-                    ((Date) value).format() +
+                    dateToDateTime((Date) value).format(DATE_VALUE_FORMAT) +
                     CommonConstants.DOUBLE_QUOTES;
             }
             when else {
-                // TODO: support pretty formatting for objects in arguments
-                return JSON.serialize(value, true)
+                return JSON.serialize(value, SUPPRESS_NULLS)
                     .replaceAll(REPLACE_JSON_PROPS_REGEXP, ESCAPED_PROP_NAME_EXP);
             }
         }
@@ -72,6 +81,10 @@ global class GraphQLArgument {
         } else {
             return GraphQLArgumentType.x_Object;
         }
+    }
+
+    private DateTime dateToDateTime(Date dateValue) {
+        return DateTime.newInstance(dateValue.year(), dateValue.month(), dateValue.day());
     }
 
     private class GraphQLArgumentException extends Exception {
