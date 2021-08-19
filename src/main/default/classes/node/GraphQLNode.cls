@@ -1,4 +1,6 @@
 global class GraphQLNode extends GraphQLNodeBase {
+    global String alias { get; private set; }
+
     global GraphQLNode() {
         this(CommonConstants.EMPTY);
     }
@@ -21,6 +23,11 @@ global class GraphQLNode extends GraphQLNodeBase {
 
     global GraphQLNode(String name, List<String> fields) {
         super(name, fields);
+    }
+
+    global GraphQLNode byAlias(String alias) {
+        this.alias = alias;
+        return this;
     }
 
     global GraphQLNode withField(String field) {

@@ -1,7 +1,9 @@
 global abstract class GraphQLNodeBase {
     global final String name;
     global final List<GraphQLNode> nodes = new List<GraphQLNode>();
+    // TODO: remove arguments from NodeBase or make them protected. Move to GraphQLNode
     global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
+    // TODO: remove variables from NodeBase or make them protected. Move to GraphQL{Query/Mutation/Subscription}Node
     public final Map<String, String> variables = new Map<String, String>();
 
     private IGraphQLNodeParser parser {

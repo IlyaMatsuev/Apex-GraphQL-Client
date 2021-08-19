@@ -194,6 +194,18 @@ private class GraphQLNodeTest {
      */
 
     @IsTest
+    private static void buildNodeWithAliasPositiveTest() {
+        GraphQLNode childNode = new GraphQLNode('countries', new List<String>{ 'name', 'code' })
+            .byAlias('ctrs');
+
+        GraphQLNode node = new GraphQLNode(new List<GraphQLNode>{ childNode });
+
+        System.assert(node != null);
+        System.assertEquals('{ctrs:countries{name,code}}', node.build());
+        System.assertEquals('{\n  ctrs: countries {\n    name\n    code\n  }\n}', node.build(true));
+    }
+
+    @IsTest
     private static void buildNodePositiveTest() {
         List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
 

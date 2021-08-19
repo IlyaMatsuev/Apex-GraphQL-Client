@@ -23,27 +23,34 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
             );
         }
 
-        String rawNode = generateNodeName(node, depth, pretty);
-        if (!node.variables.isEmpty()) {
-            rawNode += generateVariables(node, pretty);
-        }
-        if (node.hasArguments()) {
-            rawNode += generateArguments(node, pretty);
-        }
-        if (node.hasNodes()) {
-            rawNode += generateChildNodes(node, depth, pretty);
-        }
-        return rawNode;
+        return generateNodeName(node, depth, pretty) +
+            generateVariables(node, pretty) +
+            generateArguments(node, pretty) +
+            generateChildNodes(node, depth, pretty);
     }
 
     private String generateNodeName(GraphQLNodeBase node, Integer depth, Boolean pretty) {
         if (String.isBlank(node.name) && !node.hasNodes()) {
             throw new GraphQLNodeParserException(Label.EmptyNodeError);
         }
-        return (pretty ? getIndent(depth) : CommonConstants.EMPTY) + node.name;
+        return getIndent(depth, pretty) + generateAlias(node, pretty) + node.name;
+    }
+
+    private String generateAlias(GraphQLNodeBase node, Boolean pretty) {
+        if (!(node instanceof GraphQLNode) || String.isBlank(((GraphQLNode) node).alias)) {
+            return CommonConstants.EMPTY;
+        }
+
+        return ((GraphQLNode) node).alias +
+            CommonConstants.COLON +
+            (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY);
     }
 
     private String generateVariables(GraphQLNodeBase node, Boolean pretty) {
+        if (node.variables.isEmpty()) {
+            return CommonConstants.EMPTY;
+        }
+
         List<String> rawVariableDefinitions = new List<String>();
         for (String name : node.variables.keySet()) {
             String variableDefinition = CommonConstants.DOLLAR + name + CommonConstants.COLON;
@@ -62,29 +69,28 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
     }
 
     private String generateArguments(GraphQLNodeBase node, Boolean pretty) {
+        if (!node.hasArguments()) {
+            return CommonConstants.EMPTY;
+        }
+
         List<String> rawArguments = new List<String>();
         for (String key : node.arguments.keySet()) {
             String arg = key + CommonConstants.COLON;
-            if (pretty) {
-                arg += CommonConstants.SPACE;
-            }
+            arg += getSmallIndent(pretty);
             arg += node.arguments.get(key);
             rawArguments.add(arg);
         }
         return CommonConstants.PARENTHESE_LEFT +
-            String.join(
-                rawArguments,
-                CommonConstants.COMMA + (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY)
-            ) +
+            String.join(rawArguments, CommonConstants.COMMA + getSmallIndent(pretty)) +
             CommonConstants.PARENTHESE_RIGHT;
     }
 
     private String generateChildNodes(GraphQLNodeBase node, Integer depth, Boolean pretty) {
-        String childNodes = CommonConstants.EMPTY;
-        List<String> rawNodes = new List<String>();
-        for (GraphQLNode n : node.nodes) {
-            rawNodes.add(generate(n, depth + 1, pretty));
+        if (!node.hasNodes()) {
+            return CommonConstants.EMPTY;
         }
+
+        String childNodes = CommonConstants.EMPTY;
 
         if (pretty && String.isNotBlank(node.name)) {
             childNodes += CommonConstants.SPACE;
@@ -93,6 +99,11 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         childNodes += CommonConstants.BRACE_LEFT;
         childNodes += pretty ? CommonConstants.LINE_BREAK : CommonConstants.EMPTY;
 
+        List<String> rawNodes = new List<String>();
+        for (GraphQLNode n : node.nodes) {
+            rawNodes.add(generate(n, depth + 1, pretty));
+        }
+
         childNodes += String.join(
             rawNodes,
             pretty ? CommonConstants.LINE_BREAK : CommonConstants.COMMA
@@ -100,15 +111,22 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
 
         // Because when a brace closes we should get back by one indent level
         childNodes += pretty
-            ? (CommonConstants.LINE_BREAK + getIndent(depth))
+            ? (CommonConstants.LINE_BREAK + getIndent(depth, pretty))
             : CommonConstants.EMPTY;
         childNodes += CommonConstants.BRACE_RIGHT;
 
         return childNodes;
     }
 
-    private String getIndent(Integer depth) {
+    private String getIndent(Integer depth, Boolean pretty) {
+        if (!pretty) {
+            return CommonConstants.EMPTY;
+        }
         return CommonConstants.SPACE.repeat(depth * DEFAULT_INDENT);
+    }
+
+    private String getSmallIndent(Boolean pretty) {
+        return pretty ? CommonConstants.SPACE : CommonConstants.EMPTY;
     }
 
     private class GraphQLNodeParserException extends Exception {

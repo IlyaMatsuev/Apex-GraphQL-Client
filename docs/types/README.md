@@ -71,6 +71,8 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
 
+`GraphQLNode byAlias(String alias)` - Adds an alias to the node, so, that the results in the GraphQL response can be accessed by that alias name. You can read about node aliases [here](https://spec.graphql.org/June2018/#sec-Field-Alias).
+
 `GraphQLNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
 
 `GraphQLNode withFields(String[] fields)` - Adds new fields to the current node. Returns the current node instance.
