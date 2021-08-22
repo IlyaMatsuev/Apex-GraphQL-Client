@@ -1,6 +1,4 @@
-global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequestBuilder {
-    private static final GraphQLOperation Operation = GraphQLOperation.Mutation;
-
+global class GraphQLMutationNode extends GraphQLOperationNode implements IGraphQLRequestBuilder {
     global GraphQLMutationNode() {
         this(CommonConstants.EMPTY);
     }
@@ -26,11 +24,11 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
     }
 
     global GraphQLMutationNode(String alias, List<String> fields) {
-        super(getNodeName(alias), fields);
+        super(alias, fields);
     }
 
     global GraphQLMutationNode(String alias, List<GraphQLNode> nodes) {
-        super(getNodeName(alias), nodes);
+        super(alias, nodes);
     }
 
     global GraphQLMutationNode withField(String field) {
@@ -57,13 +55,10 @@ global class GraphQLMutationNode extends GraphQLNodeBase implements IGraphQLRequ
     }
 
     global GraphQLRequest buildRequest() {
-        return new GraphQLRequest(Operation, this);
+        return asRequest();
     }
 
-    private static String getNodeName(String alias) {
-        if (String.isBlank(alias)) {
-            return Operation.name().toLowerCase();
-        }
-        return Operation.name().toLowerCase() + CommonConstants.SPACE + alias;
+    global override GraphQLOperation getOperation() {
+        return GraphQLOperation.Mutation;
     }
 }

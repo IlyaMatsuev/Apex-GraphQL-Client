@@ -1,5 +1,6 @@
 global class GraphQLNode extends GraphQLNodeBase {
     global String alias { get; private set; }
+    global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
 
     global GraphQLNode() {
         this(CommonConstants.EMPTY);
@@ -23,6 +24,10 @@ global class GraphQLNode extends GraphQLNodeBase {
 
     global GraphQLNode(String name, List<String> fields) {
         super(name, fields);
+    }
+
+    global Boolean hasArguments() {
+        return !arguments.isEmpty();
     }
 
     global GraphQLNode byAlias(String alias) {
@@ -57,7 +62,9 @@ global class GraphQLNode extends GraphQLNodeBase {
     }
 
     global GraphQLNode withArguments(GraphQLArgument[] arguments) {
-        addArguments(arguments);
+        for (GraphQLArgument argument : arguments) {
+            this.arguments.put(argument.key, argument);
+        }
         return this;
     }
 

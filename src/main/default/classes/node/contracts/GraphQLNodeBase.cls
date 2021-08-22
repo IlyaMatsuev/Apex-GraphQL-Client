@@ -1,10 +1,6 @@
 global abstract class GraphQLNodeBase {
     global final String name;
     global final List<GraphQLNode> nodes = new List<GraphQLNode>();
-    // TODO: remove arguments from NodeBase or make them protected. Move to GraphQLNode
-    global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
-    // TODO: remove variables from NodeBase or make them protected. Move to GraphQL{Query/Mutation/Subscription}Node
-    public final Map<String, String> variables = new Map<String, String>();
 
     private IGraphQLNodeParser parser {
         get {
@@ -20,30 +16,16 @@ global abstract class GraphQLNodeBase {
     }
 
     protected GraphQLNodeBase(String name, List<String> fields) {
-        this(name, new List<GraphQLNode>(), fields, new Map<String, GraphQLArgument>());
+        this(name, new List<GraphQLNode>(), fields);
     }
 
     protected GraphQLNodeBase(String name, List<GraphQLNode> nodes) {
-        this(name, nodes, new Map<String, GraphQLArgument>());
+        this(name, nodes, new List<String>());
     }
 
-    protected GraphQLNodeBase(
-        String name,
-        List<GraphQLNode> nodes,
-        Map<String, GraphQLArgument> arguments
-    ) {
-        this(name, nodes, new List<String>(), arguments);
-    }
-
-    protected GraphQLNodeBase(
-        String name,
-        List<GraphQLNode> nodes,
-        List<String> fields,
-        Map<String, GraphQLArgument> arguments
-    ) {
+    protected GraphQLNodeBase(String name, List<GraphQLNode> nodes, List<String> fields) {
         this.name = name;
         this.nodes.addAll(nodes);
-        this.arguments.putAll(arguments);
 
         if (!fields.isEmpty()) {
             addFields(fields);
@@ -65,12 +47,8 @@ global abstract class GraphQLNodeBase {
         return false;
     }
 
-    global virtual Boolean hasNodes() {
+    global Boolean hasNodes() {
         return !nodes.isEmpty();
-    }
-
-    global virtual Boolean hasArguments() {
-        return !arguments.isEmpty();
     }
 
     protected virtual GraphQLNodeBase addFields(String[] fields) {
@@ -87,18 +65,6 @@ global abstract class GraphQLNodeBase {
                 this.nodes.add(node);
             }
         }
-        return this;
-    }
-
-    protected virtual GraphQLNodeBase addArguments(GraphQLArgument[] arguments) {
-        for (GraphQLArgument argument : arguments) {
-            this.arguments.put(argument.key, argument);
-        }
-        return this;
-    }
-
-    protected virtual GraphQLNodeBase addVariable(String name, String typeDefinition) {
-        this.variables.put(name, typeDefinition);
         return this;
     }
 

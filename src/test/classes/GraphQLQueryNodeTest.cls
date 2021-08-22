@@ -4,9 +4,8 @@ private class GraphQLQueryNodeTest {
     private static void emptyQueryTest() {
         GraphQLQueryNode node = new GraphQLQueryNode();
 
-        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(0, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -15,14 +14,8 @@ private class GraphQLQueryNodeTest {
 
         GraphQLQueryNode node = new GraphQLQueryNode(nodeName);
 
-        System.assertEquals(
-            GraphQLOperation.Query.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(0, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -31,9 +24,8 @@ private class GraphQLQueryNodeTest {
 
         GraphQLQueryNode node = new GraphQLQueryNode(childNode);
 
-        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(1, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -45,9 +37,8 @@ private class GraphQLQueryNodeTest {
 
         GraphQLQueryNode node = new GraphQLQueryNode(childNodes);
 
-        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(childNodes.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -56,14 +47,8 @@ private class GraphQLQueryNodeTest {
 
         GraphQLQueryNode node = new GraphQLQueryNode(nodeName, new GraphQLNode('node1'));
 
-        System.assertEquals(
-            GraphQLOperation.Query.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(1, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -76,14 +61,8 @@ private class GraphQLQueryNodeTest {
 
         GraphQLQueryNode node = new GraphQLQueryNode(nodeName, childNodes);
 
-        System.assertEquals(
-            GraphQLOperation.Query.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(childNodes.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -92,9 +71,8 @@ private class GraphQLQueryNodeTest {
 
         GraphQLQueryNode node = new GraphQLQueryNode(fields);
 
-        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -104,14 +82,8 @@ private class GraphQLQueryNodeTest {
 
         GraphQLQueryNode node = new GraphQLQueryNode(nodeName, fields);
 
-        System.assertEquals(
-            GraphQLOperation.Query.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -196,7 +168,7 @@ private class GraphQLQueryNodeTest {
             .withField('field3');
 
         System.assert(query != null);
-        System.assertEquals('query', query.name);
+        System.assert(String.isBlank(query.name));
         System.assertEquals(nodes.size() + fields.size(), query.nodes.size());
         System.assertEquals('query{field1,field2,field3,field4}', query.build());
         System.assertEquals(
@@ -220,7 +192,7 @@ private class GraphQLQueryNodeTest {
             .withVariable('param2', 'String');
 
         System.assert(query != null);
-        System.assertEquals('query', query.name);
+        System.assert(String.isBlank(query.name));
         System.assertEquals(nodes.size() + fields.size(), query.nodes.size());
         System.assertEquals(
             'query($param1:Int!,$param2:String){node1(arg:$param1),node2,field3,field4}',
@@ -246,7 +218,7 @@ private class GraphQLQueryNodeTest {
         GraphQLQueryNode query = new GraphQLQueryNode('TestQuery', nodes).withField('field1');
 
         System.assert(query != null);
-        System.assertEquals('query TestQuery', query.name);
+        System.assertEquals('TestQuery', query.name);
         System.assertEquals(nodes.size(), query.nodes.size());
         System.assertEquals(
             'query TestQuery{field1,field2{field21,field22},field3}',

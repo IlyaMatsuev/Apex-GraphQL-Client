@@ -33,7 +33,17 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         if (String.isBlank(node.name) && !node.hasNodes()) {
             throw new GraphQLNodeParserException(Label.EmptyNodeError);
         }
+        if (node instanceof GraphQLOperationNode) {
+            return generateOperationName((GraphQLOperationNode) node, pretty);
+        }
         return getIndent(depth, pretty) + generateAlias(node, pretty) + node.name;
+    }
+
+    private String generateOperationName(GraphQLOperationNode node, Boolean pretty) {
+        if (String.isBlank(node.name)) {
+            return node.getOperation().name().toLowerCase();
+        }
+        return node.getOperation().name().toLowerCase() + CommonConstants.SPACE + node.name;
     }
 
     private String generateAlias(GraphQLNodeBase node, Boolean pretty) {
@@ -47,17 +57,20 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
     }
 
     private String generateVariables(GraphQLNodeBase node, Boolean pretty) {
-        if (node.variables.isEmpty()) {
+        if (
+            !(node instanceof GraphQLOperationNode) || !((GraphQLOperationNode) node).hasVariables()
+        ) {
             return CommonConstants.EMPTY;
         }
 
+        Map<String, String> variables = ((GraphQLOperationNode) node).variables;
         List<String> rawVariableDefinitions = new List<String>();
-        for (String name : node.variables.keySet()) {
+        for (String name : variables.keySet()) {
             String variableDefinition = CommonConstants.DOLLAR + name + CommonConstants.COLON;
             if (pretty) {
                 variableDefinition += CommonConstants.SPACE;
             }
-            variableDefinition += node.variables.get(name);
+            variableDefinition += variables.get(name);
             rawVariableDefinitions.add(variableDefinition);
         }
         return CommonConstants.PARENTHESE_LEFT +
@@ -69,15 +82,16 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
     }
 
     private String generateArguments(GraphQLNodeBase node, Boolean pretty) {
-        if (!node.hasArguments()) {
+        if (!(node instanceof GraphQLNode) || !((GraphQLNode) node).hasArguments()) {
             return CommonConstants.EMPTY;
         }
 
+        Map<String, GraphQLArgument> arguments = ((GraphQLNode) node).arguments;
         List<String> rawArguments = new List<String>();
-        for (String key : node.arguments.keySet()) {
+        for (String key : arguments.keySet()) {
             String arg = key + CommonConstants.COLON;
             arg += getSmallIndent(pretty);
-            arg += node.arguments.get(key);
+            arg += arguments.get(key);
             rawArguments.add(arg);
         }
         return CommonConstants.PARENTHESE_LEFT +
@@ -92,7 +106,7 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
 
         String childNodes = CommonConstants.EMPTY;
 
-        if (pretty && String.isNotBlank(node.name)) {
+        if (pretty && (String.isNotBlank(node.name) || node instanceof GraphQLOperationNode)) {
             childNodes += CommonConstants.SPACE;
         }
 

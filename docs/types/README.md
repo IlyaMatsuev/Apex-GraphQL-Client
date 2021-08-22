@@ -55,6 +55,8 @@ This class can be used for building nodes (method calls) for queries, mutations,
 
 So, basically, in that case, this node can be used for a query request but the better recommendation would be to utilize [`GraphQLQueryNode`](#graphqlquerynode) for that purpose.
 
+`String alias` - Alias of the node. Null by default. You can read about node aliases [here](https://spec.graphql.org/June2018/#sec-Field-Alias).
+
 `List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
 
 `Map<String, GraphQLArgument> arguments` - The list of node's arguements mapped by their names. Read about [`GraphQLArgument` here](#graphqlargument). Arguments are optional.
@@ -123,7 +125,9 @@ This class is only used for building queries.
 
 ### Properties
 
-GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
+`String name` - The name of the query. Can be empty.
+
+`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -137,7 +141,7 @@ GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) cl
 
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
 
-`Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+`Boolean hasVariables()` - Returns true if there is at least one variable in the query. Otherwise returns false.
 
 `GraphQLQueryNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
 
@@ -148,6 +152,8 @@ GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) cl
 `GraphQLQueryNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
 `GraphQLQueryNode withVariable(String name, String typeDefinition)` - Defines a new variable for the query with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
+
+`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Query`.
 
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -181,7 +187,9 @@ This class is only used for building mutations.
 
 ### Properties
 
-GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
+`String name` - The name of the query. Can be empty.
+
+`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -195,7 +203,7 @@ GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode)
 
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
 
-`Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+`Boolean hasVariables()` - Returns true if there is at least one variable in the query. Otherwise returns false.
 
 `GraphQLMutationNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
 
@@ -206,6 +214,8 @@ GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode)
 `GraphQLMutationNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
 `GraphQLMutationNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
+
+`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Mutation`.
 
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -239,7 +249,9 @@ This class is only used for building subscriptions. It's not possible yet to exe
 
 ### Properties
 
-GraphQLSubscriptionNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
+`String name` - The name of the query. Can be empty.
+
+`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -253,7 +265,7 @@ GraphQLSubscriptionNode has the same properties as the [`GraphQLNode`](#graphqln
 
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
 
-`Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+`Boolean hasVariables()` - Returns true if there is at least one variable in the query. Otherwise returns false.
 
 `GraphQLSubscriptionNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
 
@@ -264,6 +276,8 @@ GraphQLSubscriptionNode has the same properties as the [`GraphQLNode`](#graphqln
 `GraphQLSubscriptionNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
 `GraphQLSubscriptionNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
+
+`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Subscription`.
 
 `String build()` - Builds a non-formatted string representation of the current node.
 
