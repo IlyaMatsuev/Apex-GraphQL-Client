@@ -14,7 +14,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>RequestNodeOfIncorrectTypeError</shortDescription>
-        <value>The root should be an instance of IGraphQLRequestBuilder</value>
+        <value>The request node should be an instance of IGraphQLRequestBuilder</value>
     </labels>
     <labels>
         <fullName>EmptyNodeError</fullName>
@@ -79,5 +79,21 @@
         <protected>true</protected>
         <shortDescription>NoEndpointProvidedError</shortDescription>
         <value>GraphQL endpoint cannot be empty. Use another constructor or specify default endpoint in the custom metadata</value>
+    </labels>
+    <labels>
+        <fullName>InvalidRequestStringNodeError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvalidRequestStringNodeError</shortDescription>
+        <value>The provided string node is empty or in invalid format</value>
+    </labels>
+    <labels>
+        <fullName>NotAllowedRequestOperationError</fullName>
+        <categories>GraphQLClient</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NotAllowedRequestOperationError</shortDescription>
+        <value>This operation is not allowed for GraphQL request</value>
     </labels>
 </CustomLabels>
