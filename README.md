@@ -171,6 +171,21 @@ Map<String, Object> dataAsMap = response.getData();
 SomeWrapper dataAsWrapper = (SomeWrapper) response.getDataAs(SomeWrapper.class);
 ```
 
+Alternatively, sometimes it's easier to just send a request as a plain string, so you can do:
+
+```java
+String query = 'query { countries { name, capital, currency } }';
+
+GraphQLRequest request = new GraphQLRequest(query);
+
+// Provide a GraphQL endpoint to the client
+GraphQLHttpClient client = new GraphQLHttpClient('https://gql-endpoint.com/graphql');
+
+GraphQLResponse response = client.send(request);
+
+...
+```
+
 All examples can be found [here](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/docs/examples).
 
 ## Documentation

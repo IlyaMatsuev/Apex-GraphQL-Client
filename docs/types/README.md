@@ -319,9 +319,11 @@ This is a wrapper for the GraphQL request. It will be utilized for sending an HT
 
 ### Constructors
 
-`GraphQLRequest(GraphQLNodeBase root)` - Creates a new instance of the GraphQLRequest with the provided root node and sets its operation as Query. `GraphQLNodeBase` is the base implementation for nodes functionality. It's required from `root` to be an instance of GraphQLQueryNode or GraphQLMutationNode. Otherwise, an exception will be thrown.
+`GraphQLRequest(String stringNode)` - Creates a new instance of the GraphQLRequest using the provided string as a body for the request query. The Operation property of GraphQLRequest is dynamically recognized.
 
-`GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase root)` - Creates a new instance of the GraphQLRequest with the provided operation and root node.
+`GraphQLRequest(GraphQLNodeBase node)` - Creates a new instance of the GraphQLRequest with the provided root node and sets its operation as Query. `GraphQLNodeBase` is the base implementation for nodes functionality. It's required from `node` to be an instance of GraphQLQueryNode or GraphQLMutationNode. Otherwise, an exception will be thrown.
+
+`GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase node)` - Creates a new instance of the GraphQLRequest with the provided operation and root node.
 
 ---
 
