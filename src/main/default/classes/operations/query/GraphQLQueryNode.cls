@@ -49,6 +49,15 @@ global class GraphQLQueryNode extends GraphQLOperationNode implements IGraphQLRe
         return this;
     }
 
+    global GraphQLQueryNode withFragment(GraphQLFragmentNode fragment) {
+        return withFragments(new List<GraphQLFragmentNode>{ fragment });
+    }
+
+    global GraphQLQueryNode withFragments(GraphQLFragmentNode[] fragments) {
+        addFragments(fragments);
+        return this;
+    }
+
     global GraphQLQueryNode withVariable(String name, String typeDefinition) {
         addVariable(name, typeDefinition);
         return this;

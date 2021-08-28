@@ -26,7 +26,8 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         return generateNodeName(node, depth, pretty) +
             generateVariables(node, pretty) +
             generateArguments(node, pretty) +
-            generateChildNodes(node, depth, pretty);
+            generateChildNodes(node, depth, pretty) +
+            generateFragments(node, depth, pretty);
     }
 
     private String generateNodeName(GraphQLNodeBase node, Integer depth, Boolean pretty) {
@@ -35,6 +36,9 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         }
         if (node instanceof GraphQLOperationNode) {
             return generateOperationName((GraphQLOperationNode) node, pretty);
+        }
+        if (node instanceof GraphQLFragmentNode) {
+            return generateFragmentName((GraphQLFragmentNode) node);
         }
         return getIndent(depth, pretty) + generateAlias(node, pretty) + node.name;
     }
@@ -130,6 +134,30 @@ public class GraphQLNodeParser implements IGraphQLNodeParser {
         childNodes += CommonConstants.BRACE_RIGHT;
 
         return childNodes;
+    }
+
+    private String generateFragmentName(GraphQLFragmentNode node) {
+        return 'fragment ' + node.name + ' on ' + node.type;
+    }
+
+    private String generateFragment(GraphQLFragmentNode node, Integer depth, Boolean pretty) {
+        return generateFragmentName(node) + generateChildNodes(node, depth, pretty);
+    }
+
+    private String generateFragments(GraphQLNodeBase node, Integer depth, Boolean pretty) {
+        if (
+            !(node instanceof GraphQLOperationNode) || !((GraphQLOperationNode) node).hasFragments()
+        ) {
+            return CommonConstants.EMPTY;
+        }
+
+        List<String> rawFragments = new List<String>();
+        for (GraphQLFragmentNode fragment : ((GraphQLOperationNode) node).fragments) {
+            rawFragments.add(generateFragment(fragment, depth, pretty));
+        }
+
+        return (pretty ? CommonConstants.LINE_BREAK : CommonConstants.EMPTY) +
+            String.join(rawFragments, pretty ? CommonConstants.LINE_BREAK : CommonConstants.EMPTY);
     }
 
     private String getIndent(Integer depth, Boolean pretty) {

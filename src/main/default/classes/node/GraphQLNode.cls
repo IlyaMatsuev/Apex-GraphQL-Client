@@ -53,6 +53,15 @@ global class GraphQLNode extends GraphQLNodeBase {
         return this;
     }
 
+    global GraphQLNode withFragment(String fragmentName) {
+        return withFragments(new List<String>{ fragmentName });
+    }
+
+    global GraphQLNode withFragments(String[] fragmentNames) {
+        addFragments(fragmentNames);
+        return this;
+    }
+
     global GraphQLNode withArgument(String key, Object value) {
         return withArgument(new GraphQLArgument(key, value));
     }

@@ -49,6 +49,15 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
         return this;
     }
 
+    global GraphQLSubscriptionNode withFragment(GraphQLFragmentNode fragment) {
+        return withFragments(new List<GraphQLFragmentNode>{ fragment });
+    }
+
+    global GraphQLSubscriptionNode withFragments(GraphQLFragmentNode[] fragments) {
+        addFragments(fragments);
+        return this;
+    }
+
     global GraphQLSubscriptionNode withVariable(String name, String typeDefinition) {
         addVariable(name, typeDefinition);
         return this;

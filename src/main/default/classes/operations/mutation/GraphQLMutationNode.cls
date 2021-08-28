@@ -49,6 +49,15 @@ global class GraphQLMutationNode extends GraphQLOperationNode implements IGraphQ
         return this;
     }
 
+    global GraphQLMutationNode withFragment(GraphQLFragmentNode fragment) {
+        return withFragments(new List<GraphQLFragmentNode>{ fragment });
+    }
+
+    global GraphQLMutationNode withFragments(GraphQLFragmentNode[] fragments) {
+        addFragments(fragments);
+        return this;
+    }
+
     global GraphQLMutationNode withVariable(String name, String typeDefinition) {
         addVariable(name, typeDefinition);
         return this;

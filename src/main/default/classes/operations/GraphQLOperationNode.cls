@@ -1,5 +1,6 @@
 global abstract class GraphQLOperationNode extends GraphQLNodeBase {
     global final Map<String, String> variables = new Map<String, String>();
+    global final List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>();
 
     protected GraphQLOperationNode(String alias, List<String> fields) {
         super(alias, fields);
@@ -11,6 +12,15 @@ global abstract class GraphQLOperationNode extends GraphQLNodeBase {
 
     global Boolean hasVariables() {
         return !variables.isEmpty();
+    }
+
+    global Boolean hasFragments() {
+        return !fragments.isEmpty();
+    }
+
+    protected GraphQLOperationNode addFragments(List<GraphQLFragmentNode> fragments) {
+        this.fragments.addAll(fragments);
+        return this;
     }
 
     protected GraphQLRequest asRequest() {

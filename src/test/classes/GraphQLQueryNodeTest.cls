@@ -108,6 +108,32 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
+    private static void queryWithFragmentTest() {
+        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
+
+        GraphQLQueryNode node = new GraphQLQueryNode().withFragment(fragment);
+
+        System.assert(node.hasFragments());
+        System.assertEquals(1, node.fragments.size());
+        System.assertEquals(fragment.name, node.fragments.get(0).name);
+    }
+
+    @IsTest
+    private static void queryWithFragmentsTest() {
+        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>{
+            new GraphQLFragmentNode('fragment1', 'Type1'),
+            new GraphQLFragmentNode('fragment2', 'Type2')
+        };
+
+        GraphQLQueryNode node = new GraphQLQueryNode().withFragments(fragments);
+
+        System.assert(node.hasFragments());
+        System.assertEquals(fragments.size(), node.fragments.size());
+        System.assertEquals('fragment1', node.fragments.get(0).name);
+        System.assertEquals('fragment2', node.fragments.get(1).name);
+    }
+
+    @IsTest
     private static void queryWithNodeTest() {
         String nodeName = 'node1';
 
@@ -226,6 +252,33 @@ private class GraphQLQueryNodeTest {
         );
         System.assertEquals(
             'query TestQuery {\n  field1\n  field2 {\n    field21\n    field22\n  }\n  field3\n}',
+            query.build(true)
+        );
+    }
+
+    @IsTest
+    private static void buildQueryWithFragmentsPositiveTest() {
+        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>{
+            new GraphQLFragmentNode('Fields1', 'Type1', new List<String>{ 'f1', 'f2' }),
+            new GraphQLFragmentNode('Fields2', 'Type2', new List<String>{ 'f3', 'f4' })
+        };
+        List<GraphQLNode> nodes = new List<GraphQLNode>{
+            new GraphQLNode('node1').withFragment(fragments.get(0).name),
+            new GraphQLNode('node2').withFragment(fragments.get(1).name)
+        };
+
+        GraphQLQueryNode query = new GraphQLQueryNode().withNodes(nodes).withFragments(fragments);
+
+        System.assertEquals(
+            'query{node1{...Fields1},node2{...Fields2}}' +
+            'fragment Fields1 on Type1{f1,f2}' +
+            'fragment Fields2 on Type2{f3,f4}',
+            query.build()
+        );
+        System.assertEquals(
+            'query {\n  node1 {\n    ...Fields1\n  }\n  node2 {\n    ...Fields2\n  }\n}\n' +
+            'fragment Fields1 on Type1 {\n  f1\n  f2\n}\n' +
+            'fragment Fields2 on Type2 {\n  f3\n  f4\n}',
             query.build(true)
         );
     }

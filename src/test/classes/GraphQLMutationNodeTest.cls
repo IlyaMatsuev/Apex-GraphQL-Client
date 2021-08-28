@@ -108,6 +108,32 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
+    private static void mutationWithFragmentTest() {
+        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
+
+        GraphQLMutationNode node = new GraphQLMutationNode().withFragment(fragment);
+
+        System.assert(node.hasFragments());
+        System.assertEquals(1, node.fragments.size());
+        System.assertEquals(fragment.name, node.fragments.get(0).name);
+    }
+
+    @IsTest
+    private static void mutationWithFragmentsTest() {
+        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>{
+            new GraphQLFragmentNode('fragment1', 'Type1'),
+            new GraphQLFragmentNode('fragment2', 'Type2')
+        };
+
+        GraphQLMutationNode node = new GraphQLMutationNode().withFragments(fragments);
+
+        System.assert(node.hasFragments());
+        System.assertEquals(fragments.size(), node.fragments.size());
+        System.assertEquals('fragment1', node.fragments.get(0).name);
+        System.assertEquals('fragment2', node.fragments.get(1).name);
+    }
+
+    @IsTest
     private static void mutationWithNodeTest() {
         String nodeName = 'node1';
 

@@ -96,6 +96,27 @@ private class GraphQLNodeTest {
     }
 
     @IsTest
+    private static void nodeWithFragmentTest() {
+        String fragmentName = 'FieldSet';
+
+        GraphQLNode node = new GraphQLNode().withFragment(fragmentName);
+
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(CommonConstants.DOT.repeat(3) + fragmentName, node.nodes.get(0).name);
+    }
+
+    @IsTest
+    private static void nodeWithFragmentsTest() {
+        List<String> fragments = new List<String>{ 'FieldSet1', 'FieldSet12' };
+
+        GraphQLNode node = new GraphQLNode().withFragments(fragments);
+
+        System.assertEquals(fragments.size(), node.nodes.size());
+        System.assertEquals(CommonConstants.DOT.repeat(3) + 'FieldSet1', node.nodes.get(0).name);
+        System.assertEquals(CommonConstants.DOT.repeat(3) + 'FieldSet12', node.nodes.get(1).name);
+    }
+
+    @IsTest
     private static void nodeWithNodeTest() {
         String nodeName = 'node1';
 
@@ -206,13 +227,16 @@ private class GraphQLNodeTest {
     private static void buildNodePositiveTest() {
         List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
 
-        GraphQLNode node = new GraphQLNode().withFields(fields);
+        GraphQLNode node = new GraphQLNode().withFields(fields).withFragment('SomeFields');
 
         System.assert(node != null);
         System.assertEquals(CommonConstants.EMPTY, node.name);
-        System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals('{field1,field2,field3}', node.build());
-        System.assertEquals('{\n  field1\n  field2\n  field3\n}', node.build(true));
+        System.assertEquals(fields.size() + 1, node.nodes.size());
+        System.assertEquals('{field1,field2,field3,...SomeFields}', node.build());
+        System.assertEquals(
+            '{\n  field1\n  field2\n  field3\n  ...SomeFields\n}',
+            node.build(true)
+        );
     }
 
     @IsTest

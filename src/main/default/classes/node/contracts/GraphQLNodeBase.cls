@@ -68,6 +68,14 @@ global abstract class GraphQLNodeBase {
         return this;
     }
 
+    protected virtual GraphQLNodeBase addFragments(String[] fragmentNames) {
+        List<String> fields = new List<String>();
+        for (String fragmentName : fragmentNames) {
+            fields.add(CommonConstants.DOT.repeat(3) + fragmentName);
+        }
+        return addFields(fields);
+    }
+
     global String build() {
         return build(false);
     }
