@@ -20,12 +20,12 @@ There are a few options for you to deploy/download the project
 
 ### Download a package
 
-This project is available as a Salesforce package. So, you can just install it following [the link](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001ELb9QAG).
+This project is available as a Salesforce package. So, you can just install it by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001ELgFQAW) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001ELgFQAW).
 
 If you prefer using salesforce CLI you can simply run:
 
 ```bash
-sfdx force:package:install --wait 10 --publishwait 10 --package gql-apex-client@0.0.0-4 --noprompt -u {ORG_ALIAS}
+sfdx force:package:install --wait 10 --publishwait 10 --package gql-apex-client@1.0.0-1 --noprompt -u {ORG_ALIAS}
 ```
 
 ### Deploy from source
