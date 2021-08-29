@@ -1,18 +1,24 @@
 global class GraphQLRequest {
     global final GraphQLOperation operation;
     global final Map<String, String> customHeaders = new Map<String, String>();
-    private final GraphQLNodeBase root;
+    private final GraphQLNodeBase node;
+    private String stringNode;
     private Map<String, Object> variables;
 
-    global GraphQLRequest(GraphQLNodeBase root) {
-        this(null, root);
+    global GraphQLRequest(String stringNode) {
+        this.stringNode = stringNode;
+        this.operation = recognizeOperation(stringNode);
     }
 
-    global GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase root) {
-        this.operation = operation == null ? GraphQLOperation.Query : operation;
-        this.root = root;
+    global GraphQLRequest(GraphQLNodeBase node) {
+        this(null, node);
+    }
 
-        if (!(root instanceof IGraphQLRequestBuilder)) {
+    global GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase node) {
+        this.operation = operation == null ? GraphQLOperation.Query : operation;
+        this.node = node;
+
+        if (!(node instanceof IGraphQLRequestBuilder)) {
             throw new GraphQLRequestException(Label.RequestNodeOfIncorrectTypeError);
         }
     }
@@ -43,11 +49,34 @@ global class GraphQLRequest {
     }
 
     global String toString(Boolean pretty) {
-        RequestJsonWrapper wrapper = new RequestJsonWrapper(root.build(pretty), variables);
+        RequestJsonWrapper wrapper = new RequestJsonWrapper(getStringNode(pretty), variables);
         if (pretty) {
             return JSON.serializePretty(wrapper, true);
         }
         return JSON.serialize(wrapper, true);
+    }
+
+    private String getStringNode(Boolean pretty) {
+        if (stringNode == null) {
+            return node.build(pretty);
+        }
+        return stringNode;
+    }
+
+    private GraphQLOperation recognizeOperation(String stringNode) {
+        List<String> tokens = stringNode?.split('\\W');
+        if (tokens == null || tokens.isEmpty()) {
+            throw new GraphQLRequestException(Label.InvalidRequestStringNodeError);
+        }
+
+        String operationName = tokens.get(CommonConstants.FIRST_ELEMENT);
+        if (operationName == GraphQLOperation.Mutation.name().toLowerCase()) {
+            return GraphQLOperation.Mutation;
+        } else if (operationName == GraphQLOperation.Subscription.name().toLowerCase()) {
+            throw new GraphQLRequestException(Label.NotAllowedRequestOperationError);
+        } else {
+            return GraphQLOperation.Query;
+        }
     }
 
     private class RequestJsonWrapper {

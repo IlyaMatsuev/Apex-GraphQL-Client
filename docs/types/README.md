@@ -8,6 +8,7 @@ This unit describes the Apex classes of the package that can be used for working
 -   [GraphQLQueryNode](#graphqlquerynode)
 -   [GraphQLMutationNode](#graphqlmutationnode)
 -   [GraphQLSubscriptionNode](#graphqlsubscriptionnode)
+-   [GraphQLFragmentNode](#graphqlfragmentnode)
 -   [GraphQLArgument](#graphqlargument)
 -   [GraphQLRequest](#graphqlrequest)
 -   [GraphQLResponse](#graphqlresponse)
@@ -55,6 +56,8 @@ This class can be used for building nodes (method calls) for queries, mutations,
 
 So, basically, in that case, this node can be used for a query request but the better recommendation would be to utilize [`GraphQLQueryNode`](#graphqlquerynode) for that purpose.
 
+`String alias` - Alias of the node. Null by default. You can read about node aliases [here](https://spec.graphql.org/June2018/#sec-Field-Alias).
+
 `List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
 
 `Map<String, GraphQLArgument> arguments` - The list of node's arguements mapped by their names. Read about [`GraphQLArgument` here](#graphqlargument). Arguments are optional.
@@ -71,6 +74,8 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
 
+`GraphQLNode byAlias(String alias)` - Adds an alias to the node, so, that the results in the GraphQL response can be accessed by that alias name. You can read about node aliases [here](https://spec.graphql.org/June2018/#sec-Field-Alias).
+
 `GraphQLNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
 
 `GraphQLNode withFields(String[] fields)` - Adds new fields to the current node. Returns the current node instance.
@@ -78,6 +83,10 @@ So, basically, in that case, this node can be used for a query request but the b
 `GraphQLNode withNode(GraphQLNode node)` - Adds a new child node to the current node. Accepts one parameter of type [`GraphQLNode`](#graphqlnode). Returns the current node instance.
 
 `GraphQLNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
+
+`GraphQLNode withFragment(String fragmentName)` - Adds a reference to a fragment's fields. Accepts the fragment name.
+
+`GraphQLNode withFragments(String[] fragmentNames)` - Adds references to fragments' fields. Accepts the fragments' names.
 
 `GraphQLNode withArgument(String key, Object value)` - Adds a new argument for the current node. Accepts key and value as parameters. Value can be any type - it will be automatically converted to the appropriate GraphQL type. Returns the current node instance.
 
@@ -121,7 +130,9 @@ This class is only used for building queries.
 
 ### Properties
 
-GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
+`String name` - The name of the query. Can be empty.
+
+`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -135,7 +146,7 @@ GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) cl
 
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
 
-`Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+`Boolean hasVariables()` - Returns true if there is at least one variable in the query. Otherwise returns false.
 
 `GraphQLQueryNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
 
@@ -145,7 +156,13 @@ GraphQLQueryNode has the same properties as the [`GraphQLNode`](#graphqlnode) cl
 
 `GraphQLQueryNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
+`GraphQLQueryNode withFragment(GraphQLFragmentNode fragment)` - Defines a fragment for the query. Accepts the instance of the [`GraphQLFragmentNode`](#graphqlfragmentnode) class.
+
+`GraphQLQueryNode withFragments(GraphQLFragmentNode[] fragments)` - Defines multiple fragments for the query. Accepts the array of the [`GraphQLFragmentNode`](#graphqlfragmentnode) instances.
+
 `GraphQLQueryNode withVariable(String name, String typeDefinition)` - Defines a new variable for the query with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
+
+`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Query`.
 
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -179,7 +196,9 @@ This class is only used for building mutations.
 
 ### Properties
 
-GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
+`String name` - The name of the query. Can be empty.
+
+`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -193,7 +212,7 @@ GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode)
 
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
 
-`Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+`Boolean hasVariables()` - Returns true if there is at least one variable in the query. Otherwise returns false.
 
 `GraphQLMutationNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
 
@@ -203,7 +222,13 @@ GraphQLMutationNode has the same properties as the [`GraphQLNode`](#graphqlnode)
 
 `GraphQLMutationNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
+`GraphQLMutationNode withFragment(GraphQLFragmentNode fragment)` - Defines a fragment for the mutation. Accepts the instance of the [`GraphQLFragmentNode`](#graphqlfragmentnode) class.
+
+`GraphQLMutationNode withFragments(GraphQLFragmentNode[] fragments)` - Defines multiple fragments for the mutation. Accepts the array of the [`GraphQLFragmentNode`](#graphqlfragmentnode) instances.
+
 `GraphQLMutationNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
+
+`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Mutation`.
 
 `GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -237,7 +262,9 @@ This class is only used for building subscriptions. It's not possible yet to exe
 
 ### Properties
 
-GraphQLSubscriptionNode has the same properties as the [`GraphQLNode`](#graphqlnode) class.
+`String name` - The name of the query. Can be empty.
+
+`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -251,7 +278,7 @@ GraphQLSubscriptionNode has the same properties as the [`GraphQLNode`](#graphqln
 
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
 
-`Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+`Boolean hasVariables()` - Returns true if there is at least one variable in the query. Otherwise returns false.
 
 `GraphQLSubscriptionNode withField(String field)` - Adds a new field to the current node. Returns the current node instance.
 
@@ -261,11 +288,69 @@ GraphQLSubscriptionNode has the same properties as the [`GraphQLNode`](#graphqln
 
 `GraphQLSubscriptionNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
+`GraphQLSubscriptionNode withFragment(GraphQLFragmentNode fragment)` - Defines a fragment for the subscription. Accepts the instance of the [`GraphQLFragmentNode`](#graphqlfragmentnode) class.
+
+`GraphQLSubscriptionNode withFragments(GraphQLFragmentNode[] fragments)` - Defines multiple fragments for the subscription. Accepts the array of the [`GraphQLFragmentNode`](#graphqlfragmentnode) instances.
+
 `GraphQLSubscriptionNode withVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
+
+`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Subscription`.
 
 `String build()` - Builds a non-formatted string representation of the current node.
 
 `String build(Boolean pretty)` - Builds a string representation of the current node. The result string can be formatted depending on the provided boolean flag `pretty`.
+
+---
+
+## GraphQLFragmentNode
+
+This class can be used for building fragments to make your queries look more efficient.
+
+### Constructors
+
+`GraphQLFragmentNode(String name, String type)` - Creates a new instance of the GraphQLFragmentNode with the provided name and type it's referring to.
+
+`GraphQLFragmentNode(String name, String type, List<GraphQLNode> nodes)` - Creates a new instance of the GraphQLFragmentNode with the provided name, type and its child nodes.
+
+`GraphQLFragmentNode(String name, String type, List<String> fields)` - Creates a new instance of the GraphQLFragmentNode with the provided name, type and fields.
+
+`GraphQLFragmentNode(String name, String type, List<GraphQLNode> nodes, List<String> fields)` - Creates a new instance of the GraphQLFragmentNode with the provided name, type, its child nodes and fields.
+
+---
+
+### Properties
+
+`String name` - The name of fragment. This name is used for referencing to the fragment in queries.
+
+`String type` - The name of the type the fragment describes fields for.
+
+`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the fragment.
+
+---
+
+### Methods
+
+`Boolean hasNode(GraphQLNode node)` - Returns true if there is a node with the same name from the parameter. Otherwise returns false.
+
+`Boolean hasNodes(GraphQLNode[] nodes)` - Returns true if there is at least one node from the provided array. Otherwise returns false.
+
+`Boolean hasNodes()` - Returns true if there is at least one child node in the current fragment. Otherwise returns false.
+
+`GraphQLFragmentNode withField(String field)` - Adds a new field to the fragment.
+
+`GraphQLFragmentNode withFields(String[] fields)` - Adds new fields to the fragment.
+
+`GraphQLFragmentNode withNode(GraphQLNode node)` - Adds a new child node to the fragment. Accepts one parameter of type [`GraphQLNode`](#graphqlnode).
+
+`GraphQLFragmentNode withNodes(GraphQLNode[] nodes)` - Adds new child nodes to the fragment. Accepts one parameter of type [`GraphQLNode[]`](#graphqlnode) (list can also be implicitly converted to the array).
+
+`GraphQLFragmentNode withFragment(String fragmentName)` - Adds a reference to another fragment's fields. Accepts the fragment name.
+
+`GraphQLFragmentNode withFragments(String[] fragmentNames)` - Adds reference to others fragments' fields. Accepts the fragments' names.
+
+`String build()` - Builds a non-formatted string representation of the fragment.
+
+`String build(Boolean pretty)` - Builds a string representation of the fragment. The result string can be formatted depending on the provided boolean flag `pretty`.
 
 ---
 
@@ -303,9 +388,11 @@ This is a wrapper for the GraphQL request. It will be utilized for sending an HT
 
 ### Constructors
 
-`GraphQLRequest(GraphQLNodeBase root)` - Creates a new instance of the GraphQLRequest with the provided root node and sets its operation as Query. `GraphQLNodeBase` is the base implementation for nodes functionality. It's required from `root` to be an instance of GraphQLQueryNode or GraphQLMutationNode. Otherwise, an exception will be thrown.
+`GraphQLRequest(String stringNode)` - Creates a new instance of the GraphQLRequest using the provided string as a body for the request query. The Operation property of GraphQLRequest is dynamically recognized.
 
-`GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase root)` - Creates a new instance of the GraphQLRequest with the provided operation and root node.
+`GraphQLRequest(GraphQLNodeBase node)` - Creates a new instance of the GraphQLRequest with the provided root node and sets its operation as Query. `GraphQLNodeBase` is the base implementation for nodes functionality. It's required from `node` to be an instance of GraphQLQueryNode or GraphQLMutationNode. Otherwise, an exception will be thrown.
+
+`GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase node)` - Creates a new instance of the GraphQLRequest with the provided operation and root node.
 
 ---
 

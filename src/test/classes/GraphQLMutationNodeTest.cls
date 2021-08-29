@@ -4,9 +4,8 @@ private class GraphQLMutationNodeTest {
     private static void emptyMutationTest() {
         GraphQLMutationNode node = new GraphQLMutationNode();
 
-        System.assertEquals(GraphQLOperation.Mutation.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(0, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -15,14 +14,8 @@ private class GraphQLMutationNodeTest {
 
         GraphQLMutationNode node = new GraphQLMutationNode(nodeName);
 
-        System.assertEquals(
-            GraphQLOperation.Mutation.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(0, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -31,9 +24,8 @@ private class GraphQLMutationNodeTest {
 
         GraphQLMutationNode node = new GraphQLMutationNode(childNode);
 
-        System.assertEquals(GraphQLOperation.Mutation.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(1, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -45,9 +37,8 @@ private class GraphQLMutationNodeTest {
 
         GraphQLMutationNode node = new GraphQLMutationNode(childNodes);
 
-        System.assertEquals(GraphQLOperation.Mutation.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(childNodes.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -56,14 +47,8 @@ private class GraphQLMutationNodeTest {
 
         GraphQLMutationNode node = new GraphQLMutationNode(nodeName, new GraphQLNode('node1'));
 
-        System.assertEquals(
-            GraphQLOperation.Mutation.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(1, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -76,14 +61,8 @@ private class GraphQLMutationNodeTest {
 
         GraphQLMutationNode node = new GraphQLMutationNode(nodeName, childNodes);
 
-        System.assertEquals(
-            GraphQLOperation.Mutation.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(childNodes.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -92,9 +71,8 @@ private class GraphQLMutationNodeTest {
 
         GraphQLMutationNode node = new GraphQLMutationNode(fields);
 
-        System.assertEquals(GraphQLOperation.Mutation.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -104,14 +82,8 @@ private class GraphQLMutationNodeTest {
 
         GraphQLMutationNode node = new GraphQLMutationNode(nodeName, fields);
 
-        System.assertEquals(
-            GraphQLOperation.Mutation.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -133,6 +105,32 @@ private class GraphQLMutationNodeTest {
         System.assertEquals(fields.size(), node.nodes.size());
         System.assertEquals('field1', node.nodes.get(0).name);
         System.assertEquals('field2', node.nodes.get(1).name);
+    }
+
+    @IsTest
+    private static void mutationWithFragmentTest() {
+        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
+
+        GraphQLMutationNode node = new GraphQLMutationNode().withFragment(fragment);
+
+        System.assert(node.hasFragments());
+        System.assertEquals(1, node.fragments.size());
+        System.assertEquals(fragment.name, node.fragments.get(0).name);
+    }
+
+    @IsTest
+    private static void mutationWithFragmentsTest() {
+        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>{
+            new GraphQLFragmentNode('fragment1', 'Type1'),
+            new GraphQLFragmentNode('fragment2', 'Type2')
+        };
+
+        GraphQLMutationNode node = new GraphQLMutationNode().withFragments(fragments);
+
+        System.assert(node.hasFragments());
+        System.assertEquals(fragments.size(), node.fragments.size());
+        System.assertEquals('fragment1', node.fragments.get(0).name);
+        System.assertEquals('fragment2', node.fragments.get(1).name);
     }
 
     @IsTest
@@ -200,7 +198,7 @@ private class GraphQLMutationNodeTest {
             .withField(fields.get(1));
 
         System.assert(mutation != null);
-        System.assertEquals('mutation', mutation.name);
+        System.assert(String.isBlank(mutation.name));
         System.assertEquals(nodes.size() + fields.size(), mutation.nodes.size());
         System.assertEquals('mutation{field1,field2,field3,field4}', mutation.build());
         System.assertEquals(
@@ -223,7 +221,7 @@ private class GraphQLMutationNodeTest {
             .withVariable('model', 'InputType!');
 
         System.assert(mutation != null);
-        System.assertEquals('mutation', mutation.name);
+        System.assert(String.isBlank(mutation.name));
         System.assertEquals(nodes.size() + fields.size(), mutation.nodes.size());
         System.assertEquals(
             'mutation($model:InputType!){node1,node2,field3,field4}',
@@ -249,7 +247,7 @@ private class GraphQLMutationNodeTest {
         GraphQLMutationNode mutation = new GraphQLMutationNode('TestMutation', nodes);
 
         System.assert(mutation != null);
-        System.assertEquals('mutation TestMutation', mutation.name);
+        System.assertEquals('TestMutation', mutation.name);
         System.assertEquals(nodes.size(), mutation.nodes.size());
         System.assertEquals(
             'mutation TestMutation{field1,field2{field21,field22},field3}',

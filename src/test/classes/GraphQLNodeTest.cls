@@ -96,6 +96,27 @@ private class GraphQLNodeTest {
     }
 
     @IsTest
+    private static void nodeWithFragmentTest() {
+        String fragmentName = 'FieldSet';
+
+        GraphQLNode node = new GraphQLNode().withFragment(fragmentName);
+
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals(CommonConstants.DOT.repeat(3) + fragmentName, node.nodes.get(0).name);
+    }
+
+    @IsTest
+    private static void nodeWithFragmentsTest() {
+        List<String> fragments = new List<String>{ 'FieldSet1', 'FieldSet12' };
+
+        GraphQLNode node = new GraphQLNode().withFragments(fragments);
+
+        System.assertEquals(fragments.size(), node.nodes.size());
+        System.assertEquals(CommonConstants.DOT.repeat(3) + 'FieldSet1', node.nodes.get(0).name);
+        System.assertEquals(CommonConstants.DOT.repeat(3) + 'FieldSet12', node.nodes.get(1).name);
+    }
+
+    @IsTest
     private static void nodeWithNodeTest() {
         String nodeName = 'node1';
 
@@ -150,9 +171,8 @@ private class GraphQLNodeTest {
 
         GraphQLQueryNode query = new GraphQLNode('Test', nodes).asQuery();
 
-        System.assertEquals('query Test', query.name);
+        System.assertEquals('Test', query.name);
         System.assertEquals(nodes.size(), query.nodes.size());
-        System.assertEquals(0, query.arguments.size());
         System.assertEquals(0, query.variables.size());
         System.assertEquals('query Test{node1,node2}', query.build());
     }
@@ -166,9 +186,8 @@ private class GraphQLNodeTest {
 
         GraphQLMutationNode mutation = new GraphQLNode('Test', nodes).asMutation();
 
-        System.assertEquals('mutation Test', mutation.name);
+        System.assertEquals('Test', mutation.name);
         System.assertEquals(nodes.size(), mutation.nodes.size());
-        System.assertEquals(0, mutation.arguments.size());
         System.assertEquals(0, mutation.variables.size());
         System.assertEquals('mutation Test{node1,node2}', mutation.build());
     }
@@ -182,9 +201,8 @@ private class GraphQLNodeTest {
 
         GraphQLSubscriptionNode subscription = new GraphQLNode('Test', nodes).asSubscription();
 
-        System.assertEquals('subscription Test', subscription.name);
+        System.assertEquals('Test', subscription.name);
         System.assertEquals(nodes.size(), subscription.nodes.size());
-        System.assertEquals(0, subscription.arguments.size());
         System.assertEquals(0, subscription.variables.size());
         System.assertEquals('subscription Test{node1,node2}', subscription.build());
     }
@@ -194,16 +212,31 @@ private class GraphQLNodeTest {
      */
 
     @IsTest
+    private static void buildNodeWithAliasPositiveTest() {
+        GraphQLNode childNode = new GraphQLNode('countries', new List<String>{ 'name', 'code' })
+            .byAlias('ctrs');
+
+        GraphQLNode node = new GraphQLNode(new List<GraphQLNode>{ childNode });
+
+        System.assert(node != null);
+        System.assertEquals('{ctrs:countries{name,code}}', node.build());
+        System.assertEquals('{\n  ctrs: countries {\n    name\n    code\n  }\n}', node.build(true));
+    }
+
+    @IsTest
     private static void buildNodePositiveTest() {
         List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
 
-        GraphQLNode node = new GraphQLNode().withFields(fields);
+        GraphQLNode node = new GraphQLNode().withFields(fields).withFragment('SomeFields');
 
         System.assert(node != null);
         System.assertEquals(CommonConstants.EMPTY, node.name);
-        System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals('{field1,field2,field3}', node.build());
-        System.assertEquals('{\n  field1\n  field2\n  field3\n}', node.build(true));
+        System.assertEquals(fields.size() + 1, node.nodes.size());
+        System.assertEquals('{field1,field2,field3,...SomeFields}', node.build());
+        System.assertEquals(
+            '{\n  field1\n  field2\n  field3\n  ...SomeFields\n}',
+            node.build(true)
+        );
     }
 
     @IsTest
@@ -216,9 +249,8 @@ private class GraphQLNodeTest {
             .asQuery();
 
         System.assert(query != null);
-        System.assertEquals(GraphQLOperation.Query.name().toLowerCase(), query.name);
+        System.assert(String.isBlank(query.name));
         System.assertEquals(fields.size(), query.nodes.size());
-        System.assertEquals(0, query.arguments.size());
         System.assertEquals('query{field1,field2,field3}', query.build());
         System.assertEquals('query {\n  field1\n  field2\n  field3\n}', query.build(true));
     }
@@ -233,9 +265,8 @@ private class GraphQLNodeTest {
             .asMutation();
 
         System.assert(mutation != null);
-        System.assertEquals(GraphQLOperation.Mutation.name().toLowerCase(), mutation.name);
+        System.assert(String.isBlank(mutation.name));
         System.assertEquals(fields.size(), mutation.nodes.size());
-        System.assertEquals(0, mutation.arguments.size());
         System.assertEquals('mutation{field1,field2,field3}', mutation.build());
         System.assertEquals('mutation {\n  field1\n  field2\n  field3\n}', mutation.build(true));
     }
@@ -250,9 +281,8 @@ private class GraphQLNodeTest {
             .asSubscription();
 
         System.assert(subscription != null);
-        System.assertEquals(GraphQLOperation.Subscription.name().toLowerCase(), subscription.name);
+        System.assert(String.isBlank(subscription.name));
         System.assertEquals(fields.size(), subscription.nodes.size());
-        System.assertEquals(0, subscription.arguments.size());
         System.assertEquals('subscription{field1,field2,field3}', subscription.build());
         System.assertEquals(
             'subscription {\n  field1\n  field2\n  field3\n}',

@@ -4,9 +4,8 @@ private class GraphQLSubscriptionNodeTest {
     private static void emptySubscriptionTest() {
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode();
 
-        System.assertEquals(GraphQLOperation.Subscription.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(0, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -15,14 +14,8 @@ private class GraphQLSubscriptionNodeTest {
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName);
 
-        System.assertEquals(
-            GraphQLOperation.Subscription.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(0, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -31,9 +24,8 @@ private class GraphQLSubscriptionNodeTest {
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(childNode);
 
-        System.assertEquals(GraphQLOperation.Subscription.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(1, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -45,9 +37,8 @@ private class GraphQLSubscriptionNodeTest {
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(childNodes);
 
-        System.assertEquals(GraphQLOperation.Subscription.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(childNodes.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -59,14 +50,8 @@ private class GraphQLSubscriptionNodeTest {
             new GraphQLNode('node1')
         );
 
-        System.assertEquals(
-            GraphQLOperation.Subscription.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(1, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -79,14 +64,8 @@ private class GraphQLSubscriptionNodeTest {
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, childNodes);
 
-        System.assertEquals(
-            GraphQLOperation.Subscription.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(childNodes.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -95,9 +74,8 @@ private class GraphQLSubscriptionNodeTest {
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(fields);
 
-        System.assertEquals(GraphQLOperation.Subscription.name().toLowerCase(), node.name);
+        System.assert(String.isBlank(node.name));
         System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
@@ -107,18 +85,12 @@ private class GraphQLSubscriptionNodeTest {
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, fields);
 
-        System.assertEquals(
-            GraphQLOperation.Subscription.name().toLowerCase() +
-            CommonConstants.SPACE +
-            nodeName,
-            node.name
-        );
+        System.assertEquals(nodeName, node.name);
         System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
     }
 
     @IsTest
-    private static void SubscriptionWithFieldTest() {
+    private static void subscriptionWithFieldTest() {
         String fieldName = 'field1';
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withField(fieldName);
@@ -128,7 +100,7 @@ private class GraphQLSubscriptionNodeTest {
     }
 
     @IsTest
-    private static void SubscriptionWithFieldsTest() {
+    private static void subscriptionWithFieldsTest() {
         List<String> fields = new List<String>{ 'field1', 'field2' };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withFields(fields);
@@ -139,7 +111,33 @@ private class GraphQLSubscriptionNodeTest {
     }
 
     @IsTest
-    private static void SubscriptionWithNodeTest() {
+    private static void subscriptionWithFragmentTest() {
+        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
+
+        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withFragment(fragment);
+
+        System.assert(node.hasFragments());
+        System.assertEquals(1, node.fragments.size());
+        System.assertEquals(fragment.name, node.fragments.get(0).name);
+    }
+
+    @IsTest
+    private static void subscriptionWithFragmentsTest() {
+        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>{
+            new GraphQLFragmentNode('fragment1', 'Type1'),
+            new GraphQLFragmentNode('fragment2', 'Type2')
+        };
+
+        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withFragments(fragments);
+
+        System.assert(node.hasFragments());
+        System.assertEquals(fragments.size(), node.fragments.size());
+        System.assertEquals('fragment1', node.fragments.get(0).name);
+        System.assertEquals('fragment2', node.fragments.get(1).name);
+    }
+
+    @IsTest
+    private static void subscriptionWithNodeTest() {
         String nodeName = 'node1';
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode()
@@ -150,7 +148,7 @@ private class GraphQLSubscriptionNodeTest {
     }
 
     @IsTest
-    private static void SubscriptionWithNodesTest() {
+    private static void subscriptionWithNodesTest() {
         List<GraphQLNode> nodes = new List<GraphQLNode>{
             new GraphQLNode('node1'),
             new GraphQLNode('node2')
@@ -164,7 +162,7 @@ private class GraphQLSubscriptionNodeTest {
     }
 
     @IsTest
-    private static void SubscriptionWithVariableTest() {
+    private static void subscriptionWithVariableTest() {
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode()
             .withNode(new GraphQLNode('node'))
             .withVariable('newVariable', '[Int]! = 0');
@@ -191,7 +189,7 @@ private class GraphQLSubscriptionNodeTest {
             .withField('field3');
 
         System.assert(subscription != null);
-        System.assertEquals('subscription', subscription.name);
+        System.assert(String.isBlank(subscription.name));
         System.assertEquals(nodes.size() + fields.size(), subscription.nodes.size());
         System.assertEquals('subscription{field1,field2,field3,field4}', subscription.build());
         System.assertEquals(
@@ -215,7 +213,7 @@ private class GraphQLSubscriptionNodeTest {
             .withVariable('param2', 'String');
 
         System.assert(subscription != null);
-        System.assertEquals('subscription', subscription.name);
+        System.assert(String.isBlank(subscription.name));
         System.assertEquals(nodes.size() + fields.size(), subscription.nodes.size());
         System.assertEquals(
             'subscription($param1:Int!,$param2:String){node1(arg:$param1),node2,field3,field4}',
@@ -245,7 +243,7 @@ private class GraphQLSubscriptionNodeTest {
             .withField('field1');
 
         System.assert(Subscription != null);
-        System.assertEquals('subscription TestSubscription', subscription.name);
+        System.assertEquals('TestSubscription', subscription.name);
         System.assertEquals(nodes.size(), subscription.nodes.size());
         System.assertEquals(
             'subscription TestSubscription{field1,field2{field21,field22},field3}',

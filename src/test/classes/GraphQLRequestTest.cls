@@ -1,6 +1,55 @@
 @IsTest(IsParallel=true)
 private class GraphQLRequestTest {
     @IsTest
+    private static void requestAsStringNodeQueryPositiveTest() {
+        String stringNode = 'query{field1, field2}';
+
+        GraphQLRequest request = new GraphQLRequest(stringNode);
+
+        System.assertEquals(GraphQLOperation.Query, request.operation);
+        System.assertEquals('{"query":"query{field1, field2}"}', request.toString());
+        System.assertEquals('{\n  "query" : "query{field1, field2}"\n}', request.toString(true));
+    }
+
+    @IsTest
+    private static void requestAsStringNodeMutationPositiveTest() {
+        String stringNode = 'mutation{field1, field2}';
+
+        GraphQLRequest request = new GraphQLRequest(stringNode);
+
+        System.assertEquals(GraphQLOperation.Mutation, request.operation);
+        System.assertEquals('{"query":"mutation{field1, field2}"}', request.toString());
+        System.assertEquals('{\n  "query" : "mutation{field1, field2}"\n}', request.toString(true));
+    }
+
+    @IsTest
+    private static void requestAsEmptyStringNodeNegativeTest() {
+        Exception error;
+        try {
+            GraphQLRequest request = new GraphQLRequest((String) null);
+        } catch (Exception ex) {
+            error = ex;
+        }
+
+        System.assert(error != null);
+        System.assertEquals(Label.InvalidRequestStringNodeError, error.getMessage());
+    }
+
+    @IsTest
+    private static void requestAsStringNodeSubscriptionNegativeTest() {
+        String stringNode = 'subscription{onNotificationCreated{message}}';
+        Exception error;
+        try {
+            GraphQLRequest request = new GraphQLRequest(stringNode);
+        } catch (Exception ex) {
+            error = ex;
+        }
+
+        System.assert(error != null);
+        System.assertEquals(Label.NotAllowedRequestOperationError, error.getMessage());
+    }
+
+    @IsTest
     private static void requestWithoutOperationTest() {
         GraphQLQueryNode node = new GraphQLQueryNode(new List<String>{ 'field1', 'field2' });
 

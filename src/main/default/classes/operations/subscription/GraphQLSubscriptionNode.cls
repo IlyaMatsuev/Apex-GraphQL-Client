@@ -1,6 +1,4 @@
-global class GraphQLSubscriptionNode extends GraphQLNodeBase {
-    private static final GraphQLOperation Operation = GraphQLOperation.Subscription;
-
+global class GraphQLSubscriptionNode extends GraphQLOperationNode {
     global GraphQLSubscriptionNode() {
         this(CommonConstants.EMPTY);
     }
@@ -26,11 +24,11 @@ global class GraphQLSubscriptionNode extends GraphQLNodeBase {
     }
 
     global GraphQLSubscriptionNode(String alias, List<String> fields) {
-        super(getNodeName(alias), fields);
+        super(alias, fields);
     }
 
     global GraphQLSubscriptionNode(String alias, List<GraphQLNode> nodes) {
-        super(getNodeName(alias), nodes);
+        super(alias, nodes);
     }
 
     global GraphQLSubscriptionNode withField(String field) {
@@ -51,15 +49,21 @@ global class GraphQLSubscriptionNode extends GraphQLNodeBase {
         return this;
     }
 
+    global GraphQLSubscriptionNode withFragment(GraphQLFragmentNode fragment) {
+        return withFragments(new List<GraphQLFragmentNode>{ fragment });
+    }
+
+    global GraphQLSubscriptionNode withFragments(GraphQLFragmentNode[] fragments) {
+        addFragments(fragments);
+        return this;
+    }
+
     global GraphQLSubscriptionNode withVariable(String name, String typeDefinition) {
         addVariable(name, typeDefinition);
         return this;
     }
 
-    private static String getNodeName(String alias) {
-        if (String.isBlank(alias)) {
-            return Operation.name().toLowerCase();
-        }
-        return Operation.name().toLowerCase() + CommonConstants.SPACE + alias;
+    global override GraphQLOperation getOperation() {
+        return GraphQLOperation.Subscription;
     }
 }
