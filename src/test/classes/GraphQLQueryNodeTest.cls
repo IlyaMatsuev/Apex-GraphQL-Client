@@ -225,7 +225,7 @@ private class GraphQLQueryNodeTest {
             query.build()
         );
         System.assertEquals(
-            'query($param1: Int!, $param2: String) {\n  node1(arg: $param1)\n  node2\n  field3\n  field4\n}',
+            'query ($param1: Int!, $param2: String) {\n  node1(arg: $param1)\n  node2\n  field3\n  field4\n}',
             query.build(true)
         );
     }

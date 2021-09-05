@@ -220,7 +220,7 @@ private class GraphQLSubscriptionNodeTest {
             subscription.build()
         );
         System.assertEquals(
-            'subscription($param1: Int!, $param2: String) {\n  node1(arg: $param1)\n  node2\n  field3\n  field4\n}',
+            'subscription ($param1: Int!, $param2: String) {\n  node1(arg: $param1)\n  node2\n  field3\n  field4\n}',
             subscription.build(true)
         );
     }

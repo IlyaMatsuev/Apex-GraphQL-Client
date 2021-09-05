@@ -18,6 +18,12 @@ global abstract class GraphQLOperationNode extends GraphQLNodeBase {
         return !fragments.isEmpty();
     }
 
+    global override IGraphQLParser getParser() {
+        return new GraphQLOperationNodeParser();
+    }
+
+    global abstract GraphQLOperation getOperation();
+
     protected GraphQLOperationNode addFragments(List<GraphQLFragmentNode> fragments) {
         this.fragments.addAll(fragments);
         return this;
@@ -31,6 +37,4 @@ global abstract class GraphQLOperationNode extends GraphQLNodeBase {
         this.variables.put(name, typeDefinition);
         return this;
     }
-
-    global abstract GraphQLOperation getOperation();
 }

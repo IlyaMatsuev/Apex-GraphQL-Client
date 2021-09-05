@@ -88,4 +88,8 @@ global class GraphQLNode extends GraphQLNodeBase {
     global GraphQLSubscriptionNode asSubscription() {
         return new GraphQLSubscriptionNode(this.name, this.nodes);
     }
+
+    global override IGraphQLParser getParser() {
+        return new GraphQLNodeParser();
+    }
 }
