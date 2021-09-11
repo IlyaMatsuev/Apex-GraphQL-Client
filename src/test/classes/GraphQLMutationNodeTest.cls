@@ -228,7 +228,7 @@ private class GraphQLMutationNodeTest {
             mutation.build()
         );
         System.assertEquals(
-            'mutation($model: InputType!) {\n  node1\n  node2\n  field3\n  field4\n}',
+            'mutation ($model: InputType!) {\n  node1\n  node2\n  field3\n  field4\n}',
             mutation.build(true)
         );
     }

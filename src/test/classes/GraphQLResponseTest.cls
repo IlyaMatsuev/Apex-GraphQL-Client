@@ -30,8 +30,35 @@ private class GraphQLResponseTest {
         Map<String, Object> hero = (Map<String, Object>) response.getDataNode('hero');
         List<GraphQLResponseError> responseErrors = response.getErrors();
         System.assertEquals(1, responseErrors.size());
+        System.assert(String.isNotBlank(responseErrors.get(0).message));
+        System.assertEquals(1, responseErrors.get(0).locations.size());
+        System.assertEquals(6, responseErrors.get(0).locations.get(0).line);
+        System.assertEquals(7, responseErrors.get(0).locations.get(0).column);
+        System.assertEquals(4, responseErrors.get(0).path.size());
+        System.assertEquals('hero', responseErrors.get(0).path.get(0));
+        System.assertEquals('heroFriends', responseErrors.get(0).path.get(1));
+        System.assertEquals(1, (Integer) responseErrors.get(0).path.get(2));
+        System.assertEquals('name', responseErrors.get(0).path.get(3));
+        System.assertEquals(2, responseErrors.get(0).extensions.size());
+        System.assertEquals(200, (Integer) responseErrors.get(0).extensions.get('code'));
+        System.assertEquals('Test!', responseErrors.get(0).extensions.get('customField'));
         System.assert(responseData.containsKey('hero'));
         System.assertEquals('R2-D2', (String) hero.get('name'));
+    }
+
+    @IsTest
+    private static void getErrorExtensionsAsTypeTest() {
+        List<GraphQLResponseError> errors = GraphQLResponse.parse(
+                getResponseBody('GraphQLResponse_OneError_OneNode')
+            )
+            .getErrors();
+
+        GraphQLResponseError firstError = errors.get(0);
+        ErrorExtensionsWrapper extensions = (ErrorExtensionsWrapper) firstError
+            .getExtensionsAs(ErrorExtensionsWrapper.class);
+        System.assert(extensions != null);
+        System.assertEquals(200, extensions.code);
+        System.assertEquals('Test!', extensions.customField);
     }
 
     @IsTest
@@ -88,5 +115,10 @@ private class GraphQLResponseTest {
         public String id;
         public String name;
         public List<HeroWrapper> heroFriends;
+    }
+
+    private class ErrorExtensionsWrapper {
+        public Integer code;
+        public String customField;
     }
 }

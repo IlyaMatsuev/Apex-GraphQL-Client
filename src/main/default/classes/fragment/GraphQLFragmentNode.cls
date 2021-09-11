@@ -49,4 +49,8 @@ global class GraphQLFragmentNode extends GraphQLNodeBase {
         addFragments(fragmentNames);
         return this;
     }
+
+    global override IGraphQLParser getParser() {
+        return new GraphQLFragmentNodeParser();
+    }
 }

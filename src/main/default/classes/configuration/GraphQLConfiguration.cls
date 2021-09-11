@@ -1,5 +1,4 @@
 public enum GraphQLConfiguration {
-    NodeParserImplementation,
     MaxQueryDepth,
     QueryIndentSize,
     SupressNullsForObjectArguments,

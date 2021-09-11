@@ -33,6 +33,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GraphQLFragmentNodeParser</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GraphQLFragmentNodeTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -74,6 +78,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GraphQLOperationNode</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GraphQLOperationNodeParser</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GraphQLParser</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -121,7 +133,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>IGraphQLNodeParser</apexClass>
+        <apexClass>IGraphQLParser</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
