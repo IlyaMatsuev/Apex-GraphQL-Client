@@ -448,8 +448,14 @@ This is a wrapper for GraphQL response errors.
 
 `String message` - The error's text message.
 `List<Location> locations` - A list of locations of the error. The schema of the Location object is `{line: Int, column: Int}`.
-`List<String> path` - The error's path. For now this field accepts strings only.
-`Map<String, String> extensions` - Extensions for the error. In GraphQL specification this field can contain a map with values of any type but due to Apex limitations This field accepts strings only yet.
+`List<Object> path` - The error's path. Can contain String and Integer values;
+`Map<String, Object> extensions` - Extensions for the error. Can contain any object type in it but its type would need to be converted manually.
+
+---
+
+### Methods
+
+`Object getExtensionsAs(Type type)` - Converts and returns the extensions map as a particular Apex class type provided as a parameter.
 
 ---
 

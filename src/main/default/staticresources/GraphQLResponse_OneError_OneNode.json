@@ -13,7 +13,11 @@
             "heroFriends",
             1,
             "name"
-         ]
+         ],
+         "extensions": {
+            "code": 200,
+            "customField": "Test!"
+         }
       }
    ],
    "data":{

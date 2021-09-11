@@ -4,6 +4,8 @@ global class GraphQLResponse {
 
     private final Map<String, Object> responseJson;
 
+    private List<GraphQLResponseError> errors = new List<GraphQLResponseError>();
+
     public GraphQLResponse(GraphQLResponseError error) {
         this(new Map<String, Object>{ ERRORS_FIELD => new List<GraphQLResponseError>{ error } });
     }
@@ -21,13 +23,10 @@ global class GraphQLResponse {
     }
 
     global List<GraphQLResponseError> getErrors() {
-        if (!hasErrors()) {
-            return new List<GraphQLResponseError>();
+        if (hasErrors()) {
+            errors = GraphQLResponseError.parseErrors(responseJson.get(ERRORS_FIELD));
         }
-        return (List<GraphQLResponseError>) serializeObject(
-            responseJson.get(ERRORS_FIELD),
-            List<GraphQLResponseError>.class
-        );
+        return errors;
     }
 
     global Map<String, Object> getData() {
@@ -57,7 +56,7 @@ global class GraphQLResponse {
     }
 
     private Boolean hasField(String fieldName) {
-        return responseJson.containsKey(fieldName);
+        return responseJson.containsKey(fieldName) && responseJson.get(fieldName) != null;
     }
 
     private Object getDataAs(Object data, Type type) {
