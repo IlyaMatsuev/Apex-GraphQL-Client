@@ -9,7 +9,7 @@
 ## The PR fulfills these requirements:
 
 [ ] Tests for the proposed changes have been added/updated.  
-[ ] Code linting and formatting was performed.
+[ ] Code linting and formatting were performed.
 
 ### Functionality Before
 
