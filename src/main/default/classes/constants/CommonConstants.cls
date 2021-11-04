@@ -10,6 +10,7 @@ public class CommonConstants {
     public static final String UNDERSCORE = '_';
     public static final String EXCLAMATION = '!';
     public static final String DOLLAR = '$';
+    public static final String AT = '@';
 
     public static final String BRACE_LEFT = '{';
     public static final String BRACE_RIGHT = '}';

@@ -163,6 +163,22 @@ private class GraphQLNodeTest {
     }
 
     @IsTest
+    private static void nodeIncludeIfConditionAndVariableTest() {
+        GraphQLNode node = new GraphQLNode().includeIf(false).includeIf('var');
+
+        System.assert(node.hasDirectives());
+        System.assertEquals(1, node.directives.size());
+    }
+
+    @IsTest
+    private static void nodeSkipIfConditionAndVariableTest() {
+        GraphQLNode node = new GraphQLNode().skipIf(false).skipIf('var');
+
+        System.assert(node.hasDirectives());
+        System.assertEquals(1, node.directives.size());
+    }
+
+    @IsTest
     private static void nodeAsQueryTest() {
         List<GraphQLNode> nodes = new List<GraphQLNode>{
             new GraphQLNode('node1'),
@@ -349,6 +365,28 @@ private class GraphQLNodeTest {
         );
         System.assertEquals(
             'root {\n  testMethod(var1: "test1", var2: 1, var3: {f2:"2",f1:1}) {\n    field1\n    field2\n    field3\n  }\n}',
+            rootNode.build(true)
+        );
+    }
+
+    @IsTest
+    private static void buildNodeWithDirectivePositiveTest() {
+        String nodeName = 'testMethod';
+        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+
+        GraphQLNode node = new GraphQLNode(nodeName, fields)
+            .includeIf(true)
+            .skipIf('test1')
+            .withArgument('var1', '$test1');
+
+        GraphQLNode rootNode = new GraphQLNode('root').withNode(node);
+
+        System.assertEquals(
+            'root{testMethod(var1:$test1) @include(if:true) @skip(if:$test1){field1,field2,field3}}',
+            rootNode.build()
+        );
+        System.assertEquals(
+            'root {\n  testMethod(var1: $test1) @include(if: true) @skip(if: $test1) {\n    field1\n    field2\n    field3\n  }\n}',
             rootNode.build(true)
         );
     }

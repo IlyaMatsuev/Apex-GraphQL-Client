@@ -1,6 +1,7 @@
 global class GraphQLNode extends GraphQLNodeBase {
     global String alias { get; private set; }
     global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
+    global final Map<GraphQLDirectiveType, GraphQLDirective> directives = new Map<GraphQLDirectiveType, GraphQLDirective>();
 
     global GraphQLNode() {
         this(CommonConstants.EMPTY);
@@ -28,6 +29,10 @@ global class GraphQLNode extends GraphQLNodeBase {
 
     global Boolean hasArguments() {
         return !arguments.isEmpty();
+    }
+
+    global Boolean hasDirectives() {
+        return !directives.isEmpty();
     }
 
     global GraphQLNode byAlias(String alias) {
@@ -77,6 +82,22 @@ global class GraphQLNode extends GraphQLNodeBase {
         return this;
     }
 
+    global GraphQLNode includeIf(Boolean condition) {
+        return withDirective(GraphQLDirectiveType.Include, condition);
+    }
+
+    global GraphQLNode includeIf(String variable) {
+        return withDirective(GraphQLDirectiveType.Include, variable);
+    }
+
+    global GraphQLNode skipIf(Boolean condition) {
+        return withDirective(GraphQLDirectiveType.Skip, condition);
+    }
+
+    global GraphQLNode skipIf(String variable) {
+        return withDirective(GraphQLDirectiveType.Skip, variable);
+    }
+
     global GraphQLQueryNode asQuery() {
         return new GraphQLQueryNode(this.name, this.nodes);
     }
@@ -91,5 +112,10 @@ global class GraphQLNode extends GraphQLNodeBase {
 
     global override IGraphQLParser getParser() {
         return new GraphQLNodeParser();
+    }
+
+    private GraphQLNode withDirective(GraphQLDirectiveType type, Object ifArgumentValue) {
+        this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
+        return this;
     }
 }

@@ -27,6 +27,7 @@ public abstract class GraphQLParser implements IGraphQLParser {
 
         return parseNodeName(node, depth, pretty) +
             parseArguments(node, pretty) +
+            parseDirectives(node, pretty) +
             parseChildNodes(node, depth, pretty);
     }
 
@@ -91,18 +92,26 @@ public abstract class GraphQLParser implements IGraphQLParser {
         }
 
         List<String> rawArguments = new List<String>();
-        for (String key : node.arguments.keySet()) {
-            rawArguments.add(
-                key +
-                CommonConstants.COLON +
-                getSmallIndent(pretty) +
-                node.arguments.get(key)
-            );
+        for (GraphQLArgument argument : node.arguments.values()) {
+            rawArguments.add(argument.parse(node, pretty));
         }
 
         return CommonConstants.PARENTHESE_LEFT +
             String.join(rawArguments, CommonConstants.COMMA + getSmallIndent(pretty)) +
             CommonConstants.PARENTHESE_RIGHT;
+    }
+
+    private String parseDirectives(GraphQLNode node, Boolean pretty) {
+        if (!node.hasDirectives()) {
+            return CommonConstants.EMPTY;
+        }
+
+        List<String> rawDirectives = new List<String>();
+        for (GraphQLDirective directive : node.directives.values()) {
+            rawDirectives.add(directive.parse(node, pretty));
+        }
+
+        return CommonConstants.SPACE + String.join(rawDirectives, CommonConstants.SPACE);
     }
 
     private class GraphQLBaseParserException extends Exception {
