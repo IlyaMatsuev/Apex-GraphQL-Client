@@ -33,17 +33,4 @@ private class GraphQLDirectiveTest {
         System.assert(error != null);
         System.assertEquals(Label.NullDirectiveArgumentError, error.getMessage());
     }
-
-    @IsTest
-    private static void createDirectiveWithIntegerArgumentNegativeTest() {
-        Exception error;
-        try {
-            new GraphQLDirective(GraphQLDirectiveType.Include, 5);
-        } catch (Exception ex) {
-            error = ex;
-        }
-
-        System.assert(error != null);
-        System.assertEquals(Label.DirectiveArgumentInvalidTypeError, error.getMessage());
-    }
 }

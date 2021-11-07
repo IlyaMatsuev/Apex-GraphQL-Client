@@ -114,7 +114,12 @@ global class GraphQLNode extends GraphQLNodeBase {
         return new GraphQLNodeParser();
     }
 
-    private GraphQLNode withDirective(GraphQLDirectiveType type, Object ifArgumentValue) {
+    private GraphQLNode withDirective(GraphQLDirectiveType type, Boolean ifArgumentValue) {
+        this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
+        return this;
+    }
+
+    private GraphQLNode withDirective(GraphQLDirectiveType type, String ifArgumentValue) {
         this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
         return this;
     }

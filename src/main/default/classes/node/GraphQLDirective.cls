@@ -1,17 +1,21 @@
-public class GraphQLDirective implements IGraphQLParser {
-    public static final String IF_ARG_NAME = 'if';
+global class GraphQLDirective implements IGraphQLParser {
+    private static final String IF_ARG_NAME = 'if';
 
     private final GraphQLDirectiveType type;
     private final GraphQLArgument ifArgument;
 
-    public GraphQLDirective(GraphQLDirectiveType type, Object ifArgumentValue) {
+    global GraphQLDirective(GraphQLDirectiveType type, String ifArgumentValue) {
+        this(type, ifArgumentValue);
+    }
+
+    global GraphQLDirective(GraphQLDirectiveType type, Boolean ifArgumentValue) {
+        this(type, ifArgumentValue);
+    }
+
+    private GraphQLDirective(GraphQLDirectiveType type, Object ifArgumentValue) {
         if (ifArgumentValue == null) {
             throw new GraphQLDirectiveException(Label.NullDirectiveArgumentError);
         }
-        if (!(ifArgumentValue instanceof String) && !(ifArgumentValue instanceof Boolean)) {
-            throw new GraphQLDirectiveException(Label.DirectiveArgumentInvalidTypeError);
-        }
-
         this.type = type;
         this.ifArgument = new GraphQLArgument(IF_ARG_NAME, toVariableIfPossible(ifArgumentValue));
     }

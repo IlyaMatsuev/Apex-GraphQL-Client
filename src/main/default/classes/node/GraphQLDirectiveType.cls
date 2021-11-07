@@ -1,4 +1,4 @@
-public enum GraphQLDirectiveType {
+global enum GraphQLDirectiveType {
     Include,
     Skip
 }

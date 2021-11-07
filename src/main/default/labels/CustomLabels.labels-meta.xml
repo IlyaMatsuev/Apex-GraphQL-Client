@@ -25,14 +25,6 @@
         <value>Directive argument value cannot be null. It should be either Boolean or variable</value>
     </labels>
     <labels>
-        <fullName>DirectiveArgumentInvalidTypeError</fullName>
-        <categories>GraphQLClient</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>DirectiveArgumentInvalidTypeError</shortDescription>
-        <value>Directive if argument should be either Boolean or variable</value>
-    </labels>
-    <labels>
         <fullName>EmptyNodeError</fullName>
         <categories>GraphQLClient</categories>
         <language>en_US</language>

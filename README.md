@@ -5,7 +5,24 @@
 
 This is a package for Salesforce that aimed to provide a convenient way to communicate with a GraphQL server via Apex.
 
-### Content:
+What is supported:
+
+-   Building particular string nodes (if you want to send requests yourself)
+-   Building queries, mutations and subscriptions
+-   Passing arguments to the graphql nodes (fields)
+-   Passing arguments to the graphql queries and mutations from request
+-   Sync and async graphql HTTP service for sending requests (with callback implementation for async calls)
+-   Functionality for handling GraphQL responses
+-   Using fragments for graphql requests
+-   Using `@include` and `@skip` directives for graphql nodes (fields)
+
+What is NOT supported:
+
+-   Sending subscription requests (WebSocket protocol is not supported by Apex)
+
+If you think there is something that is not implemented yet as for GraphQL client I'd appreciate if you open an issue/discussion in this repository.
+
+### Content
 
 -   [Installation](#installation)
 -   [Usage](#usage)
@@ -74,10 +91,7 @@ sh ./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS
 
 ## Usage
 
-The package can be used for the following:
-
--   Generate string GraphQL nodes, queries, mutations, etc
--   Send GraphQL requests with the GraphQL HTTP client
+All examples can be found [here](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/docs/examples).
 
 ### Generate a GraphQL node
 
@@ -185,8 +199,6 @@ GraphQLResponse response = client.send(request);
 
 ...
 ```
-
-All examples can be found [here](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/docs/examples).
 
 ## Documentation
 
