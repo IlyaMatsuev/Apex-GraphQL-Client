@@ -5,11 +5,11 @@ global class GraphQLDirective implements IGraphQLParser {
     private final GraphQLArgument ifArgument;
 
     global GraphQLDirective(GraphQLDirectiveType type, String ifArgumentValue) {
-        this(type, ifArgumentValue);
+        this(type, (Object) ifArgumentValue);
     }
 
     global GraphQLDirective(GraphQLDirectiveType type, Boolean ifArgumentValue) {
-        this(type, ifArgumentValue);
+        this(type, (Object) ifArgumentValue);
     }
 
     private GraphQLDirective(GraphQLDirectiveType type, Object ifArgumentValue) {

@@ -25,7 +25,7 @@ private class GraphQLDirectiveTest {
     private static void createDirectiveWithNullArgumentNegativeTest() {
         Exception error;
         try {
-            new GraphQLDirective(GraphQLDirectiveType.Include, null);
+            new GraphQLDirective(GraphQLDirectiveType.Include, (String) null);
         } catch (Exception ex) {
             error = ex;
         }
