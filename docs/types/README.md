@@ -10,6 +10,7 @@ This unit describes the Apex classes of the package that can be used for working
 -   [GraphQLSubscriptionNode](#graphqlsubscriptionnode)
 -   [GraphQLFragmentNode](#graphqlfragmentnode)
 -   [GraphQLArgument](#graphqlargument)
+-   [GraphQLDirective](#graphqldirective)
 -   [GraphQLRequest](#graphqlrequest)
 -   [GraphQLResponse](#graphqlresponse)
 -   [GraphQLResponseError](#graphqlresponseerror)
@@ -18,6 +19,7 @@ This unit describes the Apex classes of the package that can be used for working
 ### Enums:
 
 -   [GraphQLArgumentType](#graphqlargumenttype)
+-   [GraphQLDirectiveType](#graphqldirectivetype)
 -   [GraphQLOperation](#graphqloperation)
 
 ### Interfaces:
@@ -30,7 +32,7 @@ This unit describes the Apex classes of the package that can be used for working
 
 ## GraphQLNode
 
-This class can be used for building nodes (method calls) for queries, mutations, fragments, etc.
+This class can be used for building nodes (fields) for queries, mutations, fragments, etc.
 
 ### Constructors
 
@@ -62,6 +64,8 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `Map<String, GraphQLArgument> arguments` - The list of node's arguements mapped by their names. Read about [`GraphQLArgument` here](#graphqlargument). Arguments are optional.
 
+`Map<GraphQLDirectiveType, GraphQLDirective> directives` - The list of node's directives mapped by their types (`include` or `skip`). Read about [`GraphQLDirective` here](#graphqldirective). Directives are optional.
+
 ---
 
 ### Methods
@@ -73,6 +77,8 @@ So, basically, in that case, this node can be used for a query request but the b
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
 
 `Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
+
+`Boolean hasDirectives()` - Returns true if there is at least one directive for the current node. Otherwise returns false.
 
 `GraphQLNode byAlias(String alias)` - Adds an alias to the node, so, that the results in the GraphQL response can be accessed by that alias name. You can read about node aliases [here](https://spec.graphql.org/June2018/#sec-Field-Alias).
 
@@ -93,6 +99,14 @@ So, basically, in that case, this node can be used for a query request but the b
 `GraphQLNode withArgument(GraphQLArgument argument)` - Adds a new argument for the current node. Accepts one parameter of type [`GraphQLArgument`](#graphqlargument). Returns the current node instance.
 
 `GraphQLNode withArguments(GraphQLArgument[] arguments)` - Adds new arguments for the current node. Accepts one parameter of type [`GraphQLArgument[]`](#graphqlargument) (list can also be implicitly converted to the array). Returns the current node instance.
+
+`GraphQLNode includeIf(Boolean condition)` - Adds a new `include` directive to the current node. Accepts one parameter of type Boolean. Indicates whether the current node needs to be included in the response. Returns the current node instance.
+
+`GraphQLNode includeIf(String variable)` - Adds a new `include` directive to the current node. Accepts one parameter of type String that represents the query variable name (can be passed with or without the `$` sign). Indicates whether the current node needs to be included in the response. Returns the current node instance.
+
+`GraphQLNode skipIf(Boolean condition)` - Adds a new `skip` directive to the current node. Accepts one parameter of type Boolean. Indicates whether the current node needs to be skipped in the response. Returns the current node instance.
+
+`GraphQLNode skipIf(String variable)` - Adds a new `skip` directive to the current node. Accepts one parameter of type String that represents the query variable name (can be passed with or without the `$` sign). Indicates whether the current node needs to be skipped in the response. Returns the current node instance.
 
 `String build()` - Builds a non-formatted string representation of the current node.
 
@@ -382,6 +396,18 @@ This class is used for passing arguments to GraphQL nodes.
 
 ---
 
+## GraphQLDirective
+
+This class is used for passing directives to GraphQL nodes.
+
+### Constructors
+
+`GraphQLDirective(GraphQLDirectiveType type, String ifArgumentValue)` - Creates a new instance of the GraphQLArgument with provided [`GraphQLDirectiveType`](#graphqldirectivetype) and variable name.
+
+`GraphQLDirective(GraphQLDirectiveType type, Boolean ifArgumentValue)` - Creates a new instance of the GraphQLArgument with provided [`GraphQLDirectiveType`](#graphqldirectivetype) and if condition.
+
+---
+
 ## GraphQLRequest
 
 This is a wrapper for the GraphQL request. It will be utilized for sending an HTTP request.
@@ -489,7 +515,19 @@ This is an enum type representing available GraphQL scalar (and a couple of othe
 `x_Boolean` - Default scalar GraphQL Boolean type.  
 `x_DateTime` - Scalar GraphQL DateTime type.  
 `x_Date` - Scalar GraphQL Date type.  
+`x_Null` - Null GraphQL type.  
 `x_Object` - Any other type that needs to be passed to arguments (e.g. any custom type or input).
+
+---
+
+## GraphQLDirectiveType
+
+This is an enum type representing standard GraphQL directives: include and skip.
+
+### Values
+
+`Include` - Defines if we need to include a node (field).  
+`Skip` - Defines if we need to NOT include a node (field).
 
 ---
 

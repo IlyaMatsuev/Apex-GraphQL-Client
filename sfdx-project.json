@@ -3,8 +3,8 @@
         {
             "path": "./src",
             "package": "gql-apex-client",
-            "versionName": "Version 1.1",
-            "versionNumber": "1.1.0.NEXT",
+            "versionName": "Version 1.2",
+            "versionNumber": "1.2.0.0",
             "default": true
         }
     ],
@@ -19,6 +19,7 @@
         "gql-apex-client@0.0.0-3": "04t5Y000001ELb4QAG",
         "gql-apex-client@0.0.0-4": "04t5Y000001ELb9QAG",
         "gql-apex-client@1.0.0-1": "04t5Y000001ELgFQAW",
-        "gql-apex-client@1.1.0-1": "04t5Y000001ELhrQAG"
+        "gql-apex-client@1.1.0-1": "04t5Y000001ELhrQAG",
+        "gql-apex-client@1.2.0-0": "04t5Y000001wLvEQAU"
     }
 }

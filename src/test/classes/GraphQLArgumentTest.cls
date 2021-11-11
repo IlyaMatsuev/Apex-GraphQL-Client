@@ -150,6 +150,15 @@ private class GraphQLArgumentTest {
     }
 
     @IsTest
+    private static void stringifyNullArgumentTest() {
+        String key = 'key';
+
+        GraphQLArgument argument = new GraphQLArgument(key, null);
+
+        System.assertEquals(((String) null), argument.toString());
+    }
+
+    @IsTest
     private static void stringifyObjectArgumentTest() {
         String key = 'key';
         Map<String, Object> value = new Map<String, Object>{ 'key1' => 'value', 'key2' => 2 };
@@ -158,5 +167,31 @@ private class GraphQLArgumentTest {
 
         // Fields order is reversed
         System.assertEquals('{key2:2,key1:"value"}', argument.toString());
+    }
+
+    @IsTest
+    private static void parseStringArgumentTest() {
+        String key = 'key';
+        String value = 'value';
+
+        GraphQLArgument argument = new GraphQLArgument(key, value);
+
+        System.assertEquals(
+            key +
+            CommonConstants.COLON +
+            CommonConstants.DOUBLE_QUOTES +
+            value +
+            CommonConstants.DOUBLE_QUOTES,
+            argument.parse(null, false)
+        );
+        System.assertEquals(
+            key +
+            CommonConstants.COLON +
+            CommonConstants.SPACE +
+            CommonConstants.DOUBLE_QUOTES +
+            value +
+            CommonConstants.DOUBLE_QUOTES,
+            argument.parse(null, true)
+        );
     }
 }

@@ -1,4 +1,4 @@
-global class GraphQLArgument {
+global class GraphQLArgument implements IGraphQLParser {
     // Searches for all JSON property names. Needed to escape properties' double quotes
     private static final String REPLACE_JSON_PROPS_REGEXP = '"(\\w+)"\\s*:';
     // Takes the first match from the regex
@@ -34,12 +34,14 @@ global class GraphQLArgument {
     }
 
     global Boolean isVariable() {
-        return value instanceof String && ((String) value).startsWith(CommonConstants.DOLLAR);
+        return value instanceof String &&
+            value != null &&
+            ((String) value).startsWith(CommonConstants.DOLLAR);
     }
 
     global override String toString() {
         switch on type {
-            when x_Integer, x_Float, x_Boolean {
+            when x_Integer, x_Float, x_Boolean, x_Null {
                 return String.valueOf(value);
             }
             when x_String {
@@ -64,6 +66,13 @@ global class GraphQLArgument {
         }
     }
 
+    public String parse(GraphQLNodeBase node, Boolean pretty) {
+        return key +
+            CommonConstants.COLON +
+            (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY) +
+            this;
+    }
+
     // There is no way to get an object's type yet
     private GraphQLArgumentType getArgumentTypeByValue(Object value) {
         if (value instanceof Integer || value instanceof Long) {
@@ -78,6 +87,8 @@ global class GraphQLArgument {
             return GraphQLArgumentType.x_Date;
         } else if (value instanceof DateTime || value instanceof Time) {
             return GraphQLArgumentType.x_DateTime;
+        } else if (value == null) {
+            return GraphQLArgumentType.x_Null;
         } else {
             return GraphQLArgumentType.x_Object;
         }
@@ -85,8 +96,5 @@ global class GraphQLArgument {
 
     private DateTime dateToDateTime(Date dateValue) {
         return DateTime.newInstance(dateValue.year(), dateValue.month(), dateValue.day());
-    }
-
-    private class GraphQLArgumentException extends Exception {
     }
 }
