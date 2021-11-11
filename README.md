@@ -1,6 +1,6 @@
 # Saleforce Apex GraphQL Client
 
-[![CI](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml/badge.svg?branch=dev)](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml)
+[![CI](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml/badge.svg?branch=main)](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml)
 [![codecov](https://codecov.io/gh/IlyaMatsuev/Apex-GraphQL-Client/branch/main/graph/badge.svg?token=ZOSPAKZTGC)](https://codecov.io/gh/IlyaMatsuev/Apex-GraphQL-Client)
 
 This is a package for Salesforce that aimed to provide a convenient way to communicate with a GraphQL server via Apex.
@@ -37,29 +37,24 @@ There are a few options for you to deploy/download the project
 
 ### Download a package
 
-This project is available as a Salesforce package. So, you can just install it by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001ELhrQAG) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001ELhrQAG).
+This project is available as a Salesforce package. So, you can just install it by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001wLvEQAU) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001wLvEQAU).
 
 If you prefer using salesforce CLI you can simply run:
 
 ```bash
-sfdx force:package:install --wait 10 --publishwait 10 --package gql-apex-client@1.1.0-1 --noprompt -u {ORG_ALIAS}
+sfdx force:package:install --wait 10 --publishwait 10 --package gql-apex-client@1.2.0-0 --noprompt -u {ORG_ALIAS}
 ```
 
 ### Deploy from source
 
-1. Clone the project
+1. Clone the project go to the root project directory
 
 ```bash
 git clone https://github.com/IlyaMatsuev/Apex-GraphQL-Client.git
-```
-
-2. Go to the root project directory
-
-```bash
 cd ./apex-graphql-client
 ```
 
-3. If you want to deploy the project to a dev org or an existing scratch org you should use this:
+2. If you want to deploy the project to a dev org or an existing scratch org you should use this:
 
 Windows:
 
@@ -87,7 +82,7 @@ MacOS/Linux:
 sh ./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS}
 ```
 
-4. Follow the instructions in the script (if there are)
+3. Follow the instructions in the script (if there are)
 
 ## Usage
 
