@@ -3,7 +3,7 @@
 [![CI](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml/badge.svg?branch=main)](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml)
 [![codecov](https://codecov.io/gh/IlyaMatsuev/Apex-GraphQL-Client/branch/main/graph/badge.svg?token=ZOSPAKZTGC)](https://codecov.io/gh/IlyaMatsuev/Apex-GraphQL-Client)
 
-This is a package for Salesforce that aimed to provide a convenient way to communicate with a GraphQL server via Apex.
+The package for Salesforce that aimed to provide a convenient way to communicate with a GraphQL server via Apex.
 
 What is supported:
 
@@ -22,71 +22,7 @@ What is NOT supported:
 
 If you think there is something that is not implemented yet as for GraphQL client I'd appreciate if you open an issue/discussion in this repository.
 
-### Content
-
--   [Installation](#installation)
--   [Usage](#usage)
--   [Documentaiton](#documentation)
--   [Questions](#questions)
--   [Contributing](#contributing)
--   [License](#license)
-
-## Installation
-
-There are a few options for you to deploy/download the project
-
-### Download a package
-
-This project is available as a Salesforce package. So, you can just install it by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001wLvEQAU) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001wLvEQAU).
-
-If you prefer using salesforce CLI you can simply run:
-
-```bash
-sfdx force:package:install --wait 10 --publishwait 10 --package gql-apex-client@1.2.0-0 --noprompt -u {ORG_ALIAS}
-```
-
-### Deploy from source
-
-1. Clone the project go to the root project directory
-
-```bash
-git clone https://github.com/IlyaMatsuev/Apex-GraphQL-Client.git
-cd ./apex-graphql-client
-```
-
-2. If you want to deploy the project to a dev org or an existing scratch org you should use this:
-
-Windows:
-
-```bash
-./scripts/sh/update-org.sh {ORG_ALIAS}
-```
-
-MacOS/Linux:
-
-```bash
-sh ./scripts/sh/update-org.sh {ORG_ALIAS}
-```
-
-If you upload sources to a new scratch org, then run init script with such parameters as scratch alias, dev hub alias, and amount of days the scratch will expire (optional).
-
-Windows:
-
-```bash
-./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS}
-```
-
-MacOS/Linux:
-
-```bash
-sh ./scripts/sh/init-scratch.sh {SCRATCH_ALIAS} {DEV_HUB_ALIAS} {EXPIRED_IN_DAYS}
-```
-
-3. Follow the instructions in the script (if there are)
-
-## Usage
-
-All examples can be found [here](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/docs/examples).
+## Overview
 
 ### Generate a GraphQL node
 
@@ -123,7 +59,7 @@ GraphQL query statement:
 
 ```bash
 query {
-  countries(filter: "Berlin", count: 1) {
+  countries(filter: "Bel", count: 1) {
     name
     capital
     currency
@@ -141,7 +77,7 @@ GraphQLNode countriesNode = new GraphQLNode(
     'countries',
     new List<String> { 'name', 'capital', 'currency' }
 )
-    .withArgument('filter', 'Berlin')
+    .withArgument('filter', 'Bel')
     .withArgument('count', 1);
 
 GraphQLNode continentsNode = new GraphQLNode(
@@ -195,9 +131,38 @@ GraphQLResponse response = client.send(request);
 ...
 ```
 
+All examples can be found [here](docs/examples/).
+
+## Installation
+
+### From Unmanaged Package
+
+You can just install the package by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001wLvEQAU) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001wLvEQAU).
+
+If you prefer using salesforce CLI you can simply run:
+
+```bash
+sfdx force:package:install -p 04t5Y000001wLvEQAU -w 10 -b 10 -u <username>
+```
+
+### From Source
+
+You can also install the package with the automated scripts: [`update-org.sh`](scripts/update-org.sh) and [`init-scratch.sh`](scripts/init-scratch.sh).
+First is for deploying changes to the existing org.
+
+```bash
+./scripts/update-org.sh <username_or_alias>
+```
+
+Second is for creating a new configured scratch org.
+
+```bash
+./scripts/init-scratch.sh <devhub_username_or_alias> <new_scratch_org_alias>
+```
+
 ## Documentation
 
-The documentation describes all Apex types and usage cases for them. Please see it [here](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/docs).
+The documentation describes all Apex types and usage cases for them. Please see it [here](docs).
 
 ## Questions
 
@@ -210,4 +175,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-[MIT](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/blob/main/LICENSE)
+[MIT](LICENSE)

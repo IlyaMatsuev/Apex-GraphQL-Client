@@ -1,7 +1,5 @@
 # Type Definitions
 
-This unit describes the Apex classes of the package that can be used for working with GraphQL API.
-
 ### Classes:
 
 -   [GraphQLNode](#graphqlnode)
