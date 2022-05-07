@@ -6,14 +6,18 @@ labels: ""
 assignees: IlyaMatsuev
 ---
 
-**What is missing from the application? Please describe.**
-A clear and concise description of what the problem is. Ex. I'd like to see an implementation of [...]
+### What is missing from the application? Please describe.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+_A clear and concise description of what the problem is. Ex. I'd like to see an implementation of [...]_
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+### Describe the solution you'd like
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+_A clear and concise description of what you want to happen._
+
+### Describe alternatives you've considered
+
+_A clear and concise description of any alternative solutions or features you've considered._
+
+### Additional context
+
+_Add any other context or screenshots about the feature request here._

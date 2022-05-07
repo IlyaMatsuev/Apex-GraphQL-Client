@@ -1,3 +1,9 @@
+#!/bin/sh
+
+# This script creates a new scratch org with deployed and configured package
+# The script requires at least 2 parameters: devhub username/alias and new scratch org alias
+# Example: ./scripts/init-scratch.sh dev.hub@test.com test.scratch@test.com
+
 default_scratch_duration=7
 
 scratch_alias=$1

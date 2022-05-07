@@ -1,3 +1,8 @@
+#!/bin/sh
+
+# This script deploys and configures the package to the sandbox or dev org by the provided username or alias
+# Example: ./scripts/update-org.sh test.sandbox@test.com
+
 org_alias=$1
 
 if [[ -z "$org_alias" ]]
