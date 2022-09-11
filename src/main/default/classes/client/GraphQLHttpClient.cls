@@ -47,12 +47,12 @@ global class GraphQLHttpClient implements IGraphQLClient {
     private HttpRequest prepareRequest(RequestWrapper gqlRequest) {
         HttpRequest request = new HttpRequest();
         request.setEndpoint(endpoint);
-        request.setMethod(HttpConstants.METHOD_POST);
+        request.setMethod('POST');
 
         request.setTimeout(REQUEST_TIMEOUT);
 
-        request.setHeader(HttpConstants.HEADER_NAME_CONTENT_TYPE, HttpConstants.HEADER_VALUE_MIMETYPE_JSON);
-        request.setHeader(HttpConstants.HEADER_NAME_ACCEPT, HttpConstants.HEADER_VALUE_MIMETYPE_JSON);
+        request.setHeader('Content-Type', 'application/json');
+        request.setHeader('Accept', 'application/json');
 
         for (String header : gqlRequest.headers.keySet()) {
             request.setHeader(header, gqlRequest.headers.get(header));

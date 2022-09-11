@@ -88,8 +88,8 @@ private class GraphQLHttpClientTest {
     private static StaticResourceCalloutMock getServerMock(String responseBodyFileName) {
         StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
         mock.setStaticResource(responseBodyFileName);
-        mock.setStatusCode(HttpConstants.STATUS_CODE_SUCCESS);
-        mock.setHeader(HttpConstants.HEADER_NAME_CONTENT_TYPE, HttpConstants.HEADER_VALUE_MIMETYPE_JSON);
+        mock.setStatusCode(200);
+        mock.setHeader('Content-Type', 'application/json');
         return mock;
     }
 
