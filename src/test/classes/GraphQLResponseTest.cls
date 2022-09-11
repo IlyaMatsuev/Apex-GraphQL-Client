@@ -5,10 +5,8 @@ private class GraphQLResponseTest {
         String message = 'Error!';
         GraphQLResponseError error = new GraphQLResponseError(message);
         GraphQLResponse response = new GraphQLResponse(error);
-
         System.assert(response.hasErrors());
         System.assert(!response.hasData());
-
         List<GraphQLResponseError> responseErrors = response.getErrors();
         System.assertEquals(1, responseErrors.size());
         System.assertEquals(message, responseErrors.get(0).message);
@@ -19,11 +17,9 @@ private class GraphQLResponseTest {
 
     @IsTest
     private static void parseFromResponseJsonTest() {
-        GraphQLResponse response = GraphQLResponse.parse(getResponseBody('GraphQLResponse_OneError_OneNode'));
-
+        GraphQLResponse response = prepareErrorResponse();
         System.assert(response.hasErrors());
         System.assert(response.hasData());
-
         Map<String, Object> responseData = response.getData();
         Map<String, Object> hero = (Map<String, Object>) response.getDataNode('hero');
         List<GraphQLResponseError> responseErrors = response.getErrors();
@@ -46,9 +42,7 @@ private class GraphQLResponseTest {
 
     @IsTest
     private static void getErrorExtensionsAsTypeTest() {
-        List<GraphQLResponseError> errors = GraphQLResponse.parse(getResponseBody('GraphQLResponse_OneError_OneNode'))
-            .getErrors();
-
+        List<GraphQLResponseError> errors = prepareErrorResponse().getErrors();
         GraphQLResponseError firstError = errors.get(0);
         ErrorExtensionsWrapper extensions = (ErrorExtensionsWrapper) firstError
             .getExtensionsAs(ErrorExtensionsWrapper.class);
@@ -59,8 +53,7 @@ private class GraphQLResponseTest {
 
     @IsTest
     private static void getDataAsTypeTest() {
-        GraphQLResponse response = GraphQLResponse.parse(getResponseBody('GraphQLResponse_NoErrors_OneNode'));
-
+        GraphQLResponse response = prepareNoErrorsResponse();
         DataWrapper responseData = (DataWrapper) response.getDataAs(DataWrapper.class);
         System.assert(response.hasData());
         System.assert(!response.hasErrors());
@@ -73,8 +66,7 @@ private class GraphQLResponseTest {
 
     @IsTest
     private static void getDataNodeAsTypeTest() {
-        GraphQLResponse response = GraphQLResponse.parse(getResponseBody('GraphQLResponse_NoErrors_OneNode'));
-
+        GraphQLResponse response = prepareNoErrorsResponse();
         HeroWrapper hero = (HeroWrapper) response.getDataNodeAs('hero', HeroWrapper.class);
         System.assert(response.hasData());
         System.assert(!response.hasErrors());
@@ -84,12 +76,43 @@ private class GraphQLResponseTest {
         System.assertEquals(2, hero.heroFriends.size());
     }
 
-    private static String getResponseBody(String fileName) {
-        List<StaticResource> resources = [SELECT Body FROM StaticResource WHERE Name = :fileName LIMIT 1];
-        if (resources.isEmpty()) {
-            throw new QueryException(Label.NoTestJsonLoadedError.replace(CommonConstants.FIRST_FORMAT_PARAM, fileName));
-        }
-        return resources.get(0).Body.toString();
+    private static GraphQLResponse prepareNoErrorsResponse() {
+        Map<String, Object> response = new Map<String, Object>{
+            'data' => new Map<String, Object>{
+                'hero' => new Map<String, Object>{
+                    'name' => 'R2-D2',
+                    'heroFriends' => new List<Object>{
+                        new Map<String, Object>{ 'id' => '1000', 'name' => 'Luke Skywalker' },
+                        new Map<String, Object>{ 'id' => '1003', 'name' => 'Leia Organa' }
+                    }
+                }
+            }
+        };
+        return GraphQLResponse.parse(JSON.serialize(response));
+    }
+
+    private static GraphQLResponse prepareErrorResponse() {
+        Map<String, Object> response = new Map<String, Object>{
+            'errors' => new List<Object>{
+                new Map<String, Object>{
+                    'message' => 'Name for character with ID 1002 could not be fetched.',
+                    'locations' => new List<Object>{ new Map<String, Object>{ 'line' => 6, 'column' => 7 } },
+                    'path' => new List<Object>{ 'hero', 'heroFriends', 1, 'name' },
+                    'extensions' => new Map<String, Object>{ 'code' => 200, 'customField' => 'Test!' }
+                }
+            },
+            'data' => new Map<String, Object>{
+                'hero' => new Map<String, Object>{
+                    'name' => 'R2-D2',
+                    'heroFriends' => new List<Object>{
+                        new Map<String, Object>{ 'id' => '1000', 'name' => 'Luke Skywalker' },
+                        null,
+                        new Map<String, Object>{ 'id' => '1003', 'name' => 'Leia Organa' }
+                    }
+                }
+            }
+        };
+        return GraphQLResponse.parse(JSON.serialize(response));
     }
 
     private class DataWrapper {
