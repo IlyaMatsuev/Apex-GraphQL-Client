@@ -33,7 +33,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
                 putError(
                     error,
                     Label.UnexpectedResponseFormatError +
-                    CommonConstants.LINE_BREAK +
+                    GraphQLConstants.LINE_BREAK +
                     httpResponse.getBody()
                 )
             );
@@ -63,7 +63,12 @@ global class GraphQLHttpClient implements IGraphQLClient {
     }
 
     private GraphQLResponseError putError(Exception error, String message) {
-        System.debug(LoggingLevel.ERROR, error.getMessage() + CommonConstants.LINE_BREAK + error.getStackTraceString());
+        System.debug(
+            LoggingLevel.ERROR,
+            error.getMessage() +
+            GraphQLConstants.LINE_BREAK +
+            error.getStackTraceString()
+        );
         return new GraphQLResponseError(message);
     }
 

@@ -70,7 +70,12 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES, argument.toString());
+        System.assertEquals(
+            GraphQLConstants.DOUBLE_QUOTES +
+            value +
+            GraphQLConstants.DOUBLE_QUOTES,
+            argument.toString()
+        );
     }
 
     @IsTest
@@ -91,9 +96,9 @@ private class GraphQLArgumentTest {
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
         System.assertEquals(
-            CommonConstants.DOUBLE_QUOTES +
+            GraphQLConstants.DOUBLE_QUOTES +
             UserInfo.getUserId() +
-            CommonConstants.DOUBLE_QUOTES,
+            GraphQLConstants.DOUBLE_QUOTES,
             argument.toString()
         );
     }
@@ -105,7 +110,12 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES, argument.toString());
+        System.assertEquals(
+            GraphQLConstants.DOUBLE_QUOTES +
+            value +
+            GraphQLConstants.DOUBLE_QUOTES,
+            argument.toString()
+        );
     }
 
     @IsTest
@@ -117,9 +127,9 @@ private class GraphQLArgumentTest {
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
         System.assertEquals(
-            CommonConstants.DOUBLE_QUOTES +
+            GraphQLConstants.DOUBLE_QUOTES +
             dateValue.format('MM/dd/yyyy') +
-            CommonConstants.DOUBLE_QUOTES,
+            GraphQLConstants.DOUBLE_QUOTES,
             argument.toString()
         );
     }
@@ -132,9 +142,9 @@ private class GraphQLArgumentTest {
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
         System.assertEquals(
-            CommonConstants.DOUBLE_QUOTES +
+            GraphQLConstants.DOUBLE_QUOTES +
             String.valueOf(value) +
-            CommonConstants.DOUBLE_QUOTES,
+            GraphQLConstants.DOUBLE_QUOTES,
             argument.toString()
         );
     }
@@ -168,19 +178,19 @@ private class GraphQLArgumentTest {
 
         System.assertEquals(
             key +
-            CommonConstants.COLON +
-            CommonConstants.DOUBLE_QUOTES +
+            GraphQLConstants.COLON +
+            GraphQLConstants.DOUBLE_QUOTES +
             value +
-            CommonConstants.DOUBLE_QUOTES,
+            GraphQLConstants.DOUBLE_QUOTES,
             argument.parse(null, false)
         );
         System.assertEquals(
             key +
-            CommonConstants.COLON +
-            CommonConstants.SPACE +
-            CommonConstants.DOUBLE_QUOTES +
+            GraphQLConstants.COLON +
+            GraphQLConstants.SPACE +
+            GraphQLConstants.DOUBLE_QUOTES +
             value +
-            CommonConstants.DOUBLE_QUOTES,
+            GraphQLConstants.DOUBLE_QUOTES,
             argument.parse(null, true)
         );
     }

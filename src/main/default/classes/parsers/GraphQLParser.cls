@@ -13,7 +13,7 @@ public abstract class GraphQLParser implements IGraphQLParser {
     protected String parseNode(GraphQLNode node, Integer depth, Boolean pretty) {
         if (depth >= maxQueryDepth) {
             throw new GraphQLBaseParserException(
-                Label.MaxRequestDepthError.replace(CommonConstants.FIRST_FORMAT_PARAM, String.valueOf(maxQueryDepth))
+                Label.MaxRequestDepthError.replace(GraphQLConstants.FIRST_FORMAT_PARAM, String.valueOf(maxQueryDepth))
             );
         }
 
@@ -25,43 +25,43 @@ public abstract class GraphQLParser implements IGraphQLParser {
 
     protected String parseChildNodes(GraphQLNodeBase node, Integer depth, Boolean pretty) {
         if (!node.hasNodes()) {
-            return CommonConstants.EMPTY;
+            return GraphQLConstants.EMPTY;
         }
 
-        String childNodes = CommonConstants.EMPTY;
+        String childNodes = GraphQLConstants.EMPTY;
 
         if (pretty && String.isNotBlank(node.name)) {
-            childNodes += CommonConstants.SPACE;
+            childNodes += GraphQLConstants.SPACE;
         }
 
-        childNodes += CommonConstants.BRACE_LEFT;
-        childNodes += pretty ? CommonConstants.LINE_BREAK : CommonConstants.EMPTY;
+        childNodes += GraphQLConstants.BRACE_LEFT;
+        childNodes += pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.EMPTY;
 
         List<String> rawNodes = new List<String>();
         for (GraphQLNode n : node.nodes) {
             rawNodes.add(parseNode(n, depth + 1, pretty));
         }
 
-        childNodes += String.join(rawNodes, pretty ? CommonConstants.LINE_BREAK : CommonConstants.COMMA);
+        childNodes += String.join(rawNodes, pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.COMMA);
 
         if (pretty) {
-            childNodes += CommonConstants.LINE_BREAK + getIndent(depth, pretty);
+            childNodes += GraphQLConstants.LINE_BREAK + getIndent(depth, pretty);
         }
 
-        childNodes += CommonConstants.BRACE_RIGHT;
+        childNodes += GraphQLConstants.BRACE_RIGHT;
 
         return childNodes;
     }
 
     protected String getIndent(Integer depth, Boolean pretty) {
         if (!pretty) {
-            return CommonConstants.EMPTY;
+            return GraphQLConstants.EMPTY;
         }
-        return CommonConstants.SPACE.repeat(depth * defaultIndent);
+        return GraphQLConstants.SPACE.repeat(depth * defaultIndent);
     }
 
     protected String getSmallIndent(Boolean pretty) {
-        return pretty ? CommonConstants.SPACE : CommonConstants.EMPTY;
+        return pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY;
     }
 
     private String parseNodeName(GraphQLNode node, Integer depth, Boolean pretty) {
@@ -70,14 +70,14 @@ public abstract class GraphQLParser implements IGraphQLParser {
 
     private String parseAlias(GraphQLNode node, Boolean pretty) {
         if (String.isBlank(node.alias)) {
-            return CommonConstants.EMPTY;
+            return GraphQLConstants.EMPTY;
         }
-        return node.alias + CommonConstants.COLON + getSmallIndent(pretty);
+        return node.alias + GraphQLConstants.COLON + getSmallIndent(pretty);
     }
 
     private String parseArguments(GraphQLNode node, Boolean pretty) {
         if (!node.hasArguments()) {
-            return CommonConstants.EMPTY;
+            return GraphQLConstants.EMPTY;
         }
 
         List<String> rawArguments = new List<String>();
@@ -85,14 +85,14 @@ public abstract class GraphQLParser implements IGraphQLParser {
             rawArguments.add(argument.parse(node, pretty));
         }
 
-        return CommonConstants.PARENTHESE_LEFT +
-            String.join(rawArguments, CommonConstants.COMMA + getSmallIndent(pretty)) +
-            CommonConstants.PARENTHESE_RIGHT;
+        return GraphQLConstants.PARENTHESE_LEFT +
+            String.join(rawArguments, GraphQLConstants.COMMA + getSmallIndent(pretty)) +
+            GraphQLConstants.PARENTHESE_RIGHT;
     }
 
     private String parseDirectives(GraphQLNode node, Boolean pretty) {
         if (!node.hasDirectives()) {
-            return CommonConstants.EMPTY;
+            return GraphQLConstants.EMPTY;
         }
 
         List<String> rawDirectives = new List<String>();
@@ -100,7 +100,7 @@ public abstract class GraphQLParser implements IGraphQLParser {
             rawDirectives.add(directive.parse(node, pretty));
         }
 
-        return CommonConstants.SPACE + String.join(rawDirectives, CommonConstants.SPACE);
+        return GraphQLConstants.SPACE + String.join(rawDirectives, GraphQLConstants.SPACE);
     }
 
     private class GraphQLBaseParserException extends Exception {

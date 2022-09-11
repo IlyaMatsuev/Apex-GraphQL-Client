@@ -30,7 +30,7 @@ global class GraphQLArgument implements IGraphQLParser {
     }
 
     global Boolean isVariable() {
-        return value instanceof String && value != null && ((String) value).startsWith(CommonConstants.DOLLAR);
+        return value instanceof String && value != null && ((String) value).startsWith(GraphQLConstants.DOLLAR);
     }
 
     global override String toString() {
@@ -41,17 +41,17 @@ global class GraphQLArgument implements IGraphQLParser {
             when x_String {
                 return isVariable()
                     ? (String) value
-                    : CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES;
+                    : GraphQLConstants.DOUBLE_QUOTES + value + GraphQLConstants.DOUBLE_QUOTES;
             }
             when x_DateTime {
-                return CommonConstants.DOUBLE_QUOTES +
+                return GraphQLConstants.DOUBLE_QUOTES +
                     ((DateTime) value).format(DATE_TIME_VALUE_FORMAT) +
-                    CommonConstants.DOUBLE_QUOTES;
+                    GraphQLConstants.DOUBLE_QUOTES;
             }
             when x_Date {
-                return CommonConstants.DOUBLE_QUOTES +
+                return GraphQLConstants.DOUBLE_QUOTES +
                     dateToDateTime((Date) value).format(DATE_VALUE_FORMAT) +
-                    CommonConstants.DOUBLE_QUOTES;
+                    GraphQLConstants.DOUBLE_QUOTES;
             }
             when else {
                 return JSON.serialize(value, SUPPRESS_NULLS)
@@ -61,7 +61,7 @@ global class GraphQLArgument implements IGraphQLParser {
     }
 
     public String parse(GraphQLNodeBase node, Boolean pretty) {
-        return key + CommonConstants.COLON + (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY) + this;
+        return key + GraphQLConstants.COLON + (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) + this;
     }
 
     // There is no way to get an object's type yet

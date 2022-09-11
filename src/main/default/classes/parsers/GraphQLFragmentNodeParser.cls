@@ -8,11 +8,11 @@ public class GraphQLFragmentNodeParser extends GraphQLParser {
 
     private String parse(GraphQLFragmentNode fragment, Integer depth, Boolean pretty) {
         return FRAGMENT_KEYWORD +
-            CommonConstants.SPACE +
+            GraphQLConstants.SPACE +
             fragment.name +
-            CommonConstants.SPACE +
+            GraphQLConstants.SPACE +
             ON_TYPE_KEYWORD +
-            CommonConstants.SPACE +
+            GraphQLConstants.SPACE +
             fragment.type +
             parseChildNodes(fragment, depth, pretty);
     }

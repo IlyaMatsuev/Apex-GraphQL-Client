@@ -4,7 +4,7 @@ global class GraphQLNode extends GraphQLNodeBase {
     global final Map<GraphQLDirectiveType, GraphQLDirective> directives = new Map<GraphQLDirectiveType, GraphQLDirective>();
 
     global GraphQLNode() {
-        this(CommonConstants.EMPTY);
+        this(GraphQLConstants.EMPTY);
     }
 
     global GraphQLNode(String name) {
@@ -12,11 +12,11 @@ global class GraphQLNode extends GraphQLNodeBase {
     }
 
     global GraphQLNode(List<GraphQLNode> nodes) {
-        this(CommonConstants.EMPTY, nodes);
+        this(GraphQLConstants.EMPTY, nodes);
     }
 
     global GraphQLNode(List<String> fields) {
-        this(CommonConstants.EMPTY, fields);
+        this(GraphQLConstants.EMPTY, fields);
     }
 
     global GraphQLNode(String name, List<GraphQLNode> nodes) {

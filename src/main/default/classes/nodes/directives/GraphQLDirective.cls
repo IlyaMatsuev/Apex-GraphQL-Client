@@ -21,16 +21,16 @@ global class GraphQLDirective implements IGraphQLParser {
     }
 
     public String parse(GraphQLNodeBase node, Boolean pretty) {
-        return CommonConstants.AT +
+        return GraphQLConstants.AT +
             this.type.name().toLowerCase() +
-            CommonConstants.PARENTHESE_LEFT +
+            GraphQLConstants.PARENTHESE_LEFT +
             ifArgument.parse(node, pretty) +
-            CommonConstants.PARENTHESE_RIGHT;
+            GraphQLConstants.PARENTHESE_RIGHT;
     }
 
     private Object toVariableIfPossible(Object argument) {
-        if (argument instanceof String && !((String) argument).startsWith(CommonConstants.DOLLAR)) {
-            return CommonConstants.DOLLAR + argument;
+        if (argument instanceof String && !((String) argument).startsWith(GraphQLConstants.DOLLAR)) {
+            return GraphQLConstants.DOLLAR + argument;
         }
         return argument;
     }

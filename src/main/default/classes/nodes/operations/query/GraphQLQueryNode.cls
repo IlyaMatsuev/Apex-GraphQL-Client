@@ -1,6 +1,6 @@
 global class GraphQLQueryNode extends GraphQLOperationNode implements IGraphQLRequestBuilder {
     global GraphQLQueryNode() {
-        this(CommonConstants.EMPTY);
+        this(GraphQLConstants.EMPTY);
     }
 
     global GraphQLQueryNode(String alias) {

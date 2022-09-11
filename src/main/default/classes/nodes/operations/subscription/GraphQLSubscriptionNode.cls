@@ -1,6 +1,6 @@
 global class GraphQLSubscriptionNode extends GraphQLOperationNode {
     global GraphQLSubscriptionNode() {
-        this(CommonConstants.EMPTY);
+        this(GraphQLConstants.EMPTY);
     }
 
     global GraphQLSubscriptionNode(String alias) {

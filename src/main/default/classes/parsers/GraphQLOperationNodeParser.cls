@@ -16,34 +16,34 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
     }
 
     private String parseName(GraphQLOperationNode node, Boolean pretty) {
-        return String.isBlank(node.name) ? getSmallIndent(pretty) : (CommonConstants.SPACE + node.name);
+        return String.isBlank(node.name) ? getSmallIndent(pretty) : (GraphQLConstants.SPACE + node.name);
     }
 
     private String parseVariables(GraphQLOperationNode node, Boolean pretty) {
         if (!node.hasVariables()) {
-            return CommonConstants.EMPTY;
+            return GraphQLConstants.EMPTY;
         }
 
         List<String> rawVariableDefinitions = new List<String>();
         for (String name : node.variables.keySet()) {
             rawVariableDefinitions.add(
-                CommonConstants.DOLLAR +
+                GraphQLConstants.DOLLAR +
                 name +
-                CommonConstants.COLON +
+                GraphQLConstants.COLON +
                 getSmallIndent(pretty) +
                 node.variables.get(name)
             );
         }
 
-        return CommonConstants.PARENTHESE_LEFT +
-            String.join(rawVariableDefinitions, CommonConstants.COMMA + getSmallIndent(pretty)) +
-            CommonConstants.PARENTHESE_RIGHT +
+        return GraphQLConstants.PARENTHESE_LEFT +
+            String.join(rawVariableDefinitions, GraphQLConstants.COMMA + getSmallIndent(pretty)) +
+            GraphQLConstants.PARENTHESE_RIGHT +
             getSmallIndent(pretty);
     }
 
     private String parseFragments(GraphQLOperationNode node, Integer depth, Boolean pretty) {
         if (!node.hasFragments()) {
-            return CommonConstants.EMPTY;
+            return GraphQLConstants.EMPTY;
         }
 
         List<String> rawFragments = new List<String>();
@@ -54,6 +54,6 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
     }
 
     private String getLineBreakIndent(Boolean pretty) {
-        return pretty ? CommonConstants.LINE_BREAK : CommonConstants.EMPTY;
+        return pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.EMPTY;
     }
 }

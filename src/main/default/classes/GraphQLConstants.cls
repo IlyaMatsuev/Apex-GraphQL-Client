@@ -1,4 +1,4 @@
-public class CommonConstants {
+public class GraphQLConstants {
     public static final String EMPTY = '';
     public static final String DOT = '.';
     public static final String COMMA = ',';

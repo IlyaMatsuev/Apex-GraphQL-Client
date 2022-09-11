@@ -4,7 +4,7 @@ private class GraphQLNodeTest {
     private static void emptyNodeTest() {
         GraphQLNode node = new GraphQLNode();
 
-        System.assertEquals(CommonConstants.EMPTY, node.name);
+        System.assertEquals(GraphQLConstants.EMPTY, node.name);
         System.assertEquals(0, node.nodes.size());
         System.assertEquals(0, node.arguments.size());
     }
@@ -26,7 +26,7 @@ private class GraphQLNodeTest {
 
         GraphQLNode node = new GraphQLNode(childNodes);
 
-        System.assertEquals(CommonConstants.EMPTY, node.name);
+        System.assertEquals(GraphQLConstants.EMPTY, node.name);
         System.assertEquals(childNodes.size(), node.nodes.size());
         System.assertEquals(0, node.arguments.size());
         System.assert(node.hasNode(childNodes.get(0)));
@@ -51,7 +51,7 @@ private class GraphQLNodeTest {
 
         GraphQLNode node = new GraphQLNode(fields);
 
-        System.assertEquals(CommonConstants.EMPTY, node.name);
+        System.assertEquals(GraphQLConstants.EMPTY, node.name);
         System.assertEquals(fields.size(), node.nodes.size());
         System.assertEquals(0, node.arguments.size());
     }
@@ -96,7 +96,7 @@ private class GraphQLNodeTest {
         GraphQLNode node = new GraphQLNode().withFragment(fragmentName);
 
         System.assertEquals(1, node.nodes.size());
-        System.assertEquals(CommonConstants.DOT.repeat(3) + fragmentName, node.nodes.get(0).name);
+        System.assertEquals(GraphQLConstants.DOT.repeat(3) + fragmentName, node.nodes.get(0).name);
     }
 
     @IsTest
@@ -106,8 +106,8 @@ private class GraphQLNodeTest {
         GraphQLNode node = new GraphQLNode().withFragments(fragments);
 
         System.assertEquals(fragments.size(), node.nodes.size());
-        System.assertEquals(CommonConstants.DOT.repeat(3) + 'FieldSet1', node.nodes.get(0).name);
-        System.assertEquals(CommonConstants.DOT.repeat(3) + 'FieldSet12', node.nodes.get(1).name);
+        System.assertEquals(GraphQLConstants.DOT.repeat(3) + 'FieldSet1', node.nodes.get(0).name);
+        System.assertEquals(GraphQLConstants.DOT.repeat(3) + 'FieldSet12', node.nodes.get(1).name);
     }
 
     @IsTest
@@ -227,7 +227,7 @@ private class GraphQLNodeTest {
         GraphQLNode node = new GraphQLNode().withFields(fields).withFragment('SomeFields');
 
         System.assert(node != null);
-        System.assertEquals(CommonConstants.EMPTY, node.name);
+        System.assertEquals(GraphQLConstants.EMPTY, node.name);
         System.assertEquals(fields.size() + 1, node.nodes.size());
         System.assertEquals('{field1,field2,field3,...SomeFields}', node.build());
         System.assertEquals('{\n  field1\n  field2\n  field3\n  ...SomeFields\n}', node.build(true));
@@ -298,7 +298,7 @@ private class GraphQLNodeTest {
         System.assert(rootNode != null);
         System.assertEquals(firstMethodName, firstNode.name);
         System.assertEquals(secondMethodName, secondNode.name);
-        System.assertEquals(CommonConstants.EMPTY, rootNode.name);
+        System.assertEquals(GraphQLConstants.EMPTY, rootNode.name);
         System.assertEquals(firstMethodFields.size(), firstNode.nodes.size());
         System.assertEquals(secondMethodFields.size(), secondNode.nodes.size());
         System.assertEquals(childrenNodes.size(), rootNode.nodes.size());

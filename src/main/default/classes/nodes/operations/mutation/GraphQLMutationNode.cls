@@ -1,6 +1,6 @@
 global class GraphQLMutationNode extends GraphQLOperationNode implements IGraphQLRequestBuilder {
     global GraphQLMutationNode() {
-        this(CommonConstants.EMPTY);
+        this(GraphQLConstants.EMPTY);
     }
 
     global GraphQLMutationNode(String alias) {

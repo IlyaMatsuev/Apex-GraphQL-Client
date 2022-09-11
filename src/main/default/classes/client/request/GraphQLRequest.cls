@@ -69,7 +69,7 @@ global class GraphQLRequest {
             throw new GraphQLRequestException(Label.InvalidRequestStringNodeError);
         }
 
-        String operationName = tokens.get(CommonConstants.FIRST_ELEMENT);
+        String operationName = tokens.get(GraphQLConstants.FIRST_ELEMENT);
         if (operationName == GraphQLOperation.Mutation.name().toLowerCase()) {
             return GraphQLOperation.Mutation;
         } else if (operationName == GraphQLOperation.Subscription.name().toLowerCase()) {
