@@ -70,12 +70,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            CommonConstants.DOUBLE_QUOTES +
-            value +
-            CommonConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals(CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES, argument.toString());
     }
 
     @IsTest
@@ -110,12 +105,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            CommonConstants.DOUBLE_QUOTES +
-            value +
-            CommonConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals(CommonConstants.DOUBLE_QUOTES + value + CommonConstants.DOUBLE_QUOTES, argument.toString());
     }
 
     @IsTest

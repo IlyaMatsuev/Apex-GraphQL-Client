@@ -1,15 +1,13 @@
 {
-  "trailingComma": "none",
   "tabWidth": 4,
-  "printWidth": 100,
+  "printWidth": 120,
+  "singleQuote": true,
   "overrides": [
     {
-      "files": "**/lwc/**/*.html",
-      "options": { "parser": "lwc" }
-    },
-    {
-      "files": "*.{cmp,page,component}",
-      "options": { "parser": "html" }
+      "files": ["*.yml", "*.json", ".prettierrc"],
+      "options": {
+        "tabWidth": 2
+      }
     }
   ]
 }

@@ -13,12 +13,7 @@ global class GraphQLFragmentNode extends GraphQLNodeBase {
         this(name, type, new List<GraphQLNode>(), fields);
     }
 
-    global GraphQLFragmentNode(
-        String name,
-        String type,
-        List<GraphQLNode> nodes,
-        List<String> fields
-    ) {
+    global GraphQLFragmentNode(String name, String type, List<GraphQLNode> nodes, List<String> fields) {
         super(name, nodes, fields);
         this.type = type;
     }

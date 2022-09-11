@@ -34,9 +34,7 @@ global class GraphQLArgument implements IGraphQLParser {
     }
 
     global Boolean isVariable() {
-        return value instanceof String &&
-            value != null &&
-            ((String) value).startsWith(CommonConstants.DOLLAR);
+        return value instanceof String && value != null && ((String) value).startsWith(CommonConstants.DOLLAR);
     }
 
     global override String toString() {
@@ -67,10 +65,7 @@ global class GraphQLArgument implements IGraphQLParser {
     }
 
     public String parse(GraphQLNodeBase node, Boolean pretty) {
-        return key +
-            CommonConstants.COLON +
-            (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY) +
-            this;
+        return key + CommonConstants.COLON + (pretty ? CommonConstants.SPACE : CommonConstants.EMPTY) + this;
     }
 
     // There is no way to get an object's type yet

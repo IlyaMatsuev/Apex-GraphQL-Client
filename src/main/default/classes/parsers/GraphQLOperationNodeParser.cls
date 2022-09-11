@@ -16,9 +16,7 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
     }
 
     private String parseName(GraphQLOperationNode node, Boolean pretty) {
-        return String.isBlank(node.name)
-            ? getSmallIndent(pretty)
-            : (CommonConstants.SPACE + node.name);
+        return String.isBlank(node.name) ? getSmallIndent(pretty) : (CommonConstants.SPACE + node.name);
     }
 
     private String parseVariables(GraphQLOperationNode node, Boolean pretty) {

@@ -147,17 +147,16 @@ sfdx force:package:install -p 04t5Y000001wLvEQAU -w 10 -b 10 -u <username>
 
 ### From Source
 
-You can also install the package with the automated scripts: [`update-org.sh`](scripts/update-org.sh) and [`init-scratch.sh`](scripts/init-scratch.sh).
-First is for deploying changes to the existing org.
+You can also install the package with the automated scripts: [`pkg-deploy.sh`](scripts/pkg-deploy.sh) and [`pkg-from-scratch.sh`](scripts/pkg-from-scratch.sh). First is for deploying changes to the existing org:
 
 ```bash
-./scripts/update-org.sh <username_or_alias>
+./scripts/pkg-deploy.sh <username>
 ```
 
-Second is for creating a new configured scratch org.
+Second is for creating a new configured scratch org:
 
 ```bash
-./scripts/init-scratch.sh <devhub_username_or_alias> <new_scratch_org_alias>
+./scripts/pkg-from-scratch.sh <devhub_username> <scratch_username>
 ```
 
 ## Documentation

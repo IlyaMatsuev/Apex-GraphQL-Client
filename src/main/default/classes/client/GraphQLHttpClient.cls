@@ -10,9 +10,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
     );
 
     global GraphQLHttpClient() {
-        this.endpoint = GraphQLConfigurationManager.getConfiguration(
-            GraphQLConfiguration.DefaultGraphQLEndpoint
-        );
+        this.endpoint = GraphQLConfigurationManager.getConfiguration(GraphQLConfiguration.DefaultGraphQLEndpoint);
         if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
             throw new GraphQLHttpClientException(Label.NoEndpointProvidedError);
         }
@@ -27,9 +25,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
     }
 
     global Id sendAsync(GraphQLRequest request, IGraphQLResponseCallback callback) {
-        return System.enqueueJob(
-            new QueuableRequestWrapper(this, new RequestWrapper(request), callback)
-        );
+        return System.enqueueJob(new QueuableRequestWrapper(this, new RequestWrapper(request), callback));
     }
 
     private GraphQLResponse send(RequestWrapper request) {
@@ -60,14 +56,8 @@ global class GraphQLHttpClient implements IGraphQLClient {
 
         request.setTimeout(REQUEST_TIMEOUT);
 
-        request.setHeader(
-            HttpConstants.HEADER_NAME_CONTENT_TYPE,
-            HttpConstants.HEADER_VALUE_MIMETYPE_JSON
-        );
-        request.setHeader(
-            HttpConstants.HEADER_NAME_ACCEPT,
-            HttpConstants.HEADER_VALUE_MIMETYPE_JSON
-        );
+        request.setHeader(HttpConstants.HEADER_NAME_CONTENT_TYPE, HttpConstants.HEADER_VALUE_MIMETYPE_JSON);
+        request.setHeader(HttpConstants.HEADER_NAME_ACCEPT, HttpConstants.HEADER_VALUE_MIMETYPE_JSON);
 
         for (String header : gqlRequest.headers.keySet()) {
             request.setHeader(header, gqlRequest.headers.get(header));
@@ -78,12 +68,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
     }
 
     private GraphQLResponseError putError(Exception error, String message) {
-        System.debug(
-            LoggingLevel.ERROR,
-            error.getMessage() +
-            CommonConstants.LINE_BREAK +
-            error.getStackTraceString()
-        );
+        System.debug(LoggingLevel.ERROR, error.getMessage() + CommonConstants.LINE_BREAK + error.getStackTraceString());
         return new GraphQLResponseError(message);
     }
 

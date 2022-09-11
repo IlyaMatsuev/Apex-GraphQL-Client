@@ -30,10 +30,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void emptySubscriptionWithChildNodesTest() {
-        List<GraphQLNode> childNodes = new List<GraphQLNode>{
-            new GraphQLNode('node1'),
-            new GraphQLNode('node2')
-        };
+        List<GraphQLNode> childNodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(childNodes);
 
@@ -45,10 +42,7 @@ private class GraphQLSubscriptionNodeTest {
     private static void namedSubscriptionWithChildNodeTest() {
         String nodeName = 'Test';
 
-        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(
-            nodeName,
-            new GraphQLNode('node1')
-        );
+        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, new GraphQLNode('node1'));
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(1, node.nodes.size());
@@ -57,10 +51,7 @@ private class GraphQLSubscriptionNodeTest {
     @IsTest
     private static void namedSubscriptionWithChildNodesTest() {
         String nodeName = 'Test';
-        List<GraphQLNode> childNodes = new List<GraphQLNode>{
-            new GraphQLNode('node1'),
-            new GraphQLNode('node2')
-        };
+        List<GraphQLNode> childNodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, childNodes);
 
@@ -140,8 +131,7 @@ private class GraphQLSubscriptionNodeTest {
     private static void subscriptionWithNodeTest() {
         String nodeName = 'node1';
 
-        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode()
-            .withNode(new GraphQLNode(nodeName));
+        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withNode(new GraphQLNode(nodeName));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(nodeName, node.nodes.get(0).name);
@@ -149,10 +139,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void subscriptionWithNodesTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{
-            new GraphQLNode('node1'),
-            new GraphQLNode('node2')
-        };
+        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withNodes(nodes);
 
@@ -176,10 +163,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void buildSubscriptionPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{
-            new GraphQLNode('field1'),
-            new GraphQLNode('field2')
-        };
+        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('field1'), new GraphQLNode('field2') };
         List<String> fields = new List<String>{ 'field3', 'field4' };
 
         GraphQLSubscriptionNode subscription = new GraphQLSubscriptionNode()
@@ -192,10 +176,7 @@ private class GraphQLSubscriptionNodeTest {
         System.assert(String.isBlank(subscription.name));
         System.assertEquals(nodes.size() + fields.size(), subscription.nodes.size());
         System.assertEquals('subscription{field1,field2,field3,field4}', subscription.build());
-        System.assertEquals(
-            'subscription {\n  field1\n  field2\n  field3\n  field4\n}',
-            subscription.build(true)
-        );
+        System.assertEquals('subscription {\n  field1\n  field2\n  field3\n  field4\n}', subscription.build(true));
     }
 
     @IsTest
@@ -229,17 +210,11 @@ private class GraphQLSubscriptionNodeTest {
     private static void buildSubscriptionWithChildNodesPositiveTest() {
         List<GraphQLNode> nodes = new List<GraphQLNode>{
             new GraphQLNode('field1'),
-            new GraphQLNode(
-                'field2',
-                new List<GraphQLNode>{ new GraphQLNode('field21'), new GraphQLNode('field22') }
-            ),
+            new GraphQLNode('field2', new List<GraphQLNode>{ new GraphQLNode('field21'), new GraphQLNode('field22') }),
             new GraphQLNode('field3')
         };
 
-        GraphQLSubscriptionNode subscription = new GraphQLSubscriptionNode(
-                'TestSubscription',
-                nodes
-            )
+        GraphQLSubscriptionNode subscription = new GraphQLSubscriptionNode('TestSubscription', nodes)
             .withField('field1');
 
         System.assert(Subscription != null);

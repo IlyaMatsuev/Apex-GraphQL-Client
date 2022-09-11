@@ -13,7 +13,7 @@ query CountriesQuery($limit: Int) {
 }
 */
 
-String query = 
+String query =
     'query CountriesQuery($limit: Int) {' +
     '    countries(filter: "Bel") {' +
     '        name' +

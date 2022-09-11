@@ -1,9 +1,24 @@
-**/staticresources/**
-.localdevserver
-.sfdx
-.vscode
-.github
+# IDE
+**/.idea/
 
-coverage/
+# SFDX
+.sfdx/
+.sf/
+.localdevserver/
+IlluminatedCloud/
 
-*.xml
+# Dependencies
+**/node_modules/
+**/package-lock.json
+
+# Build
+**/build/
+**/dist/
+
+# System Files
+.DS_Store
+*.db
+*.ini
+
+# Logs
+*.log

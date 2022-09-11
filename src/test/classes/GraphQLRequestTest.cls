@@ -57,10 +57,7 @@ private class GraphQLRequestTest {
 
         System.assertEquals(GraphQLOperation.Query, request.operation);
         System.assertEquals('{"query":"query{field1,field2}"}', request.toString());
-        System.assertEquals(
-            '{\n  "query" : "query {\\n  field1\\n  field2\\n}"\n}',
-            request.toString(true)
-        );
+        System.assertEquals('{\n  "query" : "query {\\n  field1\\n  field2\\n}"\n}', request.toString(true));
     }
 
     @IsTest
@@ -85,10 +82,7 @@ private class GraphQLRequestTest {
 
         System.assertEquals(operation, request.operation);
         System.assertEquals('{"query":"mutation{field1,field2}"}', request.toString());
-        System.assertEquals(
-            '{\n  "query" : "mutation {\\n  field1\\n  field2\\n}"\n}',
-            request.toString(true)
-        );
+        System.assertEquals('{\n  "query" : "mutation {\\n  field1\\n  field2\\n}"\n}', request.toString(true));
     }
 
     @IsTest
@@ -109,9 +103,6 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(node).withVariable('param', 'value');
 
-        System.assertEquals(
-            '{"variables":{"param":"value"},"query":"mutation{field1,field2}"}',
-            request.toString()
-        );
+        System.assertEquals('{"variables":{"param":"value"},"query":"mutation{field1,field2}"}', request.toString());
     }
 }

@@ -22,10 +22,7 @@ public class GraphQLConfigurationManager {
     public static String getConfiguration(String configName) {
         if (!configurations.containsKey(configName)) {
             throw new GraphQLConfigurationManagerException(
-                Label.NoCustomMetadataConfigError.replace(
-                    CommonConstants.FIRST_FORMAT_PARAM,
-                    configName
-                )
+                Label.NoCustomMetadataConfigError.replace(CommonConstants.FIRST_FORMAT_PARAM, configName)
             );
         }
         return configurations.get(configName).ConfigurationValue__c;

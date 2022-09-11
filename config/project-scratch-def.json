@@ -1,10 +1,10 @@
 {
-    "orgName": "GraphQL Apex Client",
-    "edition": "Developer",
-    "features": [],
-    "settings": {
-        "lightningExperienceSettings": {
-            "enableS1DesktopEnabled": true
-        }
+  "orgName": "GraphQL Apex Client",
+  "edition": "Developer",
+  "features": [],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
     }
+  }
 }

@@ -3,10 +3,7 @@ private class GraphQLDirectiveTest {
     @IsTest
     private static void parseDirectiveWithBooleanPositiveTest() {
         Boolean include = true;
-        GraphQLDirective includeDirective = new GraphQLDirective(
-            GraphQLDirectiveType.Include,
-            include
-        );
+        GraphQLDirective includeDirective = new GraphQLDirective(GraphQLDirectiveType.Include, include);
 
         System.assertEquals('@include(if: true)', includeDirective.parse(null, true));
         System.assertEquals('@include(if:true)', includeDirective.parse(null, false));

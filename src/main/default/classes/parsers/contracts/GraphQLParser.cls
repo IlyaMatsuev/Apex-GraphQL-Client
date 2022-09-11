@@ -18,10 +18,7 @@ public abstract class GraphQLParser implements IGraphQLParser {
     protected String parseNode(GraphQLNode node, Integer depth, Boolean pretty) {
         if (depth >= maxQueryDepth) {
             throw new GraphQLBaseParserException(
-                Label.MaxRequestDepthError.replace(
-                    CommonConstants.FIRST_FORMAT_PARAM,
-                    String.valueOf(maxQueryDepth)
-                )
+                Label.MaxRequestDepthError.replace(CommonConstants.FIRST_FORMAT_PARAM, String.valueOf(maxQueryDepth))
             );
         }
 
@@ -50,10 +47,7 @@ public abstract class GraphQLParser implements IGraphQLParser {
             rawNodes.add(parseNode(n, depth + 1, pretty));
         }
 
-        childNodes += String.join(
-            rawNodes,
-            pretty ? CommonConstants.LINE_BREAK : CommonConstants.COMMA
-        );
+        childNodes += String.join(rawNodes, pretty ? CommonConstants.LINE_BREAK : CommonConstants.COMMA);
 
         if (pretty) {
             childNodes += CommonConstants.LINE_BREAK + getIndent(depth, pretty);

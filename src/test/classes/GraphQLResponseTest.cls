@@ -19,9 +19,7 @@ private class GraphQLResponseTest {
 
     @IsTest
     private static void parseFromResponseJsonTest() {
-        GraphQLResponse response = GraphQLResponse.parse(
-            getResponseBody('GraphQLResponse_OneError_OneNode')
-        );
+        GraphQLResponse response = GraphQLResponse.parse(getResponseBody('GraphQLResponse_OneError_OneNode'));
 
         System.assert(response.hasErrors());
         System.assert(response.hasData());
@@ -48,9 +46,7 @@ private class GraphQLResponseTest {
 
     @IsTest
     private static void getErrorExtensionsAsTypeTest() {
-        List<GraphQLResponseError> errors = GraphQLResponse.parse(
-                getResponseBody('GraphQLResponse_OneError_OneNode')
-            )
+        List<GraphQLResponseError> errors = GraphQLResponse.parse(getResponseBody('GraphQLResponse_OneError_OneNode'))
             .getErrors();
 
         GraphQLResponseError firstError = errors.get(0);
@@ -63,9 +59,7 @@ private class GraphQLResponseTest {
 
     @IsTest
     private static void getDataAsTypeTest() {
-        GraphQLResponse response = GraphQLResponse.parse(
-            getResponseBody('GraphQLResponse_NoErrors_OneNode')
-        );
+        GraphQLResponse response = GraphQLResponse.parse(getResponseBody('GraphQLResponse_NoErrors_OneNode'));
 
         DataWrapper responseData = (DataWrapper) response.getDataAs(DataWrapper.class);
         System.assert(response.hasData());
@@ -79,9 +73,7 @@ private class GraphQLResponseTest {
 
     @IsTest
     private static void getDataNodeAsTypeTest() {
-        GraphQLResponse response = GraphQLResponse.parse(
-            getResponseBody('GraphQLResponse_NoErrors_OneNode')
-        );
+        GraphQLResponse response = GraphQLResponse.parse(getResponseBody('GraphQLResponse_NoErrors_OneNode'));
 
         HeroWrapper hero = (HeroWrapper) response.getDataNodeAs('hero', HeroWrapper.class);
         System.assert(response.hasData());
@@ -93,16 +85,9 @@ private class GraphQLResponseTest {
     }
 
     private static String getResponseBody(String fileName) {
-        List<StaticResource> resources = [
-            SELECT Body
-            FROM StaticResource
-            WHERE Name = :fileName
-            LIMIT 1
-        ];
+        List<StaticResource> resources = [SELECT Body FROM StaticResource WHERE Name = :fileName LIMIT 1];
         if (resources.isEmpty()) {
-            throw new QueryException(
-                Label.NoTestJsonLoadedError.replace(CommonConstants.FIRST_FORMAT_PARAM, fileName)
-            );
+            throw new QueryException(Label.NoTestJsonLoadedError.replace(CommonConstants.FIRST_FORMAT_PARAM, fileName));
         }
         return resources.get(0).Body.toString();
     }
