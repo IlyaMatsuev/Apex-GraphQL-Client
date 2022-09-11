@@ -1,13 +1,8 @@
 public abstract class GraphQLParser implements IGraphQLParser {
     private static final Integer INITIAL_DEPTH = 0;
 
-    protected final Integer maxQueryDepth = GraphQLConfigurationManager.getConfigurationAsInt(
-        GraphQLConfiguration.MaxQueryDepth
-    );
-
-    protected final Integer defaultIndent = GraphQLConfigurationManager.getConfigurationAsInt(
-        GraphQLConfiguration.QueryIndentSize
-    );
+    protected final Integer maxQueryDepth = GraphQLConfigManager.getInteger(GraphQLConfig.MaxQueryDepth);
+    protected final Integer defaultIndent = GraphQLConfigManager.getInteger(GraphQLConfig.QueryIndentSize);
 
     public String parse(GraphQLNodeBase node, Boolean pretty) {
         return parse(node, INITIAL_DEPTH, pretty);

@@ -1,23 +1,18 @@
 global class GraphQLHttpClient implements IGraphQLClient {
     private final String endpoint;
 
-    private static final Integer REQUEST_TIMEOUT = GraphQLConfigurationManager.getConfigurationAsInt(
-        GraphQLConfiguration.RequestTimeout
-    );
-
-    private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigurationManager.getConfigurationAsBool(
-        GraphQLConfiguration.SendPrettyQuery
-    );
+    private static final Integer REQUEST_TIMEOUT = GraphQLConfigManager.getInteger(GraphQLConfig.RequestTimeout);
+    private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigManager.getBoolean(GraphQLConfig.SendPrettyQuery);
 
     global GraphQLHttpClient() {
-        this.endpoint = GraphQLConfigurationManager.getConfiguration(GraphQLConfiguration.DefaultGraphQLEndpoint);
-        if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
-            throw new GraphQLHttpClientException(Label.NoEndpointProvidedError);
-        }
+        this(GraphQLConfigManager.getString(GraphQLConfig.DefaultGraphQLEndpoint));
     }
 
     global GraphQLHttpClient(String endpoint) {
         this.endpoint = endpoint;
+        if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
+            throw new GraphQLHttpClientException(Label.NoEndpointProvidedError);
+        }
     }
 
     global GraphQLResponse send(GraphQLRequest request) {

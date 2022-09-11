@@ -4,16 +4,12 @@ global class GraphQLArgument implements IGraphQLParser {
     // Takes the first match from the regex
     private static final String ESCAPED_PROP_NAME_EXP = '$1:';
 
-    private static final String DATE_VALUE_FORMAT = GraphQLConfigurationManager.getConfiguration(
-        GraphQLConfiguration.DateArgumentFormat
+    private static final String DATE_VALUE_FORMAT = GraphQLConfigManager.getString(GraphQLConfig.DateArgumentFormat);
+    private static final String DATE_TIME_VALUE_FORMAT = GraphQLConfigManager.getString(
+        GraphQLConfig.DateTimeArgumentFormat
     );
-
-    private static final String DATE_TIME_VALUE_FORMAT = GraphQLConfigurationManager.getConfiguration(
-        GraphQLConfiguration.DateTimeArgumentFormat
-    );
-
-    private static final Boolean SUPPRESS_NULLS = GraphQLConfigurationManager.getConfigurationAsBool(
-        GraphQLConfiguration.SupressNullsForObjectArguments
+    private static final Boolean SUPPRESS_NULLS = GraphQLConfigManager.getBoolean(
+        GraphQLConfig.SupressNullsForObjectArguments
     );
 
     global final String key;

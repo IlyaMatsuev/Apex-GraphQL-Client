@@ -86,8 +86,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>NoEndpointProvidedError</shortDescription>
-        <value
-        >GraphQL endpoint cannot be empty. Use another constructor or specify default endpoint in the custom metadata</value>
+        <value>GraphQL endpoint cannot be empty. Use another constructor or specify default endpoint in the custom metadata</value>
     </labels>
     <labels>
         <fullName>InvalidRequestStringNodeError</fullName>

@@ -10,5 +10,5 @@
     <testClassName>GraphQLResponseTest</testClassName>
     <testClassName>GraphQLHttpClientTest</testClassName>
     <testClassName>GraphQLSubscriptionNodeTest</testClassName>
-    <testClassName>GraphQLConfigurationManagerTest</testClassName>
+    <testClassName>GraphQLConfigManagerTest</testClassName>
 </ApexTestSuite>

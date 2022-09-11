@@ -1,4 +1,4 @@
-public enum GraphQLConfiguration {
+public enum GraphQLConfig {
     MaxQueryDepth,
     QueryIndentSize,
     SupressNullsForObjectArguments,
