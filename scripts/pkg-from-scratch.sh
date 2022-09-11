@@ -40,10 +40,4 @@ sfdx force:org:create -f ./config/project-scratch-def.json -v "$devhub_alias" -a
         && sfdx force:org:create -f ./config/project-scratch-def.json -v "$devhub_alias" -a "$scratch_alias" -d "$days"\
     ) || { exit 1; }
 
-info "Deploying to $scratch_alias..."
-sfdx force:source:deploy -u "$scratch_alias" -p ./src || { exit 1; }
-
-info "Assigning permissions..."
-sfdx force:user:permset:assign -n GraphQLApexClientUser -u "$scratch_alias"
-
-info "Deployment has been finished.\\nOpen the org with 'sfdx force:org:open -u $scratch_alias'"
+sh ./scripts/pkg-deploy.sh "$scratch_alias"

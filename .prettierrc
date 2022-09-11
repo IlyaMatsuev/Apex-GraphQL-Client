@@ -4,6 +4,13 @@
   "singleQuote": true,
   "overrides": [
     {
+      "files": "*.xml",
+      "options": {
+        "printWidth": 220,
+        "bracketSameLine": true
+      }
+    },
+    {
       "files": ["*.yml", "*.json", ".prettierrc"],
       "options": {
         "tabWidth": 2
