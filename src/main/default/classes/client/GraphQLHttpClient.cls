@@ -11,7 +11,9 @@ global class GraphQLHttpClient implements IGraphQLClient {
     global GraphQLHttpClient(String endpoint) {
         this.endpoint = endpoint;
         if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
-            throw new GraphQLHttpClientException('GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata');
+            throw new GraphQLHttpClientException(
+                'GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata'
+            );
         }
     }
 

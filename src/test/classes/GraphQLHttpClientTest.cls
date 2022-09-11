@@ -14,7 +14,10 @@ private class GraphQLHttpClientTest {
 
         System.assert(client == null);
         System.assert(error != null);
-        System.assertEquals('GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata', error.getMessage());
+        System.assertEquals(
+            'GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata',
+            error.getMessage()
+        );
     }
 
     /**
