@@ -28,6 +28,9 @@ private class GraphQLDirectiveTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(Label.NullDirectiveArgumentError, error.getMessage());
+        System.assertEquals(
+            'Directive argument value cannot be null. It should be either Boolean or variable',
+            error.getMessage()
+        );
     }
 }

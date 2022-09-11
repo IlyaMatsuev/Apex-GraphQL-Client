@@ -397,6 +397,6 @@ private class GraphQLNodeTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(Label.EmptyNodeError, error.getMessage());
+        System.assertEquals('Cannot parse an empty node without any child nodes', error.getMessage());
     }
 }

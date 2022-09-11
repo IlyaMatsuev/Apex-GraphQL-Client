@@ -22,9 +22,7 @@ public class GraphQLConfigManager {
 
     private static String get(String configName) {
         if (String.isBlank(configName) || !configsByName.containsKey(configName)) {
-            throw new GraphQLConfigManagerException(
-                Label.NoCustomMetadataConfigError.replace(GraphQLConstants.FIRST_FORMAT_PARAM, configName)
-            );
+            throw new GraphQLConfigManagerException('There is no such configuration entry: ' + configName);
         }
         return configsByName.get(configName).Value__c;
     }

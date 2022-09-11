@@ -14,7 +14,7 @@ private class GraphQLHttpClientTest {
 
         System.assert(client == null);
         System.assert(error != null);
-        System.assertEquals(Label.NoEndpointProvidedError, error.getMessage());
+        System.assertEquals('GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata', error.getMessage());
     }
 
     /**
@@ -65,7 +65,7 @@ private class GraphQLHttpClientTest {
         List<GraphQLResponseError> errors = response.getErrors();
 
         System.assertEquals(1, errors.size());
-        System.assert(errors.get(0).message.startsWith(Label.UnexpectedResponseFormatError));
+        System.assert(errors.get(0).message.startsWith('Got invalid response format from the server'));
     }
 
     @IsTest

@@ -48,7 +48,7 @@ global class GraphQLResponse {
     public static GraphQLResponse parse(String jsonResponse) {
         Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(jsonResponse);
         if (!responseMap.containsKey(ERRORS_FIELD) && !responseMap.containsKey(DATA_FIELD)) {
-            throw new JSONException(Label.InvalidGraphQLResponseError);
+            throw new JSONException('GraphQL response must have at least "errors" or "data" fields');
         }
         return new GraphQLResponse(responseMap);
     }

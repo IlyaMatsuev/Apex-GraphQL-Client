@@ -32,7 +32,7 @@ private class GraphQLRequestTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(Label.InvalidRequestStringNodeError, error.getMessage());
+        System.assertEquals('The provided string node is empty or in invalid format', error.getMessage());
     }
 
     @IsTest
@@ -46,7 +46,7 @@ private class GraphQLRequestTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(Label.NotAllowedRequestOperationError, error.getMessage());
+        System.assertEquals('This operation is not allowed for GraphQL request', error.getMessage());
     }
 
     @IsTest
@@ -70,7 +70,7 @@ private class GraphQLRequestTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(Label.RequestNodeOfIncorrectTypeError, error.getMessage());
+        System.assertEquals('The request node should be an instance of IGraphQLRequestBuilder', error.getMessage());
     }
 
     @IsTest

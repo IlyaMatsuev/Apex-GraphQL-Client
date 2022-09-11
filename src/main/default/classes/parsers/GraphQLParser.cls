@@ -12,9 +12,7 @@ public abstract class GraphQLParser implements IGraphQLParser {
 
     protected String parseNode(GraphQLNode node, Integer depth, Boolean pretty) {
         if (depth >= maxQueryDepth) {
-            throw new GraphQLBaseParserException(
-                Label.MaxRequestDepthError.replace(GraphQLConstants.FIRST_FORMAT_PARAM, String.valueOf(maxQueryDepth))
-            );
+            throw new GraphQLBaseParserException('Maximum request depth level is ' + String.valueOf(maxQueryDepth));
         }
 
         return parseNodeName(node, depth, pretty) +

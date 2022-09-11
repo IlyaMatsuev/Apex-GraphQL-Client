@@ -11,7 +11,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
     global GraphQLHttpClient(String endpoint) {
         this.endpoint = endpoint;
         if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
-            throw new GraphQLHttpClientException(Label.NoEndpointProvidedError);
+            throw new GraphQLHttpClientException('GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata');
         }
     }
 
@@ -32,13 +32,15 @@ global class GraphQLHttpClient implements IGraphQLClient {
             gqlResponse = new GraphQLResponse(
                 putError(
                     error,
-                    Label.UnexpectedResponseFormatError +
+                    'Got invalid response format from the server' +
                     GraphQLConstants.LINE_BREAK +
                     httpResponse.getBody()
                 )
             );
         } catch (Exception error) {
-            gqlResponse = new GraphQLResponse(putError(error, Label.UnexpectedClientError));
+            gqlResponse = new GraphQLResponse(
+                putError(error, 'Something went wrong with the client. See debug logs for details')
+            );
         }
 
         return gqlResponse;

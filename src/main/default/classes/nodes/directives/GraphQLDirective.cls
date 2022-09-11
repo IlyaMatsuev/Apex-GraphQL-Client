@@ -14,7 +14,9 @@ global class GraphQLDirective implements IGraphQLParser {
 
     private GraphQLDirective(GraphQLDirectiveType type, Object ifArgumentValue) {
         if (ifArgumentValue == null) {
-            throw new GraphQLDirectiveException(Label.NullDirectiveArgumentError);
+            throw new GraphQLDirectiveException(
+                'Directive argument value cannot be null. It should be either Boolean or variable'
+            );
         }
         this.type = type;
         this.ifArgument = new GraphQLArgument(IF_ARG_NAME, toVariableIfPossible(ifArgumentValue));

@@ -19,7 +19,7 @@ global class GraphQLRequest {
         this.node = node;
 
         if (!(node instanceof IGraphQLRequestBuilder)) {
-            throw new GraphQLRequestException(Label.RequestNodeOfIncorrectTypeError);
+            throw new GraphQLRequestException('The request node should be an instance of IGraphQLRequestBuilder');
         }
     }
 
@@ -66,14 +66,14 @@ global class GraphQLRequest {
     private GraphQLOperation recognizeOperation(String stringNode) {
         List<String> tokens = stringNode?.split('\\W');
         if (tokens == null || tokens.isEmpty()) {
-            throw new GraphQLRequestException(Label.InvalidRequestStringNodeError);
+            throw new GraphQLRequestException('The provided string node is empty or in invalid format');
         }
 
         String operationName = tokens.get(GraphQLConstants.FIRST_ELEMENT);
         if (operationName == GraphQLOperation.Mutation.name().toLowerCase()) {
             return GraphQLOperation.Mutation;
         } else if (operationName == GraphQLOperation.Subscription.name().toLowerCase()) {
-            throw new GraphQLRequestException(Label.NotAllowedRequestOperationError);
+            throw new GraphQLRequestException('This operation is not allowed for GraphQL request');
         } else {
             return GraphQLOperation.Query;
         }
