@@ -1,5 +1,5 @@
 public class GraphQLOperationNodeParser extends GraphQLParser {
-    public override String parse(GraphQLNodeBase node, Integer depth, Boolean pretty) {
+    public override String parse(GraphQLBaseNode node, Integer depth, Boolean pretty) {
         return parse((GraphQLOperationNode) node, depth, pretty);
     }
 

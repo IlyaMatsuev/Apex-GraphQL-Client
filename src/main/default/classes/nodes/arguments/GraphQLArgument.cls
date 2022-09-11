@@ -60,7 +60,7 @@ global class GraphQLArgument implements IGraphQLParser {
         }
     }
 
-    public String parse(GraphQLNodeBase node, Boolean pretty) {
+    public String parse(GraphQLBaseNode node, Boolean pretty) {
         return key + GraphQLConstants.COLON + (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) + this;
     }
 

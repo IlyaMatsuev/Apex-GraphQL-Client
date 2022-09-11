@@ -1,7 +1,7 @@
 global class GraphQLRequest {
     global final GraphQLOperation operation;
     global final Map<String, String> customHeaders = new Map<String, String>();
-    private final GraphQLNodeBase node;
+    private final GraphQLBaseNode node;
     private String stringNode;
     private Map<String, Object> variables;
 
@@ -10,11 +10,11 @@ global class GraphQLRequest {
         this.operation = recognizeOperation(stringNode);
     }
 
-    global GraphQLRequest(GraphQLNodeBase node) {
+    global GraphQLRequest(GraphQLBaseNode node) {
         this(null, node);
     }
 
-    global GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase node) {
+    global GraphQLRequest(GraphQLOperation operation, GraphQLBaseNode node) {
         this.operation = operation == null ? GraphQLOperation.Query : operation;
         this.node = node;
 

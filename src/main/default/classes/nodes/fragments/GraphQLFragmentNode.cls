@@ -1,4 +1,4 @@
-global class GraphQLFragmentNode extends GraphQLNodeBase {
+global class GraphQLFragmentNode extends GraphQLBaseNode {
     global final String type;
 
     global GraphQLFragmentNode(String name, String type) {

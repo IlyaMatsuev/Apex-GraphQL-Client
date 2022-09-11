@@ -1,4 +1,4 @@
-global abstract class GraphQLOperationNode extends GraphQLNodeBase {
+global abstract class GraphQLOperationNode extends GraphQLBaseNode {
     global final Map<String, String> variables = new Map<String, String>();
     global final List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>();
 

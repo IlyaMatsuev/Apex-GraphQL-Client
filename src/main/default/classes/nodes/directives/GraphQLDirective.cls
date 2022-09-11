@@ -20,7 +20,7 @@ global class GraphQLDirective implements IGraphQLParser {
         this.ifArgument = new GraphQLArgument(IF_ARG_NAME, toVariableIfPossible(ifArgumentValue));
     }
 
-    public String parse(GraphQLNodeBase node, Boolean pretty) {
+    public String parse(GraphQLBaseNode node, Boolean pretty) {
         return GraphQLConstants.AT +
             this.type.name().toLowerCase() +
             GraphQLConstants.PARENTHESE_LEFT +

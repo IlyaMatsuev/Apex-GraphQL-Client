@@ -1,4 +1,4 @@
-global class GraphQLNode extends GraphQLNodeBase {
+global class GraphQLNode extends GraphQLBaseNode {
     global String alias { get; private set; }
     global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
     global final Map<GraphQLDirectiveType, GraphQLDirective> directives = new Map<GraphQLDirectiveType, GraphQLDirective>();

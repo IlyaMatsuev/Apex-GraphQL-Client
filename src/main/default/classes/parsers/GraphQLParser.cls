@@ -4,11 +4,11 @@ public abstract class GraphQLParser implements IGraphQLParser {
     protected final Integer maxQueryDepth = GraphQLConfigManager.getInteger(GraphQLConfig.MaxQueryDepth);
     protected final Integer defaultIndent = GraphQLConfigManager.getInteger(GraphQLConfig.QueryIndentSize);
 
-    public String parse(GraphQLNodeBase node, Boolean pretty) {
+    public String parse(GraphQLBaseNode node, Boolean pretty) {
         return parse(node, INITIAL_DEPTH, pretty);
     }
 
-    public abstract String parse(GraphQLNodeBase node, Integer depth, Boolean pretty);
+    public abstract String parse(GraphQLBaseNode node, Integer depth, Boolean pretty);
 
     protected String parseNode(GraphQLNode node, Integer depth, Boolean pretty) {
         if (depth >= maxQueryDepth) {
@@ -23,7 +23,7 @@ public abstract class GraphQLParser implements IGraphQLParser {
             parseChildNodes(node, depth, pretty);
     }
 
-    protected String parseChildNodes(GraphQLNodeBase node, Integer depth, Boolean pretty) {
+    protected String parseChildNodes(GraphQLBaseNode node, Integer depth, Boolean pretty) {
         if (!node.hasNodes()) {
             return GraphQLConstants.EMPTY;
         }
