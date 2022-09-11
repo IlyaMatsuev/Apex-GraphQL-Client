@@ -16,14 +16,14 @@ query CountriesQuery($withCities: Boolean!) {
 
 GraphQLNode countriesNode = new GraphQLNode('countries')
     .withField('name')
-    .withNode(new GraphQLNode('capital', new List<String> { 'id', 'name' }));
+    .withNode(new GraphQLNode('capital', new List<String>{ 'id', 'name' }));
 
-GraphQLNode citiesNode = new GraphQLNode('cities', new List<String> { 'id', 'name' })
+GraphQLNode citiesNode = new GraphQLNode('cities', new List<String>{ 'id', 'name' })
     // Indicate that we want to include this node only if the variable $withCities equals true
     // You can also use .skipIf() method
     .includeIf('withCities');
 
-GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesNode, citiesNode })
+GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode>{ countriesNode, citiesNode })
     // Define our $withCities variable. Note that it needs to be marked as required in order to use it in directives
     .withVariable('withCities', 'Boolean!');
 

@@ -3,10 +3,7 @@ private class GraphQLDirectiveTest {
     @IsTest
     private static void parseDirectiveWithBooleanPositiveTest() {
         Boolean include = true;
-        GraphQLDirective includeDirective = new GraphQLDirective(
-            GraphQLDirectiveType.Include,
-            include
-        );
+        GraphQLDirective includeDirective = new GraphQLDirective(GraphQLDirectiveType.Include, include);
 
         System.assertEquals('@include(if: true)', includeDirective.parse(null, true));
         System.assertEquals('@include(if:true)', includeDirective.parse(null, false));
@@ -31,6 +28,9 @@ private class GraphQLDirectiveTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(Label.NullDirectiveArgumentError, error.getMessage());
+        System.assertEquals(
+            'Directive argument value cannot be null. It should be either Boolean or variable',
+            error.getMessage()
+        );
     }
 }

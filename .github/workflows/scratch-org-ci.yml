@@ -1,10 +1,6 @@
 name: Scratch org CI
 
 on:
-  push:
-    branches:
-      - main
-      - dev
   pull_request:
     branches:
       - main
@@ -63,18 +59,12 @@ jobs:
         run: sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d
 
       - name: 'Create scratch org'
-        run: sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1
+        run: sh ./scripts/pkg-from-scratch.sh devhub scratch-org
 
-      - name: 'Push source to scratch org'
-        run: sfdx force:source:push
+      - name: 'Run Apex Tests'
+        run: sfdx force:apex:test:run -c -r human -d ./coverage/apex -w 20 -u scratch-org
 
-      - name: 'Assign permissionset to default user'
-        run: sfdx force:user:permset:assign -n GraphQLApexClientUser
-
-      - name: 'Run Apex tests'
-        run: sfdx force:apex:test:run -c -r human -d ./coverage/apex -w 20
-
-      - name: 'Upload code coverage for Apex to Codecov.io'
+      - name: 'Upload Test Coverage'
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

@@ -1,7 +1,7 @@
 global class GraphQLRequest {
     global final GraphQLOperation operation;
     global final Map<String, String> customHeaders = new Map<String, String>();
-    private final GraphQLNodeBase node;
+    private final GraphQLBaseNode node;
     private String stringNode;
     private Map<String, Object> variables;
 
@@ -10,16 +10,16 @@ global class GraphQLRequest {
         this.operation = recognizeOperation(stringNode);
     }
 
-    global GraphQLRequest(GraphQLNodeBase node) {
+    global GraphQLRequest(GraphQLBaseNode node) {
         this(null, node);
     }
 
-    global GraphQLRequest(GraphQLOperation operation, GraphQLNodeBase node) {
+    global GraphQLRequest(GraphQLOperation operation, GraphQLBaseNode node) {
         this.operation = operation == null ? GraphQLOperation.Query : operation;
         this.node = node;
 
         if (!(node instanceof IGraphQLRequestBuilder)) {
-            throw new GraphQLRequestException(Label.RequestNodeOfIncorrectTypeError);
+            throw new GraphQLRequestException('The request node should be an instance of IGraphQLRequestBuilder');
         }
     }
 
@@ -66,14 +66,14 @@ global class GraphQLRequest {
     private GraphQLOperation recognizeOperation(String stringNode) {
         List<String> tokens = stringNode?.split('\\W');
         if (tokens == null || tokens.isEmpty()) {
-            throw new GraphQLRequestException(Label.InvalidRequestStringNodeError);
+            throw new GraphQLRequestException('The provided string node is empty or in invalid format');
         }
 
-        String operationName = tokens.get(CommonConstants.FIRST_ELEMENT);
+        String operationName = tokens.get(GraphQLConstants.FIRST_ELEMENT);
         if (operationName == GraphQLOperation.Mutation.name().toLowerCase()) {
             return GraphQLOperation.Mutation;
         } else if (operationName == GraphQLOperation.Subscription.name().toLowerCase()) {
-            throw new GraphQLRequestException(Label.NotAllowedRequestOperationError);
+            throw new GraphQLRequestException('This operation is not allowed for GraphQL request');
         } else {
             return GraphQLOperation.Query;
         }

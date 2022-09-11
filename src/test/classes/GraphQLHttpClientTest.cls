@@ -14,7 +14,10 @@ private class GraphQLHttpClientTest {
 
         System.assert(client == null);
         System.assert(error != null);
-        System.assertEquals(Label.NoEndpointProvidedError, error.getMessage());
+        System.assertEquals(
+            'GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata',
+            error.getMessage()
+        );
     }
 
     /**
@@ -30,7 +33,7 @@ private class GraphQLHttpClientTest {
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
         GraphQLRequest request = query.buildRequest().withHeader('Authorization', 'token');
 
-        Test.setMock(HttpCalloutMock.class, getServerMock('GraphQLResponse_NoErrors_OneNode'));
+        Test.setMock(HttpCalloutMock.class, new CalloutMock());
         Test.startTest();
         GraphQLResponse response = client.send(request);
         Test.stopTest();
@@ -54,7 +57,7 @@ private class GraphQLHttpClientTest {
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
         GraphQLRequest request = query.buildRequest();
 
-        Test.setMock(HttpCalloutMock.class, getServerMock('GraphQLResponse_InvalidFormat'));
+        Test.setMock(HttpCalloutMock.class, new CalloutMock().withInvalidFormat());
         Test.startTest();
         GraphQLResponse response = client.send(request);
         Test.stopTest();
@@ -65,7 +68,7 @@ private class GraphQLHttpClientTest {
         List<GraphQLResponseError> errors = response.getErrors();
 
         System.assertEquals(1, errors.size());
-        System.assert(errors.get(0).message.startsWith(Label.UnexpectedResponseFormatError));
+        System.assert(errors.get(0).message.startsWith('Got invalid response format from the server'));
     }
 
     @IsTest
@@ -77,23 +80,12 @@ private class GraphQLHttpClientTest {
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
         GraphQLRequest request = query.buildRequest().withHeader('Authorization', 'token');
 
-        Test.setMock(HttpCalloutMock.class, getServerMock('GraphQLResponse_NoErrors_OneNode'));
+        Test.setMock(HttpCalloutMock.class, new CalloutMock());
         Test.startTest();
         Id jobId = client.sendAsync(request, new AsyncResponseCallback());
         Test.stopTest();
 
         System.assert(jobId != null);
-    }
-
-    private static StaticResourceCalloutMock getServerMock(String responseBodyFileName) {
-        StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
-        mock.setStaticResource(responseBodyFileName);
-        mock.setStatusCode(HttpConstants.STATUS_CODE_SUCCESS);
-        mock.setHeader(
-            HttpConstants.HEADER_NAME_CONTENT_TYPE,
-            HttpConstants.HEADER_VALUE_MIMETYPE_JSON
-        );
-        return mock;
     }
 
     private class HeroWrapper {
@@ -113,6 +105,34 @@ private class GraphQLHttpClientTest {
             System.assertEquals(null, hero.id);
             System.assertEquals('R2-D2', hero.name);
             System.assertEquals(2, hero.heroFriends.size());
+        }
+    }
+
+    private class CalloutMock implements HttpCalloutMock {
+        private final Map<String, Object> responseBody = new Map<String, Object>{
+            'data' => new Map<String, Object>{
+                'hero' => new Map<String, Object>{
+                    'name' => 'R2-D2',
+                    'heroFriends' => new List<Object>{
+                        new Map<String, Object>{ 'id' => '1000', 'name' => 'Luke Skywalker' },
+                        new Map<String, Object>{ 'id' => '1003', 'name' => 'Leia Organa' }
+                    }
+                }
+            }
+        };
+
+        public HttpResponse respond(HttpRequest request) {
+            HttpResponse response = new HttpResponse();
+            response.setBody(JSON.serialize(responseBody));
+            response.setStatusCode(200);
+            response.setHeader('Content-Type', 'application/json');
+            return response;
+        }
+
+        public CalloutMock withInvalidFormat() {
+            responseBody.clear();
+            responseBody.put('message', 'Error. Not Found');
+            return this;
         }
     }
 }

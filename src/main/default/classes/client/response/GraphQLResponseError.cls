@@ -60,12 +60,7 @@ global class GraphQLResponseError {
         List<Location> locations = new List<Location>();
         for (Object locationObj : (List<Object>) locationsObj) {
             Map<String, Object> locationFields = (Map<String, Object>) locationObj;
-            locations.add(
-                new Location(
-                    (Integer) locationFields.get('line'),
-                    (Integer) locationFields.get('column')
-                )
-            );
+            locations.add(new Location((Integer) locationFields.get('line'), (Integer) locationFields.get('column')));
         }
         return locations;
     }

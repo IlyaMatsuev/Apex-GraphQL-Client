@@ -1,4 +1,4 @@
-name: Enforce branch naming
+name: Enforce Branch Naming
 
 on:
   push:
@@ -10,8 +10,9 @@ jobs:
   validate-branch-name:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Validate a branch name'
+      - name: 'Validate Branch Name'
         uses: deepakputhraya/action-branch-name@master
         with:
           regex: '([a-z])+\/([a-z])+'
+          allowed_prefixes: 'feature,fix'
           min_length: 6

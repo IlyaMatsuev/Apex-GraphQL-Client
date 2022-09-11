@@ -10,7 +10,7 @@ All classes available for use can be found [here](types). There is also a short 
 
 ## Package Configuration
 
-Configuration capabilities are provided by using the Custom Metadata Type `GraphQLClientConfiguration__mdt`. Each records represents some piece of configuration. All existing records are described in the table below:
+Configuration capabilities are provided by using the Custom Metadata Type `GraphQLClientConfig__mdt`. Each record represents a piece of configuration. All existing records are described in the table below:
 
 | Label                               | Name                           | Default Value       | Type    | Description                                                                                      |
 | ----------------------------------- | ------------------------------ | ------------------- | ------- | ------------------------------------------------------------------------------------------------ |

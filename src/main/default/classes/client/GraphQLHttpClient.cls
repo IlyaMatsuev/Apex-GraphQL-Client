@@ -1,25 +1,20 @@
 global class GraphQLHttpClient implements IGraphQLClient {
     private final String endpoint;
 
-    private static final Integer REQUEST_TIMEOUT = GraphQLConfigurationManager.getConfigurationAsInt(
-        GraphQLConfiguration.RequestTimeout
-    );
-
-    private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigurationManager.getConfigurationAsBool(
-        GraphQLConfiguration.SendPrettyQuery
-    );
+    private static final Integer REQUEST_TIMEOUT = GraphQLConfigManager.getInteger(GraphQLConfig.RequestTimeout);
+    private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigManager.getBoolean(GraphQLConfig.SendPrettyQuery);
 
     global GraphQLHttpClient() {
-        this.endpoint = GraphQLConfigurationManager.getConfiguration(
-            GraphQLConfiguration.DefaultGraphQLEndpoint
-        );
-        if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
-            throw new GraphQLHttpClientException(Label.NoEndpointProvidedError);
-        }
+        this(GraphQLConfigManager.getString(GraphQLConfig.DefaultGraphQLEndpoint));
     }
 
     global GraphQLHttpClient(String endpoint) {
         this.endpoint = endpoint;
+        if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
+            throw new GraphQLHttpClientException(
+                'GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata'
+            );
+        }
     }
 
     global GraphQLResponse send(GraphQLRequest request) {
@@ -27,9 +22,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
     }
 
     global Id sendAsync(GraphQLRequest request, IGraphQLResponseCallback callback) {
-        return System.enqueueJob(
-            new QueuableRequestWrapper(this, new RequestWrapper(request), callback)
-        );
+        return System.enqueueJob(new QueuableRequestWrapper(this, new RequestWrapper(request), callback));
     }
 
     private GraphQLResponse send(RequestWrapper request) {
@@ -41,13 +34,15 @@ global class GraphQLHttpClient implements IGraphQLClient {
             gqlResponse = new GraphQLResponse(
                 putError(
                     error,
-                    Label.UnexpectedResponseFormatError +
-                    CommonConstants.LINE_BREAK +
+                    'Got invalid response format from the server' +
+                    GraphQLConstants.LINE_BREAK +
                     httpResponse.getBody()
                 )
             );
         } catch (Exception error) {
-            gqlResponse = new GraphQLResponse(putError(error, Label.UnexpectedClientError));
+            gqlResponse = new GraphQLResponse(
+                putError(error, 'Something went wrong with the client. See debug logs for details')
+            );
         }
 
         return gqlResponse;
@@ -56,18 +51,12 @@ global class GraphQLHttpClient implements IGraphQLClient {
     private HttpRequest prepareRequest(RequestWrapper gqlRequest) {
         HttpRequest request = new HttpRequest();
         request.setEndpoint(endpoint);
-        request.setMethod(HttpConstants.METHOD_POST);
+        request.setMethod('POST');
 
         request.setTimeout(REQUEST_TIMEOUT);
 
-        request.setHeader(
-            HttpConstants.HEADER_NAME_CONTENT_TYPE,
-            HttpConstants.HEADER_VALUE_MIMETYPE_JSON
-        );
-        request.setHeader(
-            HttpConstants.HEADER_NAME_ACCEPT,
-            HttpConstants.HEADER_VALUE_MIMETYPE_JSON
-        );
+        request.setHeader('Content-Type', 'application/json');
+        request.setHeader('Accept', 'application/json');
 
         for (String header : gqlRequest.headers.keySet()) {
             request.setHeader(header, gqlRequest.headers.get(header));
@@ -81,7 +70,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
         System.debug(
             LoggingLevel.ERROR,
             error.getMessage() +
-            CommonConstants.LINE_BREAK +
+            GraphQLConstants.LINE_BREAK +
             error.getStackTraceString()
         );
         return new GraphQLResponseError(message);
