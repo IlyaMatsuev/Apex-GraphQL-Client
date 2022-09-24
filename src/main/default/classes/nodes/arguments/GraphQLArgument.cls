@@ -1,8 +1,9 @@
 global class GraphQLArgument implements IGraphQLParser {
     // Searches for all JSON property names. Needed to escape properties' double quotes
     private static final String REPLACE_JSON_PROPS_REGEXP = '"(\\w+)"\\s*:';
-    // Takes the first match from the regex
-    private static final String ESCAPED_PROP_NAME_EXP = '$1:';
+    // Searches for all JSON values that are strings starting from '$'. Needed to escape variables' ref double quotes
+    private static final String REPLACE_JSON_VARIABLE_REFS_REGEXP = ':\\s*"(\\$\\w+)"';
+    private static final String FIRST_REGEX_MATCH_GROUP = '$1';
 
     private static final String DATE_VALUE_FORMAT = GraphQLConfigManager.getString(GraphQLConfig.DateArgumentFormat);
     private static final String DATE_TIME_VALUE_FORMAT = GraphQLConfigManager.getString(
@@ -34,6 +35,10 @@ global class GraphQLArgument implements IGraphQLParser {
     }
 
     global override String toString() {
+        return toString(false);
+    }
+
+    global String toString(Boolean pretty) {
         switch on type {
             when x_Integer, x_Float, x_Boolean, x_Null {
                 return String.valueOf(value);
@@ -54,14 +59,16 @@ global class GraphQLArgument implements IGraphQLParser {
                     GraphQLConstants.DOUBLE_QUOTES;
             }
             when else {
-                return JSON.serialize(value, SUPPRESS_NULLS)
-                    .replaceAll(REPLACE_JSON_PROPS_REGEXP, ESCAPED_PROP_NAME_EXP);
+                return objectToString(value, pretty);
             }
         }
     }
 
     public String parse(GraphQLBaseNode node, Boolean pretty) {
-        return key + GraphQLConstants.COLON + (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) + this;
+        return key +
+            GraphQLConstants.COLON +
+            (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) +
+            toString(pretty);
     }
 
     // There is no way to get an object's type yet
@@ -87,5 +94,25 @@ global class GraphQLArgument implements IGraphQLParser {
 
     private DateTime dateToDateTime(Date dateValue) {
         return DateTime.newInstance(dateValue.year(), dateValue.month(), dateValue.day());
+    }
+
+    private String objectToString(Object value, Boolean pretty) {
+        String jsonValue = pretty ? JSON.serializePretty(value, SUPPRESS_NULLS) : JSON.serialize(value, SUPPRESS_NULLS);
+
+        if (pretty) {
+            jsonValue = jsonValue
+                // Replace all multiple spaces with the single space. Couldn't use .normalizeSpace() because it would affect JSON string values as well
+                .replaceAll('\\s+"', GraphQLConstants.SPACE + GraphQLConstants.DOUBLE_QUOTES)
+                .replaceAll('\\s*}', GraphQLConstants.SPACE + GraphQLConstants.BRACE_RIGHT);
+        }
+
+        return jsonValue
+            .replaceAll(REPLACE_JSON_PROPS_REGEXP, FIRST_REGEX_MATCH_GROUP + GraphQLConstants.COLON)
+            .replaceAll(
+                REPLACE_JSON_VARIABLE_REFS_REGEXP,
+                GraphQLConstants.COLON +
+                (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) +
+                FIRST_REGEX_MATCH_GROUP
+            );
     }
 }
