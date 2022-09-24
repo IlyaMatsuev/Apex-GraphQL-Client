@@ -320,7 +320,7 @@ private class GraphQLNodeTest {
         GraphQLNode node = new GraphQLNode(nodeName, fields)
             .withArgument('var1', 'test1')
             .withArgument('var2', 1)
-            .withArgument('var3', new Map<String, Object>{ 'f1' => 1, 'f2' => '2' });
+            .withArgument('var3', new Map<String, Object>{ 'f1' => 1, 'f2' => '2', 'f3' => '$ref' });
 
         GraphQLNode rootNode = new GraphQLNode('root').withNode(node);
 
@@ -329,11 +329,11 @@ private class GraphQLNodeTest {
         System.assertEquals(nodeName, node.name);
         System.assertEquals(fields.size(), node.nodes.size());
         System.assertEquals(
-            'root{testMethod(var1:"test1",var2:1,var3:{f2:"2",f1:1}){field1,field2,field3}}',
+            'root{testMethod(var1:"test1",var2:1,var3:{f3:$ref,f2:"2",f1:1}){field1,field2,field3}}',
             rootNode.build()
         );
         System.assertEquals(
-            'root {\n  testMethod(var1: "test1", var2: 1, var3: {f2:"2",f1:1}) {\n    field1\n    field2\n    field3\n  }\n}',
+            'root {\n  testMethod(var1: "test1", var2: 1, var3: { f3: $ref, f2: "2", f1: 1 }) {\n    field1\n    field2\n    field3\n  }\n}',
             rootNode.build(true)
         );
     }
