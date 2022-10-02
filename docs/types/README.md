@@ -416,9 +416,7 @@ This is a wrapper for the GraphQL request. It will be utilized for sending an HT
 
 `GraphQLRequest(String stringNode)` - Creates a new instance of the GraphQLRequest using the provided string as a body for the request query. The Operation property of GraphQLRequest is dynamically recognized.
 
-`GraphQLRequest(GraphQLBaseNode node)` - Creates a new instance of the GraphQLRequest with the provided root node and sets its operation as Query. `GraphQLBaseNode` is the base implementation for nodes functionality. It's required from `node` to be an instance of GraphQLQueryNode or GraphQLMutationNode. Otherwise, an exception will be thrown.
-
-`GraphQLRequest(GraphQLOperation operation, GraphQLBaseNode node)` - Creates a new instance of the GraphQLRequest with the provided operation and root node.
+`GraphQLRequest(GraphQLOperationNode node)` - Creates a new instance of the GraphQLRequest with the provided operation node.
 
 ---
 
@@ -426,7 +424,9 @@ This is a wrapper for the GraphQL request. It will be utilized for sending an HT
 
 `GraphQLOperation operation` - The GraphQL operation type. Read about the [`GraphQLOperation` enum here](#graphqloperation).
 
-`Map<String, String> customHeaders` - Map that contains additional headeres that will be passed to an HTTP request.
+`Map<String, String> headers` - Map that contains additional headeres that will be passed to an HTTP request.
+
+`Integer timeout` - The request timeout in milliseconds. The default timeout is 120000 ms (2 min).
 
 ---
 
@@ -435,6 +435,8 @@ This is a wrapper for the GraphQL request. It will be utilized for sending an HT
 `GraphQLRequest withHeader(String key, String value)` - Adds a new custom header to the request. Returns the current instance.
 
 `GraphQLRequest withHeaders(Map<String, String> headers)` - Adds multiple custom headers to the request. Returns the current instance.
+
+`GraphQLRequest withTimeout(Integer timeout)` - Sets a timeout for the GraphQL request. Returns the current instance.
 
 `GraphQLRequest withVariable(String name, Object value)` - Assigns a value to a variable from query/mutation by its name.
 

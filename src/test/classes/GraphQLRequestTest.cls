@@ -91,8 +91,8 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(node).withHeader('Authorization', 'token');
 
-        System.assertEquals(1, request.customHeaders.size());
-        System.assertEquals('token', request.customHeaders.get('Authorization'));
+        System.assertEquals(1, request.headers.size());
+        System.assertEquals('token', request.headers.get('Authorization'));
     }
 
     @IsTest

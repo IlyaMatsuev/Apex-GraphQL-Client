@@ -4,7 +4,6 @@
 global class GraphQLHttpClient implements IGraphQLClient {
     private final String endpoint;
 
-    private static final Integer REQUEST_TIMEOUT = GraphQLConfigManager.getInteger(GraphQLConfig.RequestTimeout);
     private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigManager.getBoolean(GraphQLConfig.SendPrettyQuery);
 
     /**
@@ -75,9 +74,7 @@ global class GraphQLHttpClient implements IGraphQLClient {
         HttpRequest request = new HttpRequest();
         request.setEndpoint(endpoint);
         request.setMethod('POST');
-
-        request.setTimeout(REQUEST_TIMEOUT);
-
+        request.setTimeout(gqlRequest.timeout);
         request.setHeader('Content-Type', 'application/json');
         request.setHeader('Accept', 'application/json');
 
@@ -101,11 +98,13 @@ global class GraphQLHttpClient implements IGraphQLClient {
 
     // This wrapper is needed because of the "Processing" issue with the Queueable job
     private class RequestWrapper {
-        public Map<String, String> headers;
-        public String body;
+        public final Map<String, String> headers;
+        public final Integer timeout;
+        public final String body;
 
         public RequestWrapper(GraphQLRequest request) {
-            this.headers = request.customHeaders;
+            this.headers = request.headers;
+            this.timeout = request.timeout;
             this.body = request.toString(SEND_PRETTY_REQUEST);
         }
     }

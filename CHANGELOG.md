@@ -1,3 +1,55 @@
+# Unreleased
+
+SFDX package name and version:
+Package Id:
+
+All information regarding the installation and usage is described on the [main repo page](https://github.com/IlyaMatsuev/Apex-GraphQL-Client).
+
+## What's changed
+
+### Refactoring of the GraphQLRequest class
+
+-   One of the constructors has been simplified so it accepts only one parameter of `GraphQLOperationNode` type:
+
+Was:
+
+```java
+...
+GraphQLRequest request = new GraphQLRequest(GraphQLOperation.Query, query);
+```
+
+Now:
+
+```java
+...
+GraphQLRequest request = new GraphQLRequest(query);
+```
+
+-   The `customHeaders` field has been renamed to simply `headers` for the `GraphQLRequest` class. The documentation is updated.
+
+-   Add an opportunity to provide a timeout for the request:
+
+```java
+...
+GraphQLRequest request = new GraphQLRequest(query);
+// Timeout by default: 120000
+System.debug(request.timeout);
+
+// Set request timeout in milliseconds
+request.withTimeout(10000);
+
+// Get timeout: 10000
+System.debug(request.timeout);
+```
+
+### Remove the RequestTimeout configuration entry
+
+The `RequestTimeout` configuration metadata record has been removed because it didn't serve much purpose. Now, The timeout for the request can be set with `withTimeout` method on the `GraphQLRequest` class.
+
+### Add ApexDoc comments for all global class members
+
+Now, every global class, field, property, method has ApexDoc comments so that it would be easier to use the package froma an IDEA
+
 # Version 1.4
 
 SFDX package name and version: gql-apex-client@1.4.0-0

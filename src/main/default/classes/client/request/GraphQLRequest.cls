@@ -2,6 +2,8 @@
  * @description Represents the GraphQL request for the client
  */
 global class GraphQLRequest {
+    private static final Integer DEFAULT_REQUEST_TIMEOUT = 120000;
+
     /**
      * @description The request GraphQL operation: Query or Mutation
      */
@@ -10,7 +12,20 @@ global class GraphQLRequest {
     /**
      * @description The request custom headers
      */
-    global final Map<String, String> customHeaders = new Map<String, String>();
+    global final Map<String, String> headers = new Map<String, String>();
+
+    /**
+     * @description The request timeout in milliseconds. Default is 120000 ms
+     */
+    global Integer timeout {
+        get {
+            if (timeout == null) {
+                timeout = DEFAULT_REQUEST_TIMEOUT;
+            }
+            return timeout;
+        }
+        private set;
+    }
 
     private final GraphQLOperationNode node;
     private String stringNode;
@@ -57,7 +72,17 @@ global class GraphQLRequest {
      * @return The current `GraphQLRequest` instance
      */
     global GraphQLRequest withHeaders(Map<String, String> headers) {
-        customHeaders.putAll(headers);
+        this.headers.putAll(headers);
+        return this;
+    }
+
+    /**
+     * @description Set a timeout for the GraphQL request
+     * @param timeout The timeout in milliseconds
+     * @return The current `GraphQLRequest` instance
+     */
+    global GraphQLRequest withTimeout(Integer timeout) {
+        this.timeout = timeout;
         return this;
     }
 

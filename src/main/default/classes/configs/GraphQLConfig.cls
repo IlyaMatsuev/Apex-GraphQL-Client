@@ -5,6 +5,5 @@ public enum GraphQLConfig {
     DateArgumentFormat,
     DateTimeArgumentFormat,
     DefaultGraphQLEndpoint,
-    SendPrettyQuery,
-    RequestTimeout
+    SendPrettyQuery
 }
