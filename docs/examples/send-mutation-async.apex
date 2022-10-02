@@ -19,7 +19,7 @@ GraphQLNode createCountryNode = new GraphQLNode('createCountry')
 
 GraphQLMutationNode mutation = new GraphQLMutationNode('CreateCountry', createCountryNode);
 
-GraphQLRequest request = mutation.buildRequest()
+GraphQLRequest request = mutation.asRequest()
     // You can add additional HTTP headers if you need
     .withHeader('Authorization', 'Bearer token');
 

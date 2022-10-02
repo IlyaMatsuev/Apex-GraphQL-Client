@@ -1,7 +1,7 @@
 /**
  * @description The GraphQL mutation node
  */
-global class GraphQLMutationNode extends GraphQLOperationNode implements IGraphQLRequestBuilder {
+global class GraphQLMutationNode extends GraphQLOperationNode {
     /**
      * @description Create a new instance of the GraphQL mutation node
      */
@@ -134,14 +134,6 @@ global class GraphQLMutationNode extends GraphQLOperationNode implements IGraphQ
     global GraphQLMutationNode withVariable(String name, String typeDefinition) {
         addVariable(name, typeDefinition);
         return this;
-    }
-
-    /**
-     * @description Create a GraphQL request from the current mutation node
-     * @return The instance of the `GraphQLRequest` class
-     */
-    global GraphQLRequest buildRequest() {
-        return asRequest();
     }
 
     /**

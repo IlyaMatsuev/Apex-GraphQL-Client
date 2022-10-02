@@ -1,7 +1,7 @@
 /**
  * @description The GraphQL query node
  */
-global class GraphQLQueryNode extends GraphQLOperationNode implements IGraphQLRequestBuilder {
+global class GraphQLQueryNode extends GraphQLOperationNode {
     /**
      * @description Create a new instance of the GraphQL query node
      */
@@ -134,14 +134,6 @@ global class GraphQLQueryNode extends GraphQLOperationNode implements IGraphQLRe
     global GraphQLQueryNode withVariable(String name, String typeDefinition) {
         addVariable(name, typeDefinition);
         return this;
-    }
-
-    /**
-     * @description Create a GraphQL request from the current query node
-     * @return The instance of the `GraphQLRequest` class
-     */
-    global GraphQLRequest buildRequest() {
-        return asRequest();
     }
 
     /**

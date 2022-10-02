@@ -176,7 +176,7 @@ This class is only used for building queries.
 
 `GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Query`.
 
-`GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
+`GraphQLRequest asRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
 `String build()` - Builds a non-formatted string representation of the current node.
 
@@ -242,7 +242,7 @@ This class is only used for building mutations.
 
 `GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Mutation`.
 
-`GraphQLRequest buildRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
+`GraphQLRequest asRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
 `String build()` - Builds a non-formatted string representation of the current node.
 

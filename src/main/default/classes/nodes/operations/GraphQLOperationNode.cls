@@ -45,6 +45,14 @@ global abstract class GraphQLOperationNode extends GraphQLBaseNode {
     }
 
     /**
+     * @description Create a GraphQL request from the current operation node
+     * @return The instance of the `GraphQLRequest` class
+     */
+    global virtual GraphQLRequest asRequest() {
+        return new GraphQLRequest(this);
+    }
+
+    /**
      * @description Get the GraphQL operation type of the current node
      * @return The instance of the `GraphQLOperation` enum
      */
@@ -55,12 +63,11 @@ global abstract class GraphQLOperationNode extends GraphQLBaseNode {
         return this;
     }
 
-    protected GraphQLRequest asRequest() {
-        return new GraphQLRequest(getOperation(), this);
-    }
-
     protected virtual GraphQLOperationNode addVariable(String name, String typeDefinition) {
         this.variables.put(name, typeDefinition);
         return this;
+    }
+
+    public class GraphQLOperationNodeException extends Exception {
     }
 }

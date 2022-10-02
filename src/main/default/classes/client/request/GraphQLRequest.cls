@@ -19,20 +19,11 @@ global class GraphQLRequest {
     /**
      * @description Create an instance using the string GraphQL request
      * @param stringNode String GraphQL request
-     * @throws GraphQLRequestException If the provided string is not a GraphQL request
+     * @throws GraphQLRequestException If the provided string is not a GraphQL request or if it is a subscription
      */
     global GraphQLRequest(String stringNode) {
         this.stringNode = stringNode;
         this.operation = recognizeOperation(stringNode);
-    }
-
-    /**
-     * @description Create an instance using a GraphQL node
-     * @param node The instance of the Graph operation node (`GraphQLQueryNode` or `GraphQLMutationNode`)
-     * @throws GraphQLRequestException If the provided instance is neither `GraphQLQueryNode` nor `GraphQLMutationNode`
-     */
-    global GraphQLRequest(GraphQLOperationNode node) {
-        this(null, node);
     }
 
     /**
@@ -41,12 +32,12 @@ global class GraphQLRequest {
      * @param node The instance of the Graph operation node (`GraphQLQueryNode` or `GraphQLMutationNode`)
      * @throws GraphQLRequestException If the provided instance is neither `GraphQLQueryNode` nor `GraphQLMutationNode`
      */
-    global GraphQLRequest(GraphQLOperation operation, GraphQLOperationNode node) {
-        this.operation = operation == null ? GraphQLOperation.Query : operation;
+    global GraphQLRequest(GraphQLOperationNode node) {
+        this.operation = node.getOperation();
         this.node = node;
 
-        if (!(node instanceof IGraphQLRequestBuilder)) {
-            throw new GraphQLRequestException('The request node should be an instance of IGraphQLRequestBuilder');
+        if (this.operation == GraphQLOperation.Subscription) {
+            throw new GraphQLRequestException('The request node should be an either a Query or Mutation node');
         }
     }
 

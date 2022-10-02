@@ -23,7 +23,7 @@ country.name = 'Belarus';
 country.capital = 'Minsk';
 country.population = 9000000;
 
-GraphQLRequest request = mutation.buildRequest()
+GraphQLRequest request = mutation.asRequest()
     // You can add additional HTTP headers if you need
     .withHeader('Authorization', 'Bearer token')
     // Set value for the variable in the request

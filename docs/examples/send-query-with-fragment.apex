@@ -34,7 +34,7 @@ GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode>{ countriesNo
     // Define fragment for the query
     .withFragment(cityFieldsFragment);
 
-GraphQLRequest request = query.buildRequest();
+GraphQLRequest request = query.asRequest();
 
 IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 

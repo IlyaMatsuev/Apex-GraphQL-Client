@@ -96,7 +96,7 @@ After you created a query or mutation you can send it to the GraphQL endpoint:
 
 ```java
 ...
-GraphQLRequest request = query.buildRequest();
+GraphQLRequest request = query.asRequest();
 
 // Add custom header if needed
 request.withHeader('Authorization', 'Bearer token');

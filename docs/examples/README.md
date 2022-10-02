@@ -34,7 +34,7 @@ GraphQLQueryNode query = new GraphQLQueryNode('CountriesQuery', countriesNode);
 Now you can create request and send it. In this example we use the url `https://simple-gql-server.herokuapp.com/gql`. If you try to access your own GraphQL server, please use your url.
 
 ```java
-GraphQLRequest request = query.buildRequest();
+GraphQLRequest request = query.asRequest();
 IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 GraphQLResponse response = client.send(request);
 ```

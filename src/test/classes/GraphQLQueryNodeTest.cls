@@ -159,7 +159,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryBuildRequestTest() {
-        GraphQLRequest request = new GraphQLQueryNode(new List<String>{ 'field1' }).buildRequest();
+        GraphQLRequest request = new GraphQLQueryNode(new List<String>{ 'field1' }).asRequest();
 
         System.assertEquals(GraphQLOperation.Query, request.operation);
         System.assertEquals('{"query":"query{field1}"}', request.toString());

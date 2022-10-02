@@ -159,7 +159,7 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void mutationBuildRequestTest() {
-        GraphQLRequest request = new GraphQLMutationNode(new List<String>{ 'field1' }).buildRequest();
+        GraphQLRequest request = new GraphQLMutationNode(new List<String>{ 'field1' }).asRequest();
 
         System.assertEquals(GraphQLOperation.Mutation, request.operation);
         System.assertEquals('{"query":"mutation{field1}"}', request.toString());

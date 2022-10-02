@@ -137,6 +137,15 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
     }
 
     /**
+     * @description Create a GraphQL request from the current subscription node
+     * @throws GraphQLOperationNodeException The subscription requests are not supported yet
+     * @return The instance of the `GraphQLRequest` class
+     */
+    global override GraphQLRequest asRequest() {
+        throw new GraphQLOperationNodeException('The subscription requests are not supported yet');
+    }
+
+    /**
      * @description Get the current node's operation type
      * @return `GraphQLOperation.Subscription` enum value
      */

@@ -64,23 +64,22 @@ private class GraphQLRequestTest {
     private static void requestWithIncorrectRootNodeTypeNegativeTest() {
         Exception error;
         try {
-            new GraphQLRequest(new GraphQLNode());
+            new GraphQLRequest(new GraphQLSubscriptionNode());
         } catch (Exception err) {
             error = err;
         }
 
         System.assert(error != null);
-        System.assertEquals('The request node should be an instance of IGraphQLRequestBuilder', error.getMessage());
+        System.assertEquals('The request node should be an either a Query or Mutation node', error.getMessage());
     }
 
     @IsTest
     private static void requestWithOperationTest() {
-        GraphQLOperation operation = GraphQLOperation.Mutation;
         GraphQLMutationNode node = new GraphQLMutationNode(new List<String>{ 'field1', 'field2' });
 
-        GraphQLRequest request = new GraphQLRequest(operation, node);
+        GraphQLRequest request = new GraphQLRequest(node);
 
-        System.assertEquals(operation, request.operation);
+        System.assertEquals(GraphQLOperation.Mutation, request.operation);
         System.assertEquals('{"query":"mutation{field1,field2}"}', request.toString());
         System.assertEquals('{\n  "query" : "mutation {\\n  field1\\n  field2\\n}"\n}', request.toString(true));
     }

@@ -27,7 +27,7 @@ GraphQLQueryNode query = new GraphQLQueryNode('CountriesQuery', new List<GraphQL
     // Define variable for the query
     .withVariable('limit', 'Int');
 
-GraphQLRequest request = query.buildRequest()
+GraphQLRequest request = query.asRequest()
     // You can add additional HTTP headers if you need
     .withHeader('Authorization', 'Bearer token')
     // Set value for the variable in the request

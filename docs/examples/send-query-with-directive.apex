@@ -27,7 +27,7 @@ GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode>{ countriesNo
     // Define our $withCities variable. Note that it needs to be marked as required in order to use it in directives
     .withVariable('withCities', 'Boolean!');
 
-GraphQLRequest request = query.buildRequest()
+GraphQLRequest request = query.asRequest()
     // Pass the $withCities variable value to the request
     .withVariable('withCities', false);
 

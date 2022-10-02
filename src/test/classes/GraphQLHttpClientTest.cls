@@ -31,7 +31,7 @@ private class GraphQLHttpClientTest {
             .withNode(new GraphQLNode('heroFriends', new List<String>{ 'id', 'name' }));
 
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
-        GraphQLRequest request = query.buildRequest().withHeader('Authorization', 'token');
+        GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock());
         Test.startTest();
@@ -55,7 +55,7 @@ private class GraphQLHttpClientTest {
             .withNode(new GraphQLNode('heroFriends', new List<String>{ 'id', 'name' }));
 
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
-        GraphQLRequest request = query.buildRequest();
+        GraphQLRequest request = query.asRequest();
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock().withInvalidFormat());
         Test.startTest();
@@ -78,7 +78,7 @@ private class GraphQLHttpClientTest {
             .withNode(new GraphQLNode('heroFriends', new List<String>{ 'id', 'name' }));
 
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
-        GraphQLRequest request = query.buildRequest().withHeader('Authorization', 'token');
+        GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock());
         Test.startTest();
