@@ -1,3 +1,6 @@
+/**
+ * @description Represents an entry of a GraphQL argument in a node
+ */
 global class GraphQLArgument implements IGraphQLParser {
     // Searches for all JSON property names. Needed to escape properties' double quotes
     private static final String REPLACE_JSON_PROPS_REGEXP = '"(\\w+)"\\s*:';
@@ -13,8 +16,19 @@ global class GraphQLArgument implements IGraphQLParser {
         GraphQLConfig.SupressNullsForObjectArguments
     );
 
+    /**
+     * @description The argument name
+     */
     global final String key;
+
+    /**
+     * @description The argument value
+     */
     global final Object value;
+
+    /**
+     * @description The argument GraphQL type
+     */
     global GraphQLArgumentType type {
         get {
             if (type == null) {
@@ -25,19 +39,37 @@ global class GraphQLArgument implements IGraphQLParser {
         private set;
     }
 
+    /**
+     * @description Create an instance of an argument by the provided name and value
+     * @param key The argument name
+     * @param value The argument value
+     */
     global GraphQLArgument(String key, Object value) {
         this.key = key;
         this.value = value;
     }
 
+    /**
+     * @description Check if the current argument references a variable
+     * @return `true` if the current argument references a variable. `false` otherwise
+     */
     global Boolean isVariable() {
         return value instanceof String && value != null && ((String) value).startsWith(GraphQLConstants.DOLLAR);
     }
 
+    /**
+     * @description Parse the current argument to a string
+     * @return The string representation of the current argument
+     */
     global override String toString() {
         return toString(false);
     }
 
+    /**
+     * @description Parse the current argument to a string
+     * @param pretty Prettify the output if the value is `true`
+     * @return The string representation of the current argument
+     */
     global String toString(Boolean pretty) {
         switch on type {
             when x_Integer, x_Float, x_Boolean, x_Null {

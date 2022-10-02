@@ -1,7 +1,25 @@
+/**
+ * @description Represents the GraphQL response error entry for the client
+ */
 global class GraphQLResponseError {
+    /**
+     * @description Message from the error
+     */
     global final String message;
+
+    /**
+     * @description The error locations
+     */
     global final List<Location> locations;
+
+    /**
+     * @description The error path
+     */
     global final List<Object> path;
+
+    /**
+     * @description The error extensions
+     */
     global final Map<String, Object> extensions;
 
     public GraphQLResponseError(String message) {
@@ -20,16 +38,11 @@ global class GraphQLResponseError {
         this.extensions = extensions;
     }
 
-    global class Location {
-        global Integer line;
-        global Integer column;
-
-        private Location(Integer line, Integer column) {
-            this.line = line;
-            this.column = column;
-        }
-    }
-
+    /**
+     * @description Get the error extension as the provided type
+     * @param type The type of the error extension to deserialize to
+     * @return The deserialized error extension
+     */
     global Object getExtensionsAs(Type type) {
         return JSON.deserialize(JSON.serialize(extensions), type);
     }
@@ -63,5 +76,15 @@ global class GraphQLResponseError {
             locations.add(new Location((Integer) locationFields.get('line'), (Integer) locationFields.get('column')));
         }
         return locations;
+    }
+
+    global class Location {
+        global Integer line;
+        global Integer column;
+
+        private Location(Integer line, Integer column) {
+            this.line = line;
+            this.column = column;
+        }
     }
 }

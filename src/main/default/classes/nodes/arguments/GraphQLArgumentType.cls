@@ -1,3 +1,6 @@
+/**
+ * @description The list of all available types for GraphQL arguments
+ */
 global enum GraphQLArgumentType {
     x_Integer,
     x_Float,

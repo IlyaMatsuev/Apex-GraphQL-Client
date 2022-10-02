@@ -1,13 +1,28 @@
+/**
+ * @description Represents an entry of a GraphQL argument in a node
+ */
 global class GraphQLDirective implements IGraphQLParser {
     private static final String IF_ARG_NAME = 'if';
 
     private final GraphQLDirectiveType type;
     private final GraphQLArgument ifArgument;
 
+    /**
+     * @description Create an instance of a directive by the provided type and value
+     * @param type The directive standard type
+     * @param ifArgumentValue The reference to a boolean variable. The `$` sign is not required
+     * @throws GraphQLDirectiveException If the provided argument value is `null`
+     */
     global GraphQLDirective(GraphQLDirectiveType type, String ifArgumentValue) {
         this(type, (Object) ifArgumentValue);
     }
 
+    /**
+     * @description Create an instance of a directive by the provided type and value
+     * @param type The directive standard type
+     * @param ifArgumentValue The boolean condition for the directive
+     * @throws GraphQLDirectiveException If the provided argument value is `null`
+     */
     global GraphQLDirective(GraphQLDirectiveType type, Boolean ifArgumentValue) {
         this(type, (Object) ifArgumentValue);
     }
