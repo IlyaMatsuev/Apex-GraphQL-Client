@@ -1,4 +1,4 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLArgumentTest {
     @IsTest
     private static void createArgumentTest() {
@@ -161,11 +161,11 @@ private class GraphQLArgumentTest {
     @IsTest
     private static void stringifyObjectArgumentTest() {
         String key = 'key';
-        Map<String, Object> value = new Map<String, Object>{
+        Map<String, Object> value = new Map<String, Object> {
             'key1' => 'value',
             'key2' => '$var',
             'key3' => 2,
-            'key4' => new Map<String, Object>{ 'key41' => '$var2', 'key42' => 'value:"$var2"     !' }
+            'key4' => new Map<String, Object> { 'key41' => '$var2', 'key42' => 'value:"$var2"     !' }
         };
 
         GraphQLArgument argument = new GraphQLArgument(key, value);

@@ -10,7 +10,7 @@ global class GraphQLResponse {
     private List<GraphQLResponseError> errors = new List<GraphQLResponseError>();
 
     public GraphQLResponse(GraphQLResponseError error) {
-        this(new Map<String, Object>{ ERRORS_FIELD => new List<GraphQLResponseError>{ error } });
+        this(new Map<String, Object> { ERRORS_FIELD => new List<GraphQLResponseError> { error } });
     }
 
     private GraphQLResponse(Map<String, Object> responseJson) {

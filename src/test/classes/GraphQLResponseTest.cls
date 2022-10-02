@@ -1,4 +1,4 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLResponseTest {
     @IsTest
     private static void responseWithErrorOnlyTest() {
@@ -77,13 +77,13 @@ private class GraphQLResponseTest {
     }
 
     private static GraphQLResponse prepareNoErrorsResponse() {
-        Map<String, Object> response = new Map<String, Object>{
-            'data' => new Map<String, Object>{
-                'hero' => new Map<String, Object>{
+        Map<String, Object> response = new Map<String, Object> {
+            'data' => new Map<String, Object> {
+                'hero' => new Map<String, Object> {
                     'name' => 'R2-D2',
-                    'heroFriends' => new List<Object>{
-                        new Map<String, Object>{ 'id' => '1000', 'name' => 'Luke Skywalker' },
-                        new Map<String, Object>{ 'id' => '1003', 'name' => 'Leia Organa' }
+                    'heroFriends' => new List<Object> {
+                        new Map<String, Object> { 'id' => '1000', 'name' => 'Luke Skywalker' },
+                        new Map<String, Object> { 'id' => '1003', 'name' => 'Leia Organa' }
                     }
                 }
             }
@@ -92,22 +92,22 @@ private class GraphQLResponseTest {
     }
 
     private static GraphQLResponse prepareErrorResponse() {
-        Map<String, Object> response = new Map<String, Object>{
-            'errors' => new List<Object>{
-                new Map<String, Object>{
+        Map<String, Object> response = new Map<String, Object> {
+            'errors' => new List<Object> {
+                new Map<String, Object> {
                     'message' => 'Name for character with ID 1002 could not be fetched.',
-                    'locations' => new List<Object>{ new Map<String, Object>{ 'line' => 6, 'column' => 7 } },
-                    'path' => new List<Object>{ 'hero', 'heroFriends', 1, 'name' },
-                    'extensions' => new Map<String, Object>{ 'code' => 200, 'customField' => 'Test!' }
+                    'locations' => new List<Object> { new Map<String, Object> { 'line' => 6, 'column' => 7 } },
+                    'path' => new List<Object> { 'hero', 'heroFriends', 1, 'name' },
+                    'extensions' => new Map<String, Object> { 'code' => 200, 'customField' => 'Test!' }
                 }
             },
-            'data' => new Map<String, Object>{
-                'hero' => new Map<String, Object>{
+            'data' => new Map<String, Object> {
+                'hero' => new Map<String, Object> {
                     'name' => 'R2-D2',
-                    'heroFriends' => new List<Object>{
-                        new Map<String, Object>{ 'id' => '1000', 'name' => 'Luke Skywalker' },
+                    'heroFriends' => new List<Object> {
+                        new Map<String, Object> { 'id' => '1000', 'name' => 'Luke Skywalker' },
                         null,
-                        new Map<String, Object>{ 'id' => '1003', 'name' => 'Leia Organa' }
+                        new Map<String, Object> { 'id' => '1003', 'name' => 'Leia Organa' }
                     }
                 }
             }

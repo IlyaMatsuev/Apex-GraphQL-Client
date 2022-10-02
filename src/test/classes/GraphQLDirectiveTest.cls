@@ -1,4 +1,4 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLDirectiveTest {
     @IsTest
     private static void parseDirectiveWithBooleanPositiveTest() {

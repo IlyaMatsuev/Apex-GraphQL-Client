@@ -35,7 +35,7 @@ global abstract class GraphQLBaseNode {
      * @return `true` if the node with the same name is found in child nodes. `false` otherwise
      */
     global virtual Boolean hasNode(GraphQLNode node) {
-        return hasNodes(new List<GraphQLNode>{ node });
+        return hasNodes(new List<GraphQLNode> { node });
     }
 
     /**

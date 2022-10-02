@@ -1,4 +1,4 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLSubscriptionNodeTest {
     @IsTest
     private static void emptySubscriptionTest() {
@@ -30,7 +30,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void emptySubscriptionWithChildNodesTest() {
-        List<GraphQLNode> childNodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(childNodes);
 
@@ -51,7 +51,7 @@ private class GraphQLSubscriptionNodeTest {
     @IsTest
     private static void namedSubscriptionWithChildNodesTest() {
         String nodeName = 'Test';
-        List<GraphQLNode> childNodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, childNodes);
 
@@ -61,7 +61,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void emptySubscriptionWithFieldsTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(fields);
 
@@ -72,7 +72,7 @@ private class GraphQLSubscriptionNodeTest {
     @IsTest
     private static void namedSubscriptionWithFieldsTest() {
         String nodeName = 'node';
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, fields);
 
@@ -92,7 +92,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void subscriptionWithFieldsTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withFields(fields);
 
@@ -114,7 +114,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void subscriptionWithFragmentsTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>{
+        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
             new GraphQLFragmentNode('fragment1', 'Type1'),
             new GraphQLFragmentNode('fragment2', 'Type2')
         };
@@ -139,7 +139,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void subscriptionWithNodesTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withNodes(nodes);
 
@@ -163,8 +163,8 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void buildSubscriptionPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('field1'), new GraphQLNode('field2') };
-        List<String> fields = new List<String>{ 'field3', 'field4' };
+        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('field1'), new GraphQLNode('field2') };
+        List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLSubscriptionNode subscription = new GraphQLSubscriptionNode()
             .withNode(nodes.get(0))
@@ -181,11 +181,11 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void buildSubscriptionWithVariablesPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{
+        List<GraphQLNode> nodes = new List<GraphQLNode> {
             new GraphQLNode('node1').withArgument('arg', '$param1'),
             new GraphQLNode('node2')
         };
-        List<String> fields = new List<String>{ 'field3', 'field4' };
+        List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLSubscriptionNode subscription = new GraphQLSubscriptionNode()
             .withNodes(nodes)
@@ -208,9 +208,9 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void buildSubscriptionWithChildNodesPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{
+        List<GraphQLNode> nodes = new List<GraphQLNode> {
             new GraphQLNode('field1'),
-            new GraphQLNode('field2', new List<GraphQLNode>{ new GraphQLNode('field21'), new GraphQLNode('field22') }),
+            new GraphQLNode('field2', new List<GraphQLNode> { new GraphQLNode('field21'), new GraphQLNode('field22') }),
             new GraphQLNode('field3')
         };
 

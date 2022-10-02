@@ -1,4 +1,4 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLNodeTest {
     @IsTest
     private static void emptyNodeTest() {
@@ -22,7 +22,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void emptyNodeWithChildNodesTest() {
-        List<GraphQLNode> childNodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLNode node = new GraphQLNode(childNodes);
 
@@ -36,7 +36,7 @@ private class GraphQLNodeTest {
     @IsTest
     private static void namedNodeWithChildNodesTest() {
         String nodeName = 'node';
-        List<GraphQLNode> childNodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLNode node = new GraphQLNode(nodeName, childNodes);
 
@@ -47,7 +47,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void emptyNodeWithFieldsTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLNode node = new GraphQLNode(fields);
 
@@ -59,7 +59,7 @@ private class GraphQLNodeTest {
     @IsTest
     private static void namedNodeWithFieldsTest() {
         String nodeName = 'node';
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLNode node = new GraphQLNode(nodeName, fields);
 
@@ -80,7 +80,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeWithFieldsTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLNode node = new GraphQLNode().withFields(fields);
 
@@ -101,7 +101,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeWithFragmentsTest() {
-        List<String> fragments = new List<String>{ 'FieldSet1', 'FieldSet12' };
+        List<String> fragments = new List<String> { 'FieldSet1', 'FieldSet12' };
 
         GraphQLNode node = new GraphQLNode().withFragments(fragments);
 
@@ -122,7 +122,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeWithNodesTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLNode node = new GraphQLNode().withNodes(nodes);
 
@@ -141,7 +141,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeWithArgumentsTest() {
-        List<GraphQLArgument> arguments = new List<GraphQLArgument>{
+        List<GraphQLArgument> arguments = new List<GraphQLArgument> {
             new GraphQLArgument('key1', 'value1'),
             new GraphQLArgument('key2', 'value2')
         };
@@ -171,7 +171,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeAsQueryTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLQueryNode query = new GraphQLNode('Test', nodes).asQuery();
 
@@ -183,7 +183,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeAsMutationTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLMutationNode mutation = new GraphQLNode('Test', nodes).asMutation();
 
@@ -195,7 +195,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeAsSubscriptionTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLSubscriptionNode subscription = new GraphQLNode('Test', nodes).asSubscription();
 
@@ -211,9 +211,9 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void buildNodeWithAliasPositiveTest() {
-        GraphQLNode childNode = new GraphQLNode('countries', new List<String>{ 'name', 'code' }).byAlias('ctrs');
+        GraphQLNode childNode = new GraphQLNode('countries', new List<String> { 'name', 'code' }).byAlias('ctrs');
 
-        GraphQLNode node = new GraphQLNode(new List<GraphQLNode>{ childNode });
+        GraphQLNode node = new GraphQLNode(new List<GraphQLNode> { childNode });
 
         System.assert(node != null);
         System.assertEquals('{ctrs:countries{name,code}}', node.build());
@@ -222,7 +222,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void buildNodePositiveTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+        List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
         GraphQLNode node = new GraphQLNode().withFields(fields).withFragment('SomeFields');
 
@@ -235,7 +235,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void buildNodeAsQueryPositiveTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+        List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
         GraphQLQueryNode query = new GraphQLNode().withFields(fields).withArgument('arg', 'value').asQuery();
 
@@ -248,7 +248,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void buildNodeAsMutationPositiveTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+        List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
         GraphQLMutationNode mutation = new GraphQLNode().withFields(fields).withArgument('arg', 'value').asMutation();
 
@@ -261,7 +261,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void buildNodeAsSubscriptionPositiveTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+        List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
         GraphQLSubscriptionNode subscription = new GraphQLNode()
             .withFields(fields)
@@ -279,9 +279,9 @@ private class GraphQLNodeTest {
     private static void buildNodeWithChildrenPositiveTest() {
         String firstMethodName = 'testMethod1';
         String secondMethodName = 'testMethod2';
-        List<String> firstMethodFields = new List<String>{ 'field1', 'field2' };
-        List<String> secondMethodFields = new List<String>{ 'field3', 'field4' };
-        List<String> childrenNodeFields = new List<String>{ 'field11', 'field22' };
+        List<String> firstMethodFields = new List<String> { 'field1', 'field2' };
+        List<String> secondMethodFields = new List<String> { 'field3', 'field4' };
+        List<String> childrenNodeFields = new List<String> { 'field11', 'field22' };
 
         GraphQLNode firstNode = new GraphQLNode(firstMethodName, firstMethodFields);
 
@@ -289,7 +289,7 @@ private class GraphQLNodeTest {
             .withNode(new GraphQLNode('field3', childrenNodeFields))
             .withField('field4');
 
-        List<GraphQLNode> childrenNodes = new List<GraphQLNode>{ firstNode, secondNode };
+        List<GraphQLNode> childrenNodes = new List<GraphQLNode> { firstNode, secondNode };
 
         GraphQLNode rootNode = new GraphQLNode(childrenNodes);
 
@@ -315,12 +315,12 @@ private class GraphQLNodeTest {
     @IsTest
     private static void buildNodeWithArgumentsPositiveTest() {
         String nodeName = 'testMethod';
-        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+        List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
         GraphQLNode node = new GraphQLNode(nodeName, fields)
             .withArgument('var1', 'test1')
             .withArgument('var2', 1)
-            .withArgument('var3', new Map<String, Object>{ 'f1' => 1, 'f2' => '2', 'f3' => '$ref' });
+            .withArgument('var3', new Map<String, Object> { 'f1' => 1, 'f2' => '2', 'f3' => '$ref' });
 
         GraphQLNode rootNode = new GraphQLNode('root').withNode(node);
 
@@ -341,7 +341,7 @@ private class GraphQLNodeTest {
     @IsTest
     private static void buildNodeWithDirectivePositiveTest() {
         String nodeName = 'testMethod';
-        List<String> fields = new List<String>{ 'field1', 'field2', 'field3' };
+        List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
         GraphQLNode node = new GraphQLNode(nodeName, fields)
             .includeIf(true)

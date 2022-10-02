@@ -68,6 +68,5 @@ global abstract class GraphQLOperationNode extends GraphQLBaseNode {
         return this;
     }
 
-    public class GraphQLOperationNodeException extends Exception {
-    }
+    public class GraphQLOperationNodeException extends Exception {}
 }

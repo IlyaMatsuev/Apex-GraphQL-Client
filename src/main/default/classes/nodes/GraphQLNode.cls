@@ -96,7 +96,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode withField(String field) {
-        return withFields(new List<String>{ field });
+        return withFields(new List<String> { field });
     }
 
     /**
@@ -115,7 +115,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode withNode(GraphQLNode node) {
-        return withNodes(new List<GraphQLNode>{ node });
+        return withNodes(new List<GraphQLNode> { node });
     }
 
     /**
@@ -134,7 +134,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode withFragment(String fragmentName) {
-        return withFragments(new List<String>{ fragmentName });
+        return withFragments(new List<String> { fragmentName });
     }
 
     /**
@@ -163,7 +163,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode withArgument(GraphQLArgument argument) {
-        return withArguments(new List<GraphQLArgument>{ argument });
+        return withArguments(new List<GraphQLArgument> { argument });
     }
 
     /**

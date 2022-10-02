@@ -6,6 +6,5 @@ public class GraphQLNodeParser extends GraphQLParser {
         return parseNode((GraphQLNode) node, depth, pretty);
     }
 
-    private class GraphQLNodeParserException extends Exception {
-    }
+    private class GraphQLNodeParserException extends Exception {}
 }

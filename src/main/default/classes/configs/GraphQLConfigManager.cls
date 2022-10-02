@@ -39,6 +39,5 @@ public class GraphQLConfigManager {
         }
     }
 
-    private class GraphQLConfigManagerException extends Exception {
-    }
+    private class GraphQLConfigManagerException extends Exception {}
 }

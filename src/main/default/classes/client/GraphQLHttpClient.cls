@@ -49,17 +49,17 @@ global class GraphQLHttpClient implements IGraphQLClient {
     }
 
     private GraphQLResponse send(RequestWrapper request) {
-        HttpResponse httpResponse = new Http().send(prepareRequest(request));
+        HttpResponse response = new Http().send(prepareRequest(request));
         GraphQLResponse gqlResponse;
         try {
-            gqlResponse = GraphQLResponse.parse(httpResponse.getBody());
+            gqlResponse = GraphQLResponse.parse(response.getBody());
         } catch (JSONException error) {
             gqlResponse = new GraphQLResponse(
                 putError(
                     error,
                     'Got invalid response format from the server' +
                     GraphQLConstants.LINE_BREAK +
-                    httpResponse.getBody()
+                    response.getBody()
                 )
             );
         } catch (Exception error) {
@@ -133,6 +133,5 @@ global class GraphQLHttpClient implements IGraphQLClient {
         }
     }
 
-    private class GraphQLHttpClientException extends Exception {
-    }
+    private class GraphQLHttpClientException extends Exception {}
 }

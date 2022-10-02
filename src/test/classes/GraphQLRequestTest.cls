@@ -1,4 +1,4 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLRequestTest {
     @IsTest
     private static void requestAsStringNodeQueryPositiveTest() {
@@ -51,7 +51,7 @@ private class GraphQLRequestTest {
 
     @IsTest
     private static void requestWithoutOperationTest() {
-        GraphQLQueryNode node = new GraphQLQueryNode(new List<String>{ 'field1', 'field2' });
+        GraphQLQueryNode node = new GraphQLQueryNode(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node);
 
@@ -75,7 +75,7 @@ private class GraphQLRequestTest {
 
     @IsTest
     private static void requestWithOperationTest() {
-        GraphQLMutationNode node = new GraphQLMutationNode(new List<String>{ 'field1', 'field2' });
+        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node);
 
@@ -87,7 +87,7 @@ private class GraphQLRequestTest {
     @IsTest
     private static void requestWithHeaderTest() {
         GraphQLOperation operation = GraphQLOperation.Mutation;
-        GraphQLMutationNode node = new GraphQLMutationNode(new List<String>{ 'field1', 'field2' });
+        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node).withHeader('Authorization', 'token');
 
@@ -98,7 +98,7 @@ private class GraphQLRequestTest {
     @IsTest
     private static void requestWithVariableTest() {
         GraphQLOperation operation = GraphQLOperation.Mutation;
-        GraphQLMutationNode node = new GraphQLMutationNode(new List<String>{ 'field1', 'field2' });
+        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node).withVariable('param', 'value');
 

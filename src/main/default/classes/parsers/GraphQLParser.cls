@@ -101,6 +101,5 @@ public abstract class GraphQLParser implements IGraphQLParser {
         return GraphQLConstants.SPACE + String.join(rawDirectives, GraphQLConstants.SPACE);
     }
 
-    private class GraphQLBaseParserException extends Exception {
-    }
+    private class GraphQLBaseParserException extends Exception {}
 }

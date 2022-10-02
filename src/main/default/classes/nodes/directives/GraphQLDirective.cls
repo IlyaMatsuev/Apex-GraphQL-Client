@@ -52,6 +52,5 @@ global class GraphQLDirective implements IGraphQLParser {
         return argument;
     }
 
-    private class GraphQLDirectiveException extends Exception {
-    }
+    private class GraphQLDirectiveException extends Exception {}
 }

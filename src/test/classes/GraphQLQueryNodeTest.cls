@@ -1,4 +1,4 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLQueryNodeTest {
     @IsTest
     private static void emptyQueryTest() {
@@ -30,7 +30,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void emptyQueryWithChildNodesTest() {
-        List<GraphQLNode> childNodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLQueryNode node = new GraphQLQueryNode(childNodes);
 
@@ -51,7 +51,7 @@ private class GraphQLQueryNodeTest {
     @IsTest
     private static void namedQueryWithChildNodesTest() {
         String nodeName = 'Test';
-        List<GraphQLNode> childNodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLQueryNode node = new GraphQLQueryNode(nodeName, childNodes);
 
@@ -61,7 +61,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void emptyQueryWithFieldsTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLQueryNode node = new GraphQLQueryNode(fields);
 
@@ -72,7 +72,7 @@ private class GraphQLQueryNodeTest {
     @IsTest
     private static void namedQueryWithFieldsTest() {
         String nodeName = 'node';
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLQueryNode node = new GraphQLQueryNode(nodeName, fields);
 
@@ -92,7 +92,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithFieldsTest() {
-        List<String> fields = new List<String>{ 'field1', 'field2' };
+        List<String> fields = new List<String> { 'field1', 'field2' };
 
         GraphQLQueryNode node = new GraphQLQueryNode().withFields(fields);
 
@@ -114,7 +114,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithFragmentsTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>{
+        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
             new GraphQLFragmentNode('fragment1', 'Type1'),
             new GraphQLFragmentNode('fragment2', 'Type2')
         };
@@ -139,7 +139,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithNodesTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
 
         GraphQLQueryNode node = new GraphQLQueryNode().withNodes(nodes);
 
@@ -159,7 +159,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryBuildRequestTest() {
-        GraphQLRequest request = new GraphQLQueryNode(new List<String>{ 'field1' }).asRequest();
+        GraphQLRequest request = new GraphQLQueryNode(new List<String> { 'field1' }).asRequest();
 
         System.assertEquals(GraphQLOperation.Query, request.operation);
         System.assertEquals('{"query":"query{field1}"}', request.toString());
@@ -172,8 +172,8 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{ new GraphQLNode('field1'), new GraphQLNode('field2') };
-        List<String> fields = new List<String>{ 'field3', 'field4' };
+        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('field1'), new GraphQLNode('field2') };
+        List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLQueryNode query = new GraphQLQueryNode()
             .withNode(nodes.get(0))
@@ -190,11 +190,11 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryWithVariablesPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{
+        List<GraphQLNode> nodes = new List<GraphQLNode> {
             new GraphQLNode('node1').withArgument('arg', '$param1'),
             new GraphQLNode('node2')
         };
-        List<String> fields = new List<String>{ 'field3', 'field4' };
+        List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLQueryNode query = new GraphQLQueryNode()
             .withNodes(nodes)
@@ -217,9 +217,9 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryWithChildNodesPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode>{
+        List<GraphQLNode> nodes = new List<GraphQLNode> {
             new GraphQLNode('field1'),
-            new GraphQLNode('field2', new List<GraphQLNode>{ new GraphQLNode('field21'), new GraphQLNode('field22') }),
+            new GraphQLNode('field2', new List<GraphQLNode> { new GraphQLNode('field21'), new GraphQLNode('field22') }),
             new GraphQLNode('field3')
         };
 
@@ -237,11 +237,11 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryWithFragmentsPositiveTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>{
-            new GraphQLFragmentNode('Fields1', 'Type1', new List<String>{ 'f1', 'f2' }),
-            new GraphQLFragmentNode('Fields2', 'Type2', new List<String>{ 'f3', 'f4' })
+        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
+            new GraphQLFragmentNode('Fields1', 'Type1', new List<String> { 'f1', 'f2' }),
+            new GraphQLFragmentNode('Fields2', 'Type2', new List<String> { 'f3', 'f4' })
         };
-        List<GraphQLNode> nodes = new List<GraphQLNode>{
+        List<GraphQLNode> nodes = new List<GraphQLNode> {
             new GraphQLNode('node1').withFragment(fragments.get(0).name),
             new GraphQLNode('node2').withFragment(fragments.get(1).name)
         };

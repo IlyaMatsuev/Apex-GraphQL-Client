@@ -48,7 +48,7 @@ global class GraphQLRequest {
      * @return The current `GraphQLRequest` instance
      */
     global GraphQLRequest withHeader(String key, String value) {
-        return withHeaders(new Map<String, String>{ key => value });
+        return withHeaders(new Map<String, String> { key => value });
     }
 
     /**
@@ -68,7 +68,7 @@ global class GraphQLRequest {
      * @return The current `GraphQLRequest` instance
      */
     global GraphQLRequest withVariable(String name, Object value) {
-        return withVariables(new Map<String, Object>{ name => value });
+        return withVariables(new Map<String, Object> { name => value });
     }
 
     /**
@@ -138,6 +138,5 @@ global class GraphQLRequest {
         }
     }
 
-    private class GraphQLRequestException extends Exception {
-    }
+    private class GraphQLRequestException extends Exception {}
 }

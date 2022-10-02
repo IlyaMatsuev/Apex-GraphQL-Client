@@ -22,7 +22,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @param node The child node
      */
     global GraphQLSubscriptionNode(GraphQLNode node) {
-        this(new List<GraphQLNode>{ node });
+        this(new List<GraphQLNode> { node });
     }
 
     /**
@@ -47,7 +47,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @param node The child node
      */
     global GraphQLSubscriptionNode(String alias, GraphQLNode node) {
-        this(alias, new List<GraphQLNode>{ node });
+        this(alias, new List<GraphQLNode> { node });
     }
 
     /**
@@ -74,7 +74,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
     global GraphQLSubscriptionNode withField(String field) {
-        return withFields(new List<String>{ field });
+        return withFields(new List<String> { field });
     }
 
     /**
@@ -93,7 +93,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
     global GraphQLSubscriptionNode withNode(GraphQLNode node) {
-        return withNodes(new List<GraphQLNode>{ node });
+        return withNodes(new List<GraphQLNode> { node });
     }
 
     /**
@@ -112,7 +112,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
     global GraphQLSubscriptionNode withFragment(GraphQLFragmentNode fragment) {
-        return withFragments(new List<GraphQLFragmentNode>{ fragment });
+        return withFragments(new List<GraphQLFragmentNode> { fragment });
     }
 
     /**
