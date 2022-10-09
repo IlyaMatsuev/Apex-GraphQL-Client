@@ -2,6 +2,7 @@
  * @description Represents the GraphQL request for the client
  */
 global class GraphQLRequest {
+    @TestVisible
     private static final Integer DEFAULT_REQUEST_TIMEOUT = 120000;
 
     /**

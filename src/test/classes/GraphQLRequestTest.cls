@@ -6,6 +6,7 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(stringNode);
 
+        System.assertEquals(GraphQLRequest.DEFAULT_REQUEST_TIMEOUT, request.timeout);
         System.assertEquals(GraphQLOperation.Query, request.operation);
         System.assertEquals('{"query":"query{field1, field2}"}', request.toString());
         System.assertEquals('{\n  "query" : "query{field1, field2}"\n}', request.toString(true));
@@ -93,6 +94,16 @@ private class GraphQLRequestTest {
 
         System.assertEquals(1, request.headers.size());
         System.assertEquals('token', request.headers.get('Authorization'));
+    }
+
+    @IsTest
+    private static void requestWithTimeoutTest() {
+        GraphQLOperation operation = GraphQLOperation.Mutation;
+        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
+
+        GraphQLRequest request = new GraphQLRequest(node).withTimeout(10000);
+
+        System.assertEquals(10000, request.timeout);
     }
 
     @IsTest

@@ -157,6 +157,19 @@ private class GraphQLSubscriptionNodeTest {
         System.assertEquals(1, node.variables.size());
     }
 
+    @IsTest
+    private static void subscriptionBuildRequestTest() {
+        Exception error;
+        try {
+            new GraphQLSubscriptionNode(new List<String> { 'field1' }).asRequest();
+        } catch (Exception ex) {
+            error = ex;
+        }
+
+        System.assert(error != null);
+        System.assert(error instanceof GraphQLOperationNode.GraphQLOperationNodeException);
+    }
+
     /**
      * E2E tests below
      */
