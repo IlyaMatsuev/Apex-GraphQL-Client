@@ -8,6 +8,14 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
     global final String type;
 
     /**
+     * @description Create an instance of an inline fragment by the provided type
+     * @param type The fragment referencing type
+     */
+    global GraphQLFragmentNode(String type) {
+        this(GraphQLConstants.EMPTY, type);
+    }
+
+    /**
      * @description Create an instance of a fragment by the provided name and type
      * @param name The fragment name
      * @param type The fragment referencing type
@@ -46,6 +54,14 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
     global GraphQLFragmentNode(String name, String type, List<GraphQLNode> nodes, List<String> fields) {
         super(name, nodes, fields);
         this.type = type;
+    }
+
+    /**
+     * @description Check if the current fragment is an inline fragment
+     * @return `true` if the fragment is inline. `false` otherwise
+     */
+    global Boolean isInline() {
+        return String.isBlank(name);
     }
 
     /**

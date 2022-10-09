@@ -18,6 +18,11 @@ global class GraphQLNode extends GraphQLBaseNode {
     global final Map<GraphQLDirectiveType, GraphQLDirective> directives = new Map<GraphQLDirectiveType, GraphQLDirective>();
 
     /**
+     * @description The list of inline fragments added to the node
+     */
+    global final List<GraphQLFragmentNode> inlineFragments = new List<GraphQLFragmentNode>();
+
+    /**
      * @description Create an instance of `GraphQLNode` with the empty name
      */
     global GraphQLNode() {
@@ -148,6 +153,32 @@ global class GraphQLNode extends GraphQLBaseNode {
     }
 
     /**
+     * @description Add an inline fragment to the current node
+     * @param fragment The inline fragment to add
+     * @throws GraphQLNodeException If the provided fragment is not inline
+     * @return The current instance of `GraphQLNode`
+     */
+    global GraphQLNode withInlineFragment(GraphQLFragmentNode fragment) {
+        return withInlineFragments(new List<String> { fragment });
+    }
+
+    /**
+     * @description Add multiple inline fragments to the current node
+     * @param fragments The list of inline fragments to add
+     * @throws GraphQLNodeException If one of the provided fragments is not inline
+     * @return The current instance of `GraphQLNode`
+     */
+    global GraphQLNode withInlineFragments(GraphQLFragmentNode[] fragments) {
+        for (GraphQLFragmentNode fragment : fragments) {
+            if (!fragment.isInline()) {
+                throw new GraphQLNodeException('The added fragments should be inline.');
+            }
+            inlineFragments.addAll(fragments);
+        }
+        return this;
+    }
+
+    /**
      * @description Add an argument to the current node
      * @param key The argument name
      * @param value The argument value. Use string with the `$` sign for variable referencing
@@ -255,4 +286,6 @@ global class GraphQLNode extends GraphQLBaseNode {
         this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
         return this;
     }
+
+    private class GraphQLNodeException extends Exception {}
 }

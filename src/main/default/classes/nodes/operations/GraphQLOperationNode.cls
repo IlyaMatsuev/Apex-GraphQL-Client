@@ -59,7 +59,14 @@ global abstract class GraphQLOperationNode extends GraphQLBaseNode {
     global abstract GraphQLOperation getOperation();
 
     protected GraphQLOperationNode addFragments(List<GraphQLFragmentNode> fragments) {
-        this.fragments.addAll(fragments);
+        for (GraphQLFragmentNode fragment : fragments) {
+            if (fragment.isInline()) {
+                throw new GraphQLOperationNodeException(
+                    'It\'s not allowed to put inline fragments to the operation node'
+                );
+            }
+            this.fragments.add(fragment);
+        }
         return this;
     }
 

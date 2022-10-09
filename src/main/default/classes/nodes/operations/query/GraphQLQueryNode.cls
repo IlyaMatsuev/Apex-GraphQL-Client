@@ -109,6 +109,7 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
     /**
      * @description Add a fragment definition for the current query node
      * @param fragment The fragment definition to add
+     * @throws GraphQLOperationNodeException If the provided fragment is inline
      * @return The instance of the current `GraphQLQueryNode` class
      */
     global GraphQLQueryNode withFragment(GraphQLFragmentNode fragment) {
@@ -118,6 +119,7 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
     /**
      * @description Add multiple fragment definitions for the current query node
      * @param fragments The list of fragment definitions to add
+     * @throws GraphQLOperationNodeException If the provided fragments are inline
      * @return The instance of the current `GraphQLQueryNode` class
      */
     global GraphQLQueryNode withFragments(GraphQLFragmentNode[] fragments) {
