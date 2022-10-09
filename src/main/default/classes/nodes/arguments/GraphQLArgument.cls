@@ -58,6 +58,21 @@ global class GraphQLArgument implements IGraphQLParser {
     }
 
     /**
+     * @description Represent the current argument as a GraphQL enum value
+     * @throws GraphQLArgumentException If the current argument value is not String or if it's a variable reference
+     * @return The current instance of `GraphQLArgument`
+     */
+    global GraphQLArgument asEnum() {
+        if (!(value instanceof String) || isVariable()) {
+            throw new GraphQLArgumentException(
+                'Impossible to cast GraphQL argument as enum. The value type must be String and must not be a variable reference.'
+            );
+        }
+        type = GraphQLArgumentType.x_Enum;
+        return this;
+    }
+
+    /**
      * @description Parse the current argument to a string
      * @return The string representation of the current argument
      */
@@ -72,7 +87,7 @@ global class GraphQLArgument implements IGraphQLParser {
      */
     global String toString(Boolean pretty) {
         switch on type {
-            when x_Integer, x_Float, x_Boolean, x_Null {
+            when x_Integer, x_Float, x_Boolean, x_Null, x_Enum {
                 return String.valueOf(value);
             }
             when x_String {
@@ -147,4 +162,7 @@ global class GraphQLArgument implements IGraphQLParser {
                 FIRST_REGEX_MATCH_GROUP
             );
     }
+
+    @TestVisible
+    private class GraphQLArgumentException extends Exception {}
 }

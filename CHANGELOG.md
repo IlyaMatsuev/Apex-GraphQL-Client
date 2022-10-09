@@ -7,6 +7,27 @@ All information regarding the installation and usage is described on the [main r
 
 ## What's changed
 
+### Enum arguments
+
+Now it's possible to define GraphQL enum arguments for GraphQL nodes. To do that, you'll need to create an instance of `GraphQLArgument` and call the `asEnum()` method.
+
+GraphQL query:
+
+```
+testNode(newArg: ENUM_VALUE) {
+  field1
+  field2
+}
+```
+
+Apex equivalent:
+
+```java
+GraphQLNode node = new GraphQLNode('testNode', new List<String> { 'field1', 'field2' });
+node.withArgument(new GraphQLArgument('newArg', 'ENUM_VALUE').asEnum());
+System.debug(node.build(true));
+```
+
 ### Refactoring of the GraphQLRequest class
 
 -   One of the constructors has been simplified so it accepts only one parameter of `GraphQLOperationNode` type:
@@ -48,7 +69,11 @@ The `RequestTimeout` configuration metadata record has been removed because it d
 
 ### Add ApexDoc comments for all global class members
 
-Now, every global class, field, property, method has ApexDoc comments so that it would be easier to use the package froma an IDEA
+Now, every global class, field, property, method has ApexDoc comments so that it would be easier to use the package from an IDEA
+
+---
+
+Please, open a discussion or issue if you face any problems with the package. Best regards!
 
 # Version 1.4
 
@@ -139,7 +164,7 @@ node.withArgument('newArg', null);
 System.debug(node.build(true));
 ```
 
-# #What's new
+## What's new
 
 ### Support for standard GraphQL directives
 

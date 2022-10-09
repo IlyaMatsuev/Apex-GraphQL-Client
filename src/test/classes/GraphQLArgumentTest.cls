@@ -79,6 +79,16 @@ private class GraphQLArgumentTest {
     }
 
     @IsTest
+    private static void stringifyEnumArgumentTest() {
+        String key = 'key';
+        String value = 'VALUE';
+
+        GraphQLArgument argument = new GraphQLArgument(key, value).asEnum();
+
+        System.assertEquals(value, argument.toString());
+    }
+
+    @IsTest
     private static void stringifyVariableArgumentTest() {
         String key = 'key';
         String value = '$variableName';
@@ -201,5 +211,32 @@ private class GraphQLArgumentTest {
             GraphQLConstants.DOUBLE_QUOTES,
             argument.parse(null, true)
         );
+    }
+
+    @IsTest
+    private static void parseEnumArgumentTest() {
+        String key = 'key';
+        String value = 'VALUE';
+
+        GraphQLArgument argument = new GraphQLArgument(key, value).asEnum();
+
+        System.assertEquals(key + GraphQLConstants.COLON + value, argument.parse(null, false));
+        System.assertEquals(key + GraphQLConstants.COLON + GraphQLConstants.SPACE + value, argument.parse(null, true));
+    }
+
+    @IsTest
+    private static void asEnumWithVariableFailureTest() {
+        String key = 'key';
+        String value = '$var';
+
+        Exception error;
+        try {
+            new GraphQLArgument(key, value).asEnum();
+        } catch (Exception ex) {
+            error = ex;
+        }
+
+        System.assert(error != null);
+        System.assert(error instanceof GraphQLArgument.GraphQLArgumentException);
     }
 }

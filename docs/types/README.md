@@ -518,6 +518,7 @@ This is an enum type representing available GraphQL scalar (and a couple of othe
 `x_DateTime` - Scalar GraphQL DateTime type.  
 `x_Date` - Scalar GraphQL Date type.  
 `x_Null` - Null GraphQL type.  
+`x_Enum` - GraphQL enum value type.
 `x_Object` - Any other type that needs to be passed to arguments (e.g. any custom type or input).
 
 ---
