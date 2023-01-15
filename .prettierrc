@@ -15,21 +15,20 @@
     {
       "files": "*.xml",
       "options": {
-        "printWidth": 220,
+        "printWidth": 240,
         "bracketSameLine": true
       }
     },
     {
-      "files": "*.apex",
+      "files": ["*.yml", "*.yaml", "*.json", ".prettierrc"],
       "options": {
-        "apexSortModifiers": false,
-        "apexExplicitAccessModifier": false
+        "tabWidth": 2
       }
     },
     {
-      "files": ["*.yml", "*.json", ".prettierrc"],
+      "files": "*.trigger",
       "options": {
-        "tabWidth": 2
+        "apexExplicitAccessModifier": false
       }
     }
   ]

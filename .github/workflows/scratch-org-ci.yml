@@ -28,7 +28,7 @@ jobs:
         run: npm i
 
       - name: 'Code formatting verification with Prettier'
-        run: npm run prettier:verify
+        run: npm run prettier:verify ./
 
   scratch-org-test:
     runs-on: ubuntu-latest
