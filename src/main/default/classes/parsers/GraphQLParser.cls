@@ -22,7 +22,7 @@ public abstract class GraphQLParser implements IGraphQLParser {
     }
 
     protected String parseChildNodes(GraphQLBaseNode node, Integer depth, Boolean pretty) {
-        if (!node.hasNodes()) {
+        if (node.nodes.isEmpty() && node.fragments.isEmpty()) {
             return GraphQLConstants.EMPTY;
         }
 
@@ -38,6 +38,15 @@ public abstract class GraphQLParser implements IGraphQLParser {
         List<String> rawNodes = new List<String>();
         for (GraphQLNode n : node.nodes) {
             rawNodes.add(parseNode(n, depth + 1, pretty));
+        }
+        // TODO: Refactor the parsing strategy
+        for (GraphQLFragmentNode fragment : node.fragments) {
+            if (fragment.isInline()) {
+                rawNodes.add(
+                    ((GraphQLFragmentNodeParser) fragment.getParser())
+                        .parse((GraphQLBaseNode) fragment, depth + 1, pretty)
+                );
+            }
         }
 
         childNodes += String.join(rawNodes, pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.COMMA);

@@ -102,10 +102,10 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
-    private static void queryWithFragmentTest() {
+    private static void queryWithFragmentDefinitionTest() {
         GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
 
-        GraphQLQueryNode node = new GraphQLQueryNode().withFragment(fragment);
+        GraphQLQueryNode node = new GraphQLQueryNode().defineFragment(fragment);
 
         System.assert(node.hasFragments());
         System.assertEquals(1, node.fragments.size());
@@ -113,13 +113,13 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
-    private static void queryWithFragmentsTest() {
+    private static void queryWithFragmentDefinitionsTest() {
         List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
             new GraphQLFragmentNode('fragment1', 'Type1'),
             new GraphQLFragmentNode('fragment2', 'Type2')
         };
 
-        GraphQLQueryNode node = new GraphQLQueryNode().withFragments(fragments);
+        GraphQLQueryNode node = new GraphQLQueryNode().defineFragments(fragments);
 
         System.assert(node.hasFragments());
         System.assertEquals(fragments.size(), node.fragments.size());
@@ -149,10 +149,10 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
-    private static void queryWithVariableTest() {
+    private static void queryWithVariableDefinitionTest() {
         GraphQLQueryNode node = new GraphQLQueryNode()
             .withNode(new GraphQLNode('node'))
-            .withVariable('newVariable', '[Int]! = 0');
+            .defineVariable('newVariable', '[Int]! = 0');
 
         System.assertEquals(1, node.variables.size());
     }
@@ -189,7 +189,7 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
-    private static void buildQueryWithVariablesPositiveTest() {
+    private static void buildQueryWithVariableDefinitionsPositiveTest() {
         List<GraphQLNode> nodes = new List<GraphQLNode> {
             new GraphQLNode('node1').withArgument('arg', '$param1'),
             new GraphQLNode('node2')
@@ -199,8 +199,8 @@ private class GraphQLQueryNodeTest {
         GraphQLQueryNode query = new GraphQLQueryNode()
             .withNodes(nodes)
             .withFields(fields)
-            .withVariable('param1', 'Int!')
-            .withVariable('param2', 'String');
+            .defineVariable('param1', 'Int!')
+            .defineVariable('param2', 'String');
 
         System.assert(query != null);
         System.assert(String.isBlank(query.name));
@@ -246,7 +246,7 @@ private class GraphQLQueryNodeTest {
             new GraphQLNode('node2').withFragment(fragments.get(1).name)
         };
 
-        GraphQLQueryNode query = new GraphQLQueryNode().withNodes(nodes).withFragments(fragments);
+        GraphQLQueryNode query = new GraphQLQueryNode().withNodes(nodes).defineFragments(fragments);
 
         System.assertEquals(
             'query{node1{...Fields1},node2{...Fields2}}' +

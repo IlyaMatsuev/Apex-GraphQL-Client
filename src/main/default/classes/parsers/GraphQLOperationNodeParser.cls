@@ -6,9 +6,9 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
     private String parse(GraphQLOperationNode node, Integer depth, Boolean pretty) {
         return parseOperation(node) +
             parseName(node, pretty) +
-            parseVariables(node, pretty) +
+            parseVariableDefinitions(node, pretty) +
             parseChildNodes(node, depth, pretty) +
-            parseFragments(node, depth, pretty);
+            parseFragmentDefinitions(node, depth, pretty);
     }
 
     private String parseOperation(GraphQLOperationNode node) {
@@ -19,7 +19,7 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
         return String.isBlank(node.name) ? getSmallIndent(pretty) : (GraphQLConstants.SPACE + node.name);
     }
 
-    private String parseVariables(GraphQLOperationNode node, Boolean pretty) {
+    private String parseVariableDefinitions(GraphQLOperationNode node, Boolean pretty) {
         if (!node.hasVariables()) {
             return GraphQLConstants.EMPTY;
         }
@@ -41,7 +41,7 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
             getSmallIndent(pretty);
     }
 
-    private String parseFragments(GraphQLOperationNode node, Integer depth, Boolean pretty) {
+    private String parseFragmentDefinitions(GraphQLOperationNode node, Integer depth, Boolean pretty) {
         if (!node.hasFragments()) {
             return GraphQLConstants.EMPTY;
         }

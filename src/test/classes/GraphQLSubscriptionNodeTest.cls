@@ -102,10 +102,10 @@ private class GraphQLSubscriptionNodeTest {
     }
 
     @IsTest
-    private static void subscriptionWithFragmentTest() {
+    private static void subscriptionWithFragmentDefinitionTest() {
         GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
 
-        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withFragment(fragment);
+        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().defineFragment(fragment);
 
         System.assert(node.hasFragments());
         System.assertEquals(1, node.fragments.size());
@@ -113,13 +113,13 @@ private class GraphQLSubscriptionNodeTest {
     }
 
     @IsTest
-    private static void subscriptionWithFragmentsTest() {
+    private static void subscriptionWithFragmentDefinitionsTest() {
         List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
             new GraphQLFragmentNode('fragment1', 'Type1'),
             new GraphQLFragmentNode('fragment2', 'Type2')
         };
 
-        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withFragments(fragments);
+        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().defineFragments(fragments);
 
         System.assert(node.hasFragments());
         System.assertEquals(fragments.size(), node.fragments.size());
@@ -149,10 +149,10 @@ private class GraphQLSubscriptionNodeTest {
     }
 
     @IsTest
-    private static void subscriptionWithVariableTest() {
+    private static void subscriptionWithVariableDefinitionTest() {
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode()
             .withNode(new GraphQLNode('node'))
-            .withVariable('newVariable', '[Int]! = 0');
+            .defineVariable('newVariable', '[Int]! = 0');
 
         System.assertEquals(1, node.variables.size());
     }
@@ -193,7 +193,7 @@ private class GraphQLSubscriptionNodeTest {
     }
 
     @IsTest
-    private static void buildSubscriptionWithVariablesPositiveTest() {
+    private static void buildSubscriptionWithVariableDefinitionsPositiveTest() {
         List<GraphQLNode> nodes = new List<GraphQLNode> {
             new GraphQLNode('node1').withArgument('arg', '$param1'),
             new GraphQLNode('node2')
@@ -203,8 +203,8 @@ private class GraphQLSubscriptionNodeTest {
         GraphQLSubscriptionNode subscription = new GraphQLSubscriptionNode()
             .withNodes(nodes)
             .withFields(fields)
-            .withVariable('param1', 'Int!')
-            .withVariable('param2', 'String');
+            .defineVariable('param1', 'Int!')
+            .defineVariable('param2', 'String');
 
         System.assert(subscription != null);
         System.assert(String.isBlank(subscription.name));

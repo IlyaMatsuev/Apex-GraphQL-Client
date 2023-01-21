@@ -287,5 +287,6 @@ global class GraphQLNode extends GraphQLBaseNode {
         return this;
     }
 
+    @TestVisible
     private class GraphQLNodeException extends Exception {}
 }

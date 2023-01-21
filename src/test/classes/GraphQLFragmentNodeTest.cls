@@ -58,7 +58,7 @@ private class GraphQLFragmentNodeTest {
     }
 
     @IsTest
-    private static void emptyFragmentWithFieldTest() {
+    private static void fragmentWithFieldTest() {
         String name = 'Fields';
         String type = 'SomeType';
         GraphQLFragmentNode fragment = new GraphQLFragmentNode(name, type).withField('field1');
@@ -70,7 +70,7 @@ private class GraphQLFragmentNodeTest {
     }
 
     @IsTest
-    private static void emptyFragmentWithNodeTest() {
+    private static void fragmentWithNodeTest() {
         String name = 'Fields';
         String type = 'SomeType';
         GraphQLFragmentNode fragment = new GraphQLFragmentNode(name, type)
@@ -83,7 +83,7 @@ private class GraphQLFragmentNodeTest {
     }
 
     @IsTest
-    private static void emptyFragmentWithFragmentTest() {
+    private static void fragmentWithFragmentTest() {
         String name = 'Fields';
         String type = 'SomeType';
         GraphQLFragmentNode fragment = new GraphQLFragmentNode(name, type).withFragment('OtherFields');
@@ -92,6 +92,16 @@ private class GraphQLFragmentNodeTest {
         System.assertEquals(type, fragment.type);
         System.assert(fragment.hasNodes());
         System.assertEquals(1, fragment.nodes.size());
+    }
+
+    @IsTest
+    private static void fragmentWithInlineFragmentTest() {
+        GraphQLFragmentNode inlineFragment = new GraphQLFragmentNode('SomeType2').withField('field1');
+        GraphQLFragmentNode fragment = new GraphQLFragmentNode('Fields', 'SomeType').withInlineFragment(inlineFragment);
+
+        System.assert(!fragment.hasNodes());
+        System.assert(fragment.hasInlineFragments());
+        System.assertEquals(1, fragment.fragments.size());
     }
 
     /**
@@ -104,11 +114,15 @@ private class GraphQLFragmentNodeTest {
         String type = 'SomeType';
         GraphQLFragmentNode fragment = new GraphQLFragmentNode(name, type)
             .withFields(new List<String> { 'field1', 'field2' })
-            .withNode(new GraphQLNode('node', new List<String> { 'field1', 'field2' }));
+            .withNode(new GraphQLNode('node', new List<String> { 'field1', 'field2' }))
+            .withInlineFragment(new GraphQLFragmentNode('SomeType2').withField('field11'));
 
-        System.assertEquals('fragment Fields on SomeType{field1,field2,node{field1,field2}}', fragment.build());
         System.assertEquals(
-            'fragment Fields on SomeType {\n  field1\n  field2\n  node {\n    field1\n    field2\n  }\n}',
+            'fragment Fields on SomeType{field1,field2,node{field1,field2},... on SomeType2{field11}}',
+            fragment.build()
+        );
+        System.assertEquals(
+            'fragment Fields on SomeType {\n  field1\n  field2\n  node {\n    field1\n    field2\n  }\n  ... on SomeType2 {\n    field11\n  }\n}',
             fragment.build(true)
         );
     }
