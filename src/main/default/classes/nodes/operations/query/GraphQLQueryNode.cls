@@ -83,8 +83,7 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLQueryNode` class
      */
     global GraphQLQueryNode withFields(String[] fields) {
-        addFields(fields);
-        return this;
+        return (GraphQLQueryNode) addFields(fields);
     }
 
     /**
@@ -102,8 +101,7 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLQueryNode` class
      */
     global GraphQLQueryNode withNodes(GraphQLNode[] nodes) {
-        addNodes(nodes);
-        return this;
+        return (GraphQLQueryNode) addNodes(nodes);
     }
 
     /**
@@ -112,19 +110,18 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @throws GraphQLOperationNodeException If the provided fragment is inline
      * @return The instance of the current `GraphQLQueryNode` class
      */
-    global GraphQLQueryNode withFragment(GraphQLFragmentNode fragment) {
-        return withFragments(new List<GraphQLFragmentNode> { fragment });
+    global GraphQLQueryNode defineFragment(GraphQLFragmentNode fragment) {
+        return defineFragments(new List<GraphQLFragmentNode> { fragment });
     }
 
     /**
      * @description Add multiple fragment definitions for the current query node
      * @param fragments The list of fragment definitions to add
-     * @throws GraphQLOperationNodeException If the provided fragments are inline
+     * @throws GraphQLOperationNodeException If some of the provided fragments are inline
      * @return The instance of the current `GraphQLQueryNode` class
      */
-    global GraphQLQueryNode withFragments(GraphQLFragmentNode[] fragments) {
-        addFragments(fragments);
-        return this;
+    global GraphQLQueryNode defineFragments(GraphQLFragmentNode[] fragments) {
+        return (GraphQLQueryNode) addFragments(fragments);
     }
 
     /**
@@ -133,9 +130,8 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @param typeDefinition The variable type definition
      * @return The instance of the current `GraphQLQueryNode` class
      */
-    global GraphQLQueryNode withVariable(String name, String typeDefinition) {
-        addVariable(name, typeDefinition);
-        return this;
+    global GraphQLQueryNode defineVariable(String name, String typeDefinition) {
+        return (GraphQLQueryNode) addVariable(name, typeDefinition);
     }
 
     /**

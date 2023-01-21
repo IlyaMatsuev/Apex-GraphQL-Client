@@ -83,8 +83,7 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLMutationNode` class
      */
     global GraphQLMutationNode withFields(String[] fields) {
-        addFields(fields);
-        return this;
+        return (GraphQLMutationNode) addFields(fields);
     }
 
     /**
@@ -102,8 +101,7 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLMutationNode` class
      */
     global GraphQLMutationNode withNodes(GraphQLNode[] nodes) {
-        addNodes(nodes);
-        return this;
+        return (GraphQLMutationNode) addNodes(nodes);
     }
 
     /**
@@ -112,19 +110,18 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @throws GraphQLOperationNodeException If the provided fragment is inline
      * @return The instance of the current `GraphQLMutationNode` class
      */
-    global GraphQLMutationNode withFragment(GraphQLFragmentNode fragment) {
-        return withFragments(new List<GraphQLFragmentNode> { fragment });
+    global GraphQLMutationNode defineFragment(GraphQLFragmentNode fragment) {
+        return defineFragments(new List<GraphQLFragmentNode> { fragment });
     }
 
     /**
      * @description Add multiple fragment definitions for the current mutation node
      * @param fragments The list of fragment definitions to add
-     * @throws GraphQLOperationNodeException If the provided fragments are inline
+     * @throws GraphQLOperationNodeException If some of the provided fragments are inline
      * @return The instance of the current `GraphQLMutationNode` class
      */
-    global GraphQLMutationNode withFragments(GraphQLFragmentNode[] fragments) {
-        addFragments(fragments);
-        return this;
+    global GraphQLMutationNode defineFragments(GraphQLFragmentNode[] fragments) {
+        return (GraphQLMutationNode) addFragments(fragments);
     }
 
     /**
@@ -133,9 +130,8 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @param typeDefinition The variable type definition
      * @return The instance of the current `GraphQLMutationNode` class
      */
-    global GraphQLMutationNode withVariable(String name, String typeDefinition) {
-        addVariable(name, typeDefinition);
-        return this;
+    global GraphQLMutationNode defineVariable(String name, String typeDefinition) {
+        return (GraphQLMutationNode) addVariable(name, typeDefinition);
     }
 
     /**

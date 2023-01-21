@@ -83,8 +83,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
     global GraphQLSubscriptionNode withFields(String[] fields) {
-        addFields(fields);
-        return this;
+        return (GraphQLSubscriptionNode) addFields(fields);
     }
 
     /**
@@ -102,8 +101,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
     global GraphQLSubscriptionNode withNodes(GraphQLNode[] nodes) {
-        addNodes(nodes);
-        return this;
+        return (GraphQLSubscriptionNode) addNodes(nodes);
     }
 
     /**
@@ -112,19 +110,18 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @throws GraphQLOperationNodeException If the provided fragment is inline
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
-    global GraphQLSubscriptionNode withFragment(GraphQLFragmentNode fragment) {
-        return withFragments(new List<GraphQLFragmentNode> { fragment });
+    global GraphQLSubscriptionNode defineFragment(GraphQLFragmentNode fragment) {
+        return defineFragments(new List<GraphQLFragmentNode> { fragment });
     }
 
     /**
      * @description Add multiple fragment definitions for the current subscription node
      * @param fragments The list of fragment definitions to add
-     * @throws GraphQLOperationNodeException If the provided fragments are inline
+     * @throws GraphQLOperationNodeException If some of the provided fragments are inline
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
-    global GraphQLSubscriptionNode withFragments(GraphQLFragmentNode[] fragments) {
-        addFragments(fragments);
-        return this;
+    global GraphQLSubscriptionNode defineFragments(GraphQLFragmentNode[] fragments) {
+        return (GraphQLSubscriptionNode) addFragments(fragments);
     }
 
     /**
@@ -133,9 +130,8 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @param typeDefinition The variable type definition
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
-    global GraphQLSubscriptionNode withVariable(String name, String typeDefinition) {
-        addVariable(name, typeDefinition);
-        return this;
+    global GraphQLSubscriptionNode defineVariable(String name, String typeDefinition) {
+        return (GraphQLSubscriptionNode) addVariable(name, typeDefinition);
     }
 
     /**
