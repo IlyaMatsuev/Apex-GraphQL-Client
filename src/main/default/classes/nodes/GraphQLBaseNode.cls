@@ -115,7 +115,7 @@ global abstract class GraphQLBaseNode {
         return addFields(fields);
     }
 
-    protected virtual GraphQLBaseNode addInlineFragments(List<GraphQLFragmentNode> fragments) {
+    protected virtual GraphQLBaseNode addInlineFragments(GraphQLFragmentNode[] fragments) {
         this.fragments.addAll(fragments);
         return this;
     }

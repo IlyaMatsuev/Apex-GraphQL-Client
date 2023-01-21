@@ -74,7 +74,7 @@ global class GraphQLNode extends GraphQLBaseNode {
 
     /**
      * @description Check if the current node contains any inline fragments
-     * @return `true` if there are no inline fragments. `false` otherwise
+     * @return `true` if there are any inline fragments. `false` otherwise
      */
     global Boolean hasInlineFragments() {
         return !fragments.isEmpty();

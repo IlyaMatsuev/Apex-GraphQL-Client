@@ -25,7 +25,7 @@ GraphQLNode citiesNode = new GraphQLNode('cities')
 
 GraphQLQueryNode query = new GraphQLQueryNode('CountriesQuery', new List<GraphQLNode> { countriesNode, citiesNode })
     // Define variable for the query
-    .withVariable('limit', 'Int');
+    .defineVariable('limit', 'Int');
 
 GraphQLRequest request = query.asRequest()
     // You can add additional HTTP headers if you need

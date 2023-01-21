@@ -65,6 +65,14 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
     }
 
     /**
+     * @description Check if the current fragment contains any child inline fragments
+     * @return `true` if there are any inline fragments. `false` otherwise
+     */
+    global Boolean hasInlineFragments() {
+        return !fragments.isEmpty();
+    }
+
+    /**
      * @description Add a field to the current fragment
      * @param field The field name to be added
      * @return The current instance of `GraphQLFragmentNode`
@@ -128,4 +136,31 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
     global override IGraphQLParser getParser() {
         return new GraphQLFragmentNodeParser();
     }
+
+    /**
+     * @description Add an inline fragment to the current fragment
+     * @param fragment The instance of the `GraphQLFragmentNode`. Should be inline fragment without a name
+     * @return The current instance of `GraphQLFragmentNode`
+     * @throws GraphQLFragmentNodeException If the passed fragment is not inline
+     */
+    global GraphQLFragmentNode withInlineFragment(GraphQLFragmentNode fragment) {
+        return withInlineFragments(new List<GraphQLFragmentNode> { fragment });
+    }
+
+    /**
+     * @description Add inline fragments to the current fragment
+     * @param fragment The instances of the `GraphQLFragmentNode`. Should be inline fragments without names
+     * @return The current instance of `GraphQLFragmentNode`
+     * @throws GraphQLFragmentNodeException If some of the passed fragments are not inline
+     */
+    global GraphQLFragmentNode withInlineFragments(GraphQLFragmentNode[] fragments) {
+        for (GraphQLFragmentNode fragment : fragments) {
+            if (!fragment.isInline()) {
+                throw new GraphQLFragmentNodeException('Not possible to add non-inline fragments: ' + fragment.name);
+            }
+        }
+        return (GraphQLFragmentNode) addInlineFragments(fragments);
+    }
+
+    private class GraphQLFragmentNodeException extends Exception {}
 }
