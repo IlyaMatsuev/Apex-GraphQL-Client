@@ -12,6 +12,11 @@ global abstract class GraphQLBaseNode {
      */
     global final List<GraphQLNode> nodes = new List<GraphQLNode>();
 
+    /**
+     * @description The list of regular or inline fragments added to the node
+     */
+    global final List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>();
+
     protected GraphQLBaseNode(String name, List<String> fields) {
         this(name, new List<GraphQLNode>(), fields);
     }
@@ -108,5 +113,10 @@ global abstract class GraphQLBaseNode {
             fields.add(GraphQLConstants.DOT.repeat(3) + fragmentName);
         }
         return addFields(fields);
+    }
+
+    protected virtual GraphQLBaseNode addInlineFragments(List<GraphQLFragmentNode> fragments) {
+        this.fragments.addAll(fragments);
+        return this;
     }
 }

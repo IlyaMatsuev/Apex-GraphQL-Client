@@ -17,12 +17,6 @@ global class GraphQLNode extends GraphQLBaseNode {
      */
     global final Map<GraphQLDirectiveType, GraphQLDirective> directives = new Map<GraphQLDirectiveType, GraphQLDirective>();
 
-    // TODO: Should be moved to GraphQLBaseNode (it will be used by regular nodes, operations and other fragments)
-    /**
-     * @description The list of fragments added to the node
-     */
-    global final List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>();
-
     /**
      * @description Create an instance of `GraphQLNode` with the empty name
      */
@@ -79,6 +73,14 @@ global class GraphQLNode extends GraphQLBaseNode {
     }
 
     /**
+     * @description Check if the current node contains any inline fragments
+     * @return `true` if there are no inline fragments. `false` otherwise
+     */
+    global Boolean hasInlineFragments() {
+        return !fragments.isEmpty();
+    }
+
+    /**
      * @description Check if the current node contains any directives
      * @return `true` if there are any directives. `false` otherwise
      */
@@ -130,8 +132,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode withNodes(GraphQLNode[] nodes) {
-        addNodes(nodes);
-        return this;
+        return (GraphQLNode) addNodes(nodes);
     }
 
     /**
@@ -144,32 +145,37 @@ global class GraphQLNode extends GraphQLBaseNode {
     }
 
     /**
-     * @description Add a fragment the current node. For a regular fragment adds a name reference to the node
-     * @param fragment The instance of the `GraphQLFragmentNode`. Can be either regular or inline fragment
-     * @return The current instance of `GraphQLNode`
-     */
-    global GraphQLNode withFragment(GraphQLFragmentNode fragment) {
-        return withFragments(new List<GraphQLFragmentNode> { fragment });
-    }
-
-    /**
      * @description Add multiple fragment uses to the current node
      * @param fragmentNames The list of names of the fragments to be used
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode withFragments(String[] fragmentNames) {
-        addFragments(fragmentNames);
-        return this;
+        return (GraphQLNode) addFragments(fragmentNames);
     }
 
     /**
-     * @description Add a fragment the current node. For a regular fragment adds a name reference to the node
-     * @param fragment The instance of the `GraphQLFragmentNode`. Can be either regular or inline fragment
+     * @description Add an inline fragment to the current node
+     * @param fragment The instance of the `GraphQLFragmentNode`. Should be inline fragment without a name
      * @return The current instance of `GraphQLNode`
+     * @throws GraphQLNodeException If the passed fragment is not inline
      */
-    global GraphQLNode withFragments(GraphQLFragmentNode[] fragments) {
-        // TODO
-        return this;
+    global GraphQLNode withInlineFragment(GraphQLFragmentNode fragment) {
+        return withInlineFragments(new List<GraphQLFragmentNode> { fragment });
+    }
+
+    /**
+     * @description Add inline fragments to the current node
+     * @param fragment The instances of the `GraphQLFragmentNode`. Should be inline fragments without names
+     * @return The current instance of `GraphQLNode`
+     * @throws GraphQLNodeException If some of the passed fragments are not inline
+     */
+    global GraphQLNode withInlineFragments(GraphQLFragmentNode[] fragments) {
+        for (GraphQLFragmentNode fragment : fragments) {
+            if (!fragment.isInline()) {
+                throw new GraphQLNodeException('Not possible to add non-inline fragments: ' + fragment.name);
+            }
+        }
+        return (GraphQLNode) addInlineFragments(fragments);
     }
 
     /**
