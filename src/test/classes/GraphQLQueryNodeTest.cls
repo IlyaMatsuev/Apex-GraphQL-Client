@@ -128,6 +128,21 @@ private class GraphQLQueryNodeTest {
     }
 
     @IsTest
+    private static void queryWithInlineFragmentDefinitionNegativeTest() {
+        GraphQLFragmentNode fragment = new GraphQLFragmentNode('Type1');
+
+        Exception error;
+        try {
+            new GraphQLQueryNode().defineFragment(fragment);
+        } catch (Exception ex) {
+            error = ex;
+        }
+
+        System.assert(error != null);
+        System.assert(error instanceof GraphQLOperationNode.GraphQLOperationNodeException);
+    }
+
+    @IsTest
     private static void queryWithNodeTest() {
         String nodeName = 'node1';
 
