@@ -13,20 +13,20 @@ query CountriesQuery {
 */
 
 // Create fragment instance passing the type name it's referring to. If we don't provide fragment name it's evaluated as inline fragment
-private GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('City').withField('id').withField('name');
+GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('City').withField('id').withField('name');
 
-private GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLNode countriesNode = new GraphQLNode('countries')
     .withField('name')
     // Use inline fragment fields for the capital node
     .withNode(new GraphQLNode('capital').withInlineFragment(cityFieldsFragment));
 
-private GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesNode, citiesNode });
+GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesNode, citiesNode });
 
-private GraphQLRequest request = query.asRequest();
+GraphQLRequest request = query.asRequest();
 
-private IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
-private GraphQLResponse response = client.send(request);
+GraphQLResponse response = client.send(request);
 
 if (response.hasErrors()) {
     System.debug('First error: ' + response.getErrors().get(0).message);

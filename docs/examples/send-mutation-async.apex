@@ -24,7 +24,7 @@ GraphQLRequest request = mutation.asRequest()
     .withHeader('Authorization', 'Bearer token');
 
 // Provide GraphQL endpoint to the client constructor
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 // Send the request async and provide a callback implementation (can be null)
 Id jobId = client.sendAsync(request, new CountryMutationCallback());

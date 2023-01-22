@@ -34,7 +34,7 @@ GraphQLRequest request = new GraphQLRequest(query)
     .withVariable('limit', 10);
 
 // Provide GraphQL endpoint to the client constructor
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 GraphQLResponse response = client.send(request);
 

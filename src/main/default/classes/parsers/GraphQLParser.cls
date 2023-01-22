@@ -1,4 +1,4 @@
-public abstract class GraphQLParser implements IGraphQLParser {
+public abstract class GraphQLParser {
     private static final Integer INITIAL_DEPTH = 0;
 
     protected final Integer maxQueryDepth = GraphQLConfigManager.getInteger(GraphQLConfig.MaxQueryDepth);

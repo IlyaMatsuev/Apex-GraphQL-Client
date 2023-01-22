@@ -5,54 +5,7 @@ Package Id:
 
 All information regarding the installation and usage is described on the [main repo page](https://github.com/IlyaMatsuev/Apex-GraphQL-Client).
 
-## What's changed
-
-### Child nodes are now of type `GraphQLBaseNode` instead of `GraphQLNode`
-
-Which allows more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragmentNode`). To determine what child nodes are fields and what are inline fragments there are two new methods:
-
-`isFieldNode()` - True if the instance is `GraphQLNode`
-`isFragmentNode()` - True if the instance is `GraphQLFragmentNode`
-
-Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
-
-### Method renames in GraphQLQueryNode, GraphQLMutationNode and GraphQLSubscriptionNode
-
-3 methods have been renamed to prevent some confusion:
-
--   `withFragment()` => `defineFragment()`
--   `withFragments()` => `defineFragments()`
--   `withVariable()` => `defineVariable()`
-
-Was:
-
-```java
-GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
-
-GraphQLQueryNode query = new GraphQLQueryNode()
-  .withNode(node)
-  .withFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
-  .withVariable('limit', 'Int!');
-
-System.debug(query.build(true));
-```
-
-Now:
-
-```java
-GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
-
-GraphQLQueryNode query = new GraphQLQueryNode()
-  .withNode(node)
-  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
-  .defineVariable('limit', 'Int!');
-
-System.debug(query.build(true));
-```
-
-### Directives are available for both `GraphQLNode` and `GraphQLFragmentNode`
-
-Previously, directives have been presented only on `GraphQLNode` as a Map with the directive types as a key. Now the directives field is moved to `GraphQLBaseNode`. It's also not a map anymore but just a list of `GraphQLDirective`. Map has been removed just because it wasn't really helpful.
+## What's new
 
 ### Opportunity to add inline fragments to nodes
 
@@ -150,7 +103,64 @@ node.withArgument(new GraphQLArgument('newArg', 'ENUM_VALUE').asEnum());
 System.debug(node.build(true));
 ```
 
-### Refactoring of the GraphQLRequest class
+### Add ApexDoc comments for all global class members
+
+Now, every global class, field, property, method has ApexDoc comments so that it would be easier to use the package from an IDEA.
+
+## What's changed
+
+### `IGraphQLParser` and `IGraphQLClient` interfaces have been deleted
+
+These interfaces have been deleted from the package as they were not useful and did not serve any purpose. Hope this makes the code more clean and easy to understand!
+
+### Child nodes are now of type `GraphQLBaseNode` instead of `GraphQLNode`
+
+Which allows more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragmentNode`). To determine what child nodes are fields and what are inline fragments there are two new methods:
+
+`isFieldNode()` - True if the instance is `GraphQLNode`
+`isFragmentNode()` - True if the instance is `GraphQLFragmentNode`
+
+Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
+
+### Method renames in `GraphQLQueryNode`, `GraphQLMutationNode` and `GraphQLSubscriptionNode`
+
+3 methods have been renamed to prevent some confusion:
+
+-   `withFragment()` => `defineFragment()`
+-   `withFragments()` => `defineFragments()`
+-   `withVariable()` => `defineVariable()`
+
+Was:
+
+```java
+GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQueryNode query = new GraphQLQueryNode()
+  .withNode(node)
+  .withFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
+  .withVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+Now:
+
+```java
+GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQueryNode query = new GraphQLQueryNode()
+  .withNode(node)
+  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
+  .defineVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+### Directives are available for both `GraphQLNode` and `GraphQLFragmentNode`
+
+Previously, directives have been presented only on `GraphQLNode` as a Map with the directive types as a key. Now the directives field is moved to `GraphQLBaseNode`. It's also not a map anymore but just a list of `GraphQLDirective`. Map has been removed just because it wasn't really helpful.
+
+### Refactoring of the `GraphQLRequest` class
 
 -   One of the constructors has been simplified so it accepts only one parameter of `GraphQLOperationNode` type:
 
@@ -188,10 +198,6 @@ System.debug(request.timeout);
 ### Remove the RequestTimeout configuration entry
 
 The `RequestTimeout` configuration metadata record has been removed because it didn't serve much purpose. Now, The timeout for the request can be set with `withTimeout` method on the `GraphQLRequest` class.
-
-### Add ApexDoc comments for all global class members
-
-Now, every global class, field, property, method has ApexDoc comments so that it would be easier to use the package from an IDEA
 
 ---
 
