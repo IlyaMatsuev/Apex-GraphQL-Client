@@ -14,12 +14,13 @@ public class GraphQLFragmentNodeParser extends GraphQLParser {
     }
 
     private String parseInlineFragment(GraphQLFragmentNode fragment, Integer depth, Boolean pretty) {
+        String spread = GraphQLConstants.DOT.repeat(3);
+        if (String.isNotBlank(fragment.type)) {
+            spread += GraphQLConstants.SPACE + ON_TYPE_KEYWORD + GraphQLConstants.SPACE + fragment.type;
+        }
         return getIndent(depth, pretty) +
-            GraphQLConstants.DOT.repeat(3) +
-            GraphQLConstants.SPACE +
-            ON_TYPE_KEYWORD +
-            GraphQLConstants.SPACE +
-            fragment.type +
+            spread +
+            parseDirectives(fragment, pretty) +
             getSmallIndent(pretty) +
             parseChildNodes(fragment, depth, pretty);
     }
@@ -32,6 +33,7 @@ public class GraphQLFragmentNodeParser extends GraphQLParser {
             ON_TYPE_KEYWORD +
             GraphQLConstants.SPACE +
             fragment.type +
+            parseDirectives(fragment, pretty) +
             parseChildNodes(fragment, depth, pretty);
     }
 }

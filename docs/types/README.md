@@ -62,7 +62,7 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `Map<String, GraphQLArgument> arguments` - The list of node's arguements mapped by their names. Read about [`GraphQLArgument` here](#graphqlargument). Arguments are optional.
 
-`Map<GraphQLDirectiveType, GraphQLDirective> directives` - The list of node's directives mapped by their types (`include` or `skip`). Read about [`GraphQLDirective` here](#graphqldirective). Directives are optional.
+`List<GraphQLDirective> directives` - The list of node's directives. Read about [`GraphQLDirective` here](#graphqldirective).
 
 ---
 
@@ -358,7 +358,7 @@ This class can be used for building fragments to make your queries look more eff
 
 `List<GraphQLBaseNode> nodes` - The list of child nodes of the current fragment. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLNode` or `GraphQLFragmentNode`.
 
----
+## `List<GraphQLDirective> directives` - The list of fragment's directives. Read about [`GraphQLDirective` here](#graphqldirective).
 
 ### Methods
 
@@ -371,6 +371,8 @@ This class can be used for building fragments to make your queries look more eff
 `Boolean hasNodes(GraphQLNode[] nodes)` - Returns true if there is at least one node from the provided array. Otherwise returns false.
 
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current fragment. Otherwise returns false.
+
+`Boolean hasDirectives()` - Returns true if there is at least one directive for the current fragment. Otherwise returns false.
 
 `GraphQLFragmentNode withField(String field)` - Adds a new field to the fragment.
 
@@ -387,6 +389,14 @@ This class can be used for building fragments to make your queries look more eff
 `GraphQLFragmentNode withInlineFragment(GraphQLFragmentNode fragment)` - Adds a child fragment node with the set of fields for a particular type.
 
 `GraphQLFragmentNode withInlineFragments(GraphQLFragmentNode[] fragments)` - Adds child fragment nodes with the set of fields for particular types.
+
+`GraphQLFragmentNode includeIf(Boolean condition)` - Adds a new `include` directive to the current fragment. Accepts one parameter of type Boolean. Indicates whether the current fragment needs to be included in the response.
+
+`GraphQLFragmentNode includeIf(String variable)` - Adds a new `include` directive to the current fragment. Accepts one parameter of type String that represents the query variable name (can be passed with or without the `$` sign). Indicates whether the current fragment needs to be included in the response.
+
+`GraphQLFragmentNode skipIf(Boolean condition)` - Adds a new `skip` directive to the current fragment. Accepts one parameter of type Boolean. Indicates whether the current fragment needs to be skipped in the response.
+
+`GraphQLFragmentNode skipIf(String variable)` - Adds a new `skip` directive to the current fragment. Accepts one parameter of type String that represents the query variable name (can be passed with or without the `$` sign). Indicates whether the current fragment needs to be skipped in the response.
 
 `String build()` - Builds a non-formatted string representation of the fragment.
 

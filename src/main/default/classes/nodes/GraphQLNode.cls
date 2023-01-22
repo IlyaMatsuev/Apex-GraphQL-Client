@@ -13,11 +13,6 @@ global class GraphQLNode extends GraphQLBaseNode {
     global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
 
     /**
-     * @description The Map of node directives with the names as keys
-     */
-    global final Map<GraphQLDirectiveType, GraphQLDirective> directives = new Map<GraphQLDirectiveType, GraphQLDirective>();
-
-    /**
      * @description Create an instance of `GraphQLNode` with the empty name
      */
     global GraphQLNode() {
@@ -70,14 +65,6 @@ global class GraphQLNode extends GraphQLBaseNode {
      */
     global Boolean hasArguments() {
         return !arguments.isEmpty();
-    }
-
-    /**
-     * @description Check if the current node contains any directives
-     * @return `true` if there are any directives. `false` otherwise
-     */
-    global Boolean hasDirectives() {
-        return !directives.isEmpty();
     }
 
     /**
@@ -202,7 +189,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode includeIf(Boolean condition) {
-        return withDirective(GraphQLDirectiveType.Include, condition);
+        return (GraphQLNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, condition));
     }
 
     /**
@@ -211,7 +198,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode includeIf(String variable) {
-        return withDirective(GraphQLDirectiveType.Include, variable);
+        return (GraphQLNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, variable));
     }
 
     /**
@@ -220,7 +207,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode skipIf(Boolean condition) {
-        return withDirective(GraphQLDirectiveType.Skip, condition);
+        return (GraphQLNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, condition));
     }
 
     /**
@@ -229,7 +216,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode skipIf(String variable) {
-        return withDirective(GraphQLDirectiveType.Skip, variable);
+        return (GraphQLNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, variable));
     }
 
     /**
@@ -262,16 +249,6 @@ global class GraphQLNode extends GraphQLBaseNode {
      */
     global override IGraphQLParser getParser() {
         return new GraphQLNodeParser();
-    }
-
-    private GraphQLNode withDirective(GraphQLDirectiveType type, Boolean ifArgumentValue) {
-        this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
-        return this;
-    }
-
-    private GraphQLNode withDirective(GraphQLDirectiveType type, String ifArgumentValue) {
-        this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
-        return this;
     }
 
     private List<GraphQLNode> getFieldNodes() {

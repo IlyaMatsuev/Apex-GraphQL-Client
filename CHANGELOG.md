@@ -16,6 +16,44 @@ Which allows more flexibility as now the `nodes` field also stores inline fragme
 
 Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
 
+### Method renames in GraphQLQueryNode, GraphQLMutationNode and GraphQLSubscriptionNode
+
+3 methods have been renamed to prevent some confusion:
+
+-   `withFragment()` => `defineFragment()`
+-   `withFragments()` => `defineFragments()`
+-   `withVariable()` => `defineVariable()`
+
+Was:
+
+```java
+GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQueryNode query = new GraphQLQueryNode()
+  .withNode(node)
+  .withFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
+  .withVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+Now:
+
+```java
+GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQueryNode query = new GraphQLQueryNode()
+  .withNode(node)
+  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
+  .defineVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+### Directives are available for both `GraphQLNode` and `GraphQLFragmentNode`
+
+Previously, directives have been presented only on `GraphQLNode` as a Map with the directive types as a key. Now the directives field is moved to `GraphQLBaseNode`. It's also not a map anymore but just a list of `GraphQLDirective`. Map has been removed just because it wasn't really helpful.
+
 ### Opportunity to add inline fragments to nodes
 
 There two new methods for `GraphQLNode` and `GraphQLFragmentNode` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
@@ -61,38 +99,32 @@ GraphQLQueryNode query = new GraphQLQueryNode().withNode(profiles);
 System.debug(query.build(true));
 ```
 
-// TODO: Add an example of the inline fragment with @includeif directive and omited type
+Also an example with an inline fragment marked with a directive and without the type specified:
 
-### Method renames in GraphQLQueryNode, GraphQLMutationNode and GraphQLSubscriptionNode
-
-3 methods have been renamed to prevent some confusion:
-
--   `withFragment()` => `defineFragment()`
--   `withFragments()` => `defineFragments()`
--   `withVariable()` => `defineVariable()`
-
-Was:
-
-```java
-GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
-
-GraphQLQueryNode query = new GraphQLQueryNode()
-  .withNode(node)
-  .withFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
-  .withVariable('limit', 'Int!');
-
-System.debug(query.build(true));
+```gql
+query ($expandedInfo: Boolean) {
+    user {
+        name
+        ... @include(if: $expandedInfo) {
+            firstName
+            lastName
+        }
+    }
+}
 ```
 
-Now:
-
 ```java
-GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+GraphQLNode userNode = new GraphQLNode('user')
+  .withField('name')
+  .withInlineFragment(
+    new GraphQLFragmentNode()
+      .includeIf('expandedInfo')
+      .withFields(new List<String> { 'firstName', 'lastName' })
+  );
 
 GraphQLQueryNode query = new GraphQLQueryNode()
-  .withNode(node)
-  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
-  .defineVariable('limit', 'Int!');
+  .withNode(userNode)
+  .defineVariable('expandedInfo', 'Boolean');
 
 System.debug(query.build(true));
 ```

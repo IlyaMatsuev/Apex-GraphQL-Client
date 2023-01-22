@@ -51,6 +51,19 @@ public abstract class GraphQLParser implements IGraphQLParser {
         return childNodes;
     }
 
+    protected String parseDirectives(GraphQLBaseNode node, Boolean pretty) {
+        if (!node.hasDirectives()) {
+            return GraphQLConstants.EMPTY;
+        }
+
+        List<String> rawDirectives = new List<String>();
+        for (GraphQLDirective directive : node.directives) {
+            rawDirectives.add(directive.parse(node, pretty));
+        }
+
+        return GraphQLConstants.SPACE + String.join(rawDirectives, GraphQLConstants.SPACE);
+    }
+
     protected String getIndent(Integer depth, Boolean pretty) {
         if (!pretty) {
             return GraphQLConstants.EMPTY;
@@ -86,19 +99,6 @@ public abstract class GraphQLParser implements IGraphQLParser {
         return GraphQLConstants.PARENTHESE_LEFT +
             String.join(rawArguments, GraphQLConstants.COMMA + getSmallIndent(pretty)) +
             GraphQLConstants.PARENTHESE_RIGHT;
-    }
-
-    private String parseDirectives(GraphQLNode node, Boolean pretty) {
-        if (!node.hasDirectives()) {
-            return GraphQLConstants.EMPTY;
-        }
-
-        List<String> rawDirectives = new List<String>();
-        for (GraphQLDirective directive : node.directives.values()) {
-            rawDirectives.add(directive.parse(node, pretty));
-        }
-
-        return GraphQLConstants.SPACE + String.join(rawDirectives, GraphQLConstants.SPACE);
     }
 
     private class GraphQLBaseParserException extends Exception {}

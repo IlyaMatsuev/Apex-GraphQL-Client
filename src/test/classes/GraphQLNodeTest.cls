@@ -136,6 +136,16 @@ private class GraphQLNodeTest {
     }
 
     @IsTest
+    private static void nodeWithInlineFragmentOnTheSameTypeTest() {
+        GraphQLNode node = new GraphQLNode()
+            .withInlineFragment(new GraphQLFragmentNode().withField('field1').withField('field2'));
+
+        System.assertEquals(1, node.nodes.size());
+        System.assertEquals('{...{field1,field2}}', node.build());
+        System.assertEquals('{\n  ... {\n    field1\n    field2\n  }\n}', node.build(true));
+    }
+
+    @IsTest
     private static void nodeWithInlineFragmentWithNamedFragmentNegativeTest() {
         GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'SomeType').withField('field1');
 
@@ -198,7 +208,7 @@ private class GraphQLNodeTest {
         GraphQLNode node = new GraphQLNode().includeIf(false).includeIf('var');
 
         System.assert(node.hasDirectives());
-        System.assertEquals(1, node.directives.size());
+        System.assertEquals(2, node.directives.size());
     }
 
     @IsTest
@@ -206,7 +216,7 @@ private class GraphQLNodeTest {
         GraphQLNode node = new GraphQLNode().skipIf(false).skipIf('var');
 
         System.assert(node.hasDirectives());
-        System.assertEquals(1, node.directives.size());
+        System.assertEquals(2, node.directives.size());
     }
 
     @IsTest

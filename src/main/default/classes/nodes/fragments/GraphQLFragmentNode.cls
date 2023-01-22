@@ -8,6 +8,13 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
     global final String type;
 
     /**
+     * @description Create an instance of an inline fragment not providing the type. Assuming the type is identical to the parent node's type
+     */
+    global GraphQLFragmentNode() {
+        this(GraphQLConstants.EMPTY);
+    }
+
+    /**
      * @description Create an instance of an inline fragment by the provided type
      * @param type The fragment referencing type
      */
@@ -147,5 +154,41 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
      */
     global GraphQLFragmentNode withInlineFragments(GraphQLFragmentNode[] fragments) {
         return (GraphQLFragmentNode) addInlineFragments(fragments);
+    }
+
+    /**
+     * @description Add the standard `includeIf` directive to the current fragment
+     * @param condition The boolean condition for the directive
+     * @return The current instance of `GraphQLFragmentNode`
+     */
+    global GraphQLFragmentNode includeIf(Boolean condition) {
+        return (GraphQLFragmentNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, condition));
+    }
+
+    /**
+     * @description Add the standard `includeIf` directive to the current fragment
+     * @param variable The variable reference for the directive. The `$` sign is not required
+     * @return The current instance of `GraphQLFragmentNode`
+     */
+    global GraphQLFragmentNode includeIf(String variable) {
+        return (GraphQLFragmentNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, variable));
+    }
+
+    /**
+     * @description Add the standard `skipIf` directive to the current fragment
+     * @param condition The boolean condition for the directive
+     * @return The current instance of `GraphQLFragmentNode`
+     */
+    global GraphQLFragmentNode skipIf(Boolean condition) {
+        return (GraphQLFragmentNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, condition));
+    }
+
+    /**
+     * @description Add the standard `skipIf` directive to the current fragment
+     * @param variable The variable reference for the directive. The `$` sign is not required
+     * @return The current instance of `GraphQLFragmentNode`
+     */
+    global GraphQLFragmentNode skipIf(String variable) {
+        return (GraphQLFragmentNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, variable));
     }
 }

@@ -12,6 +12,11 @@ global abstract class GraphQLBaseNode {
      */
     global final List<GraphQLBaseNode> nodes = new List<GraphQLBaseNode>();
 
+    /**
+     * @description The list of directives attached to the node
+     */
+    global final List<GraphQLDirective> directives = new List<GraphQLDirective>();
+
     protected GraphQLBaseNode(String name, List<String> fields) {
         this(name, new List<GraphQLNode>(), fields);
     }
@@ -79,6 +84,14 @@ global abstract class GraphQLBaseNode {
     }
 
     /**
+     * @description Check if the current node contains any directives
+     * @return `true` if there are any directives. `false` otherwise
+     */
+    global Boolean hasDirectives() {
+        return !directives.isEmpty();
+    }
+
+    /**
      * @description Parse the node as a string
      * @return String representation of the node
      */
@@ -133,6 +146,11 @@ global abstract class GraphQLBaseNode {
             }
         }
         nodes.addAll(fragments);
+        return this;
+    }
+
+    protected virtual GraphQLBaseNode addDirective(GraphQLDirective directive) {
+        directives.add(directive);
         return this;
     }
 
