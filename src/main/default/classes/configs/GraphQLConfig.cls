@@ -4,6 +4,5 @@ public enum GraphQLConfig {
     SupressNullsForObjectArguments,
     DateArgumentFormat,
     DateTimeArgumentFormat,
-    DefaultGraphQLEndpoint,
     SendPrettyQuery
 }

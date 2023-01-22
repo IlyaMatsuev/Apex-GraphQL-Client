@@ -4,20 +4,15 @@ private class GraphQLHttpClientTest {
 
     @IsTest
     private static void createClientWithoutEndpointNegativeTest() {
-        GraphQLHttpClient client;
         Exception error;
         try {
-            client = new GraphQLHttpClient();
+            new GraphQLHttpClient('');
         } catch (Exception ex) {
             error = ex;
         }
 
-        System.assert(client == null);
         System.assert(error != null);
-        System.assertEquals(
-            'GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata',
-            error.getMessage()
-        );
+        System.assert(error instanceof GraphQLHttpClient.GraphQLHttpClientException);
     }
 
     /**
