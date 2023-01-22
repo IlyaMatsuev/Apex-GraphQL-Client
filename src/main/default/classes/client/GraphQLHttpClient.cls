@@ -1,7 +1,7 @@
 /**
  * @description The client that can be used to send and receive GraphQL requests and responses
  */
-global class GraphQLHttpClient implements IGraphQLClient {
+global class GraphQLHttpClient {
     private final String endpoint;
 
     private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigManager.getBoolean(GraphQLConfig.SendPrettyQuery);

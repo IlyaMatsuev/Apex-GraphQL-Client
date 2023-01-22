@@ -22,7 +22,6 @@
 
 ### Interfaces:
 
--   [IGraphQLClient](#igraphqlclient)
 -   [IGraphQLResponseCallback](#igraphqlresponsecallback)
 
 ---
@@ -580,16 +579,6 @@ This enum contains values for all available request operations in GraphQL.
 `Query` - GraphQL query operation.  
 `Mutation` - GraphQL mutation operation.  
 `Subscription` - GraphQL subscription operation. This node builder is not yet implemented since it's currently impossible to work with WebSockets in Apex.
-
----
-
-## IGraphQLClient
-
-This interface is needed for providing a GraphQL client to be able to send GraphQL requests and receive response from the GraphQL endpoint.
-
-`GraphQLResponse send(GraphQLRequest request)` - Sends the [`GraphQLRequest`](#graphqlrequest) instance provided as the parameter to a GraphQL endpoint. Returns [`GraphQLResponse`](#graphqlresponse) instance.
-
-`Id sendAsync(GraphQLRequest request, IGraphQLResponseCallback callback)` - Sends the [`GraphQLRequest`](#graphqlrequest) instance provided as the first parameter to a GraphQL endpoint asynchronously. Accepts an [`IGraphQLResponseCallback`](#igraphqlresponsecallback) instance as the second parameter. Should call the callback when the response is received. Returns an Id of the asynchronous job.
 
 ---
 

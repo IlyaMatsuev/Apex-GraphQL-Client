@@ -109,7 +109,7 @@ Now, every global class, field, property, method has ApexDoc comments so that it
 
 ## What's changed
 
-### `IGraphQLParser` interface has been deleted
+### `IGraphQLParser` and `IGraphQLClient` interfaces have been deleted
 
 These interfaces have been deleted from the package as they were not useful and did not serve any purpose. Hope this makes the code more clean and easy to understand!
 

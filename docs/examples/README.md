@@ -35,7 +35,7 @@ Now you can create request and send it. In this example we use the url `https://
 
 ```java
 GraphQLRequest request = query.asRequest();
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 GraphQLResponse response = client.send(request);
 ```
 

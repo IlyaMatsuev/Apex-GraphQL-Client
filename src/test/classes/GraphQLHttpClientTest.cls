@@ -4,7 +4,7 @@ private class GraphQLHttpClientTest {
 
     @IsTest
     private static void createClientWithoutEndpointNegativeTest() {
-        IGraphQLClient client;
+        GraphQLHttpClient client;
         Exception error;
         try {
             client = new GraphQLHttpClient();
@@ -26,7 +26,7 @@ private class GraphQLHttpClientTest {
 
     @IsTest
     private static void sendRequestSyncPositiveTest() {
-        IGraphQLClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
+        GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
         GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
             .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
 
@@ -50,7 +50,7 @@ private class GraphQLHttpClientTest {
 
     @IsTest
     private static void sendRequestSyncInvalidResponseFormatTest() {
-        IGraphQLClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
+        GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
         GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
             .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
 
@@ -73,7 +73,7 @@ private class GraphQLHttpClientTest {
 
     @IsTest
     private static void sendRequestAsyncPositiveTest() {
-        IGraphQLClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
+        GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
         GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
             .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
 

@@ -31,7 +31,7 @@ GraphQLRequest request = query.asRequest()
     // Pass the $withCities variable value to the request
     .withVariable('withCities', false);
 
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 GraphQLResponse response = client.send(request);
 

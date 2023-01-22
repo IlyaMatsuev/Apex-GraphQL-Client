@@ -30,7 +30,7 @@ GraphQLRequest request = mutation.asRequest()
     .withVariable('country', country);
 
 // Provide GraphQL endpoint to the client constructor
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 GraphQLResponse response = client.send(request);
 

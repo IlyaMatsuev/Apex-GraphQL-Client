@@ -36,7 +36,7 @@ GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesN
 
 GraphQLRequest request = query.asRequest();
 
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 GraphQLResponse response = client.send(request);
 
