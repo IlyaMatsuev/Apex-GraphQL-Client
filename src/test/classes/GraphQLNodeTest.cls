@@ -464,4 +464,23 @@ private class GraphQLNodeTest {
         System.assert(error != null);
         System.assertEquals('Cannot parse an empty node without any child nodes', error.getMessage());
     }
+
+    @IsTest
+    private static void getNodeParserNegativeTest() {
+        Exception error;
+        try {
+            new TestNode().build();
+        } catch (Exception ex) {
+            error = ex;
+        }
+
+        System.assert(error != null);
+        System.assert(error instanceof GraphQLBaseNode.GraphQLBaseNodeException);
+    }
+
+    private class TestNode extends GraphQLBaseNode {
+        private TestNode() {
+            super(GraphQLConstants.EMPTY, new List<String>());
+        }
+    }
 }
