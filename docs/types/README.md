@@ -58,9 +58,7 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `String alias` - Alias of the node. Null by default. You can read about node aliases [here](https://spec.graphql.org/June2018/#sec-Field-Alias).
 
-`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
-
-`List<GraphQLFragmentNode> fragments` - The list of child inline fragment nodes. The regular fragments are not stored here as they are pasted directly into node as child fields.
+`List<GraphQLBaseNode> nodes` - The list of child nodes of the current node. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLNode` or `GraphQLFragmentNode`.
 
 `Map<String, GraphQLArgument> arguments` - The list of node's arguements mapped by their names. Read about [`GraphQLArgument` here](#graphqlargument). Arguments are optional.
 
@@ -70,6 +68,10 @@ So, basically, in that case, this node can be used for a query request but the b
 
 ### Methods
 
+`Boolean isFieldNode()` - Returns true if the current node is an instance of `GraphQLNode`. Otherwise returns false.
+
+`Boolean isFragmentNode()` - Returns true if the current node is an instance of `GraphQLFragmentNode`. Otherwise returns false.
+
 `Boolean hasNode(GraphQLNode node)` - Returns true if there is a node with the same name from the parameter. Otherwise returns false.
 
 `Boolean hasNodes(GraphQLNode[] nodes)` - Returns true if there is at least one node from the provided array. Otherwise returns false.
@@ -77,8 +79,6 @@ So, basically, in that case, this node can be used for a query request but the b
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current node. Otherwise returns false.
 
 `Boolean hasArguments()` - Returns true if there is at least one argument in the current node. Otherwise returns false.
-
-`Boolean hasInlineFragments()` - Returns true if there is at least one child inline fragment for the current node. Otherwise returns false.
 
 `Boolean hasDirectives()` - Returns true if there is at least one directive for the current node. Otherwise returns false.
 
@@ -118,11 +118,11 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `String build(Boolean pretty)` - Builds a string representation of the current node. The result string can be formatted depending on the provided boolean flag `pretty`.
 
-`GraphQLQueryNode asQuery()` - Wraps the current node and returns a new instance of [`GraphQLQueryNode`](#graphqlquerynode) with the same node name and child nodes. Arguments are not passing to a new query node since they are not supported for the type [`GraphQLQueryNode`](#graphqlquerynode).
+`GraphQLQueryNode asQuery()` - Wraps the current node and returns a new instance of [`GraphQLQueryNode`](#graphqlquerynode) with the same node name and child nodes. Arguments and inline fragments are not passing to a new query node since they are not supported for the type [`GraphQLQueryNode`](#graphqlquerynode).
 
-`GraphQLMutationNode asMutation()` - Wraps the current node and returns a new instance of [`GraphQLMutationNode`](#graphqlmutationnode) with the same node name and child nodes. Arguments are not passing to a new mutation node since they are not supported for the type [`GraphQLMutationNode`](#graphqlmutationnode).
+`GraphQLMutationNode asMutation()` - Wraps the current node and returns a new instance of [`GraphQLMutationNode`](#graphqlmutationnode) with the same node name and child nodes. Arguments and inline fragments are not passing to a new mutation node since they are not supported for the type [`GraphQLMutationNode`](#graphqlmutationnode).
 
-`GraphQLSubscriptionNode asSubscription()` - Wraps the current node and returns a new instance of [`GraphQLSubscriptionNode`](#graphqlsubscriptionnode) with the same node name and child nodes. Arguments are not passing to a new query node since they are not supported for the type [`GraphQLSubscriptionNode`](#graphqlsubscriptionnode).
+`GraphQLSubscriptionNode asSubscription()` - Wraps the current node and returns a new instance of [`GraphQLSubscriptionNode`](#graphqlsubscriptionnode) with the same node name and child nodes. Arguments and inline fragments are not passing to a new query node since they are not supported for the type [`GraphQLSubscriptionNode`](#graphqlsubscriptionnode).
 
 ---
 
@@ -152,7 +152,7 @@ This class is only used for building queries.
 
 `String name` - The name of the query. Can be empty.
 
-`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
+`List<GraphQLBaseNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
 `List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
 
@@ -222,7 +222,7 @@ This class is only used for building mutations.
 
 `String name` - The name of the query. Can be empty.
 
-`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
+`List<GraphQLBaseNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
 `List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
 
@@ -292,7 +292,7 @@ This class is only used for building subscriptions. It's not possible yet to exe
 
 `String name` - The name of the query. Can be empty.
 
-`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the current node. If a node has no child nodes it'll be built as a field. Therefore, this property is optional.
+`List<GraphQLBaseNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
 `List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
 
@@ -356,21 +356,21 @@ This class can be used for building fragments to make your queries look more eff
 
 `String type` - The name of the type the fragment describes fields for.
 
-`List<GraphQLNode> nodes` - The list of child nodes (or fields) of the fragment.
-
-`List<GraphQLFragmentNode> fragments` - The list of child inline fragment nodes. The regular fragments are not stored here as they are pasted directly into fragment as child fields.
+`List<GraphQLBaseNode> nodes` - The list of child nodes of the current fragment. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLNode` or `GraphQLFragmentNode`.
 
 ---
 
 ### Methods
+
+`Boolean isFieldNode()` - Returns true if the current node is an instance of `GraphQLNode`. Otherwise returns false.
+
+`Boolean isFragmentNode()` - Returns true if the current node is an instance of `GraphQLFragmentNode`. Otherwise returns false.
 
 `Boolean hasNode(GraphQLNode node)` - Returns true if there is a node with the same name from the parameter. Otherwise returns false.
 
 `Boolean hasNodes(GraphQLNode[] nodes)` - Returns true if there is at least one node from the provided array. Otherwise returns false.
 
 `Boolean hasNodes()` - Returns true if there is at least one child node in the current fragment. Otherwise returns false.
-
-`Boolean hasInlineFragments()` - Returns true if there is at least one child inline fragment for the current fragment. Otherwise returns false.
 
 `GraphQLFragmentNode withField(String field)` - Adds a new field to the fragment.
 

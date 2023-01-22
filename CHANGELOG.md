@@ -7,6 +7,96 @@ All information regarding the installation and usage is described on the [main r
 
 ## What's changed
 
+### Child nodes are now of type `GraphQLBaseNode` instead of `GraphQLNode`
+
+Which allows more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragmentNode`). To determine what child nodes are fields and what are inline fragments there are two new methods:
+
+`isFieldNode()` - True if the instance is `GraphQLNode`
+`isFragmentNode()` - True if the instance is `GraphQLFragmentNode`
+
+Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
+
+### Opportunity to add inline fragments to nodes
+
+There two new methods for `GraphQLNode` and `GraphQLFragmentNode` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
+
+Example:
+
+```gql
+query {
+    profiles {
+        name
+        ... on User {
+            friends {
+                count
+            }
+        }
+        ... on Page {
+            likers {
+                count
+            }
+        }
+    }
+}
+```
+
+Apex equivalent:
+
+```java
+GraphQLNode profiles = new GraphQLNode('profiles')
+  .withField('name')
+  .withInlineFragment(
+    new GraphQLFragmentNode('User').withNode(
+        new GraphQLNode('friends').withField('count')
+    )
+  )
+  .withInlineFragment(
+    new GraphQLFragmentNode('Page').withNode(
+        new GraphQLNode('likers').withField('count')
+    )
+  );
+
+GraphQLQueryNode query = new GraphQLQueryNode().withNode(profiles);
+
+System.debug(query.build(true));
+```
+
+// TODO: Add an example of the inline fragment with @includeif directive and omited type
+
+### Method renames in GraphQLQueryNode, GraphQLMutationNode and GraphQLSubscriptionNode
+
+3 methods have been renamed to prevent some confusion:
+
+-   `withFragment()` => `defineFragment()`
+-   `withFragments()` => `defineFragments()`
+-   `withVariable()` => `defineVariable()`
+
+Was:
+
+```java
+GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQueryNode query = new GraphQLQueryNode()
+  .withNode(node)
+  .withFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
+  .withVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+Now:
+
+```java
+GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQueryNode query = new GraphQLQueryNode()
+  .withNode(node)
+  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
+  .defineVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
 ### Enum arguments
 
 Now it's possible to define GraphQL enum arguments for GraphQL nodes. To do that, you'll need to create an instance of `GraphQLArgument` and call the `asEnum()` method.
