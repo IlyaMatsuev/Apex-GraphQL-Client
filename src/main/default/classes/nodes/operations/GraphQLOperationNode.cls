@@ -7,6 +7,11 @@ global abstract class GraphQLOperationNode extends GraphQLBaseNode {
      */
     global final Map<String, String> variables = new Map<String, String>();
 
+    /**
+     * @description The list of fragment definitions added to the operation
+     */
+    global final List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>();
+
     protected GraphQLOperationNode(String alias, List<String> fields) {
         super(alias, fields);
     }

@@ -4,6 +4,7 @@ private class GraphQLNodeTest {
     private static void emptyNodeTest() {
         GraphQLNode node = new GraphQLNode();
 
+        System.assert(node.isFieldNode());
         System.assertEquals(GraphQLConstants.EMPTY, node.name);
         System.assertEquals(0, node.nodes.size());
         System.assertEquals(0, node.arguments.size());
@@ -116,9 +117,7 @@ private class GraphQLNodeTest {
 
         GraphQLNode node = new GraphQLNode().withInlineFragment(fragment);
 
-        System.assert(node.nodes.isEmpty());
-        System.assert(node.hasInlineFragments());
-        System.assertEquals(1, node.fragments.size());
+        System.assertEquals(1, node.nodes.size());
         System.assertEquals('{... on SomeType{field1}}', node.build());
         System.assertEquals('{\n  ... on SomeType {\n    field1\n  }\n}', node.build(true));
     }
@@ -132,9 +131,7 @@ private class GraphQLNodeTest {
 
         GraphQLNode node = new GraphQLNode().withInlineFragments(fragments);
 
-        System.assert(node.nodes.isEmpty());
-        System.assert(node.hasInlineFragments());
-        System.assertEquals(2, node.fragments.size());
+        System.assertEquals(2, node.nodes.size());
         System.assertEquals('{... on SomeType{field1},... on SomeType2{field11}}', node.build());
     }
 
@@ -150,7 +147,7 @@ private class GraphQLNodeTest {
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLNode.GraphQLNodeException);
+        System.assert(error instanceof GraphQLBaseNode.GraphQLBaseNodeException);
     }
 
     @IsTest
@@ -286,8 +283,7 @@ private class GraphQLNodeTest {
             .withInlineFragment(inlineFragment);
 
         System.assert(node != null);
-        System.assertEquals(2, node.nodes.size());
-        System.assertEquals(1, node.fragments.size());
+        System.assertEquals(3, node.nodes.size());
         System.assertEquals('{field1,...SomeFields,... on SomeType{field11}}', node.build());
         System.assertEquals('{\n  field1\n  ...SomeFields\n  ... on SomeType {\n    field11\n  }\n}', node.build(true));
     }

@@ -73,14 +73,6 @@ global class GraphQLNode extends GraphQLBaseNode {
     }
 
     /**
-     * @description Check if the current node contains any inline fragments
-     * @return `true` if there are any inline fragments. `false` otherwise
-     */
-    global Boolean hasInlineFragments() {
-        return !fragments.isEmpty();
-    }
-
-    /**
      * @description Check if the current node contains any directives
      * @return `true` if there are any directives. `false` otherwise
      */
@@ -157,7 +149,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @description Add an inline fragment to the current node
      * @param fragment The instance of the `GraphQLFragmentNode`. Should be inline fragment without a name
      * @return The current instance of `GraphQLNode`
-     * @throws GraphQLNodeException If the passed fragment is not inline
+     * @throws GraphQLBaseNodeException If the passed fragment is not inline
      */
     global GraphQLNode withInlineFragment(GraphQLFragmentNode fragment) {
         return withInlineFragments(new List<GraphQLFragmentNode> { fragment });
@@ -167,14 +159,9 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @description Add inline fragments to the current node
      * @param fragment The instances of the `GraphQLFragmentNode`. Should be inline fragments without names
      * @return The current instance of `GraphQLNode`
-     * @throws GraphQLNodeException If some of the passed fragments are not inline
+     * @throws GraphQLBaseNodeException If some of the passed fragments are not inline
      */
     global GraphQLNode withInlineFragments(GraphQLFragmentNode[] fragments) {
-        for (GraphQLFragmentNode fragment : fragments) {
-            if (!fragment.isInline()) {
-                throw new GraphQLNodeException('Not possible to add non-inline fragments: ' + fragment.name);
-            }
-        }
         return (GraphQLNode) addInlineFragments(fragments);
     }
 
@@ -250,7 +237,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The new `GraphQLQueryNode` instance
      */
     global GraphQLQueryNode asQuery() {
-        return new GraphQLQueryNode(this.name, this.nodes);
+        return new GraphQLQueryNode(name, getFieldNodes());
     }
 
     /**
@@ -258,7 +245,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The new `GraphQLMutationNode` instance
      */
     global GraphQLMutationNode asMutation() {
-        return new GraphQLMutationNode(this.name, this.nodes);
+        return new GraphQLMutationNode(name, getFieldNodes());
     }
 
     /**
@@ -266,7 +253,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The new `GraphQLSubscriptionNode` instance
      */
     global GraphQLSubscriptionNode asSubscription() {
-        return new GraphQLSubscriptionNode(this.name, this.nodes);
+        return new GraphQLSubscriptionNode(name, getFieldNodes());
     }
 
     /**
@@ -287,6 +274,13 @@ global class GraphQLNode extends GraphQLBaseNode {
         return this;
     }
 
-    @TestVisible
-    private class GraphQLNodeException extends Exception {}
+    private List<GraphQLNode> getFieldNodes() {
+        List<GraphQLNode> fieldNodes = new List<GraphQLNode>();
+        for (GraphQLBaseNode node : this.nodes) {
+            if (node.isFieldNode()) {
+                fieldNodes.add((GraphQLNode) node);
+            }
+        }
+        return fieldNodes;
+    }
 }

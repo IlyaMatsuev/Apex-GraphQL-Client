@@ -10,12 +10,7 @@ global abstract class GraphQLBaseNode {
     /**
      * @description The list of child nodes
      */
-    global final List<GraphQLNode> nodes = new List<GraphQLNode>();
-
-    /**
-     * @description The list of regular or inline fragments added to the node
-     */
-    global final List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>();
+    global final List<GraphQLBaseNode> nodes = new List<GraphQLBaseNode>();
 
     protected GraphQLBaseNode(String name, List<String> fields) {
         this(name, new List<GraphQLNode>(), fields);
@@ -35,6 +30,22 @@ global abstract class GraphQLBaseNode {
     }
 
     /**
+     * @description Check if the current node is an instance of `GraphQLNode`
+     * @return `true` if the current instance is `GraphQLNode`
+     */
+    global Boolean isFieldNode() {
+        return this instanceof GraphQLNode;
+    }
+
+    /**
+     * @description Check if the current node is an instance of `GraphQLFragmentNode`
+     * @return `true` if the current instance is `GraphQLFragmentNode`
+     */
+    global Boolean isFragmentNode() {
+        return this instanceof GraphQLFragmentNode;
+    }
+
+    /**
      * @description Check if the provided node exists in the child nodes. Searches by the node's name
      * @param node The target GraphQL node to search for
      * @return `true` if the node with the same name is found in child nodes. `false` otherwise
@@ -49,7 +60,7 @@ global abstract class GraphQLBaseNode {
      * @return `true` if one of the nodes with the same name is found in child nodes. `false` otherwise
      */
     global virtual Boolean hasNodes(GraphQLNode[] nodes) {
-        for (GraphQLNode existingNode : this.nodes) {
+        for (GraphQLBaseNode existingNode : this.nodes) {
             for (GraphQLNode node : nodes) {
                 if (existingNode.name == node.name) {
                     return true;
@@ -116,7 +127,15 @@ global abstract class GraphQLBaseNode {
     }
 
     protected virtual GraphQLBaseNode addInlineFragments(GraphQLFragmentNode[] fragments) {
-        this.fragments.addAll(fragments);
+        for (GraphQLFragmentNode fragment : fragments) {
+            if (!fragment.isInline()) {
+                throw new GraphQLBaseNodeException('Not possible to add non-inline fragment: ' + fragment.name);
+            }
+        }
+        nodes.addAll(fragments);
         return this;
     }
+
+    @TestVisible
+    private class GraphQLBaseNodeException extends Exception {}
 }

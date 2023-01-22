@@ -6,6 +6,7 @@ private class GraphQLFragmentNodeTest {
         String type = 'SomeType';
         GraphQLFragmentNode fragment = new GraphQLFragmentNode(name, type);
 
+        System.assert(fragment.isFragmentNode());
         System.assertEquals(name, fragment.name);
         System.assertEquals(type, fragment.type);
         System.assert(!fragment.hasNodes());
@@ -99,9 +100,8 @@ private class GraphQLFragmentNodeTest {
         GraphQLFragmentNode inlineFragment = new GraphQLFragmentNode('SomeType2').withField('field1');
         GraphQLFragmentNode fragment = new GraphQLFragmentNode('Fields', 'SomeType').withInlineFragment(inlineFragment);
 
-        System.assert(!fragment.hasNodes());
-        System.assert(fragment.hasInlineFragments());
-        System.assertEquals(1, fragment.fragments.size());
+        System.assert(fragment.hasNodes());
+        System.assertEquals(1, fragment.nodes.size());
     }
 
     /**
