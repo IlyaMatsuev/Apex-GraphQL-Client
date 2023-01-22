@@ -36,11 +36,7 @@ global abstract class GraphQLOperationNode extends GraphQLBaseNode {
         return !fragments.isEmpty();
     }
 
-    /**
-     * @description Get the parser for the operation node
-     * @return The instance of the `GraphQLOperationNodeParser` class
-     */
-    global override IGraphQLParser getParser() {
+    public override GraphQLParser getParser() {
         return new GraphQLOperationNodeParser();
     }
 

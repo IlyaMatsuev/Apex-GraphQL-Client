@@ -1,7 +1,7 @@
 /**
  * @description Represents an entry of a GraphQL argument in a node
  */
-global class GraphQLDirective implements IGraphQLParser {
+global class GraphQLDirective {
     private static final String IF_ARG_NAME = 'if';
 
     private final GraphQLDirectiveType type;
@@ -37,6 +37,7 @@ global class GraphQLDirective implements IGraphQLParser {
         this.ifArgument = new GraphQLArgument(IF_ARG_NAME, toVariableIfPossible(ifArgumentValue));
     }
 
+    // TODO: Remove this method, implement toString() instead
     public String parse(GraphQLBaseNode node, Boolean pretty) {
         return GraphQLConstants.AT +
             this.type.name().toLowerCase() +

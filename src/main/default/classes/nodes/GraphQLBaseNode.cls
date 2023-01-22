@@ -108,11 +108,9 @@ global abstract class GraphQLBaseNode {
         return getParser().parse(this, pretty);
     }
 
-    /**
-     * @description Get the parser for this particular node type
-     * @return Implementation of the `IGraphQLParser` interface
-     */
-    global abstract IGraphQLParser getParser();
+    public virtual GraphQLParser getParser() {
+        throw new GraphQLBaseNodeException('No parser implementation found for this node');
+    }
 
     protected virtual GraphQLBaseNode addFields(String[] fields) {
         List<GraphQLNode> nodes = new List<GraphQLNode>();

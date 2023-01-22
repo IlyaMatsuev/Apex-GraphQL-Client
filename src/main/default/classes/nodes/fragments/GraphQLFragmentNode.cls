@@ -128,11 +128,7 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
         return this;
     }
 
-    /**
-     * @description Get the parser for the fragment node
-     * @return The instance of the `GraphQLFragmentNodeParser` class
-     */
-    global override IGraphQLParser getParser() {
+    public override GraphQLParser getParser() {
         return new GraphQLFragmentNodeParser();
     }
 

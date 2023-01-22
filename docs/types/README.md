@@ -22,7 +22,6 @@
 
 ### Interfaces:
 
--   [IGraphQLParser](#igraphqlparser)
 -   [IGraphQLClient](#igraphqlclient)
 -   [IGraphQLResponseCallback](#igraphqlresponsecallback)
 
@@ -581,14 +580,6 @@ This enum contains values for all available request operations in GraphQL.
 `Query` - GraphQL query operation.  
 `Mutation` - GraphQL mutation operation.  
 `Subscription` - GraphQL subscription operation. This node builder is not yet implemented since it's currently impossible to work with WebSockets in Apex.
-
----
-
-## IGraphQLParser
-
-This interface is needed for parsing a GraphQL node to the string (well formatted or not).
-
-`String parse(GraphQLBaseNode node, Boolean pretty)` - Returns a string parsing the provided node. If `pretty` is true the string should be well-formatted.
 
 ---
 

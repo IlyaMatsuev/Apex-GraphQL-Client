@@ -243,11 +243,7 @@ global class GraphQLNode extends GraphQLBaseNode {
         return new GraphQLSubscriptionNode(name, getFieldNodes());
     }
 
-    /**
-     * @description Get GraphQL node parser
-     * @return The instance of the `GraphQLNodeParser` class
-     */
-    global override IGraphQLParser getParser() {
+    public override GraphQLParser getParser() {
         return new GraphQLNodeParser();
     }
 

@@ -1,7 +1,7 @@
 /**
  * @description Represents an entry of a GraphQL argument in a node
  */
-global class GraphQLArgument implements IGraphQLParser {
+global class GraphQLArgument {
     // Searches for all JSON property names. Needed to escape properties' double quotes
     private static final String REPLACE_JSON_PROPS_REGEXP = '"(\\w+)"\\s*:';
     // Searches for all JSON values that are strings starting from '$'. Needed to escape variables' ref double quotes
@@ -111,6 +111,7 @@ global class GraphQLArgument implements IGraphQLParser {
         }
     }
 
+    // TODO: Remove this method
     public String parse(GraphQLBaseNode node, Boolean pretty) {
         return key +
             GraphQLConstants.COLON +
