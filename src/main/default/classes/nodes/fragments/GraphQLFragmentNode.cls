@@ -1,11 +1,26 @@
 /**
- * @description Represents a GraphQL fragment node definition
+ * @description Represents a GraphQL fragment node definition. Can be used for regular and inline fragments
  */
 global class GraphQLFragmentNode extends GraphQLBaseNode {
     /**
      * @description The referencing fragment type
      */
     global final String type;
+
+    /**
+     * @description Create an instance of an inline fragment not providing the type. Assuming the type is identical to the parent node's type
+     */
+    global GraphQLFragmentNode() {
+        this(GraphQLConstants.EMPTY);
+    }
+
+    /**
+     * @description Create an instance of an inline fragment by the provided type
+     * @param type The fragment referencing type
+     */
+    global GraphQLFragmentNode(String type) {
+        this(GraphQLConstants.EMPTY, type);
+    }
 
     /**
      * @description Create an instance of a fragment by the provided name and type
@@ -46,6 +61,14 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
     global GraphQLFragmentNode(String name, String type, List<GraphQLNode> nodes, List<String> fields) {
         super(name, nodes, fields);
         this.type = type;
+    }
+
+    /**
+     * @description Check if the current fragment is an inline fragment
+     * @return `true` if the fragment is inline. `false` otherwise
+     */
+    global Boolean isInline() {
+        return String.isBlank(name);
     }
 
     /**
@@ -111,5 +134,61 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
      */
     global override IGraphQLParser getParser() {
         return new GraphQLFragmentNodeParser();
+    }
+
+    /**
+     * @description Add an inline fragment to the current fragment
+     * @param fragment The instance of the `GraphQLFragmentNode`. Should be inline fragment without a name
+     * @return The current instance of `GraphQLFragmentNode`
+     * @throws GraphQLBaseNodeException If the passed fragment is not inline
+     */
+    global GraphQLFragmentNode withInlineFragment(GraphQLFragmentNode fragment) {
+        return withInlineFragments(new List<GraphQLFragmentNode> { fragment });
+    }
+
+    /**
+     * @description Add inline fragments to the current fragment
+     * @param fragment The instances of the `GraphQLFragmentNode`. Should be inline fragments without names
+     * @return The current instance of `GraphQLFragmentNode`
+     * @throws GraphQLBaseNodeException If some of the passed fragments are not inline
+     */
+    global GraphQLFragmentNode withInlineFragments(GraphQLFragmentNode[] fragments) {
+        return (GraphQLFragmentNode) addInlineFragments(fragments);
+    }
+
+    /**
+     * @description Add the standard `includeIf` directive to the current fragment
+     * @param condition The boolean condition for the directive
+     * @return The current instance of `GraphQLFragmentNode`
+     */
+    global GraphQLFragmentNode includeIf(Boolean condition) {
+        return (GraphQLFragmentNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, condition));
+    }
+
+    /**
+     * @description Add the standard `includeIf` directive to the current fragment
+     * @param variable The variable reference for the directive. The `$` sign is not required
+     * @return The current instance of `GraphQLFragmentNode`
+     */
+    global GraphQLFragmentNode includeIf(String variable) {
+        return (GraphQLFragmentNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, variable));
+    }
+
+    /**
+     * @description Add the standard `skipIf` directive to the current fragment
+     * @param condition The boolean condition for the directive
+     * @return The current instance of `GraphQLFragmentNode`
+     */
+    global GraphQLFragmentNode skipIf(Boolean condition) {
+        return (GraphQLFragmentNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, condition));
+    }
+
+    /**
+     * @description Add the standard `skipIf` directive to the current fragment
+     * @param variable The variable reference for the directive. The `$` sign is not required
+     * @return The current instance of `GraphQLFragmentNode`
+     */
+    global GraphQLFragmentNode skipIf(String variable) {
+        return (GraphQLFragmentNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, variable));
     }
 }

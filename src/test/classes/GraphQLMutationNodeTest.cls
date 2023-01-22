@@ -102,10 +102,10 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
-    private static void mutationWithFragmentTest() {
+    private static void mutationWithFragmentDefinitionTest() {
         GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
 
-        GraphQLMutationNode node = new GraphQLMutationNode().withFragment(fragment);
+        GraphQLMutationNode node = new GraphQLMutationNode().defineFragment(fragment);
 
         System.assert(node.hasFragments());
         System.assertEquals(1, node.fragments.size());
@@ -113,13 +113,13 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
-    private static void mutationWithFragmentsTest() {
+    private static void mutationWithFragmentDefinitionsTest() {
         List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
             new GraphQLFragmentNode('fragment1', 'Type1'),
             new GraphQLFragmentNode('fragment2', 'Type2')
         };
 
-        GraphQLMutationNode node = new GraphQLMutationNode().withFragments(fragments);
+        GraphQLMutationNode node = new GraphQLMutationNode().defineFragments(fragments);
 
         System.assert(node.hasFragments());
         System.assertEquals(fragments.size(), node.fragments.size());
@@ -149,10 +149,10 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
-    private static void mutationWithVariableTest() {
+    private static void mutationWithVariableDefinitionTest() {
         GraphQLMutationNode node = new GraphQLMutationNode()
             .withNode(new GraphQLNode('node'))
-            .withVariable('var', '[String!]');
+            .defineVariable('var', '[String!]');
 
         System.assertEquals(1, node.variables.size());
     }
@@ -189,14 +189,14 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
-    private static void buildMutationWithVariablePositiveTest() {
+    private static void buildMutationWithVariableDefinitionPositiveTest() {
         List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLMutationNode mutation = new GraphQLMutationNode()
             .withNodes(nodes)
             .withFields(fields)
-            .withVariable('model', 'InputType!');
+            .defineVariable('model', 'InputType!');
 
         System.assert(mutation != null);
         System.assert(String.isBlank(mutation.name));

@@ -13,11 +13,6 @@ global class GraphQLNode extends GraphQLBaseNode {
     global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
 
     /**
-     * @description The Map of node directives with the names as keys
-     */
-    global final Map<GraphQLDirectiveType, GraphQLDirective> directives = new Map<GraphQLDirectiveType, GraphQLDirective>();
-
-    /**
      * @description Create an instance of `GraphQLNode` with the empty name
      */
     global GraphQLNode() {
@@ -73,14 +68,6 @@ global class GraphQLNode extends GraphQLBaseNode {
     }
 
     /**
-     * @description Check if the current node contains any directives
-     * @return `true` if there are any directives. `false` otherwise
-     */
-    global Boolean hasDirectives() {
-        return !directives.isEmpty();
-    }
-
-    /**
      * @description Add an alias to the current node
      * @param alias The node's alias name
      * @return The current instance of `GraphQLNode`
@@ -124,8 +111,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode withNodes(GraphQLNode[] nodes) {
-        addNodes(nodes);
-        return this;
+        return (GraphQLNode) addNodes(nodes);
     }
 
     /**
@@ -143,8 +129,27 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode withFragments(String[] fragmentNames) {
-        addFragments(fragmentNames);
-        return this;
+        return (GraphQLNode) addFragments(fragmentNames);
+    }
+
+    /**
+     * @description Add an inline fragment to the current node
+     * @param fragment The instance of the `GraphQLFragmentNode`. Should be inline fragment without a name
+     * @return The current instance of `GraphQLNode`
+     * @throws GraphQLBaseNodeException If the passed fragment is not inline
+     */
+    global GraphQLNode withInlineFragment(GraphQLFragmentNode fragment) {
+        return withInlineFragments(new List<GraphQLFragmentNode> { fragment });
+    }
+
+    /**
+     * @description Add inline fragments to the current node
+     * @param fragment The instances of the `GraphQLFragmentNode`. Should be inline fragments without names
+     * @return The current instance of `GraphQLNode`
+     * @throws GraphQLBaseNodeException If some of the passed fragments are not inline
+     */
+    global GraphQLNode withInlineFragments(GraphQLFragmentNode[] fragments) {
+        return (GraphQLNode) addInlineFragments(fragments);
     }
 
     /**
@@ -184,7 +189,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode includeIf(Boolean condition) {
-        return withDirective(GraphQLDirectiveType.Include, condition);
+        return (GraphQLNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, condition));
     }
 
     /**
@@ -193,7 +198,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode includeIf(String variable) {
-        return withDirective(GraphQLDirectiveType.Include, variable);
+        return (GraphQLNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, variable));
     }
 
     /**
@@ -202,7 +207,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode skipIf(Boolean condition) {
-        return withDirective(GraphQLDirectiveType.Skip, condition);
+        return (GraphQLNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, condition));
     }
 
     /**
@@ -211,7 +216,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The current instance of `GraphQLNode`
      */
     global GraphQLNode skipIf(String variable) {
-        return withDirective(GraphQLDirectiveType.Skip, variable);
+        return (GraphQLNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, variable));
     }
 
     /**
@@ -219,7 +224,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The new `GraphQLQueryNode` instance
      */
     global GraphQLQueryNode asQuery() {
-        return new GraphQLQueryNode(this.name, this.nodes);
+        return new GraphQLQueryNode(name, getFieldNodes());
     }
 
     /**
@@ -227,7 +232,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The new `GraphQLMutationNode` instance
      */
     global GraphQLMutationNode asMutation() {
-        return new GraphQLMutationNode(this.name, this.nodes);
+        return new GraphQLMutationNode(name, getFieldNodes());
     }
 
     /**
@@ -235,7 +240,7 @@ global class GraphQLNode extends GraphQLBaseNode {
      * @return The new `GraphQLSubscriptionNode` instance
      */
     global GraphQLSubscriptionNode asSubscription() {
-        return new GraphQLSubscriptionNode(this.name, this.nodes);
+        return new GraphQLSubscriptionNode(name, getFieldNodes());
     }
 
     /**
@@ -246,13 +251,13 @@ global class GraphQLNode extends GraphQLBaseNode {
         return new GraphQLNodeParser();
     }
 
-    private GraphQLNode withDirective(GraphQLDirectiveType type, Boolean ifArgumentValue) {
-        this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
-        return this;
-    }
-
-    private GraphQLNode withDirective(GraphQLDirectiveType type, String ifArgumentValue) {
-        this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
-        return this;
+    private List<GraphQLNode> getFieldNodes() {
+        List<GraphQLNode> fieldNodes = new List<GraphQLNode>();
+        for (GraphQLBaseNode node : this.nodes) {
+            if (node.isFieldNode()) {
+                fieldNodes.add((GraphQLNode) node);
+            }
+        }
+        return fieldNodes;
     }
 }

@@ -32,7 +32,7 @@ GraphQLNode citiesNode = new GraphQLNode('cities')
 
 GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesNode, citiesNode })
     // Define fragment for the query
-    .withFragment(cityFieldsFragment);
+    .defineFragment(cityFieldsFragment);
 
 GraphQLRequest request = query.asRequest();
 

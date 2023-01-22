@@ -36,8 +36,8 @@ public abstract class GraphQLParser implements IGraphQLParser {
         childNodes += pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.EMPTY;
 
         List<String> rawNodes = new List<String>();
-        for (GraphQLNode n : node.nodes) {
-            rawNodes.add(parseNode(n, depth + 1, pretty));
+        for (GraphQLBaseNode n : node.nodes) {
+            rawNodes.add(((GraphQLParser) n.getParser()).parse(n, depth + 1, pretty));
         }
 
         childNodes += String.join(rawNodes, pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.COMMA);
@@ -49,6 +49,19 @@ public abstract class GraphQLParser implements IGraphQLParser {
         childNodes += GraphQLConstants.BRACE_RIGHT;
 
         return childNodes;
+    }
+
+    protected String parseDirectives(GraphQLBaseNode node, Boolean pretty) {
+        if (!node.hasDirectives()) {
+            return GraphQLConstants.EMPTY;
+        }
+
+        List<String> rawDirectives = new List<String>();
+        for (GraphQLDirective directive : node.directives) {
+            rawDirectives.add(directive.parse(node, pretty));
+        }
+
+        return GraphQLConstants.SPACE + String.join(rawDirectives, GraphQLConstants.SPACE);
     }
 
     protected String getIndent(Integer depth, Boolean pretty) {
@@ -86,19 +99,6 @@ public abstract class GraphQLParser implements IGraphQLParser {
         return GraphQLConstants.PARENTHESE_LEFT +
             String.join(rawArguments, GraphQLConstants.COMMA + getSmallIndent(pretty)) +
             GraphQLConstants.PARENTHESE_RIGHT;
-    }
-
-    private String parseDirectives(GraphQLNode node, Boolean pretty) {
-        if (!node.hasDirectives()) {
-            return GraphQLConstants.EMPTY;
-        }
-
-        List<String> rawDirectives = new List<String>();
-        for (GraphQLDirective directive : node.directives.values()) {
-            rawDirectives.add(directive.parse(node, pretty));
-        }
-
-        return GraphQLConstants.SPACE + String.join(rawDirectives, GraphQLConstants.SPACE);
     }
 
     private class GraphQLBaseParserException extends Exception {}

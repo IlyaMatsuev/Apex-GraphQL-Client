@@ -15,7 +15,7 @@ GraphQLNode createCountryNode = new GraphQLNode('createCountry')
 
 GraphQLMutationNode mutation = new GraphQLMutationNode('CreateCountry', createCountryNode)
     // Define variable for the mutation
-    .withVariable('country', 'NewCountryInput!');
+    .defineVariable('country', 'NewCountryInput!');
 
 // Create our input object
 Country country = new Country();

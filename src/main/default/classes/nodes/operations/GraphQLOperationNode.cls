@@ -8,7 +8,7 @@ global abstract class GraphQLOperationNode extends GraphQLBaseNode {
     global final Map<String, String> variables = new Map<String, String>();
 
     /**
-     * @description The list of defined fragments for the operation
+     * @description The list of fragment definitions added to the operation
      */
     global final List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>();
 
@@ -59,7 +59,14 @@ global abstract class GraphQLOperationNode extends GraphQLBaseNode {
     global abstract GraphQLOperation getOperation();
 
     protected GraphQLOperationNode addFragments(List<GraphQLFragmentNode> fragments) {
-        this.fragments.addAll(fragments);
+        for (GraphQLFragmentNode fragment : fragments) {
+            if (fragment.isInline()) {
+                throw new GraphQLOperationNodeException(
+                    'Not possible to add an inline fragment to the operation node: ' + fragment.name
+                );
+            }
+            this.fragments.add(fragment);
+        }
         return this;
     }
 

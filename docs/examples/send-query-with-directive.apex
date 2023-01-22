@@ -25,7 +25,7 @@ GraphQLNode citiesNode = new GraphQLNode('cities', new List<String> { 'id', 'nam
 
 GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesNode, citiesNode })
     // Define our $withCities variable. Note that it needs to be marked as required in order to use it in directives
-    .withVariable('withCities', 'Boolean!');
+    .defineVariable('withCities', 'Boolean!');
 
 GraphQLRequest request = query.asRequest()
     // Pass the $withCities variable value to the request
