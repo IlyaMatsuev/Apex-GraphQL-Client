@@ -7,24 +7,14 @@ global class GraphQLHttpClient {
     private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigManager.getBoolean(GraphQLConfig.SendPrettyQuery);
 
     /**
-     * @description Create an instance of the client taking the GraphQL endpoint from the `GraphQLClientConfig__mdt`
-     * @throws GraphQLHttpClientException If the the `GraphQLClientConfig__mdt` `DefaultGraphQLEndpoint` config is null or empty
-     */
-    global GraphQLHttpClient() {
-        this(GraphQLConfigManager.getString(GraphQLConfig.DefaultGraphQLEndpoint));
-    }
-
-    /**
-     * @description Create an instance of the client passinf the GraphQL endpoint
+     * @description Create an instance of the client passing the GraphQL endpoint
      * @param endpoint The GraphQL endpoint
      * @throws GraphQLHttpClientException If the the provided endpoint is null or empty
      */
     global GraphQLHttpClient(String endpoint) {
         this.endpoint = endpoint;
-        if (String.isBlank(this.endpoint) || this.endpoint == 'null') {
-            throw new GraphQLHttpClientException(
-                'GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata'
-            );
+        if (String.isBlank(endpoint)) {
+            throw new GraphQLHttpClientException('GraphQL endpoint cannot be null');
         }
     }
 
@@ -132,5 +122,6 @@ global class GraphQLHttpClient {
         }
     }
 
+    @TestVisible
     private class GraphQLHttpClientException extends Exception {}
 }
