@@ -1,6 +1,11 @@
 name: Scratch org CI
 
 on:
+  # Needed keep Codecove reports up to date for the target branches
+  push:
+    branches:
+      - main
+      - dev
   pull_request:
     branches:
       - main
