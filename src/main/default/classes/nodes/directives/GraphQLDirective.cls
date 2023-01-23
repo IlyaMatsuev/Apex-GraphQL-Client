@@ -37,12 +37,15 @@ global class GraphQLDirective {
         this.ifArgument = new GraphQLArgument(IF_ARG_NAME, toVariableIfPossible(ifArgumentValue));
     }
 
-    // TODO: Remove this method, implement toString() instead
-    public String parse(GraphQLBaseNode node, Boolean pretty) {
+    public override String toString() {
+        return toString(false);
+    }
+
+    public String toString(Boolean pretty) {
         return GraphQLConstants.AT +
-            this.type.name().toLowerCase() +
+            type.name().toLowerCase() +
             GraphQLConstants.PARENTHESE_LEFT +
-            ifArgument.parse(node, pretty) +
+            ifArgument.toString(pretty) +
             GraphQLConstants.PARENTHESE_RIGHT;
     }
 
@@ -53,5 +56,6 @@ global class GraphQLDirective {
         return argument;
     }
 
+    @TestVisible
     private class GraphQLDirectiveException extends Exception {}
 }

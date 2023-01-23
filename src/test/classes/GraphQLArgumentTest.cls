@@ -20,7 +20,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('111', argument.toString());
+        System.assertEquals('key:111', argument.toString());
     }
 
     @IsTest
@@ -30,7 +30,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('1111111111', argument.toString());
+        System.assertEquals('key:1111111111', argument.toString());
     }
 
     @IsTest
@@ -40,7 +40,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('111.11', argument.toString());
+        System.assertEquals('key:111.11', argument.toString());
     }
 
     @IsTest
@@ -50,7 +50,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('111.11', argument.toString());
+        System.assertEquals('key:111.11', argument.toString());
     }
 
     @IsTest
@@ -60,7 +60,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('true', argument.toString());
+        System.assertEquals('key:true', argument.toString());
     }
 
     @IsTest
@@ -70,12 +70,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            value +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"qqqq"', argument.toString());
     }
 
     @IsTest
@@ -85,7 +80,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value).asEnum();
 
-        System.assertEquals(value, argument.toString());
+        System.assertEquals('key:VALUE', argument.toString());
     }
 
     @IsTest
@@ -95,7 +90,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(value, argument.toString());
+        System.assertEquals('key:$variableName', argument.toString());
     }
 
     @IsTest
@@ -105,12 +100,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            UserInfo.getUserId() +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"' + value + '"', argument.toString());
     }
 
     @IsTest
@@ -120,12 +110,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            value +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"' + value + '"', argument.toString());
     }
 
     @IsTest
@@ -136,12 +121,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            dateValue.format('MM/dd/yyyy') +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"' + dateValue.format('MM/dd/yyyy') + '"', argument.toString());
     }
 
     @IsTest
@@ -151,12 +131,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            String.valueOf(value) +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"' + String.valueOf(value) + '"', argument.toString());
     }
 
     @IsTest
@@ -165,7 +140,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, null);
 
-        System.assertEquals(((String) null), argument.toString());
+        System.assertEquals('key:null', argument.toString());
     }
 
     @IsTest
@@ -182,46 +157,9 @@ private class GraphQLArgumentTest {
 
         // Fields order is reversed
         System.assertEquals(
-            '{ key4: { key42: "value:\\"$var2\\"     !", key41: $var2 }, key3: 2, key2: $var, key1: "value" }',
+            'key: { key4: { key42: "value:\\"$var2\\"     !", key41: $var2 }, key3: 2, key2: $var, key1: "value" }',
             argument.toString(true)
         );
-    }
-
-    @IsTest
-    private static void parseStringArgumentTest() {
-        String key = 'key';
-        String value = 'value';
-
-        GraphQLArgument argument = new GraphQLArgument(key, value);
-
-        System.assertEquals(
-            key +
-            GraphQLConstants.COLON +
-            GraphQLConstants.DOUBLE_QUOTES +
-            value +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.parse(null, false)
-        );
-        System.assertEquals(
-            key +
-            GraphQLConstants.COLON +
-            GraphQLConstants.SPACE +
-            GraphQLConstants.DOUBLE_QUOTES +
-            value +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.parse(null, true)
-        );
-    }
-
-    @IsTest
-    private static void parseEnumArgumentTest() {
-        String key = 'key';
-        String value = 'VALUE';
-
-        GraphQLArgument argument = new GraphQLArgument(key, value).asEnum();
-
-        System.assertEquals(key + GraphQLConstants.COLON + value, argument.parse(null, false));
-        System.assertEquals(key + GraphQLConstants.COLON + GraphQLConstants.SPACE + value, argument.parse(null, true));
     }
 
     @IsTest

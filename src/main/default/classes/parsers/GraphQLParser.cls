@@ -8,47 +8,24 @@ public abstract class GraphQLParser {
         return parse(node, INITIAL_DEPTH, pretty);
     }
 
-    public abstract String parse(GraphQLBaseNode node, Integer depth, Boolean pretty);
-
-    protected String parseNode(GraphQLNode node, Integer depth, Boolean pretty) {
-        if (depth >= maxQueryDepth) {
-            throw new GraphQLBaseParserException('Maximum request depth level is ' + String.valueOf(maxQueryDepth));
-        }
-
-        return parseNodeName(node, depth, pretty) +
-            parseArguments(node, pretty) +
-            parseDirectives(node, pretty) +
-            parseChildNodes(node, depth, pretty);
-    }
+    protected abstract String parse(GraphQLBaseNode node, Integer depth, Boolean pretty);
 
     protected String parseChildNodes(GraphQLBaseNode node, Integer depth, Boolean pretty) {
         if (!node.hasNodes()) {
             return GraphQLConstants.EMPTY;
         }
 
-        String childNodes = GraphQLConstants.EMPTY;
-
-        if (pretty && String.isNotBlank(node.name)) {
-            childNodes += GraphQLConstants.SPACE;
-        }
-
-        childNodes += GraphQLConstants.BRACE_LEFT;
-        childNodes += pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.EMPTY;
-
         List<String> rawNodes = new List<String>();
         for (GraphQLBaseNode n : node.nodes) {
-            rawNodes.add(((GraphQLParser) n.getParser()).parse(n, depth + 1, pretty));
+            rawNodes.add(n.getParser().parse(n, depth + 1, pretty));
         }
 
-        childNodes += String.join(rawNodes, pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.COMMA);
-
-        if (pretty) {
-            childNodes += GraphQLConstants.LINE_BREAK + getIndent(depth, pretty);
-        }
-
-        childNodes += GraphQLConstants.BRACE_RIGHT;
-
-        return childNodes;
+        return GraphQLConstants.BRACE_LEFT +
+            getLineBreak(pretty) +
+            String.join(rawNodes, pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.COMMA) +
+            getLineBreak(pretty) +
+            getIndent(depth, pretty) +
+            GraphQLConstants.BRACE_RIGHT;
     }
 
     protected String parseDirectives(GraphQLBaseNode node, Boolean pretty) {
@@ -58,7 +35,7 @@ public abstract class GraphQLParser {
 
         List<String> rawDirectives = new List<String>();
         for (GraphQLDirective directive : node.directives) {
-            rawDirectives.add(directive.parse(node, pretty));
+            rawDirectives.add(directive.toString(pretty));
         }
 
         return GraphQLConstants.SPACE + String.join(rawDirectives, GraphQLConstants.SPACE);
@@ -75,31 +52,7 @@ public abstract class GraphQLParser {
         return pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY;
     }
 
-    private String parseNodeName(GraphQLNode node, Integer depth, Boolean pretty) {
-        return getIndent(depth, pretty) + parseAlias(node, pretty) + node.name;
+    protected String getLineBreak(Boolean pretty) {
+        return pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.EMPTY;
     }
-
-    private String parseAlias(GraphQLNode node, Boolean pretty) {
-        if (String.isBlank(node.alias)) {
-            return GraphQLConstants.EMPTY;
-        }
-        return node.alias + GraphQLConstants.COLON + getSmallIndent(pretty);
-    }
-
-    private String parseArguments(GraphQLNode node, Boolean pretty) {
-        if (!node.hasArguments()) {
-            return GraphQLConstants.EMPTY;
-        }
-
-        List<String> rawArguments = new List<String>();
-        for (GraphQLArgument argument : node.arguments.values()) {
-            rawArguments.add(argument.parse(node, pretty));
-        }
-
-        return GraphQLConstants.PARENTHESE_LEFT +
-            String.join(rawArguments, GraphQLConstants.COMMA + getSmallIndent(pretty)) +
-            GraphQLConstants.PARENTHESE_RIGHT;
-    }
-
-    private class GraphQLBaseParserException extends Exception {}
 }

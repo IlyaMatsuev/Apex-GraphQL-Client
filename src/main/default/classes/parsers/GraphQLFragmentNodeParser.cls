@@ -2,7 +2,7 @@ public class GraphQLFragmentNodeParser extends GraphQLParser {
     private static final String FRAGMENT_KEYWORD = 'fragment';
     private static final String ON_TYPE_KEYWORD = 'on';
 
-    public override String parse(GraphQLBaseNode node, Integer depth, Boolean pretty) {
+    protected override String parse(GraphQLBaseNode node, Integer depth, Boolean pretty) {
         return parse((GraphQLFragmentNode) node, depth, pretty);
     }
 
@@ -34,6 +34,7 @@ public class GraphQLFragmentNodeParser extends GraphQLParser {
             GraphQLConstants.SPACE +
             fragment.type +
             parseDirectives(fragment, pretty) +
+            getSmallIndent(pretty) +
             parseChildNodes(fragment, depth, pretty);
     }
 }

@@ -5,8 +5,8 @@ private class GraphQLDirectiveTest {
         Boolean include = true;
         GraphQLDirective includeDirective = new GraphQLDirective(GraphQLDirectiveType.Include, include);
 
-        System.assertEquals('@include(if: true)', includeDirective.parse(null, true));
-        System.assertEquals('@include(if:true)', includeDirective.parse(null, false));
+        System.assertEquals('@include(if:true)', includeDirective.toString());
+        System.assertEquals('@include(if: true)', includeDirective.toString(true));
     }
 
     @IsTest
@@ -14,8 +14,8 @@ private class GraphQLDirectiveTest {
         String var = 'var';
         GraphQLDirective includeDirective = new GraphQLDirective(GraphQLDirectiveType.Include, var);
 
-        System.assertEquals('@include(if: $var)', includeDirective.parse(null, true));
-        System.assertEquals('@include(if:$var)', includeDirective.parse(null, false));
+        System.assertEquals('@include(if:$var)', includeDirective.toString());
+        System.assertEquals('@include(if: $var)', includeDirective.toString(true));
     }
 
     @IsTest
@@ -28,9 +28,6 @@ private class GraphQLDirectiveTest {
         }
 
         System.assert(error != null);
-        System.assertEquals(
-            'Directive argument value cannot be null. It should be either Boolean or variable',
-            error.getMessage()
-        );
+        System.assert(error instanceof GraphQLDirective.GraphQLDirectiveException);
     }
 }
