@@ -424,10 +424,6 @@ This class is used for passing arguments to GraphQL nodes.
 
 ### Methods
 
-`override String toString()` - Returns a string equivalent of the argument according to its value's type. For example, if the value is an instance of a class it will be serialized with JSON.
-
-`String toString(Boolean pretty)` - Returns a string equivalent of the argument according to its value's type. For example, if the value is an instance of a class it will be serialized with JSON. For object arguments will return prettified argument if the `pretty` param is true.
-
 `Boolean isVariable()` - Returns true if the value of the argument references a variable. Otherwise, returns false. The value is considered as a variable if it starts with the dollar `$` sign.
 
 ---

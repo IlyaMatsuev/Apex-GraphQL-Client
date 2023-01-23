@@ -72,20 +72,39 @@ global class GraphQLArgument {
         return this;
     }
 
-    /**
-     * @description Parse the current argument to a string
-     * @return The string representation of the current argument
-     */
-    global override String toString() {
+    public override String toString() {
         return toString(false);
     }
 
-    /**
-     * @description Parse the current argument to a string
-     * @param pretty Prettify the output if the value is `true`
-     * @return The string representation of the current argument
-     */
-    global String toString(Boolean pretty) {
+    public String toString(Boolean pretty) {
+        return key +
+            GraphQLConstants.COLON +
+            (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) +
+            valueToString(pretty);
+    }
+
+    // There is no way to get an object's type yet
+    private GraphQLArgumentType getArgumentTypeByValue(Object value) {
+        if (value instanceof Integer || value instanceof Long) {
+            return GraphQLArgumentType.x_Integer;
+        } else if (value instanceof String || value instanceof Blob || value instanceof Id) {
+            return GraphQLArgumentType.x_String;
+        } else if (value instanceof Double || value instanceof Decimal) {
+            return GraphQLArgumentType.x_Float;
+        } else if (value instanceof Boolean) {
+            return GraphQLArgumentType.x_Boolean;
+        } else if (value instanceof Date) {
+            return GraphQLArgumentType.x_Date;
+        } else if (value instanceof DateTime || value instanceof Time) {
+            return GraphQLArgumentType.x_DateTime;
+        } else if (value == null) {
+            return GraphQLArgumentType.x_Null;
+        } else {
+            return GraphQLArgumentType.x_Object;
+        }
+    }
+
+    private String valueToString(Boolean pretty) {
         switch on type {
             when x_Integer, x_Float, x_Boolean, x_Null, x_Enum {
                 return String.valueOf(value);
@@ -108,35 +127,6 @@ global class GraphQLArgument {
             when else {
                 return objectToString(value, pretty);
             }
-        }
-    }
-
-    // TODO: Remove this method
-    public String parse(GraphQLBaseNode node, Boolean pretty) {
-        return key +
-            GraphQLConstants.COLON +
-            (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) +
-            toString(pretty);
-    }
-
-    // There is no way to get an object's type yet
-    private GraphQLArgumentType getArgumentTypeByValue(Object value) {
-        if (value instanceof Integer || value instanceof Long) {
-            return GraphQLArgumentType.x_Integer;
-        } else if (value instanceof String || value instanceof Blob || value instanceof Id) {
-            return GraphQLArgumentType.x_String;
-        } else if (value instanceof Double || value instanceof Decimal) {
-            return GraphQLArgumentType.x_Float;
-        } else if (value instanceof Boolean) {
-            return GraphQLArgumentType.x_Boolean;
-        } else if (value instanceof Date) {
-            return GraphQLArgumentType.x_Date;
-        } else if (value instanceof DateTime || value instanceof Time) {
-            return GraphQLArgumentType.x_DateTime;
-        } else if (value == null) {
-            return GraphQLArgumentType.x_Null;
-        } else {
-            return GraphQLArgumentType.x_Object;
         }
     }
 

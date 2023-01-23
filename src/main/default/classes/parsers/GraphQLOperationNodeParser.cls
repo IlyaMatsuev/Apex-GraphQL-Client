@@ -1,14 +1,19 @@
 public class GraphQLOperationNodeParser extends GraphQLParser {
-    public override String parse(GraphQLBaseNode node, Integer depth, Boolean pretty) {
+    protected override String parse(GraphQLBaseNode node, Integer depth, Boolean pretty) {
         return parse((GraphQLOperationNode) node, depth, pretty);
     }
 
     private String parse(GraphQLOperationNode node, Integer depth, Boolean pretty) {
-        return parseOperation(node) +
+        String operationNameAndVars =
+            parseOperation(node) +
             parseName(node, pretty) +
             parseVariableDefinitions(node, pretty) +
-            parseChildNodes(node, depth, pretty) +
-            parseFragmentDefinitions(node, depth, pretty);
+            parseDirectives(node, pretty);
+
+        if (String.isNotBlank(operationNameAndVars) && !operationNameAndVars.endsWith(GraphQLConstants.SPACE)) {
+            operationNameAndVars += getSmallIndent(pretty);
+        }
+        return operationNameAndVars + parseChildNodes(node, depth, pretty) + parseFragmentDefinitions(node, pretty);
     }
 
     private String parseOperation(GraphQLOperationNode node) {
@@ -16,7 +21,7 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
     }
 
     private String parseName(GraphQLOperationNode node, Boolean pretty) {
-        return String.isBlank(node.name) ? getSmallIndent(pretty) : (GraphQLConstants.SPACE + node.name);
+        return String.isNotBlank(node.name) ? (GraphQLConstants.SPACE + node.name) : getSmallIndent(pretty);
     }
 
     private String parseVariableDefinitions(GraphQLOperationNode node, Boolean pretty) {
@@ -41,7 +46,7 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
             getSmallIndent(pretty);
     }
 
-    private String parseFragmentDefinitions(GraphQLOperationNode node, Integer depth, Boolean pretty) {
+    private String parseFragmentDefinitions(GraphQLOperationNode node, Boolean pretty) {
         if (!node.hasFragments()) {
             return GraphQLConstants.EMPTY;
         }
@@ -50,10 +55,7 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
         for (GraphQLFragmentNode fragment : node.fragments) {
             rawFragments.add(fragment.build(pretty));
         }
-        return getLineBreakIndent(pretty) + String.join(rawFragments, getLineBreakIndent(pretty));
-    }
 
-    private String getLineBreakIndent(Boolean pretty) {
-        return pretty ? GraphQLConstants.LINE_BREAK : GraphQLConstants.EMPTY;
+        return getLineBreak(pretty) + String.join(rawFragments, getLineBreak(pretty));
     }
 }
