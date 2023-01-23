@@ -15,12 +15,12 @@ query CountriesQuery {
 // Create fragment instance passing the type name it's referring to. If we don't provide fragment name it's evaluated as inline fragment
 GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('City').withField('id').withField('name');
 
-GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLFieldNode countriesNode = new GraphQLFieldNode('countries')
     .withField('name')
     // Use inline fragment fields for the capital node
-    .withNode(new GraphQLNode('capital').withInlineFragment(cityFieldsFragment));
+    .withNode(new GraphQLFieldNode('capital').withInlineFragment(cityFieldsFragment));
 
-GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesNode, citiesNode });
+GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLFieldNode> { countriesNode, citiesNode });
 
 GraphQLRequest request = query.asRequest();
 

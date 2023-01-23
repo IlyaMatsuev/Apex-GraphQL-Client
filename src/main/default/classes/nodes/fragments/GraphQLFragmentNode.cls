@@ -28,7 +28,7 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
      * @param type The fragment referencing type
      */
     global GraphQLFragmentNode(String name, String type) {
-        this(name, type, new List<GraphQLNode>());
+        this(name, type, new List<GraphQLFieldNode>());
     }
 
     /**
@@ -37,7 +37,7 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
      * @param type The fragment referencing type
      * @param nodes The child nodes to be added to the fragment
      */
-    global GraphQLFragmentNode(String name, String type, List<GraphQLNode> nodes) {
+    global GraphQLFragmentNode(String name, String type, List<GraphQLFieldNode> nodes) {
         this(name, type, nodes, new List<String>());
     }
 
@@ -48,7 +48,7 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
      * @param fields The child fields to be added to the fragment
      */
     global GraphQLFragmentNode(String name, String type, List<String> fields) {
-        this(name, type, new List<GraphQLNode>(), fields);
+        this(name, type, new List<GraphQLFieldNode>(), fields);
     }
 
     /**
@@ -58,7 +58,7 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
      * @param nodes The child nodes to be added to the fragment
      * @param fields The child fields to be added to the fragment
      */
-    global GraphQLFragmentNode(String name, String type, List<GraphQLNode> nodes, List<String> fields) {
+    global GraphQLFragmentNode(String name, String type, List<GraphQLFieldNode> nodes, List<String> fields) {
         super(name, nodes, fields);
         this.type = type;
     }
@@ -95,8 +95,8 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
      * @param node The node instance to be added
      * @return The current instance of `GraphQLFragmentNode`
      */
-    global GraphQLFragmentNode withNode(GraphQLNode node) {
-        return withNodes(new List<GraphQLNode> { node });
+    global GraphQLFragmentNode withNode(GraphQLFieldNode node) {
+        return withNodes(new List<GraphQLFieldNode> { node });
     }
 
     /**
@@ -104,7 +104,7 @@ global class GraphQLFragmentNode extends GraphQLBaseNode {
      * @param nodes The list of node instances to be added
      * @return The current instance of `GraphQLFragmentNode`
      */
-    global GraphQLFragmentNode withNodes(GraphQLNode[] nodes) {
+    global GraphQLFragmentNode withNodes(GraphQLFieldNode[] nodes) {
         addNodes(nodes);
         return this;
     }

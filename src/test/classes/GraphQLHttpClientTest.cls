@@ -22,8 +22,8 @@ private class GraphQLHttpClientTest {
     @IsTest
     private static void sendRequestSyncPositiveTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
+        GraphQLFieldNode heroNode = new GraphQLFieldNode('hero', new List<String> { 'name' })
+            .withNode(new GraphQLFieldNode('heroFriends', new List<String> { 'id', 'name' }));
 
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
         GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');
@@ -46,8 +46,8 @@ private class GraphQLHttpClientTest {
     @IsTest
     private static void sendRequestSyncInvalidResponseFormatTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
+        GraphQLFieldNode heroNode = new GraphQLFieldNode('hero', new List<String> { 'name' })
+            .withNode(new GraphQLFieldNode('heroFriends', new List<String> { 'id', 'name' }));
 
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
         GraphQLRequest request = query.asRequest();
@@ -69,8 +69,8 @@ private class GraphQLHttpClientTest {
     @IsTest
     private static void sendRequestAsyncPositiveTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
+        GraphQLFieldNode heroNode = new GraphQLFieldNode('hero', new List<String> { 'name' })
+            .withNode(new GraphQLFieldNode('heroFriends', new List<String> { 'id', 'name' }));
 
         GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
         GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');

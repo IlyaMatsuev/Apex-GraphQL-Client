@@ -19,10 +19,10 @@ query CountriesQuery {
 First, you need to build the `countries` node:
 
 ```java
-GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLFieldNode countriesNode = new GraphQLFieldNode('countries')
     .withField('name')
     // We have the child node "capital" in this example
-    .withNode(new GraphQLNode('capital', new List<String> { 'id', 'name' }));
+    .withNode(new GraphQLFieldNode('capital', new List<String> { 'id', 'name' }));
 ```
 
 Then you should create the query instance itself:

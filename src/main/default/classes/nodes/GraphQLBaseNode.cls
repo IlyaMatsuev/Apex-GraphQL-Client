@@ -18,14 +18,14 @@ global abstract class GraphQLBaseNode {
     global final List<GraphQLDirective> directives = new List<GraphQLDirective>();
 
     protected GraphQLBaseNode(String name, List<String> fields) {
-        this(name, new List<GraphQLNode>(), fields);
+        this(name, new List<GraphQLFieldNode>(), fields);
     }
 
-    protected GraphQLBaseNode(String name, List<GraphQLNode> nodes) {
+    protected GraphQLBaseNode(String name, List<GraphQLFieldNode> nodes) {
         this(name, nodes, new List<String>());
     }
 
-    protected GraphQLBaseNode(String name, List<GraphQLNode> nodes, List<String> fields) {
+    protected GraphQLBaseNode(String name, List<GraphQLFieldNode> nodes, List<String> fields) {
         this.name = name;
         this.nodes.addAll(nodes);
 
@@ -35,11 +35,11 @@ global abstract class GraphQLBaseNode {
     }
 
     /**
-     * @description Check if the current node is an instance of `GraphQLNode`
-     * @return `true` if the current instance is `GraphQLNode`
+     * @description Check if the current node is an instance of `GraphQLFieldNode`
+     * @return `true` if the current instance is `GraphQLFieldNode`
      */
     global Boolean isFieldNode() {
-        return this instanceof GraphQLNode;
+        return this instanceof GraphQLFieldNode;
     }
 
     /**
@@ -55,8 +55,8 @@ global abstract class GraphQLBaseNode {
      * @param node The target GraphQL node to search for
      * @return `true` if the node with the same name is found in child nodes. `false` otherwise
      */
-    global virtual Boolean hasNode(GraphQLNode node) {
-        return hasNodes(new List<GraphQLNode> { node });
+    global virtual Boolean hasNode(GraphQLFieldNode node) {
+        return hasNodes(new List<GraphQLFieldNode> { node });
     }
 
     /**
@@ -64,9 +64,9 @@ global abstract class GraphQLBaseNode {
      * @param nodes The target list of GraphQL node to search for
      * @return `true` if one of the nodes with the same name is found in child nodes. `false` otherwise
      */
-    global virtual Boolean hasNodes(GraphQLNode[] nodes) {
+    global virtual Boolean hasNodes(GraphQLFieldNode[] nodes) {
         for (GraphQLBaseNode existingNode : this.nodes) {
-            for (GraphQLNode node : nodes) {
+            for (GraphQLFieldNode node : nodes) {
                 if (existingNode.name == node.name) {
                     return true;
                 }
@@ -113,15 +113,15 @@ global abstract class GraphQLBaseNode {
     }
 
     protected virtual GraphQLBaseNode addFields(String[] fields) {
-        List<GraphQLNode> nodes = new List<GraphQLNode>();
+        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode>();
         for (String field : fields) {
-            nodes.add(new GraphQLNode(field));
+            nodes.add(new GraphQLFieldNode(field));
         }
         return addNodes(nodes);
     }
 
-    protected virtual GraphQLBaseNode addNodes(GraphQLNode[] nodes) {
-        for (GraphQLNode node : nodes) {
+    protected virtual GraphQLBaseNode addNodes(GraphQLFieldNode[] nodes) {
+        for (GraphQLFieldNode node : nodes) {
             if (!hasNode(node)) {
                 this.nodes.add(node);
             }

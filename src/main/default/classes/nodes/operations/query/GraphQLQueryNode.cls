@@ -21,8 +21,8 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @description Create a new instance of the GraphQL query node with the provided child node
      * @param node The child node
      */
-    global GraphQLQueryNode(GraphQLNode node) {
-        this(new List<GraphQLNode> { node });
+    global GraphQLQueryNode(GraphQLFieldNode node) {
+        this(new List<GraphQLFieldNode> { node });
     }
 
     /**
@@ -37,7 +37,7 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @description Create a new instance of the GraphQL query node with the provided child nodes
      * @param nodes The child nodes
      */
-    global GraphQLQueryNode(List<GraphQLNode> nodes) {
+    global GraphQLQueryNode(List<GraphQLFieldNode> nodes) {
         this(null, nodes);
     }
 
@@ -46,8 +46,8 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @param alias The query alias
      * @param node The child node
      */
-    global GraphQLQueryNode(String alias, GraphQLNode node) {
-        this(alias, new List<GraphQLNode> { node });
+    global GraphQLQueryNode(String alias, GraphQLFieldNode node) {
+        this(alias, new List<GraphQLFieldNode> { node });
     }
 
     /**
@@ -64,7 +64,7 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @param alias The query alias
      * @param nodes The child nodes
      */
-    global GraphQLQueryNode(String alias, List<GraphQLNode> nodes) {
+    global GraphQLQueryNode(String alias, List<GraphQLFieldNode> nodes) {
         super(alias, nodes);
     }
 
@@ -91,8 +91,8 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @param node The node to add
      * @return The instance of the current `GraphQLQueryNode` class
      */
-    global GraphQLQueryNode withNode(GraphQLNode node) {
-        return withNodes(new List<GraphQLNode> { node });
+    global GraphQLQueryNode withNode(GraphQLFieldNode node) {
+        return withNodes(new List<GraphQLFieldNode> { node });
     }
 
     /**
@@ -100,7 +100,7 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @param nodes The list of nodes to add
      * @return The instance of the current `GraphQLQueryNode` class
      */
-    global GraphQLQueryNode withNodes(GraphQLNode[] nodes) {
+    global GraphQLQueryNode withNodes(GraphQLFieldNode[] nodes) {
         return (GraphQLQueryNode) addNodes(nodes);
     }
 

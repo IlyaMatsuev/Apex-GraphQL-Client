@@ -21,16 +21,16 @@ GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('CityFields', '
     .withField('id')
     .withField('name');
 
-GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLFieldNode countriesNode = new GraphQLFieldNode('countries')
     .withField('name')
     // Use fragment fields for the capital node
-    .withNode(new GraphQLNode('capital').withFragment(cityFieldsFragment.name));
+    .withNode(new GraphQLFieldNode('capital').withFragment(cityFieldsFragment.name));
 
-GraphQLNode citiesNode = new GraphQLNode('cities')
+GraphQLFieldNode citiesNode = new GraphQLFieldNode('cities')
     // Use fragment fields for the cities node
     .withFragment(cityFieldsFragment.name);
 
-GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesNode, citiesNode })
+GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLFieldNode> { countriesNode, citiesNode })
     // Define fragment for the query
     .defineFragment(cityFieldsFragment);
 

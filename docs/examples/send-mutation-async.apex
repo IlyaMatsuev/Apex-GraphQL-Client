@@ -12,7 +12,7 @@ country.name = 'Belarus';
 country.capital = 'Minsk';
 country.population = 9000000;
 
-GraphQLNode createCountryNode = new GraphQLNode('createCountry')
+GraphQLFieldNode createCountryNode = new GraphQLFieldNode('createCountry')
     .withArgument('country', country)
     .withField('id')
     .withField('name');
