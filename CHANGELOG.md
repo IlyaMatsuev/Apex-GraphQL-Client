@@ -5,6 +5,8 @@ Package Id:
 
 All information regarding the installation and usage is described on the [main repo page](https://github.com/IlyaMatsuev/Apex-GraphQL-Client).
 
+TODO: Add important note here about renaming `GraphQLNode` to `GraphQLFieldNode` and `GraphQLBaseNode` to `GraphQLNode`
+
 ## What's new
 
 ### Opportunity to add inline fragments to nodes

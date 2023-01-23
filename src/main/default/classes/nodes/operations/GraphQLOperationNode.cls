@@ -1,7 +1,7 @@
 /**
  * @description The GraphQL operation node, eathier Query, Mutation or Subscription
  */
-global abstract class GraphQLOperationNode extends GraphQLBaseNode {
+global abstract class GraphQLOperationNode extends GraphQLNode {
     /**
      * @description The Map of defined variables for the operation
      */

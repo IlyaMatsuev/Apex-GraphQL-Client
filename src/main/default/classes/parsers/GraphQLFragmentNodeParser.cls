@@ -2,7 +2,7 @@ public class GraphQLFragmentNodeParser extends GraphQLParser {
     private static final String FRAGMENT_KEYWORD = 'fragment';
     private static final String ON_TYPE_KEYWORD = 'on';
 
-    protected override String parse(GraphQLBaseNode node, Integer depth, Boolean pretty) {
+    protected override String parse(GraphQLNode node, Integer depth, Boolean pretty) {
         return parse((GraphQLFragmentNode) node, depth, pretty);
     }
 

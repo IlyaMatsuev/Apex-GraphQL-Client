@@ -163,7 +163,7 @@ private class GraphQLNodeTest {
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLBaseNode.GraphQLBaseNodeException);
+        System.assert(error instanceof GraphQLNode.GraphQLBaseNodeException);
     }
 
     @IsTest
@@ -497,10 +497,10 @@ private class GraphQLNodeTest {
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLBaseNode.GraphQLBaseNodeException);
+        System.assert(error instanceof GraphQLNode.GraphQLBaseNodeException);
     }
 
-    private class TestNode extends GraphQLBaseNode {
+    private class TestNode extends GraphQLNode {
         private TestNode() {
             super(GraphQLConstants.EMPTY, new List<String>());
         }

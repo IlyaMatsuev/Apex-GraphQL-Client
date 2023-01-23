@@ -1,7 +1,7 @@
 /**
  * @description The GraphQL node that can be a part of a GraphQL operation
  */
-global class GraphQLFieldNode extends GraphQLBaseNode {
+global class GraphQLFieldNode extends GraphQLNode {
     /**
      * @description The alias of the GraphQL node. Can be null
      */
@@ -249,7 +249,7 @@ global class GraphQLFieldNode extends GraphQLBaseNode {
 
     private List<GraphQLFieldNode> getFieldNodes() {
         List<GraphQLFieldNode> fieldNodes = new List<GraphQLFieldNode>();
-        for (GraphQLBaseNode node : this.nodes) {
+        for (GraphQLNode node : this.nodes) {
             if (node.isFieldNode()) {
                 fieldNodes.add((GraphQLFieldNode) node);
             }

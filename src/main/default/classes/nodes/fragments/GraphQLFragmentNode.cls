@@ -1,7 +1,7 @@
 /**
  * @description Represents a GraphQL fragment node definition. Can be used for regular and inline fragments
  */
-global class GraphQLFragmentNode extends GraphQLBaseNode {
+global class GraphQLFragmentNode extends GraphQLNode {
     /**
      * @description The referencing fragment type
      */

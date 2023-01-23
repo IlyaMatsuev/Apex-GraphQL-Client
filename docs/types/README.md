@@ -2,6 +2,8 @@
 
 ### Classes:
 
+// TODO: Add description of `GraphQLNode`. Mention all classes that extend this class. Move all inherited classes into it.
+
 -   [GraphQLFieldNode](#graphqlfieldnode)
 -   [GraphQLQueryNode](#graphqlquerynode)
 -   [GraphQLMutationNode](#graphqlmutationnode)
@@ -56,7 +58,7 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `String alias` - Alias of the node. Null by default. You can read about node aliases [here](https://spec.graphql.org/June2018/#sec-Field-Alias).
 
-`List<GraphQLBaseNode> nodes` - The list of child nodes of the current node. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLFieldNode` or `GraphQLFragmentNode`.
+`List<GraphQLNode> nodes` - The list of child nodes of the current node. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLFieldNode` or `GraphQLFragmentNode`.
 
 `Map<String, GraphQLArgument> arguments` - The list of node's arguements mapped by their names. Read about [`GraphQLArgument` here](#graphqlargument). Arguments are optional.
 
@@ -150,7 +152,7 @@ This class is only used for building queries.
 
 `String name` - The name of the query. Can be empty.
 
-`List<GraphQLBaseNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
+`List<GraphQLNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
 `List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
 
@@ -220,7 +222,7 @@ This class is only used for building mutations.
 
 `String name` - The name of the query. Can be empty.
 
-`List<GraphQLBaseNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
+`List<GraphQLNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
 `List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
 
@@ -290,7 +292,7 @@ This class is only used for building subscriptions. It's not possible yet to exe
 
 `String name` - The name of the query. Can be empty.
 
-`List<GraphQLBaseNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
+`List<GraphQLNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
 `List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
 
@@ -354,7 +356,7 @@ This class can be used for building fragments to make your queries look more eff
 
 `String type` - The name of the type the fragment describes fields for.
 
-`List<GraphQLBaseNode> nodes` - The list of child nodes of the current fragment. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLFieldNode` or `GraphQLFragmentNode`.
+`List<GraphQLNode> nodes` - The list of child nodes of the current fragment. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLFieldNode` or `GraphQLFragmentNode`.
 
 ## `List<GraphQLDirective> directives` - The list of fragment's directives. Read about [`GraphQLDirective` here](#graphqldirective).
 

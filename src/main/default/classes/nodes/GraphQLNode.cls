@@ -1,7 +1,7 @@
 /**
  * @description Defines the base properties and methods for every GraphQL node
  */
-global abstract class GraphQLBaseNode {
+global abstract class GraphQLNode {
     /**
      * @description The GraphQL node name. Can be empty but cannot be `null`
      */
@@ -10,22 +10,22 @@ global abstract class GraphQLBaseNode {
     /**
      * @description The list of child nodes
      */
-    global final List<GraphQLBaseNode> nodes = new List<GraphQLBaseNode>();
+    global final List<GraphQLNode> nodes = new List<GraphQLNode>();
 
     /**
      * @description The list of directives attached to the node
      */
     global final List<GraphQLDirective> directives = new List<GraphQLDirective>();
 
-    protected GraphQLBaseNode(String name, List<String> fields) {
+    protected GraphQLNode(String name, List<String> fields) {
         this(name, new List<GraphQLFieldNode>(), fields);
     }
 
-    protected GraphQLBaseNode(String name, List<GraphQLFieldNode> nodes) {
+    protected GraphQLNode(String name, List<GraphQLFieldNode> nodes) {
         this(name, nodes, new List<String>());
     }
 
-    protected GraphQLBaseNode(String name, List<GraphQLFieldNode> nodes, List<String> fields) {
+    protected GraphQLNode(String name, List<GraphQLFieldNode> nodes, List<String> fields) {
         this.name = name;
         this.nodes.addAll(nodes);
 
@@ -65,7 +65,7 @@ global abstract class GraphQLBaseNode {
      * @return `true` if one of the nodes with the same name is found in child nodes. `false` otherwise
      */
     global virtual Boolean hasNodes(GraphQLFieldNode[] nodes) {
-        for (GraphQLBaseNode existingNode : this.nodes) {
+        for (GraphQLNode existingNode : this.nodes) {
             for (GraphQLFieldNode node : nodes) {
                 if (existingNode.name == node.name) {
                     return true;
@@ -112,7 +112,7 @@ global abstract class GraphQLBaseNode {
         throw new GraphQLBaseNodeException('No parser implementation found for this node');
     }
 
-    protected virtual GraphQLBaseNode addFields(String[] fields) {
+    protected virtual GraphQLNode addFields(String[] fields) {
         List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode>();
         for (String field : fields) {
             nodes.add(new GraphQLFieldNode(field));
@@ -120,7 +120,7 @@ global abstract class GraphQLBaseNode {
         return addNodes(nodes);
     }
 
-    protected virtual GraphQLBaseNode addNodes(GraphQLFieldNode[] nodes) {
+    protected virtual GraphQLNode addNodes(GraphQLFieldNode[] nodes) {
         for (GraphQLFieldNode node : nodes) {
             if (!hasNode(node)) {
                 this.nodes.add(node);
@@ -129,7 +129,7 @@ global abstract class GraphQLBaseNode {
         return this;
     }
 
-    protected virtual GraphQLBaseNode addFragments(String[] fragmentNames) {
+    protected virtual GraphQLNode addFragments(String[] fragmentNames) {
         List<String> fields = new List<String>();
         for (String fragmentName : fragmentNames) {
             fields.add(GraphQLConstants.DOT.repeat(3) + fragmentName);
@@ -137,7 +137,7 @@ global abstract class GraphQLBaseNode {
         return addFields(fields);
     }
 
-    protected virtual GraphQLBaseNode addInlineFragments(GraphQLFragmentNode[] fragments) {
+    protected virtual GraphQLNode addInlineFragments(GraphQLFragmentNode[] fragments) {
         for (GraphQLFragmentNode fragment : fragments) {
             if (!fragment.isInline()) {
                 throw new GraphQLBaseNodeException('Not possible to add non-inline fragment: ' + fragment.name);
@@ -147,7 +147,7 @@ global abstract class GraphQLBaseNode {
         return this;
     }
 
-    protected virtual GraphQLBaseNode addDirective(GraphQLDirective directive) {
+    protected virtual GraphQLNode addDirective(GraphQLDirective directive) {
         directives.add(directive);
         return this;
     }
