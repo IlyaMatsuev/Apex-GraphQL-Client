@@ -52,7 +52,7 @@ public class GraphQLOperationNodeParser extends GraphQLParser {
         }
 
         List<String> rawFragments = new List<String>();
-        for (GraphQLFragmentNode fragment : node.fragments) {
+        for (GraphQLFragment fragment : node.fragments) {
             rawFragments.add(fragment.build(pretty));
         }
 

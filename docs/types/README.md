@@ -8,7 +8,7 @@
 -   [GraphQLQueryNode](#graphqlquerynode)
 -   [GraphQLMutationNode](#graphqlmutationnode)
 -   [GraphQLSubscriptionNode](#graphqlsubscriptionnode)
--   [GraphQLFragmentNode](#graphqlfragmentnode)
+-   [GraphQLFragment](#graphqlfragmentnode)
 -   [GraphQLArgument](#graphqlargument)
 -   [GraphQLDirective](#graphqldirective)
 -   [GraphQLRequest](#graphqlrequest)
@@ -58,7 +58,7 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `String alias` - Alias of the node. Null by default. You can read about node aliases [here](https://spec.graphql.org/June2018/#sec-Field-Alias).
 
-`List<GraphQLNode> nodes` - The list of child nodes of the current node. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLField` or `GraphQLFragmentNode`.
+`List<GraphQLNode> nodes` - The list of child nodes of the current node. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLField` or `GraphQLFragment`.
 
 `Map<String, GraphQLArgument> arguments` - The list of node's arguements mapped by their names. Read about [`GraphQLArgument` here](#graphqlargument). Arguments are optional.
 
@@ -70,7 +70,7 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `Boolean isFieldNode()` - Returns true if the current node is an instance of `GraphQLField`. Otherwise returns false.
 
-`Boolean isFragmentNode()` - Returns true if the current node is an instance of `GraphQLFragmentNode`. Otherwise returns false.
+`Boolean isFragmentNode()` - Returns true if the current node is an instance of `GraphQLFragment`. Otherwise returns false.
 
 `Boolean hasNode(GraphQLField node)` - Returns true if there is a node with the same name from the parameter. Otherwise returns false.
 
@@ -96,9 +96,9 @@ So, basically, in that case, this node can be used for a query request but the b
 
 `GraphQLField withFragments(String[] fragmentNames)` - Adds references to fragments' fields. Accepts the fragments' names.
 
-`GraphQLField withInlineFragment(GraphQLFragmentNode fragment)` - Adds a child fragment node with the set of fields for a particular type.
+`GraphQLField withInlineFragment(GraphQLFragment fragment)` - Adds a child fragment node with the set of fields for a particular type.
 
-`GraphQLField withInlineFragments(GraphQLFragmentNode[] fragments)` - Adds child fragment nodes with the set of fields for particular types.
+`GraphQLField withInlineFragments(GraphQLFragment[] fragments)` - Adds child fragment nodes with the set of fields for particular types.
 
 `GraphQLField withArgument(String key, Object value)` - Adds a new argument for the current node. Accepts key and value as parameters. Value can be any type - it will be automatically converted to the appropriate GraphQL type. Returns the current node instance.
 
@@ -154,7 +154,7 @@ This class is only used for building queries.
 
 `List<GraphQLNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
-`List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
+`List<GraphQLFragment> fragments` - The list of fragment node definitions.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -180,9 +180,9 @@ This class is only used for building queries.
 
 `GraphQLQueryNode withNodes(GraphQLField[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLField[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
-`GraphQLQueryNode defineFragment(GraphQLFragmentNode fragment)` - Defines a fragment for the query. Accepts the instance of the [`GraphQLFragmentNode`](#graphqlfragmentnode) class.
+`GraphQLQueryNode defineFragment(GraphQLFragment fragment)` - Defines a fragment for the query. Accepts the instance of the [`GraphQLFragment`](#graphqlfragmentnode) class.
 
-`GraphQLQueryNode defineFragments(GraphQLFragmentNode[] fragments)` - Defines multiple fragments for the query. Accepts the array of the [`GraphQLFragmentNode`](#graphqlfragmentnode) instances.
+`GraphQLQueryNode defineFragments(GraphQLFragment[] fragments)` - Defines multiple fragments for the query. Accepts the array of the [`GraphQLFragment`](#graphqlfragmentnode) instances.
 
 `GraphQLQueryNode defineVariable(String name, String typeDefinition)` - Defines a new variable for the query with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
@@ -224,7 +224,7 @@ This class is only used for building mutations.
 
 `List<GraphQLNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
-`List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
+`List<GraphQLFragment> fragments` - The list of fragment node definitions.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -250,9 +250,9 @@ This class is only used for building mutations.
 
 `GraphQLMutationNode withNodes(GraphQLField[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLField[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
-`GraphQLMutationNode defineFragment(GraphQLFragmentNode fragment)` - Defines a fragment for the mutation. Accepts the instance of the [`GraphQLFragmentNode`](#graphqlfragmentnode) class.
+`GraphQLMutationNode defineFragment(GraphQLFragment fragment)` - Defines a fragment for the mutation. Accepts the instance of the [`GraphQLFragment`](#graphqlfragmentnode) class.
 
-`GraphQLMutationNode defineFragments(GraphQLFragmentNode[] fragments)` - Defines multiple fragments for the mutation. Accepts the array of the [`GraphQLFragmentNode`](#graphqlfragmentnode) instances.
+`GraphQLMutationNode defineFragments(GraphQLFragment[] fragments)` - Defines multiple fragments for the mutation. Accepts the array of the [`GraphQLFragment`](#graphqlfragmentnode) instances.
 
 `GraphQLMutationNode defineVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
@@ -294,7 +294,7 @@ This class is only used for building subscriptions. It's not possible yet to exe
 
 `List<GraphQLNode> nodes` - The list of child nodes of the current node. If a node has no child nodes it'll be built as a field.
 
-`List<GraphQLFragmentNode> fragments` - The list of fragment node definitions.
+`List<GraphQLFragment> fragments` - The list of fragment node definitions.
 
 `Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
 
@@ -320,9 +320,9 @@ This class is only used for building subscriptions. It's not possible yet to exe
 
 `GraphQLSubscriptionNode withNodes(GraphQLField[] nodes)` - Adds new child nodes to the current node. Accepts one parameter of type [`GraphQLField[]`](#graphqlnode) (list can also be implicitly converted to the array). Returns the current node instance.
 
-`GraphQLSubscriptionNode defineFragment(GraphQLFragmentNode fragment)` - Defines a fragment for the subscription. Accepts the instance of the [`GraphQLFragmentNode`](#graphqlfragmentnode) class.
+`GraphQLSubscriptionNode defineFragment(GraphQLFragment fragment)` - Defines a fragment for the subscription. Accepts the instance of the [`GraphQLFragment`](#graphqlfragmentnode) class.
 
-`GraphQLSubscriptionNode defineFragments(GraphQLFragmentNode[] fragments)` - Defines multiple fragments for the subscription. Accepts the array of the [`GraphQLFragmentNode`](#graphqlfragmentnode) instances.
+`GraphQLSubscriptionNode defineFragments(GraphQLFragment[] fragments)` - Defines multiple fragments for the subscription. Accepts the array of the [`GraphQLFragment`](#graphqlfragmentnode) instances.
 
 `GraphQLSubscriptionNode defineVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
@@ -334,19 +334,19 @@ This class is only used for building subscriptions. It's not possible yet to exe
 
 ---
 
-## GraphQLFragmentNode
+## GraphQLFragment
 
 This class can be used for building fragments to make your queries look more efficient.
 
 ### Constructors
 
-`GraphQLFragmentNode(String name, String type)` - Creates a new instance of the GraphQLFragmentNode with the provided name and type it's referring to.
+`GraphQLFragment(String name, String type)` - Creates a new instance of the GraphQLFragment with the provided name and type it's referring to.
 
-`GraphQLFragmentNode(String name, String type, List<GraphQLField> nodes)` - Creates a new instance of the GraphQLFragmentNode with the provided name, type and its child nodes.
+`GraphQLFragment(String name, String type, List<GraphQLField> nodes)` - Creates a new instance of the GraphQLFragment with the provided name, type and its child nodes.
 
-`GraphQLFragmentNode(String name, String type, List<String> fields)` - Creates a new instance of the GraphQLFragmentNode with the provided name, type and fields.
+`GraphQLFragment(String name, String type, List<String> fields)` - Creates a new instance of the GraphQLFragment with the provided name, type and fields.
 
-`GraphQLFragmentNode(String name, String type, List<GraphQLField> nodes, List<String> fields)` - Creates a new instance of the GraphQLFragmentNode with the provided name, type, its child nodes and fields.
+`GraphQLFragment(String name, String type, List<GraphQLField> nodes, List<String> fields)` - Creates a new instance of the GraphQLFragment with the provided name, type, its child nodes and fields.
 
 ---
 
@@ -356,7 +356,7 @@ This class can be used for building fragments to make your queries look more eff
 
 `String type` - The name of the type the fragment describes fields for.
 
-`List<GraphQLNode> nodes` - The list of child nodes of the current fragment. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLField` or `GraphQLFragmentNode`.
+`List<GraphQLNode> nodes` - The list of child nodes of the current fragment. Includes inline fragments. If a node has no child nodes it'll be built as a field. The node can either be `GraphQLField` or `GraphQLFragment`.
 
 ## `List<GraphQLDirective> directives` - The list of fragment's directives. Read about [`GraphQLDirective` here](#graphqldirective).
 
@@ -364,7 +364,7 @@ This class can be used for building fragments to make your queries look more eff
 
 `Boolean isFieldNode()` - Returns true if the current node is an instance of `GraphQLField`. Otherwise returns false.
 
-`Boolean isFragmentNode()` - Returns true if the current node is an instance of `GraphQLFragmentNode`. Otherwise returns false.
+`Boolean isFragmentNode()` - Returns true if the current node is an instance of `GraphQLFragment`. Otherwise returns false.
 
 `Boolean hasNode(GraphQLField node)` - Returns true if there is a node with the same name from the parameter. Otherwise returns false.
 
@@ -374,29 +374,29 @@ This class can be used for building fragments to make your queries look more eff
 
 `Boolean hasDirectives()` - Returns true if there is at least one directive for the current fragment. Otherwise returns false.
 
-`GraphQLFragmentNode withField(String field)` - Adds a new field to the fragment.
+`GraphQLFragment withField(String field)` - Adds a new field to the fragment.
 
-`GraphQLFragmentNode withFields(String[] fields)` - Adds new fields to the fragment.
+`GraphQLFragment withFields(String[] fields)` - Adds new fields to the fragment.
 
-`GraphQLFragmentNode withNode(GraphQLField node)` - Adds a new child node to the fragment. Accepts one parameter of type [`GraphQLField`](#graphqlnode).
+`GraphQLFragment withNode(GraphQLField node)` - Adds a new child node to the fragment. Accepts one parameter of type [`GraphQLField`](#graphqlnode).
 
-`GraphQLFragmentNode withNodes(GraphQLField[] nodes)` - Adds new child nodes to the fragment. Accepts one parameter of type [`GraphQLField[]`](#graphqlnode) (list can also be implicitly converted to the array).
+`GraphQLFragment withNodes(GraphQLField[] nodes)` - Adds new child nodes to the fragment. Accepts one parameter of type [`GraphQLField[]`](#graphqlnode) (list can also be implicitly converted to the array).
 
-`GraphQLFragmentNode withFragment(String fragmentName)` - Adds a reference to another fragment's fields. Accepts the fragment name.
+`GraphQLFragment withFragment(String fragmentName)` - Adds a reference to another fragment's fields. Accepts the fragment name.
 
-`GraphQLFragmentNode withFragments(String[] fragmentNames)` - Adds reference to others fragments' fields. Accepts the fragments' names.
+`GraphQLFragment withFragments(String[] fragmentNames)` - Adds reference to others fragments' fields. Accepts the fragments' names.
 
-`GraphQLFragmentNode withInlineFragment(GraphQLFragmentNode fragment)` - Adds a child fragment node with the set of fields for a particular type.
+`GraphQLFragment withInlineFragment(GraphQLFragment fragment)` - Adds a child fragment node with the set of fields for a particular type.
 
-`GraphQLFragmentNode withInlineFragments(GraphQLFragmentNode[] fragments)` - Adds child fragment nodes with the set of fields for particular types.
+`GraphQLFragment withInlineFragments(GraphQLFragment[] fragments)` - Adds child fragment nodes with the set of fields for particular types.
 
-`GraphQLFragmentNode includeIf(Boolean condition)` - Adds a new `include` directive to the current fragment. Accepts one parameter of type Boolean. Indicates whether the current fragment needs to be included in the response.
+`GraphQLFragment includeIf(Boolean condition)` - Adds a new `include` directive to the current fragment. Accepts one parameter of type Boolean. Indicates whether the current fragment needs to be included in the response.
 
-`GraphQLFragmentNode includeIf(String variable)` - Adds a new `include` directive to the current fragment. Accepts one parameter of type String that represents the query variable name (can be passed with or without the `$` sign). Indicates whether the current fragment needs to be included in the response.
+`GraphQLFragment includeIf(String variable)` - Adds a new `include` directive to the current fragment. Accepts one parameter of type String that represents the query variable name (can be passed with or without the `$` sign). Indicates whether the current fragment needs to be included in the response.
 
-`GraphQLFragmentNode skipIf(Boolean condition)` - Adds a new `skip` directive to the current fragment. Accepts one parameter of type Boolean. Indicates whether the current fragment needs to be skipped in the response.
+`GraphQLFragment skipIf(Boolean condition)` - Adds a new `skip` directive to the current fragment. Accepts one parameter of type Boolean. Indicates whether the current fragment needs to be skipped in the response.
 
-`GraphQLFragmentNode skipIf(String variable)` - Adds a new `skip` directive to the current fragment. Accepts one parameter of type String that represents the query variable name (can be passed with or without the `$` sign). Indicates whether the current fragment needs to be skipped in the response.
+`GraphQLFragment skipIf(String variable)` - Adds a new `skip` directive to the current fragment. Accepts one parameter of type String that represents the query variable name (can be passed with or without the `$` sign). Indicates whether the current fragment needs to be skipped in the response.
 
 `String build()` - Builds a non-formatted string representation of the fragment.
 

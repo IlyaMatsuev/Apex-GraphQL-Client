@@ -113,7 +113,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeWithInlineFragmentTest() {
-        GraphQLFragmentNode fragment = new GraphQLFragmentNode('SomeType').withField('field1');
+        GraphQLFragment fragment = new GraphQLFragment('SomeType').withField('field1');
 
         GraphQLField node = new GraphQLField().withInlineFragment(fragment);
 
@@ -124,9 +124,9 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeWithInlineFragmentsTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
-            new GraphQLFragmentNode('SomeType').withField('field1'),
-            new GraphQLFragmentNode('SomeType2').withField('field11')
+        List<GraphQLFragment> fragments = new List<GraphQLFragment> {
+            new GraphQLFragment('SomeType').withField('field1'),
+            new GraphQLFragment('SomeType2').withField('field11')
         };
 
         GraphQLField node = new GraphQLField().withInlineFragments(fragments);
@@ -138,7 +138,7 @@ private class GraphQLNodeTest {
     @IsTest
     private static void nodeWithInlineFragmentOnTheSameTypeTest() {
         GraphQLField node = new GraphQLField()
-            .withInlineFragment(new GraphQLFragmentNode().withField('field1').withField('field2'));
+            .withInlineFragment(new GraphQLFragment().withField('field1').withField('field2'));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals('{...{field1,field2}}', node.build());
@@ -147,7 +147,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void nodeWithInlineFragmentWithNamedFragmentNegativeTest() {
-        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'SomeType').withField('field1');
+        GraphQLFragment fragment = new GraphQLFragment('fragment1', 'SomeType').withField('field1');
 
         Exception error;
         try {
@@ -285,7 +285,7 @@ private class GraphQLNodeTest {
 
     @IsTest
     private static void buildNodeWithInlineFragmentPositiveTest() {
-        GraphQLFragmentNode inlineFragment = new GraphQLFragmentNode('SomeType').withField('field11');
+        GraphQLFragment inlineFragment = new GraphQLFragment('SomeType').withField('field11');
 
         GraphQLField node = new GraphQLField()
             .withField('field1')

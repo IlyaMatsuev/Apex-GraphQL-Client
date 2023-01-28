@@ -10,7 +10,7 @@ global abstract class GraphQLOperationNode extends GraphQLNode {
     /**
      * @description The list of fragment definitions added to the operation
      */
-    global final List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode>();
+    global final List<GraphQLFragment> fragments = new List<GraphQLFragment>();
 
     protected GraphQLOperationNode(String alias, List<String> fields) {
         super(alias, fields);
@@ -54,8 +54,8 @@ global abstract class GraphQLOperationNode extends GraphQLNode {
      */
     global abstract GraphQLOperation getOperation();
 
-    protected GraphQLOperationNode addFragments(List<GraphQLFragmentNode> fragments) {
-        for (GraphQLFragmentNode fragment : fragments) {
+    protected GraphQLOperationNode addFragments(List<GraphQLFragment> fragments) {
+        for (GraphQLFragment fragment : fragments) {
             if (fragment.isInline()) {
                 throw new GraphQLOperationNodeException(
                     'Not possible to add an inline fragment to the operation node: ' + fragment.name

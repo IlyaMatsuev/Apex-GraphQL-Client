@@ -110,8 +110,8 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @throws GraphQLOperationNodeException If the provided fragment is inline
      * @return The instance of the current `GraphQLQueryNode` class
      */
-    global GraphQLQueryNode defineFragment(GraphQLFragmentNode fragment) {
-        return defineFragments(new List<GraphQLFragmentNode> { fragment });
+    global GraphQLQueryNode defineFragment(GraphQLFragment fragment) {
+        return defineFragments(new List<GraphQLFragment> { fragment });
     }
 
     /**
@@ -120,7 +120,7 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
      * @throws GraphQLOperationNodeException If some of the provided fragments are inline
      * @return The instance of the current `GraphQLQueryNode` class
      */
-    global GraphQLQueryNode defineFragments(GraphQLFragmentNode[] fragments) {
+    global GraphQLQueryNode defineFragments(GraphQLFragment[] fragments) {
         return (GraphQLQueryNode) addFragments(fragments);
     }
 

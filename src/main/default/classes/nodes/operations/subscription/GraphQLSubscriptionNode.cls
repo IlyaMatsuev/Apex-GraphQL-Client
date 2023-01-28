@@ -110,8 +110,8 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @throws GraphQLOperationNodeException If the provided fragment is inline
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
-    global GraphQLSubscriptionNode defineFragment(GraphQLFragmentNode fragment) {
-        return defineFragments(new List<GraphQLFragmentNode> { fragment });
+    global GraphQLSubscriptionNode defineFragment(GraphQLFragment fragment) {
+        return defineFragments(new List<GraphQLFragment> { fragment });
     }
 
     /**
@@ -120,7 +120,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
      * @throws GraphQLOperationNodeException If some of the provided fragments are inline
      * @return The instance of the current `GraphQLSubscriptionNode` class
      */
-    global GraphQLSubscriptionNode defineFragments(GraphQLFragmentNode[] fragments) {
+    global GraphQLSubscriptionNode defineFragments(GraphQLFragment[] fragments) {
         return (GraphQLSubscriptionNode) addFragments(fragments);
     }
 

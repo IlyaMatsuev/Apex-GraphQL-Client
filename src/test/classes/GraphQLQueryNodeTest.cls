@@ -103,7 +103,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithFragmentDefinitionTest() {
-        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
+        GraphQLFragment fragment = new GraphQLFragment('fragment1', 'Type1');
 
         GraphQLQueryNode node = new GraphQLQueryNode().defineFragment(fragment);
 
@@ -114,9 +114,9 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithFragmentDefinitionsTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
-            new GraphQLFragmentNode('fragment1', 'Type1'),
-            new GraphQLFragmentNode('fragment2', 'Type2')
+        List<GraphQLFragment> fragments = new List<GraphQLFragment> {
+            new GraphQLFragment('fragment1', 'Type1'),
+            new GraphQLFragment('fragment2', 'Type2')
         };
 
         GraphQLQueryNode node = new GraphQLQueryNode().defineFragments(fragments);
@@ -129,7 +129,7 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithInlineFragmentDefinitionNegativeTest() {
-        GraphQLFragmentNode fragment = new GraphQLFragmentNode('Type1');
+        GraphQLFragment fragment = new GraphQLFragment('Type1');
 
         Exception error;
         try {
@@ -255,9 +255,9 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryWithFragmentsPositiveTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
-            new GraphQLFragmentNode('Fields1', 'Type1', new List<String> { 'f1', 'f2' }),
-            new GraphQLFragmentNode('Fields2', 'Type2', new List<String> { 'f3', 'f4' })
+        List<GraphQLFragment> fragments = new List<GraphQLFragment> {
+            new GraphQLFragment('Fields1', 'Type1', new List<String> { 'f1', 'f2' }),
+            new GraphQLFragment('Fields2', 'Type2', new List<String> { 'f3', 'f4' })
         };
         List<GraphQLField> nodes = new List<GraphQLField> {
             new GraphQLField('node1').withFragment(fragments.get(0).name),

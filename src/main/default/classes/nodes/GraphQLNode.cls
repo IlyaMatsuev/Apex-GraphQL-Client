@@ -43,11 +43,11 @@ global abstract class GraphQLNode {
     }
 
     /**
-     * @description Check if the current node is an instance of `GraphQLFragmentNode`
-     * @return `true` if the current instance is `GraphQLFragmentNode`
+     * @description Check if the current node is an instance of `GraphQLFragment`
+     * @return `true` if the current instance is `GraphQLFragment`
      */
     global Boolean isFragmentNode() {
-        return this instanceof GraphQLFragmentNode;
+        return this instanceof GraphQLFragment;
     }
 
     /**
@@ -137,8 +137,8 @@ global abstract class GraphQLNode {
         return addFields(fields);
     }
 
-    protected virtual GraphQLNode addInlineFragments(GraphQLFragmentNode[] fragments) {
-        for (GraphQLFragmentNode fragment : fragments) {
+    protected virtual GraphQLNode addInlineFragments(GraphQLFragment[] fragments) {
+        for (GraphQLFragment fragment : fragments) {
             if (!fragment.isInline()) {
                 throw new GraphQLBaseNodeException('Not possible to add non-inline fragment: ' + fragment.name);
             }

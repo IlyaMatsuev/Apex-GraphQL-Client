@@ -13,7 +13,7 @@ query CountriesQuery {
 */
 
 // Create fragment instance passing the type name it's referring to. If we don't provide fragment name it's evaluated as inline fragment
-GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('City').withField('id').withField('name');
+GraphQLFragment cityFieldsFragment = new GraphQLFragment('City').withField('id').withField('name');
 
 GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')

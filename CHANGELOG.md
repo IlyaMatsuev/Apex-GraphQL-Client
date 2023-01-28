@@ -11,8 +11,9 @@ All information regarding the installation and usage is described on the [main r
 
 The name of the below classes have been changed:
 
--   `GraphQLNode` --> `GraphQLField`
 -   `GraphQLBaseNode` --> `GraphQLNode`
+-   `GraphQLNode` --> `GraphQLField`
+-   `GraphQLFragmentNode` --> `GraphQLFragment`
 
 This was made in order to be aligned with the terms (such as "field") provided by the GraphQL specification. And also to make the names shorter for more convenient usage.
 
@@ -20,7 +21,7 @@ This was made in order to be aligned with the terms (such as "field") provided b
 
 ### Opportunity to add inline fragments to nodes
 
-There two new methods for `GraphQLNode` and `GraphQLFragmentNode` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
+There two new methods for `GraphQLNode` and `GraphQLFragment` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
 
 Example:
 
@@ -48,12 +49,12 @@ Apex equivalent:
 GraphQLNode profiles = new GraphQLNode('profiles')
   .withField('name')
   .withInlineFragment(
-    new GraphQLFragmentNode('User').withNode(
+    new GraphQLFragment('User').withNode(
         new GraphQLNode('friends').withField('count')
     )
   )
   .withInlineFragment(
-    new GraphQLFragmentNode('Page').withNode(
+    new GraphQLFragment('Page').withNode(
         new GraphQLNode('likers').withField('count')
     )
   );
@@ -81,7 +82,7 @@ query ($expandedInfo: Boolean) {
 GraphQLNode userNode = new GraphQLNode('user')
   .withField('name')
   .withInlineFragment(
-    new GraphQLFragmentNode()
+    new GraphQLFragment()
       .includeIf('expandedInfo')
       .withFields(new List<String> { 'firstName', 'lastName' })
   );
@@ -130,10 +131,10 @@ These interfaces have been deleted from the package as they were not useful and 
 
 ### Child nodes are now of type `GraphQLBaseNode` instead of `GraphQLNode`
 
-Which allows more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragmentNode`). To determine what child nodes are fields and what are inline fragments there are two new methods:
+Which allows more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragment`). To determine what child nodes are fields and what are inline fragments there are two new methods:
 
 `isFieldNode()` - True if the instance is `GraphQLNode`
-`isFragmentNode()` - True if the instance is `GraphQLFragmentNode`
+`isFragmentNode()` - True if the instance is `GraphQLFragment`
 
 Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
 
@@ -171,7 +172,7 @@ GraphQLQueryNode query = new GraphQLQueryNode()
 System.debug(query.build(true));
 ```
 
-### Directives are available for both `GraphQLNode` and `GraphQLFragmentNode`
+### Directives are available for both `GraphQLNode` and `GraphQLFragment`
 
 Previously, directives have been presented only on `GraphQLNode` as a Map with the directive types as a key. Now the directives field is moved to `GraphQLBaseNode`. It's also not a map anymore but just a list of `GraphQLDirective`. Map has been removed just because it wasn't really helpful.
 
@@ -437,7 +438,7 @@ Now you can use fragments for your queries/mutations to make your GraphQL reques
 
 ```java
 // Create fragment instance passing its name and type it's referring to
-GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('CityFields', 'City')
+GraphQLFragment cityFieldsFragment = new GraphQLFragment('CityFields', 'City')
     .withField('id')
     .withField('name');
 

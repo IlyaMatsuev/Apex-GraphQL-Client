@@ -103,7 +103,7 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void mutationWithFragmentDefinitionTest() {
-        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
+        GraphQLFragment fragment = new GraphQLFragment('fragment1', 'Type1');
 
         GraphQLMutationNode node = new GraphQLMutationNode().defineFragment(fragment);
 
@@ -114,9 +114,9 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void mutationWithFragmentDefinitionsTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
-            new GraphQLFragmentNode('fragment1', 'Type1'),
-            new GraphQLFragmentNode('fragment2', 'Type2')
+        List<GraphQLFragment> fragments = new List<GraphQLFragment> {
+            new GraphQLFragment('fragment1', 'Type1'),
+            new GraphQLFragment('fragment2', 'Type2')
         };
 
         GraphQLMutationNode node = new GraphQLMutationNode().defineFragments(fragments);

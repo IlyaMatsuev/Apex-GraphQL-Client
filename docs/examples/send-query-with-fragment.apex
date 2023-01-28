@@ -17,9 +17,7 @@ fragment CityFields on City {
 */
 
 // Create fragment instance passing its name and type it's referring to
-GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('CityFields', 'City')
-    .withField('id')
-    .withField('name');
+GraphQLFragment cityFieldsFragment = new GraphQLFragment('CityFields', 'City').withField('id').withField('name');
 
 GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
