@@ -1,5 +1,5 @@
 @IsTest(IsParallel = true)
-private class GraphQLFragmentNodeTest {
+private class GraphQLFragmentTest {
     @IsTest
     private static void emptyFragmentTest() {
         String name = 'Fields';

@@ -1,4 +1,4 @@
-public class GraphQLConfigManager {
+public class GraphQLConfigs {
     private static final Integer CONFIG_QUERY_LIMIT = 50;
 
     @TestVisible
@@ -8,15 +8,15 @@ public class GraphQLConfigManager {
         init();
     }
 
-    public static Integer getInteger(GraphQLConfig config) {
+    public static Integer getInteger(Option config) {
         return Integer.valueOf(getString(config));
     }
 
-    public static Boolean getBoolean(GraphQLConfig config) {
+    public static Boolean getBoolean(Option config) {
         return Boolean.valueOf(getString(config));
     }
 
-    public static String getString(GraphQLConfig config) {
+    public static String getString(Option config) {
         return get(config?.name());
     }
 
@@ -37,6 +37,15 @@ public class GraphQLConfigManager {
         for (GraphQLClientConfig__mdt config : configs) {
             configsByName.put(config.DeveloperName, config);
         }
+    }
+
+    public enum Option {
+        MaxQueryDepth,
+        QueryIndentSize,
+        SupressNullsForObjectArguments,
+        DateArgumentFormat,
+        DateTimeArgumentFormat,
+        SendPrettyQuery
     }
 
     private class GraphQLConfigManagerException extends Exception {}

@@ -1,5 +1,5 @@
 @IsTest(IsParallel = true)
-private class GraphQLMutationNodeTest {
+private class GraphQLMutationTest {
     @IsTest
     private static void emptyMutationTest() {
         GraphQLMutation node = new GraphQLMutation();

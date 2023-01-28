@@ -11,10 +11,32 @@ All information regarding the installation and usage is described on the [main r
 
 The name of the below classes have been changed:
 
+Global classes:
+
 -   `GraphQLBaseNode` --> `GraphQLNode`
 -   `GraphQLNode` --> `GraphQLField`
 -   `GraphQLFragmentNode` --> `GraphQLFragment`
 -   `GraphQLOperation` --> `GraphQLOperationType`
+-   `GraphQLQueryNode` --> `GraphQLQuery`
+-   `GraphQLMutationNode` --> `GraphQLMutation`
+-   `GraphQLSubscriptionNode` --> `GraphQLSubscription`
+
+Public classes:
+
+-   `GraphQLNodeParser` --> `GraphQLFieldParser`
+-   `GraphQLFragmentNodeParser` --> `GraphQLFragmentParser`
+-   `GraphQLOperationNodeParser` --> `GraphQLOperationParser`
+-   `GraphQLConfigManager` --> `GraphQLConfigs`
+-   `GraphQLConfig` --> `GraphQLConfigs.Option`
+
+Tests:
+
+-   `GraphQLNodeTest` --> `GraphQLFieldTest`
+-   `GraphQLFragmentNodeTest` --> `GraphQLFragmentTest`
+-   `GraphQLQueryNodeTest` --> `GraphQLQueryTest`
+-   `GraphQLMutationNodeTest` --> `GraphQLMutationTest`
+-   `GraphQLSubscriptionNodeTest` --> `GraphQLSubscriptionTest`
+-   `GraphQLConfigManagerTest` --> `GraphQLConfigsTest`
 
 This was made in order to be aligned with the terms (such as "field") provided by the GraphQL specification. And also to make the names shorter for more convenient usage.
 

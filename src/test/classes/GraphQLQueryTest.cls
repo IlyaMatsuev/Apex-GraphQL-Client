@@ -1,5 +1,5 @@
 @IsTest(IsParallel = true)
-private class GraphQLQueryNodeTest {
+private class GraphQLQueryTest {
     @IsTest
     private static void emptyQueryTest() {
         GraphQLQuery node = new GraphQLQuery();

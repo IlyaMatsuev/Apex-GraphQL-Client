@@ -1,14 +1,14 @@
 @IsTest(IsParallel = true)
-private class GraphQLConfigManagerTest {
+private class GraphQLConfigsTest {
     @IsTest
     private static void getString_shouldReturnStringConfig() {
-        GraphQLConfig config = GraphQLConfig.DateArgumentFormat;
-        GraphQLConfigManager.configsByName.put(
+        GraphQLConfigs.Option config = GraphQLConfigs.Option.DateArgumentFormat;
+        GraphQLConfigs.configsByName.put(
             config.name(),
             new GraphQLClientConfig__mdt(DeveloperName = config.name(), Value__c = 'MM/dd/yyyy')
         );
 
-        String configValue = GraphQLConfigManager.getString(config);
+        String configValue = GraphQLConfigs.getString(config);
 
         System.assert(configValue != null);
         System.assertEquals('MM/dd/yyyy', configValue);
@@ -16,12 +16,12 @@ private class GraphQLConfigManagerTest {
 
     @IsTest
     private static void getString_configDoesntExist_shouldThrowException() {
-        GraphQLConfig config = GraphQLConfig.DateArgumentFormat;
-        GraphQLConfigManager.configsByName.clear();
+        GraphQLConfigs.Option config = GraphQLConfigs.Option.DateArgumentFormat;
+        GraphQLConfigs.configsByName.clear();
 
         Exception error;
         try {
-            GraphQLConfigManager.getString(config);
+            GraphQLConfigs.getString(config);
         } catch (Exception ex) {
             error = ex;
         }

@@ -1,5 +1,5 @@
 @IsTest(IsParallel = true)
-private class GraphQLNodeTest {
+private class GraphQLFieldTest {
     @IsTest
     private static void emptyNodeTest() {
         GraphQLField node = new GraphQLField();

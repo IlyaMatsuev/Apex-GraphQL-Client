@@ -1,5 +1,5 @@
 @IsTest(IsParallel = true)
-private class GraphQLSubscriptionNodeTest {
+private class GraphQLSubscriptionTest {
     @IsTest
     private static void emptySubscriptionTest() {
         GraphQLSubscription node = new GraphQLSubscription();
