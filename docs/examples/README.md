@@ -22,7 +22,7 @@ First, you need to build the `countries` node:
 GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
     // We have the child node "capital" in this example
-    .withNode(new GraphQLField('capital', new List<String> { 'id', 'name' }));
+    .withField(new GraphQLField('capital', new List<String> { 'id', 'name' }));
 ```
 
 Then you should create the query instance itself:

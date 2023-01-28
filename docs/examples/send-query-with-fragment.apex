@@ -22,7 +22,7 @@ GraphQLFragment cityFieldsFragment = new GraphQLFragment('CityFields', 'City').w
 GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
     // Use fragment fields for the capital node
-    .withNode(new GraphQLField('capital').withFragment(cityFieldsFragment.name));
+    .withField(new GraphQLField('capital').withFragment(cityFieldsFragment.name));
 
 GraphQLField citiesNode = new GraphQLField('cities')
     // Use fragment fields for the cities node

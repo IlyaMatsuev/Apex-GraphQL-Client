@@ -16,7 +16,7 @@ query CountriesQuery($withCities: Boolean!) {
 
 GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
-    .withNode(new GraphQLField('capital', new List<String> { 'id', 'name' }));
+    .withField(new GraphQLField('capital', new List<String> { 'id', 'name' }));
 
 GraphQLField citiesNode = new GraphQLField('cities', new List<String> { 'id', 'name' })
     // Indicate that we want to include this node only if the variable $withCities equals true

@@ -16,7 +16,7 @@ query CountriesQuery($limit: Int) {
 GraphQLField countriesNode = new GraphQLField('countries')
     .withArgument('filter', 'Bel')
     .withField('name')
-    .withNode(new GraphQLField('capital', new List<String> { 'id', 'name' }));
+    .withField(new GraphQLField('capital', new List<String> { 'id', 'name' }));
 
 GraphQLField citiesNode = new GraphQLField('cities')
     // Point the argument to the $limit variable

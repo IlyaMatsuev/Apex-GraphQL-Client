@@ -18,7 +18,7 @@ GraphQLFragment cityFieldsFragment = new GraphQLFragment('City').withField('id')
 GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
     // Use inline fragment fields for the capital node
-    .withNode(new GraphQLField('capital').withInlineFragment(cityFieldsFragment));
+    .withField(new GraphQLField('capital').withInlineFragment(cityFieldsFragment));
 
 GraphQLQuery query = new GraphQLQuery(new List<GraphQLField> { countriesNode, citiesNode });
 
