@@ -8,12 +8,12 @@ global class GraphQLArgument {
     private static final String REPLACE_JSON_VARIABLE_REFS_REGEXP = ':\\s*"(\\$\\w+)"';
     private static final String FIRST_REGEX_MATCH_GROUP = '$1';
 
-    private static final String DATE_VALUE_FORMAT = GraphQLConfigManager.getString(GraphQLConfig.DateArgumentFormat);
-    private static final String DATE_TIME_VALUE_FORMAT = GraphQLConfigManager.getString(
-        GraphQLConfig.DateTimeArgumentFormat
+    private static final String DATE_VALUE_FORMAT = GraphQLConfigs.getString(GraphQLConfigs.Option.DateArgumentFormat);
+    private static final String DATE_TIME_VALUE_FORMAT = GraphQLConfigs.getString(
+        GraphQLConfigs.Option.DateTimeArgumentFormat
     );
-    private static final Boolean SUPPRESS_NULLS = GraphQLConfigManager.getBoolean(
-        GraphQLConfig.SupressNullsForObjectArguments
+    private static final Boolean SUPPRESS_NULLS = GraphQLConfigs.getBoolean(
+        GraphQLConfigs.Option.SupressNullsForObjectArguments
     );
 
     /**

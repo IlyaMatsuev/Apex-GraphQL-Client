@@ -13,17 +13,17 @@ query CountriesQuery($limit: Int) {
 }
 */
 
-GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLField countriesNode = new GraphQLField('countries')
     .withArgument('filter', 'Bel')
     .withField('name')
-    .withNode(new GraphQLNode('capital', new List<String> { 'id', 'name' }));
+    .withField(new GraphQLField('capital', new List<String> { 'id', 'name' }));
 
-GraphQLNode citiesNode = new GraphQLNode('cities')
+GraphQLField citiesNode = new GraphQLField('cities')
     // Point the argument to the $limit variable
     .withArgument('limit', '$limit')
     .withField('name');
 
-GraphQLQueryNode query = new GraphQLQueryNode('CountriesQuery', new List<GraphQLNode> { countriesNode, citiesNode })
+GraphQLQuery query = new GraphQLQuery('CountriesQuery', new List<GraphQLField> { countriesNode, citiesNode })
     // Define variable for the query
     .defineVariable('limit', 'Int');
 

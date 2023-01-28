@@ -7,13 +7,13 @@ mutation CreateCountry($country: NewCountryInput!) {
 }
 */
 
-GraphQLNode createCountryNode = new GraphQLNode('createCountry')
+GraphQLField createCountryNode = new GraphQLField('createCountry')
     // Point the argument to the $country variable
     .withArgument('country', '$country')
     .withField('id')
     .withField('name');
 
-GraphQLMutationNode mutation = new GraphQLMutationNode('CreateCountry', createCountryNode)
+GraphQLMutation mutation = new GraphQLMutation('CreateCountry', createCountryNode)
     // Define variable for the mutation
     .defineVariable('country', 'NewCountryInput!');
 

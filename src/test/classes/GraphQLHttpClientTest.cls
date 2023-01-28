@@ -22,10 +22,10 @@ private class GraphQLHttpClientTest {
     @IsTest
     private static void sendRequestSyncPositiveTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
+        GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
-        GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
+        GraphQLQuery query = new GraphQLQuery(heroNode);
         GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock());
@@ -46,10 +46,10 @@ private class GraphQLHttpClientTest {
     @IsTest
     private static void sendRequestSyncInvalidResponseFormatTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
+        GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
-        GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
+        GraphQLQuery query = new GraphQLQuery(heroNode);
         GraphQLRequest request = query.asRequest();
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock().withInvalidFormat());
@@ -69,10 +69,10 @@ private class GraphQLHttpClientTest {
     @IsTest
     private static void sendRequestAsyncPositiveTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String> { 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String> { 'id', 'name' }));
+        GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
-        GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
+        GraphQLQuery query = new GraphQLQuery(heroNode);
         GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock());

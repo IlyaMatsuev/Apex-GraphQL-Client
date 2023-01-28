@@ -1,8 +1,0 @@
-public enum GraphQLConfig {
-    MaxQueryDepth,
-    QueryIndentSize,
-    SupressNullsForObjectArguments,
-    DateArgumentFormat,
-    DateTimeArgumentFormat,
-    SendPrettyQuery
-}

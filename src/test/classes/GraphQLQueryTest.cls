@@ -1,8 +1,8 @@
 @IsTest(IsParallel = true)
-private class GraphQLQueryNodeTest {
+private class GraphQLQueryTest {
     @IsTest
     private static void emptyQueryTest() {
-        GraphQLQueryNode node = new GraphQLQueryNode();
+        GraphQLQuery node = new GraphQLQuery();
 
         System.assert(String.isBlank(node.name));
         System.assertEquals(0, node.nodes.size());
@@ -12,7 +12,7 @@ private class GraphQLQueryNodeTest {
     private static void namedQueryTest() {
         String nodeName = 'Test';
 
-        GraphQLQueryNode node = new GraphQLQueryNode(nodeName);
+        GraphQLQuery node = new GraphQLQuery(nodeName);
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(0, node.nodes.size());
@@ -20,9 +20,9 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void emptyQueryWithChildNodeTest() {
-        GraphQLNode childNode = new GraphQLNode('node1');
+        GraphQLField childNode = new GraphQLField('node1');
 
-        GraphQLQueryNode node = new GraphQLQueryNode(childNode);
+        GraphQLQuery node = new GraphQLQuery(childNode);
 
         System.assert(String.isBlank(node.name));
         System.assertEquals(1, node.nodes.size());
@@ -30,9 +30,9 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void emptyQueryWithChildNodesTest() {
-        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLField> childNodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLQueryNode node = new GraphQLQueryNode(childNodes);
+        GraphQLQuery node = new GraphQLQuery(childNodes);
 
         System.assert(String.isBlank(node.name));
         System.assertEquals(childNodes.size(), node.nodes.size());
@@ -42,7 +42,7 @@ private class GraphQLQueryNodeTest {
     private static void namedQueryWithChildNodeTest() {
         String nodeName = 'Test';
 
-        GraphQLQueryNode node = new GraphQLQueryNode(nodeName, new GraphQLNode('node1'));
+        GraphQLQuery node = new GraphQLQuery(nodeName, new GraphQLField('node1'));
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(1, node.nodes.size());
@@ -51,9 +51,9 @@ private class GraphQLQueryNodeTest {
     @IsTest
     private static void namedQueryWithChildNodesTest() {
         String nodeName = 'Test';
-        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLField> childNodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLQueryNode node = new GraphQLQueryNode(nodeName, childNodes);
+        GraphQLQuery node = new GraphQLQuery(nodeName, childNodes);
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(childNodes.size(), node.nodes.size());
@@ -63,7 +63,7 @@ private class GraphQLQueryNodeTest {
     private static void emptyQueryWithFieldsTest() {
         List<String> fields = new List<String> { 'field1', 'field2' };
 
-        GraphQLQueryNode node = new GraphQLQueryNode(fields);
+        GraphQLQuery node = new GraphQLQuery(fields);
 
         System.assert(String.isBlank(node.name));
         System.assertEquals(fields.size(), node.nodes.size());
@@ -74,7 +74,7 @@ private class GraphQLQueryNodeTest {
         String nodeName = 'node';
         List<String> fields = new List<String> { 'field1', 'field2' };
 
-        GraphQLQueryNode node = new GraphQLQueryNode(nodeName, fields);
+        GraphQLQuery node = new GraphQLQuery(nodeName, fields);
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(fields.size(), node.nodes.size());
@@ -84,7 +84,7 @@ private class GraphQLQueryNodeTest {
     private static void queryWithFieldTest() {
         String fieldName = 'field1';
 
-        GraphQLQueryNode node = new GraphQLQueryNode().withField(fieldName);
+        GraphQLQuery node = new GraphQLQuery().withField(fieldName);
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(fieldName, node.nodes.get(0).name);
@@ -94,7 +94,7 @@ private class GraphQLQueryNodeTest {
     private static void queryWithFieldsTest() {
         List<String> fields = new List<String> { 'field1', 'field2' };
 
-        GraphQLQueryNode node = new GraphQLQueryNode().withFields(fields);
+        GraphQLQuery node = new GraphQLQuery().withFields(fields);
 
         System.assertEquals(fields.size(), node.nodes.size());
         System.assertEquals('field1', node.nodes.get(0).name);
@@ -103,9 +103,9 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithFragmentDefinitionTest() {
-        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
+        GraphQLFragment fragment = new GraphQLFragment('fragment1', 'Type1');
 
-        GraphQLQueryNode node = new GraphQLQueryNode().defineFragment(fragment);
+        GraphQLQuery node = new GraphQLQuery().defineFragment(fragment);
 
         System.assert(node.hasFragments());
         System.assertEquals(1, node.fragments.size());
@@ -114,12 +114,12 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithFragmentDefinitionsTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
-            new GraphQLFragmentNode('fragment1', 'Type1'),
-            new GraphQLFragmentNode('fragment2', 'Type2')
+        List<GraphQLFragment> fragments = new List<GraphQLFragment> {
+            new GraphQLFragment('fragment1', 'Type1'),
+            new GraphQLFragment('fragment2', 'Type2')
         };
 
-        GraphQLQueryNode node = new GraphQLQueryNode().defineFragments(fragments);
+        GraphQLQuery node = new GraphQLQuery().defineFragments(fragments);
 
         System.assert(node.hasFragments());
         System.assertEquals(fragments.size(), node.fragments.size());
@@ -129,34 +129,34 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithInlineFragmentDefinitionNegativeTest() {
-        GraphQLFragmentNode fragment = new GraphQLFragmentNode('Type1');
+        GraphQLFragment fragment = new GraphQLFragment('Type1');
 
         Exception error;
         try {
-            new GraphQLQueryNode().defineFragment(fragment);
+            new GraphQLQuery().defineFragment(fragment);
         } catch (Exception ex) {
             error = ex;
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLOperationNode.GraphQLOperationNodeException);
+        System.assert(error instanceof GraphQLOperation.GraphQLOperationException);
     }
 
     @IsTest
-    private static void queryWithNodeTest() {
+    private static void queryWithFieldNodeTest() {
         String nodeName = 'node1';
 
-        GraphQLQueryNode node = new GraphQLQueryNode().withNode(new GraphQLNode(nodeName));
+        GraphQLQuery node = new GraphQLQuery().withField(new GraphQLField(nodeName));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(nodeName, node.nodes.get(0).name);
     }
 
     @IsTest
-    private static void queryWithNodesTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
+    private static void queryWithFieldNodesTest() {
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLQueryNode node = new GraphQLQueryNode().withNodes(nodes);
+        GraphQLQuery node = new GraphQLQuery().withFields(nodes);
 
         System.assertEquals(nodes.size(), node.nodes.size());
         System.assertEquals('node1', node.nodes.get(0).name);
@@ -165,8 +165,8 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryWithVariableDefinitionTest() {
-        GraphQLQueryNode node = new GraphQLQueryNode()
-            .withNode(new GraphQLNode('node'))
+        GraphQLQuery node = new GraphQLQuery()
+            .withField(new GraphQLField('node'))
             .defineVariable('newVariable', '[Int]! = 0');
 
         System.assertEquals(1, node.variables.size());
@@ -174,9 +174,9 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void queryBuildRequestTest() {
-        GraphQLRequest request = new GraphQLQueryNode(new List<String> { 'field1' }).asRequest();
+        GraphQLRequest request = new GraphQLQuery(new List<String> { 'field1' }).asRequest();
 
-        System.assertEquals(GraphQLOperation.Query, request.operation);
+        System.assertEquals(GraphQLOperationType.Query, request.operation);
         System.assertEquals('{"query":"query{field1}"}', request.toString());
         System.assertEquals('{\n  "query" : "query {\\n  field1\\n}"\n}', request.toString(true));
     }
@@ -187,12 +187,12 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('field1'), new GraphQLNode('field2') };
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('field1'), new GraphQLField('field2') };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
-        GraphQLQueryNode query = new GraphQLQueryNode()
-            .withNode(nodes.get(0))
-            .withNode(nodes.get(1))
+        GraphQLQuery query = new GraphQLQuery()
+            .withField(nodes.get(0))
+            .withField(nodes.get(1))
             .withFields(fields)
             .withField('field3');
 
@@ -205,14 +205,14 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryWithVariableDefinitionsPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode> {
-            new GraphQLNode('node1').withArgument('arg', '$param1'),
-            new GraphQLNode('node2')
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('node1').withArgument('arg', '$param1'),
+            new GraphQLField('node2')
         };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
-        GraphQLQueryNode query = new GraphQLQueryNode()
-            .withNodes(nodes)
+        GraphQLQuery query = new GraphQLQuery()
+            .withFields(nodes)
             .withFields(fields)
             .defineVariable('param1', 'Int!')
             .defineVariable('param2', 'String');
@@ -232,13 +232,16 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryWithChildNodesPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode> {
-            new GraphQLNode('field1'),
-            new GraphQLNode('field2', new List<GraphQLNode> { new GraphQLNode('field21'), new GraphQLNode('field22') }),
-            new GraphQLNode('field3')
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('field1'),
+            new GraphQLField(
+                'field2',
+                new List<GraphQLField> { new GraphQLField('field21'), new GraphQLField('field22') }
+            ),
+            new GraphQLField('field3')
         };
 
-        GraphQLQueryNode query = new GraphQLQueryNode('TestQuery', nodes).withField('field1');
+        GraphQLQuery query = new GraphQLQuery('TestQuery', nodes).withField('field1');
 
         System.assert(query != null);
         System.assertEquals('TestQuery', query.name);
@@ -252,16 +255,16 @@ private class GraphQLQueryNodeTest {
 
     @IsTest
     private static void buildQueryWithFragmentsPositiveTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
-            new GraphQLFragmentNode('Fields1', 'Type1', new List<String> { 'f1', 'f2' }),
-            new GraphQLFragmentNode('Fields2', 'Type2', new List<String> { 'f3', 'f4' })
+        List<GraphQLFragment> fragments = new List<GraphQLFragment> {
+            new GraphQLFragment('Fields1', 'Type1', new List<String> { 'f1', 'f2' }),
+            new GraphQLFragment('Fields2', 'Type2', new List<String> { 'f3', 'f4' })
         };
-        List<GraphQLNode> nodes = new List<GraphQLNode> {
-            new GraphQLNode('node1').withFragment(fragments.get(0).name),
-            new GraphQLNode('node2').withFragment(fragments.get(1).name)
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('node1').withFragment(fragments.get(0).name),
+            new GraphQLField('node2').withFragment(fragments.get(1).name)
         };
 
-        GraphQLQueryNode query = new GraphQLQueryNode().withNodes(nodes).defineFragments(fragments);
+        GraphQLQuery query = new GraphQLQuery().withFields(nodes).defineFragments(fragments);
 
         System.assertEquals(
             'query{node1{...Fields1},node2{...Fields2}}' +

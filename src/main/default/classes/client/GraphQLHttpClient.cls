@@ -4,7 +4,7 @@
 global class GraphQLHttpClient {
     private final String endpoint;
 
-    private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigManager.getBoolean(GraphQLConfig.SendPrettyQuery);
+    private static final Boolean SEND_PRETTY_REQUEST = GraphQLConfigs.getBoolean(GraphQLConfigs.Option.SendPrettyQuery);
 
     /**
      * @description Create an instance of the client passing the GraphQL endpoint

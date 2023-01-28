@@ -42,15 +42,15 @@ continents {
 Equivalent Apex code:
 
 ```java
-GraphQLNode continentsNode = new GraphQLNode('continents')
+GraphQLField continents = new GraphQLField('continents')
     .withField('name')
-    .withNode(new GraphQLNode(
+    .withField(new GraphQLField(
         'countries',
         new List<String> { 'name', 'capital', 'currency' }
     ));
 
 // Will print a well-formatted node just like on the example above
-System.debug(continentsNode.build(true));
+System.debug(continents.build(true));
 ```
 
 ### Create a query GraphQL request
@@ -73,20 +73,20 @@ query {
 Equivalent Apex code:
 
 ```java
-GraphQLNode countriesNode = new GraphQLNode(
+GraphQLField countries = new GraphQLField(
     'countries',
     new List<String> { 'name', 'capital', 'currency' }
 )
     .withArgument('filter', 'Bel')
     .withArgument('count', 1);
 
-GraphQLNode continentsNode = new GraphQLNode(
+GraphQLField continents = new GraphQLField(
     'continents',
     new List<String> { 'name' }
 );
 
-GraphQLQueryNode query = new GraphQLQueryNode(
-    new List<GraphQLNode> { countriesNode, continentsNode }
+GraphQLQuery query = new GraphQLQuery(
+    new List<GraphQLField> { countries, continents }
 );
 
 System.debug(query.build(true));

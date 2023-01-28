@@ -5,11 +5,112 @@ Package Id:
 
 All information regarding the installation and usage is described on the [main repo page](https://github.com/IlyaMatsuev/Apex-GraphQL-Client).
 
+## Beaking changes
+
+### Package classes amd methods naming changes
+
+The names of the below classes have been changed:
+
+Global classes:
+
+-   `GraphQLBaseNode` --> `GraphQLNode`
+-   `GraphQLNode` --> `GraphQLField`
+-   `GraphQLFragmentNode` --> `GraphQLFragment`
+-   `GraphQLOperation` --> `GraphQLOperationType`
+-   `GraphQLQueryNode` --> `GraphQLQuery`
+-   `GraphQLMutationNode` --> `GraphQLMutation`
+-   `GraphQLSubscriptionNode` --> `GraphQLSubscription`
+
+Public classes:
+
+-   `GraphQLNodeParser` --> `GraphQLFieldParser`
+-   `GraphQLFragmentNodeParser` --> `GraphQLFragmentParser`
+-   `GraphQLOperationNodeParser` --> `GraphQLOperationParser`
+-   `GraphQLConfigManager` --> `GraphQLConfigs`
+-   `GraphQLConfig` --> `GraphQLConfigs.Option`
+
+Exceptions:
+
+-   `GraphQLBaseNodeException` --> `GraphQLNodeException`
+-   `GraphQLOperationNodeException` --> `GraphQLOperationException`
+-   `GraphQLConfigManagerException` --> `GraphQLConfigsException`
+
+Tests:
+
+-   `GraphQLNodeTest` --> `GraphQLFieldTest`
+-   `GraphQLFragmentNodeTest` --> `GraphQLFragmentTest`
+-   `GraphQLQueryNodeTest` --> `GraphQLQueryTest`
+-   `GraphQLMutationNodeTest` --> `GraphQLMutationTest`
+-   `GraphQLSubscriptionNodeTest` --> `GraphQLSubscriptionTest`
+-   `GraphQLConfigManagerTest` --> `GraphQLConfigsTest`
+
+The names of the below methods have been changed:
+
+For `GraphQLNode`:
+
+-   `hasNode(GraphQLField fieldNode)` --> `hasField(GraphQLField fieldNode)`
+
+For `GraphQLField`, `GraphQLFragment`, `GraphQLQuery`, `GraphQLMutation` and `GraphQLSubscription`:
+
+-   `withNode(GraphQLField fieldNode)` --> `withField(GraphQLField fieldNode)`
+-   `withNodes(GraphQLField[] fieldNodes)` --> `withFields(GraphQLField[] fieldNodes)`
+
+For `GraphQLQuery`, `GraphQLMutation` and `GraphQLSubscription`:
+
+-   `withFragment(GraphQLFragment fragment)` => `defineFragment(GraphQLFragment fragment)`
+-   `withFragments(GraphQLFragment[] fragments)` => `defineFragments(GraphQLFragment[] fragments)`
+-   `withVariable(String name, String typeDefinition)` => `defineVariable(String name, String typeDefinition)`
+
+This was made in order to be aligned with the terms (such as "field") provided by the GraphQL specification. And also to make the names shorter for more convenient usage.
+
+Here is an example of how this changes the usage of the package:
+
+Was:
+
+```java
+GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQueryNode query = new GraphQLQueryNode()
+  .withNode(node)
+  .withFragment(new GraphQLFragmentNode('CityFields', 'City').withField('name'))
+  .withVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+Now:
+
+```java
+GraphQLField node = new GraphQLField('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQuery query = new GraphQLQuery()
+  .withField(node)
+  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
+  .defineVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+### Unnecessary components have been removed
+
+Some of the classes and custom metadata records have been removed because they were not too much useful. Below is the list of deleted components:
+
+GraphQLConfig custom metadata records:
+
+-   `DefaultGraphQLEndpoint` - Wasn't really helpful. The GraphQL endpoint should be defined at the code level, not with the custom metadata.
+-   `RequestTimeout` - The timeout for the request can be set with `withTimeout` method on the `GraphQLRequest` class.
+
+Classes:
+
+-   `IGraphQLParser`
+-   `IGraphQLClient`
+-   `GraphQLConfig`
+
 ## What's new
 
 ### Opportunity to add inline fragments to nodes
 
-There two new methods for `GraphQLNode` and `GraphQLFragmentNode` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
+There two new methods for `GraphQLField` and `GraphQLFragment` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
 
 Example:
 
@@ -34,20 +135,20 @@ query {
 Apex equivalent:
 
 ```java
-GraphQLNode profiles = new GraphQLNode('profiles')
+GraphQLField profiles = new GraphQLField('profiles')
   .withField('name')
   .withInlineFragment(
-    new GraphQLFragmentNode('User').withNode(
-        new GraphQLNode('friends').withField('count')
+    new GraphQLFragment('User').withField(
+        new GraphQLField('friends').withField('count')
     )
   )
   .withInlineFragment(
-    new GraphQLFragmentNode('Page').withNode(
-        new GraphQLNode('likers').withField('count')
+    new GraphQLFragment('Page').withField(
+        new GraphQLField('likers').withField('count')
     )
   );
 
-GraphQLQueryNode query = new GraphQLQueryNode().withNode(profiles);
+GraphQLQuery query = new GraphQLQuery().withField(profiles);
 
 System.debug(query.build(true));
 ```
@@ -67,16 +168,16 @@ query ($expandedInfo: Boolean) {
 ```
 
 ```java
-GraphQLNode userNode = new GraphQLNode('user')
+GraphQLField userNode = new GraphQLField('user')
   .withField('name')
   .withInlineFragment(
-    new GraphQLFragmentNode()
+    new GraphQLFragment()
       .includeIf('expandedInfo')
       .withFields(new List<String> { 'firstName', 'lastName' })
   );
 
-GraphQLQueryNode query = new GraphQLQueryNode()
-  .withNode(userNode)
+GraphQLQuery query = new GraphQLQuery()
+  .withField(userNode)
   .defineVariable('expandedInfo', 'Boolean');
 
 System.debug(query.build(true));
@@ -98,7 +199,7 @@ testNode(newArg: ENUM_VALUE) {
 Apex equivalent:
 
 ```java
-GraphQLNode node = new GraphQLNode('testNode', new List<String> { 'field1', 'field2' });
+GraphQLField node = new GraphQLField('testNode', new List<String> { 'field1', 'field2' });
 node.withArgument(new GraphQLArgument('newArg', 'ENUM_VALUE').asEnum());
 System.debug(node.build(true));
 ```
@@ -109,64 +210,22 @@ Now, every global class, field, property, method has ApexDoc comments so that it
 
 ## What's changed
 
-### The `DefaultGraphQLEndpoint` custom metadata configuration has been deleted
+### Child nodes are now of type `GraphQLNode` instead of `GraphQLField`
 
-This custom metadata record was not really necessary and could cause confusion.
+Which adds more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragment`). To determine what child nodes are fields and what are inline fragments there are two new methods:
 
-### `IGraphQLParser` and `IGraphQLClient` interfaces have been deleted
+`isFieldNode()` - True if the instance is `GraphQLField`
+`isFragmentNode()` - True if the instance is `GraphQLFragment`
 
-These interfaces have been deleted from the package as they were not useful and did not serve any purpose. Hope this makes the code more clean and easy to understand!
+Generally, this change should not affect you as all other method signatures like `withField()` and etc. remain the same.
 
-### Child nodes are now of type `GraphQLBaseNode` instead of `GraphQLNode`
+### Directives are available for both `GraphQLField` and `GraphQLFragment`
 
-Which allows more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragmentNode`). To determine what child nodes are fields and what are inline fragments there are two new methods:
-
-`isFieldNode()` - True if the instance is `GraphQLNode`
-`isFragmentNode()` - True if the instance is `GraphQLFragmentNode`
-
-Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
-
-### Method renames in `GraphQLQueryNode`, `GraphQLMutationNode` and `GraphQLSubscriptionNode`
-
-3 methods have been renamed to prevent some confusion:
-
--   `withFragment()` => `defineFragment()`
--   `withFragments()` => `defineFragments()`
--   `withVariable()` => `defineVariable()`
-
-Was:
-
-```java
-GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
-
-GraphQLQueryNode query = new GraphQLQueryNode()
-  .withNode(node)
-  .withFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
-  .withVariable('limit', 'Int!');
-
-System.debug(query.build(true));
-```
-
-Now:
-
-```java
-GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
-
-GraphQLQueryNode query = new GraphQLQueryNode()
-  .withNode(node)
-  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
-  .defineVariable('limit', 'Int!');
-
-System.debug(query.build(true));
-```
-
-### Directives are available for both `GraphQLNode` and `GraphQLFragmentNode`
-
-Previously, directives have been presented only on `GraphQLNode` as a Map with the directive types as a key. Now the directives field is moved to `GraphQLBaseNode`. It's also not a map anymore but just a list of `GraphQLDirective`. Map has been removed just because it wasn't really helpful.
+Previously, directives have been presented only on `GraphQLField` as a Map with the directive types as a key. Now the directives field is moved to `GraphQLNode`. It's also not a map anymore but just a list of `GraphQLDirective`. Map has been removed just because it wasn't really helpful.
 
 ### Refactoring of the `GraphQLRequest` class
 
--   One of the constructors has been simplified so it accepts only one parameter of `GraphQLOperationNode` type:
+-   One of the constructors has been simplified so it accepts only one parameter of `GraphQLOperation` type:
 
 Was:
 
@@ -198,10 +257,6 @@ request.withTimeout(10000);
 // Get timeout: 10000
 System.debug(request.timeout);
 ```
-
-### Remove the RequestTimeout configuration entry
-
-The `RequestTimeout` configuration metadata record has been removed because it didn't serve much purpose. Now, The timeout for the request can be set with `withTimeout` method on the `GraphQLRequest` class.
 
 ---
 

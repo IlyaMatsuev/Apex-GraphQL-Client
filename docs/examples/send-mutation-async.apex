@@ -12,12 +12,12 @@ country.name = 'Belarus';
 country.capital = 'Minsk';
 country.population = 9000000;
 
-GraphQLNode createCountryNode = new GraphQLNode('createCountry')
+GraphQLField createCountryNode = new GraphQLField('createCountry')
     .withArgument('country', country)
     .withField('id')
     .withField('name');
 
-GraphQLMutationNode mutation = new GraphQLMutationNode('CreateCountry', createCountryNode);
+GraphQLMutation mutation = new GraphQLMutation('CreateCountry', createCountryNode);
 
 GraphQLRequest request = mutation.asRequest()
     // You can add additional HTTP headers if you need

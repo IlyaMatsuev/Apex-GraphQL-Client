@@ -1,8 +1,8 @@
 @IsTest(IsParallel = true)
-private class GraphQLMutationNodeTest {
+private class GraphQLMutationTest {
     @IsTest
     private static void emptyMutationTest() {
-        GraphQLMutationNode node = new GraphQLMutationNode();
+        GraphQLMutation node = new GraphQLMutation();
 
         System.assert(String.isBlank(node.name));
         System.assertEquals(0, node.nodes.size());
@@ -12,7 +12,7 @@ private class GraphQLMutationNodeTest {
     private static void namedMutationTest() {
         String nodeName = 'Test';
 
-        GraphQLMutationNode node = new GraphQLMutationNode(nodeName);
+        GraphQLMutation node = new GraphQLMutation(nodeName);
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(0, node.nodes.size());
@@ -20,9 +20,9 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void emptyMutationWithChildNodeTest() {
-        GraphQLNode childNode = new GraphQLNode('node1');
+        GraphQLField childNode = new GraphQLField('node1');
 
-        GraphQLMutationNode node = new GraphQLMutationNode(childNode);
+        GraphQLMutation node = new GraphQLMutation(childNode);
 
         System.assert(String.isBlank(node.name));
         System.assertEquals(1, node.nodes.size());
@@ -30,9 +30,9 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void emptyMutationWithChildNodesTest() {
-        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLField> childNodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLMutationNode node = new GraphQLMutationNode(childNodes);
+        GraphQLMutation node = new GraphQLMutation(childNodes);
 
         System.assert(String.isBlank(node.name));
         System.assertEquals(childNodes.size(), node.nodes.size());
@@ -42,7 +42,7 @@ private class GraphQLMutationNodeTest {
     private static void namedMutationWithChildNodeTest() {
         String nodeName = 'Test';
 
-        GraphQLMutationNode node = new GraphQLMutationNode(nodeName, new GraphQLNode('node1'));
+        GraphQLMutation node = new GraphQLMutation(nodeName, new GraphQLField('node1'));
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(1, node.nodes.size());
@@ -51,9 +51,9 @@ private class GraphQLMutationNodeTest {
     @IsTest
     private static void namedMutationWithChildNodesTest() {
         String nodeName = 'Test';
-        List<GraphQLNode> childNodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLField> childNodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLMutationNode node = new GraphQLMutationNode(nodeName, childNodes);
+        GraphQLMutation node = new GraphQLMutation(nodeName, childNodes);
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(childNodes.size(), node.nodes.size());
@@ -63,7 +63,7 @@ private class GraphQLMutationNodeTest {
     private static void emptyMutationWithFieldsTest() {
         List<String> fields = new List<String> { 'field1', 'field2' };
 
-        GraphQLMutationNode node = new GraphQLMutationNode(fields);
+        GraphQLMutation node = new GraphQLMutation(fields);
 
         System.assert(String.isBlank(node.name));
         System.assertEquals(fields.size(), node.nodes.size());
@@ -74,7 +74,7 @@ private class GraphQLMutationNodeTest {
         String nodeName = 'node';
         List<String> fields = new List<String> { 'field1', 'field2' };
 
-        GraphQLMutationNode node = new GraphQLMutationNode(nodeName, fields);
+        GraphQLMutation node = new GraphQLMutation(nodeName, fields);
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(fields.size(), node.nodes.size());
@@ -84,7 +84,7 @@ private class GraphQLMutationNodeTest {
     private static void mutationWithFieldTest() {
         String fieldName = 'field1';
 
-        GraphQLMutationNode node = new GraphQLMutationNode().withField(fieldName);
+        GraphQLMutation node = new GraphQLMutation().withField(fieldName);
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(fieldName, node.nodes.get(0).name);
@@ -94,7 +94,7 @@ private class GraphQLMutationNodeTest {
     private static void mutationWithFieldsTest() {
         List<String> fields = new List<String> { 'field1', 'field2' };
 
-        GraphQLMutationNode node = new GraphQLMutationNode().withFields(fields);
+        GraphQLMutation node = new GraphQLMutation().withFields(fields);
 
         System.assertEquals(fields.size(), node.nodes.size());
         System.assertEquals('field1', node.nodes.get(0).name);
@@ -103,9 +103,9 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void mutationWithFragmentDefinitionTest() {
-        GraphQLFragmentNode fragment = new GraphQLFragmentNode('fragment1', 'Type1');
+        GraphQLFragment fragment = new GraphQLFragment('fragment1', 'Type1');
 
-        GraphQLMutationNode node = new GraphQLMutationNode().defineFragment(fragment);
+        GraphQLMutation node = new GraphQLMutation().defineFragment(fragment);
 
         System.assert(node.hasFragments());
         System.assertEquals(1, node.fragments.size());
@@ -114,12 +114,12 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void mutationWithFragmentDefinitionsTest() {
-        List<GraphQLFragmentNode> fragments = new List<GraphQLFragmentNode> {
-            new GraphQLFragmentNode('fragment1', 'Type1'),
-            new GraphQLFragmentNode('fragment2', 'Type2')
+        List<GraphQLFragment> fragments = new List<GraphQLFragment> {
+            new GraphQLFragment('fragment1', 'Type1'),
+            new GraphQLFragment('fragment2', 'Type2')
         };
 
-        GraphQLMutationNode node = new GraphQLMutationNode().defineFragments(fragments);
+        GraphQLMutation node = new GraphQLMutation().defineFragments(fragments);
 
         System.assert(node.hasFragments());
         System.assertEquals(fragments.size(), node.fragments.size());
@@ -128,20 +128,20 @@ private class GraphQLMutationNodeTest {
     }
 
     @IsTest
-    private static void mutationWithNodeTest() {
+    private static void mutationWithFieldNodeTest() {
         String nodeName = 'node1';
 
-        GraphQLMutationNode node = new GraphQLMutationNode().withNode(new GraphQLNode(nodeName));
+        GraphQLMutation node = new GraphQLMutation().withField(new GraphQLField(nodeName));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(nodeName, node.nodes.get(0).name);
     }
 
     @IsTest
-    private static void mutationWithNodesTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
+    private static void mutationWithFieldNodesTest() {
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLMutationNode node = new GraphQLMutationNode().withNodes(nodes);
+        GraphQLMutation node = new GraphQLMutation().withFields(nodes);
 
         System.assertEquals(nodes.size(), node.nodes.size());
         System.assertEquals('node1', node.nodes.get(0).name);
@@ -150,8 +150,8 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void mutationWithVariableDefinitionTest() {
-        GraphQLMutationNode node = new GraphQLMutationNode()
-            .withNode(new GraphQLNode('node'))
+        GraphQLMutation node = new GraphQLMutation()
+            .withField(new GraphQLField('node'))
             .defineVariable('var', '[String!]');
 
         System.assertEquals(1, node.variables.size());
@@ -159,9 +159,9 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void mutationBuildRequestTest() {
-        GraphQLRequest request = new GraphQLMutationNode(new List<String> { 'field1' }).asRequest();
+        GraphQLRequest request = new GraphQLMutation(new List<String> { 'field1' }).asRequest();
 
-        System.assertEquals(GraphQLOperation.Mutation, request.operation);
+        System.assertEquals(GraphQLOperationType.Mutation, request.operation);
         System.assertEquals('{"query":"mutation{field1}"}', request.toString());
         System.assertEquals('{\n  "query" : "mutation {\\n  field1\\n}"\n}', request.toString(true));
     }
@@ -172,12 +172,12 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void buildMutationPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('field1'), new GraphQLNode('field2') };
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('field1'), new GraphQLField('field2') };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
-        GraphQLMutationNode mutation = new GraphQLMutationNode()
-            .withNode(nodes.get(0))
-            .withNode(nodes.get(1))
+        GraphQLMutation mutation = new GraphQLMutation()
+            .withField(nodes.get(0))
+            .withField(nodes.get(1))
             .withField(fields.get(0))
             .withField(fields.get(1));
 
@@ -190,11 +190,11 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void buildMutationWithVariableDefinitionPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode> { new GraphQLNode('node1'), new GraphQLNode('node2') };
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
-        GraphQLMutationNode mutation = new GraphQLMutationNode()
-            .withNodes(nodes)
+        GraphQLMutation mutation = new GraphQLMutation()
+            .withFields(nodes)
             .withFields(fields)
             .defineVariable('model', 'InputType!');
 
@@ -210,13 +210,16 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void buildMutationWithChildNodesPositiveTest() {
-        List<GraphQLNode> nodes = new List<GraphQLNode> {
-            new GraphQLNode('field1'),
-            new GraphQLNode('field2', new List<GraphQLNode> { new GraphQLNode('field21'), new GraphQLNode('field22') }),
-            new GraphQLNode('field3')
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('field1'),
+            new GraphQLField(
+                'field2',
+                new List<GraphQLField> { new GraphQLField('field21'), new GraphQLField('field22') }
+            ),
+            new GraphQLField('field3')
         };
 
-        GraphQLMutationNode mutation = new GraphQLMutationNode('TestMutation', nodes);
+        GraphQLMutation mutation = new GraphQLMutation('TestMutation', nodes);
 
         System.assert(mutation != null);
         System.assertEquals('TestMutation', mutation.name);

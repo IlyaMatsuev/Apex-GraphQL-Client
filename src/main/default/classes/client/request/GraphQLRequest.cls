@@ -8,7 +8,7 @@ global class GraphQLRequest {
     /**
      * @description The request GraphQL operation: Query or Mutation
      */
-    global final GraphQLOperation operation;
+    global final GraphQLOperationType operation;
 
     /**
      * @description The request custom headers
@@ -28,7 +28,7 @@ global class GraphQLRequest {
         private set;
     }
 
-    private final GraphQLOperationNode node;
+    private final GraphQLOperation node;
     private String stringNode;
     private Map<String, Object> variables;
 
@@ -44,15 +44,15 @@ global class GraphQLRequest {
 
     /**
      * @description Create an instance using a GraphQL node for a specific GraphQL operation (Query or Mutation)
-     * @param operation The instance of the `GraphQLOperation` enum (`Query` or `Mutation`)
-     * @param node The instance of the Graph operation node (`GraphQLQueryNode` or `GraphQLMutationNode`)
-     * @throws GraphQLRequestException If the provided instance is neither `GraphQLQueryNode` nor `GraphQLMutationNode`
+     * @param operation The instance of the `GraphQLOperationType` enum (`Query` or `Mutation`)
+     * @param node The instance of the Graph operation node (`GraphQLQuery` or `GraphQLMutation`)
+     * @throws GraphQLRequestException If the provided instance is neither `GraphQLQuery` nor `GraphQLMutation`
      */
-    global GraphQLRequest(GraphQLOperationNode node) {
+    global GraphQLRequest(GraphQLOperation node) {
         this.operation = node.getOperation();
         this.node = node;
 
-        if (this.operation == GraphQLOperation.Subscription) {
+        if (this.operation == GraphQLOperationType.Subscription) {
             throw new GraphQLRequestException('The request node should be an either a Query or Mutation node');
         }
     }
@@ -138,19 +138,19 @@ global class GraphQLRequest {
         return stringNode;
     }
 
-    private GraphQLOperation recognizeOperation(String stringNode) {
+    private GraphQLOperationType recognizeOperation(String stringNode) {
         List<String> tokens = stringNode?.split('\\W');
         if (tokens == null || tokens.isEmpty()) {
             throw new GraphQLRequestException('The provided string node is empty or in invalid format');
         }
 
         String operationName = tokens.get(GraphQLConstants.FIRST_ELEMENT);
-        if (operationName == GraphQLOperation.Mutation.name().toLowerCase()) {
-            return GraphQLOperation.Mutation;
-        } else if (operationName == GraphQLOperation.Subscription.name().toLowerCase()) {
+        if (operationName == GraphQLOperationType.Mutation.name().toLowerCase()) {
+            return GraphQLOperationType.Mutation;
+        } else if (operationName == GraphQLOperationType.Subscription.name().toLowerCase()) {
             throw new GraphQLRequestException('This operation is not allowed for GraphQL request');
         } else {
-            return GraphQLOperation.Query;
+            return GraphQLOperationType.Query;
         }
     }
 

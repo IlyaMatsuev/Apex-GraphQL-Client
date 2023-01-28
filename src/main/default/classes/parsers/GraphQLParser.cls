@@ -1,22 +1,22 @@
 public abstract class GraphQLParser {
     private static final Integer INITIAL_DEPTH = 0;
 
-    protected final Integer maxQueryDepth = GraphQLConfigManager.getInteger(GraphQLConfig.MaxQueryDepth);
-    protected final Integer defaultIndent = GraphQLConfigManager.getInteger(GraphQLConfig.QueryIndentSize);
+    protected final Integer maxQueryDepth = GraphQLConfigs.getInteger(GraphQLConfigs.Option.MaxQueryDepth);
+    protected final Integer defaultIndent = GraphQLConfigs.getInteger(GraphQLConfigs.Option.QueryIndentSize);
 
-    public String parse(GraphQLBaseNode node, Boolean pretty) {
+    public String parse(GraphQLNode node, Boolean pretty) {
         return parse(node, INITIAL_DEPTH, pretty);
     }
 
-    protected abstract String parse(GraphQLBaseNode node, Integer depth, Boolean pretty);
+    protected abstract String parse(GraphQLNode node, Integer depth, Boolean pretty);
 
-    protected String parseChildNodes(GraphQLBaseNode node, Integer depth, Boolean pretty) {
+    protected String parseChildNodes(GraphQLNode node, Integer depth, Boolean pretty) {
         if (!node.hasNodes()) {
             return GraphQLConstants.EMPTY;
         }
 
         List<String> rawNodes = new List<String>();
-        for (GraphQLBaseNode n : node.nodes) {
+        for (GraphQLNode n : node.nodes) {
             rawNodes.add(n.getParser().parse(n, depth + 1, pretty));
         }
 
@@ -28,7 +28,7 @@ public abstract class GraphQLParser {
             GraphQLConstants.BRACE_RIGHT;
     }
 
-    protected String parseDirectives(GraphQLBaseNode node, Boolean pretty) {
+    protected String parseDirectives(GraphQLNode node, Boolean pretty) {
         if (!node.hasDirectives()) {
             return GraphQLConstants.EMPTY;
         }

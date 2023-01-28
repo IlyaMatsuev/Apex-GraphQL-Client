@@ -21,7 +21,7 @@
   },
   "lint-staged": {
     "**/*.{cls,trigger,md,xml,yaml,yml,json}": [
-      "prettier"
+      "npm run prettier"
     ]
   }
 }

@@ -1,9 +1,9 @@
-public class GraphQLNodeParser extends GraphQLParser {
-    protected override String parse(GraphQLBaseNode node, Integer depth, Boolean pretty) {
-        return parseNode((GraphQLNode) node, depth, pretty);
+public class GraphQLFieldParser extends GraphQLParser {
+    protected override String parse(GraphQLNode node, Integer depth, Boolean pretty) {
+        return parseNode((GraphQLField) node, depth, pretty);
     }
 
-    private String parseNode(GraphQLNode node, Integer depth, Boolean pretty) {
+    private String parseNode(GraphQLField node, Integer depth, Boolean pretty) {
         if (String.isBlank(node.name) && !node.hasNodes()) {
             throw new GraphQLNodeParserException('Cannot parse an empty node without any child nodes');
         }
@@ -24,18 +24,18 @@ public class GraphQLNodeParser extends GraphQLParser {
         return nodeNameAndArgs + parseChildNodes(node, depth, pretty);
     }
 
-    private String parseNodeName(GraphQLNode node, Integer depth, Boolean pretty) {
+    private String parseNodeName(GraphQLField node, Integer depth, Boolean pretty) {
         return getIndent(depth, pretty) + parseAlias(node, pretty) + node.name;
     }
 
-    private String parseAlias(GraphQLNode node, Boolean pretty) {
+    private String parseAlias(GraphQLField node, Boolean pretty) {
         if (String.isBlank(node.alias)) {
             return GraphQLConstants.EMPTY;
         }
         return node.alias + GraphQLConstants.COLON + getSmallIndent(pretty);
     }
 
-    private String parseArguments(GraphQLNode node, Boolean pretty) {
+    private String parseArguments(GraphQLField node, Boolean pretty) {
         if (!node.hasArguments()) {
             return GraphQLConstants.EMPTY;
         }

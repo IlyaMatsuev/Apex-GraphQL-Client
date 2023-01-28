@@ -17,20 +17,18 @@ fragment CityFields on City {
 */
 
 // Create fragment instance passing its name and type it's referring to
-GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('CityFields', 'City')
-    .withField('id')
-    .withField('name');
+GraphQLFragment cityFieldsFragment = new GraphQLFragment('CityFields', 'City').withField('id').withField('name');
 
-GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
     // Use fragment fields for the capital node
-    .withNode(new GraphQLNode('capital').withFragment(cityFieldsFragment.name));
+    .withField(new GraphQLField('capital').withFragment(cityFieldsFragment.name));
 
-GraphQLNode citiesNode = new GraphQLNode('cities')
+GraphQLField citiesNode = new GraphQLField('cities')
     // Use fragment fields for the cities node
     .withFragment(cityFieldsFragment.name);
 
-GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode> { countriesNode, citiesNode })
+GraphQLQuery query = new GraphQLQuery(new List<GraphQLField> { countriesNode, citiesNode })
     // Define fragment for the query
     .defineFragment(cityFieldsFragment);
 
