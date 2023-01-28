@@ -1,7 +1,7 @@
 /**
  * @description The GraphQL subscription node
  */
-global class GraphQLSubscriptionNode extends GraphQLOperationNode {
+global class GraphQLSubscriptionNode extends GraphQLOperation {
     /**
      * @description Create a new instance of the GraphQL subscription node
      */
@@ -145,9 +145,9 @@ global class GraphQLSubscriptionNode extends GraphQLOperationNode {
 
     /**
      * @description Get the current node's operation type
-     * @return `GraphQLOperation.Subscription` enum value
+     * @return `GraphQLOperationType.Subscription` enum value
      */
-    global override GraphQLOperation getOperation() {
-        return GraphQLOperation.Subscription;
+    global override GraphQLOperationType getOperation() {
+        return GraphQLOperationType.Subscription;
     }
 }

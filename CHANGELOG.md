@@ -14,6 +14,7 @@ The name of the below classes have been changed:
 -   `GraphQLBaseNode` --> `GraphQLNode`
 -   `GraphQLNode` --> `GraphQLField`
 -   `GraphQLFragmentNode` --> `GraphQLFragment`
+-   `GraphQLOperation` --> `GraphQLOperationType`
 
 This was made in order to be aligned with the terms (such as "field") provided by the GraphQL specification. And also to make the names shorter for more convenient usage.
 
@@ -178,7 +179,7 @@ Previously, directives have been presented only on `GraphQLNode` as a Map with t
 
 ### Refactoring of the `GraphQLRequest` class
 
--   One of the constructors has been simplified so it accepts only one parameter of `GraphQLOperationNode` type:
+-   One of the constructors has been simplified so it accepts only one parameter of `GraphQLOperation` type:
 
 Was:
 

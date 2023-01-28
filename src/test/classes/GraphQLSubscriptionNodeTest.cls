@@ -167,7 +167,7 @@ private class GraphQLSubscriptionNodeTest {
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLOperationNode.GraphQLOperationNodeException);
+        System.assert(error instanceof GraphQLOperation.GraphQLOperationNodeException);
     }
 
     /**

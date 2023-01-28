@@ -1,8 +1,75 @@
 /**
- * @description The list of all available GraphQL operation types
+ * @description The GraphQL operation node, eathier Query, Mutation or Subscription
  */
-global enum GraphQLOperation {
-    Query,
-    Mutation,
-    Subscription
+global abstract class GraphQLOperation extends GraphQLNode {
+    /**
+     * @description The Map of defined variables for the operation
+     */
+    global final Map<String, String> variables = new Map<String, String>();
+
+    /**
+     * @description The list of fragment definitions added to the operation
+     */
+    global final List<GraphQLFragment> fragments = new List<GraphQLFragment>();
+
+    protected GraphQLOperation(String alias, List<String> fields) {
+        super(alias, fields);
+    }
+
+    protected GraphQLOperation(String alias, List<GraphQLField> nodes) {
+        super(alias, nodes);
+    }
+
+    /**
+     * @description Check the current operation node has any defined variables
+     * @return `true` if there are any variable definitions. `false` otherwise
+     */
+    global Boolean hasVariables() {
+        return !variables.isEmpty();
+    }
+
+    /**
+     * @description Check the current operation node has any defined fragments
+     * @return `true` if there are any fragment definitions. `false` otherwise
+     */
+    global Boolean hasFragments() {
+        return !fragments.isEmpty();
+    }
+
+    public override GraphQLParser getParser() {
+        return new GraphQLOperationParser();
+    }
+
+    /**
+     * @description Create a GraphQL request from the current operation node
+     * @return The instance of the `GraphQLRequest` class
+     */
+    global virtual GraphQLRequest asRequest() {
+        return new GraphQLRequest(this);
+    }
+
+    /**
+     * @description Get the GraphQL operation type of the current node
+     * @return The instance of the `GraphQLOperationType` enum
+     */
+    global abstract GraphQLOperationType getOperation();
+
+    protected GraphQLOperation addFragments(List<GraphQLFragment> fragments) {
+        for (GraphQLFragment fragment : fragments) {
+            if (fragment.isInline()) {
+                throw new GraphQLOperationNodeException(
+                    'Not possible to add an inline fragment to the operation node: ' + fragment.name
+                );
+            }
+            this.fragments.add(fragment);
+        }
+        return this;
+    }
+
+    protected virtual GraphQLOperation addVariable(String name, String typeDefinition) {
+        this.variables.put(name, typeDefinition);
+        return this;
+    }
+
+    public class GraphQLOperationNodeException extends Exception {}
 }

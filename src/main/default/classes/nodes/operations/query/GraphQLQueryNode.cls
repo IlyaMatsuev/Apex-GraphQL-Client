@@ -1,7 +1,7 @@
 /**
  * @description The GraphQL query node
  */
-global class GraphQLQueryNode extends GraphQLOperationNode {
+global class GraphQLQueryNode extends GraphQLOperation {
     /**
      * @description Create a new instance of the GraphQL query node
      */
@@ -136,9 +136,9 @@ global class GraphQLQueryNode extends GraphQLOperationNode {
 
     /**
      * @description Get the current node's operation type
-     * @return `GraphQLOperation.Query` enum value
+     * @return `GraphQLOperationType.Query` enum value
      */
-    global override GraphQLOperation getOperation() {
-        return GraphQLOperation.Query;
+    global override GraphQLOperationType getOperation() {
+        return GraphQLOperationType.Query;
     }
 }

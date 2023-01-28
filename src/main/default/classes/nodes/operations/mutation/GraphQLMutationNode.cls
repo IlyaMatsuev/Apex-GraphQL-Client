@@ -1,7 +1,7 @@
 /**
  * @description The GraphQL mutation node
  */
-global class GraphQLMutationNode extends GraphQLOperationNode {
+global class GraphQLMutationNode extends GraphQLOperation {
     /**
      * @description Create a new instance of the GraphQL mutation node
      */
@@ -136,9 +136,9 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
 
     /**
      * @description Get the current node's operation type
-     * @return `GraphQLOperation.Mutation` enum value
+     * @return `GraphQLOperationType.Mutation` enum value
      */
-    global override GraphQLOperation getOperation() {
-        return GraphQLOperation.Mutation;
+    global override GraphQLOperationType getOperation() {
+        return GraphQLOperationType.Mutation;
     }
 }

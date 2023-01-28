@@ -139,7 +139,7 @@ private class GraphQLQueryNodeTest {
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLOperationNode.GraphQLOperationNodeException);
+        System.assert(error instanceof GraphQLOperation.GraphQLOperationNodeException);
     }
 
     @IsTest
@@ -176,7 +176,7 @@ private class GraphQLQueryNodeTest {
     private static void queryBuildRequestTest() {
         GraphQLRequest request = new GraphQLQueryNode(new List<String> { 'field1' }).asRequest();
 
-        System.assertEquals(GraphQLOperation.Query, request.operation);
+        System.assertEquals(GraphQLOperationType.Query, request.operation);
         System.assertEquals('{"query":"query{field1}"}', request.toString());
         System.assertEquals('{\n  "query" : "query {\\n  field1\\n}"\n}', request.toString(true));
     }

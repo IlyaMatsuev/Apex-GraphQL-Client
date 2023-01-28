@@ -20,7 +20,7 @@
 
 -   [GraphQLArgumentType](#graphqlargumenttype)
 -   [GraphQLDirectiveType](#graphqldirectivetype)
--   [GraphQLOperation](#graphqloperation)
+-   [GraphQLOperationType](#graphqloperation)
 
 ### Interfaces:
 
@@ -186,7 +186,7 @@ This class is only used for building queries.
 
 `GraphQLQueryNode defineVariable(String name, String typeDefinition)` - Defines a new variable for the query with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
-`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Query`.
+`GraphQLOperationType getOperation()` - Returns the [`GraphQLOperationType`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Query`.
 
 `GraphQLRequest asRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -256,7 +256,7 @@ This class is only used for building mutations.
 
 `GraphQLMutationNode defineVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
-`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Mutation`.
+`GraphQLOperationType getOperation()` - Returns the [`GraphQLOperationType`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Mutation`.
 
 `GraphQLRequest asRequest()` - Returns a new instace of type [`GraphQLRequest`](#graphqlrequest) building it from the current node.
 
@@ -326,7 +326,7 @@ This class is only used for building subscriptions. It's not possible yet to exe
 
 `GraphQLSubscriptionNode defineVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
-`GraphQLOperation getOperation()` - Returns the [`GraphQLOperation`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Subscription`.
+`GraphQLOperationType getOperation()` - Returns the [`GraphQLOperationType`](#graphqloperation) instance of the current node. In case of GraphQLQueryNode it's `Subscription`.
 
 `String build()` - Builds a non-formatted string representation of the current node.
 
@@ -450,13 +450,13 @@ This is a wrapper for the GraphQL request. It will be utilized for sending an HT
 
 `GraphQLRequest(String stringNode)` - Creates a new instance of the GraphQLRequest using the provided string as a body for the request query. The Operation property of GraphQLRequest is dynamically recognized.
 
-`GraphQLRequest(GraphQLOperationNode node)` - Creates a new instance of the GraphQLRequest with the provided operation node.
+`GraphQLRequest(GraphQLOperation node)` - Creates a new instance of the GraphQLRequest with the provided operation node.
 
 ---
 
 ### Properties
 
-`GraphQLOperation operation` - The GraphQL operation type. Read about the [`GraphQLOperation` enum here](#graphqloperation).
+`GraphQLOperationType operation` - The GraphQL operation type. Read about the [`GraphQLOperationType` enum here](#graphqloperation).
 
 `Map<String, String> headers` - Map that contains additional headeres that will be passed to an HTTP request.
 
@@ -568,7 +568,7 @@ This is an enum type representing standard GraphQL directives: include and skip.
 
 ---
 
-## GraphQLOperation
+## GraphQLOperationType
 
 This enum contains values for all available request operations in GraphQL.
 
