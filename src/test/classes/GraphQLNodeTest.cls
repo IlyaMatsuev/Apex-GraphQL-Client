@@ -223,7 +223,7 @@ private class GraphQLNodeTest {
     private static void nodeAsQueryTest() {
         List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLQueryNode query = new GraphQLField('Test', nodes).asQuery();
+        GraphQLQuery query = new GraphQLField('Test', nodes).asQuery();
 
         System.assertEquals('Test', query.name);
         System.assertEquals(nodes.size(), query.nodes.size());
@@ -235,7 +235,7 @@ private class GraphQLNodeTest {
     private static void nodeAsMutationTest() {
         List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLMutationNode mutation = new GraphQLField('Test', nodes).asMutation();
+        GraphQLMutation mutation = new GraphQLField('Test', nodes).asMutation();
 
         System.assertEquals('Test', mutation.name);
         System.assertEquals(nodes.size(), mutation.nodes.size());
@@ -247,7 +247,7 @@ private class GraphQLNodeTest {
     private static void nodeAsSubscriptionTest() {
         List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLSubscriptionNode subscription = new GraphQLField('Test', nodes).asSubscription();
+        GraphQLSubscription subscription = new GraphQLField('Test', nodes).asSubscription();
 
         System.assertEquals('Test', subscription.name);
         System.assertEquals(nodes.size(), subscription.nodes.size());
@@ -302,7 +302,7 @@ private class GraphQLNodeTest {
     private static void buildNodeAsQueryPositiveTest() {
         List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
-        GraphQLQueryNode query = new GraphQLField().withFields(fields).withArgument('arg', 'value').asQuery();
+        GraphQLQuery query = new GraphQLField().withFields(fields).withArgument('arg', 'value').asQuery();
 
         System.assert(query != null);
         System.assert(String.isBlank(query.name));
@@ -315,7 +315,7 @@ private class GraphQLNodeTest {
     private static void buildNodeAsMutationPositiveTest() {
         List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
-        GraphQLMutationNode mutation = new GraphQLField().withFields(fields).withArgument('arg', 'value').asMutation();
+        GraphQLMutation mutation = new GraphQLField().withFields(fields).withArgument('arg', 'value').asMutation();
 
         System.assert(mutation != null);
         System.assert(String.isBlank(mutation.name));
@@ -328,7 +328,7 @@ private class GraphQLNodeTest {
     private static void buildNodeAsSubscriptionPositiveTest() {
         List<String> fields = new List<String> { 'field1', 'field2', 'field3' };
 
-        GraphQLSubscriptionNode subscription = new GraphQLField()
+        GraphQLSubscription subscription = new GraphQLField()
             .withFields(fields)
             .withArgument('arg', 'value')
             .asSubscription();

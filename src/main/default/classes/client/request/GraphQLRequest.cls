@@ -45,8 +45,8 @@ global class GraphQLRequest {
     /**
      * @description Create an instance using a GraphQL node for a specific GraphQL operation (Query or Mutation)
      * @param operation The instance of the `GraphQLOperationType` enum (`Query` or `Mutation`)
-     * @param node The instance of the Graph operation node (`GraphQLQueryNode` or `GraphQLMutationNode`)
-     * @throws GraphQLRequestException If the provided instance is neither `GraphQLQueryNode` nor `GraphQLMutationNode`
+     * @param node The instance of the Graph operation node (`GraphQLQuery` or `GraphQLMutation`)
+     * @throws GraphQLRequestException If the provided instance is neither `GraphQLQuery` nor `GraphQLMutation`
      */
     global GraphQLRequest(GraphQLOperation node) {
         this.operation = node.getOperation();

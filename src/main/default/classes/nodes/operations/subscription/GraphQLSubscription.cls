@@ -1,11 +1,11 @@
 /**
  * @description The GraphQL subscription node
  */
-global class GraphQLSubscriptionNode extends GraphQLOperation {
+global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Create a new instance of the GraphQL subscription node
      */
-    global GraphQLSubscriptionNode() {
+    global GraphQLSubscription() {
         this(GraphQLConstants.EMPTY);
     }
 
@@ -13,7 +13,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperation {
      * @description Create a new instance of the GraphQL subscription node with the provided alias
      * @param alias The subscription alias
      */
-    global GraphQLSubscriptionNode(String alias) {
+    global GraphQLSubscription(String alias) {
         this(alias, new List<String>());
     }
 
@@ -21,7 +21,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperation {
      * @description Create a new instance of the GraphQL subscription node with the provided child node
      * @param node The child node
      */
-    global GraphQLSubscriptionNode(GraphQLField node) {
+    global GraphQLSubscription(GraphQLField node) {
         this(new List<GraphQLField> { node });
     }
 
@@ -29,7 +29,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperation {
      * @description Create a new instance of the GraphQL subscription node with the provided child fields
      * @param fields The child fields
      */
-    global GraphQLSubscriptionNode(List<String> fields) {
+    global GraphQLSubscription(List<String> fields) {
         this(null, fields);
     }
 
@@ -37,7 +37,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperation {
      * @description Create a new instance of the GraphQL subscription node with the provided child nodes
      * @param nodes The child nodes
      */
-    global GraphQLSubscriptionNode(List<GraphQLField> nodes) {
+    global GraphQLSubscription(List<GraphQLField> nodes) {
         this(null, nodes);
     }
 
@@ -46,7 +46,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperation {
      * @param alias The subscription alias
      * @param node The child node
      */
-    global GraphQLSubscriptionNode(String alias, GraphQLField node) {
+    global GraphQLSubscription(String alias, GraphQLField node) {
         this(alias, new List<GraphQLField> { node });
     }
 
@@ -55,7 +55,7 @@ global class GraphQLSubscriptionNode extends GraphQLOperation {
      * @param alias The subscription alias
      * @param fields The child fields
      */
-    global GraphQLSubscriptionNode(String alias, List<String> fields) {
+    global GraphQLSubscription(String alias, List<String> fields) {
         super(alias, fields);
     }
 
@@ -64,53 +64,53 @@ global class GraphQLSubscriptionNode extends GraphQLOperation {
      * @param alias The subscription alias
      * @param nodes The child nodes
      */
-    global GraphQLSubscriptionNode(String alias, List<GraphQLField> nodes) {
+    global GraphQLSubscription(String alias, List<GraphQLField> nodes) {
         super(alias, nodes);
     }
 
     /**
      * @description Add a child field to the current subscription node
      * @param field The field to add
-     * @return The instance of the current `GraphQLSubscriptionNode` class
+     * @return The instance of the current `GraphQLSubscription` class
      */
-    global GraphQLSubscriptionNode withField(String field) {
+    global GraphQLSubscription withField(String field) {
         return withFields(new List<String> { field });
     }
 
     /**
      * @description Add multiple child fields to the current subscription node
      * @param fields The list of fields to add
-     * @return The instance of the current `GraphQLSubscriptionNode` class
+     * @return The instance of the current `GraphQLSubscription` class
      */
-    global GraphQLSubscriptionNode withFields(String[] fields) {
-        return (GraphQLSubscriptionNode) addFields(fields);
+    global GraphQLSubscription withFields(String[] fields) {
+        return (GraphQLSubscription) addFields(fields);
     }
 
     /**
      * @description Add a child node to the current subscription node
      * @param node The node to add
-     * @return The instance of the current `GraphQLSubscriptionNode` class
+     * @return The instance of the current `GraphQLSubscription` class
      */
-    global GraphQLSubscriptionNode withNode(GraphQLField node) {
+    global GraphQLSubscription withNode(GraphQLField node) {
         return withNodes(new List<GraphQLField> { node });
     }
 
     /**
      * @description Add multiple child nodes to the current subscription node
      * @param nodes The list of nodes to add
-     * @return The instance of the current `GraphQLSubscriptionNode` class
+     * @return The instance of the current `GraphQLSubscription` class
      */
-    global GraphQLSubscriptionNode withNodes(GraphQLField[] nodes) {
-        return (GraphQLSubscriptionNode) addNodes(nodes);
+    global GraphQLSubscription withNodes(GraphQLField[] nodes) {
+        return (GraphQLSubscription) addNodes(nodes);
     }
 
     /**
      * @description Add a fragment definition for the current subscription node
      * @param fragment The fragment definition to add
      * @throws GraphQLOperationNodeException If the provided fragment is inline
-     * @return The instance of the current `GraphQLSubscriptionNode` class
+     * @return The instance of the current `GraphQLSubscription` class
      */
-    global GraphQLSubscriptionNode defineFragment(GraphQLFragment fragment) {
+    global GraphQLSubscription defineFragment(GraphQLFragment fragment) {
         return defineFragments(new List<GraphQLFragment> { fragment });
     }
 
@@ -118,20 +118,20 @@ global class GraphQLSubscriptionNode extends GraphQLOperation {
      * @description Add multiple fragment definitions for the current subscription node
      * @param fragments The list of fragment definitions to add
      * @throws GraphQLOperationNodeException If some of the provided fragments are inline
-     * @return The instance of the current `GraphQLSubscriptionNode` class
+     * @return The instance of the current `GraphQLSubscription` class
      */
-    global GraphQLSubscriptionNode defineFragments(GraphQLFragment[] fragments) {
-        return (GraphQLSubscriptionNode) addFragments(fragments);
+    global GraphQLSubscription defineFragments(GraphQLFragment[] fragments) {
+        return (GraphQLSubscription) addFragments(fragments);
     }
 
     /**
      * @description Add a variable definition for the current subscription node
      * @param name The variable name
      * @param typeDefinition The variable type definition
-     * @return The instance of the current `GraphQLSubscriptionNode` class
+     * @return The instance of the current `GraphQLSubscription` class
      */
-    global GraphQLSubscriptionNode defineVariable(String name, String typeDefinition) {
-        return (GraphQLSubscriptionNode) addVariable(name, typeDefinition);
+    global GraphQLSubscription defineVariable(String name, String typeDefinition) {
+        return (GraphQLSubscription) addVariable(name, typeDefinition);
     }
 
     /**

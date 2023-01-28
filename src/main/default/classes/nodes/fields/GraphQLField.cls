@@ -221,26 +221,26 @@ global class GraphQLField extends GraphQLNode {
 
     /**
      * @description Convert the current node to the Query node. The arguments and directives are not transferred to the new node
-     * @return The new `GraphQLQueryNode` instance
+     * @return The new `GraphQLQuery` instance
      */
-    global GraphQLQueryNode asQuery() {
-        return new GraphQLQueryNode(name, getFieldNodes());
+    global GraphQLQuery asQuery() {
+        return new GraphQLQuery(name, getFieldNodes());
     }
 
     /**
      * @description Convert the current node to the Mutation node. The arguments and directives are not transferred to the new node
-     * @return The new `GraphQLMutationNode` instance
+     * @return The new `GraphQLMutation` instance
      */
-    global GraphQLMutationNode asMutation() {
-        return new GraphQLMutationNode(name, getFieldNodes());
+    global GraphQLMutation asMutation() {
+        return new GraphQLMutation(name, getFieldNodes());
     }
 
     /**
      * @description Convert the current node to the Subscription node. The arguments and directives are not transferred to the new node
-     * @return The new `GraphQLSubscriptionNode` instance
+     * @return The new `GraphQLSubscription` instance
      */
-    global GraphQLSubscriptionNode asSubscription() {
-        return new GraphQLSubscriptionNode(name, getFieldNodes());
+    global GraphQLSubscription asSubscription() {
+        return new GraphQLSubscription(name, getFieldNodes());
     }
 
     public override GraphQLParser getParser() {

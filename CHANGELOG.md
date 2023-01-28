@@ -60,7 +60,7 @@ GraphQLNode profiles = new GraphQLNode('profiles')
     )
   );
 
-GraphQLQueryNode query = new GraphQLQueryNode().withNode(profiles);
+GraphQLQuery query = new GraphQLQuery().withNode(profiles);
 
 System.debug(query.build(true));
 ```
@@ -88,7 +88,7 @@ GraphQLNode userNode = new GraphQLNode('user')
       .withFields(new List<String> { 'firstName', 'lastName' })
   );
 
-GraphQLQueryNode query = new GraphQLQueryNode()
+GraphQLQuery query = new GraphQLQuery()
   .withNode(userNode)
   .defineVariable('expandedInfo', 'Boolean');
 
@@ -139,7 +139,7 @@ Which allows more flexibility as now the `nodes` field also stores inline fragme
 
 Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
 
-### Method renames in `GraphQLQueryNode`, `GraphQLMutationNode` and `GraphQLSubscriptionNode`
+### Method renames in `GraphQLQuery`, `GraphQLMutation` and `GraphQLSubscription`
 
 3 methods have been renamed to prevent some confusion:
 
@@ -152,7 +152,7 @@ Was:
 ```java
 GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
 
-GraphQLQueryNode query = new GraphQLQueryNode()
+GraphQLQuery query = new GraphQLQuery()
   .withNode(node)
   .withFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
   .withVariable('limit', 'Int!');
@@ -165,7 +165,7 @@ Now:
 ```java
 GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
 
-GraphQLQueryNode query = new GraphQLQueryNode()
+GraphQLQuery query = new GraphQLQuery()
   .withNode(node)
   .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
   .defineVariable('limit', 'Int!');

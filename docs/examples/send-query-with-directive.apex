@@ -23,7 +23,7 @@ GraphQLField citiesNode = new GraphQLField('cities', new List<String> { 'id', 'n
     // You can also use .skipIf() method
     .includeIf('withCities');
 
-GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLField> { countriesNode, citiesNode })
+GraphQLQuery query = new GraphQLQuery(new List<GraphQLField> { countriesNode, citiesNode })
     // Define our $withCities variable. Note that it needs to be marked as required in order to use it in directives
     .defineVariable('withCities', 'Boolean!');
 

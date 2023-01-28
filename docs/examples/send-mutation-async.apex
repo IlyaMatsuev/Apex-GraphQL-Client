@@ -17,7 +17,7 @@ GraphQLField createCountryNode = new GraphQLField('createCountry')
     .withField('id')
     .withField('name');
 
-GraphQLMutationNode mutation = new GraphQLMutationNode('CreateCountry', createCountryNode);
+GraphQLMutation mutation = new GraphQLMutation('CreateCountry', createCountryNode);
 
 GraphQLRequest request = mutation.asRequest()
     // You can add additional HTTP headers if you need

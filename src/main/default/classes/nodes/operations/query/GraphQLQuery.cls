@@ -1,11 +1,11 @@
 /**
  * @description The GraphQL query node
  */
-global class GraphQLQueryNode extends GraphQLOperation {
+global class GraphQLQuery extends GraphQLOperation {
     /**
      * @description Create a new instance of the GraphQL query node
      */
-    global GraphQLQueryNode() {
+    global GraphQLQuery() {
         this(GraphQLConstants.EMPTY);
     }
 
@@ -13,7 +13,7 @@ global class GraphQLQueryNode extends GraphQLOperation {
      * @description Create a new instance of the GraphQL query node with the provided alias
      * @param alias The query alias
      */
-    global GraphQLQueryNode(String alias) {
+    global GraphQLQuery(String alias) {
         this(alias, new List<String>());
     }
 
@@ -21,7 +21,7 @@ global class GraphQLQueryNode extends GraphQLOperation {
      * @description Create a new instance of the GraphQL query node with the provided child node
      * @param node The child node
      */
-    global GraphQLQueryNode(GraphQLField node) {
+    global GraphQLQuery(GraphQLField node) {
         this(new List<GraphQLField> { node });
     }
 
@@ -29,7 +29,7 @@ global class GraphQLQueryNode extends GraphQLOperation {
      * @description Create a new instance of the GraphQL query node with the provided child fields
      * @param fields The child fields
      */
-    global GraphQLQueryNode(List<String> fields) {
+    global GraphQLQuery(List<String> fields) {
         this(null, fields);
     }
 
@@ -37,7 +37,7 @@ global class GraphQLQueryNode extends GraphQLOperation {
      * @description Create a new instance of the GraphQL query node with the provided child nodes
      * @param nodes The child nodes
      */
-    global GraphQLQueryNode(List<GraphQLField> nodes) {
+    global GraphQLQuery(List<GraphQLField> nodes) {
         this(null, nodes);
     }
 
@@ -46,7 +46,7 @@ global class GraphQLQueryNode extends GraphQLOperation {
      * @param alias The query alias
      * @param node The child node
      */
-    global GraphQLQueryNode(String alias, GraphQLField node) {
+    global GraphQLQuery(String alias, GraphQLField node) {
         this(alias, new List<GraphQLField> { node });
     }
 
@@ -55,7 +55,7 @@ global class GraphQLQueryNode extends GraphQLOperation {
      * @param alias The query alias
      * @param fields The child fields
      */
-    global GraphQLQueryNode(String alias, List<String> fields) {
+    global GraphQLQuery(String alias, List<String> fields) {
         super(alias, fields);
     }
 
@@ -64,53 +64,53 @@ global class GraphQLQueryNode extends GraphQLOperation {
      * @param alias The query alias
      * @param nodes The child nodes
      */
-    global GraphQLQueryNode(String alias, List<GraphQLField> nodes) {
+    global GraphQLQuery(String alias, List<GraphQLField> nodes) {
         super(alias, nodes);
     }
 
     /**
      * @description Add a child field to the current query node
      * @param field The field to add
-     * @return The instance of the current `GraphQLQueryNode` class
+     * @return The instance of the current `GraphQLQuery` class
      */
-    global GraphQLQueryNode withField(String field) {
+    global GraphQLQuery withField(String field) {
         return withFields(new List<String> { field });
     }
 
     /**
      * @description Add multiple child fields to the current query node
      * @param fields The list of fields to add
-     * @return The instance of the current `GraphQLQueryNode` class
+     * @return The instance of the current `GraphQLQuery` class
      */
-    global GraphQLQueryNode withFields(String[] fields) {
-        return (GraphQLQueryNode) addFields(fields);
+    global GraphQLQuery withFields(String[] fields) {
+        return (GraphQLQuery) addFields(fields);
     }
 
     /**
      * @description Add a child node to the current query node
      * @param node The node to add
-     * @return The instance of the current `GraphQLQueryNode` class
+     * @return The instance of the current `GraphQLQuery` class
      */
-    global GraphQLQueryNode withNode(GraphQLField node) {
+    global GraphQLQuery withNode(GraphQLField node) {
         return withNodes(new List<GraphQLField> { node });
     }
 
     /**
      * @description Add multiple child nodes to the current query node
      * @param nodes The list of nodes to add
-     * @return The instance of the current `GraphQLQueryNode` class
+     * @return The instance of the current `GraphQLQuery` class
      */
-    global GraphQLQueryNode withNodes(GraphQLField[] nodes) {
-        return (GraphQLQueryNode) addNodes(nodes);
+    global GraphQLQuery withNodes(GraphQLField[] nodes) {
+        return (GraphQLQuery) addNodes(nodes);
     }
 
     /**
      * @description Add a fragment definition for the current query node
      * @param fragment The fragment definition to add
      * @throws GraphQLOperationNodeException If the provided fragment is inline
-     * @return The instance of the current `GraphQLQueryNode` class
+     * @return The instance of the current `GraphQLQuery` class
      */
-    global GraphQLQueryNode defineFragment(GraphQLFragment fragment) {
+    global GraphQLQuery defineFragment(GraphQLFragment fragment) {
         return defineFragments(new List<GraphQLFragment> { fragment });
     }
 
@@ -118,20 +118,20 @@ global class GraphQLQueryNode extends GraphQLOperation {
      * @description Add multiple fragment definitions for the current query node
      * @param fragments The list of fragment definitions to add
      * @throws GraphQLOperationNodeException If some of the provided fragments are inline
-     * @return The instance of the current `GraphQLQueryNode` class
+     * @return The instance of the current `GraphQLQuery` class
      */
-    global GraphQLQueryNode defineFragments(GraphQLFragment[] fragments) {
-        return (GraphQLQueryNode) addFragments(fragments);
+    global GraphQLQuery defineFragments(GraphQLFragment[] fragments) {
+        return (GraphQLQuery) addFragments(fragments);
     }
 
     /**
      * @description Add a variable definition for the current query node
      * @param name The variable name
      * @param typeDefinition The variable type definition
-     * @return The instance of the current `GraphQLQueryNode` class
+     * @return The instance of the current `GraphQLQuery` class
      */
-    global GraphQLQueryNode defineVariable(String name, String typeDefinition) {
-        return (GraphQLQueryNode) addVariable(name, typeDefinition);
+    global GraphQLQuery defineVariable(String name, String typeDefinition) {
+        return (GraphQLQuery) addVariable(name, typeDefinition);
     }
 
     /**

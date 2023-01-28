@@ -13,7 +13,7 @@ GraphQLField createCountryNode = new GraphQLField('createCountry')
     .withField('id')
     .withField('name');
 
-GraphQLMutationNode mutation = new GraphQLMutationNode('CreateCountry', createCountryNode)
+GraphQLMutation mutation = new GraphQLMutation('CreateCountry', createCountryNode)
     // Define variable for the mutation
     .defineVariable('country', 'NewCountryInput!');
 

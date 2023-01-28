@@ -85,7 +85,7 @@ GraphQLField continentsNode = new GraphQLField(
     new List<String> { 'name' }
 );
 
-GraphQLQueryNode query = new GraphQLQueryNode(
+GraphQLQuery query = new GraphQLQuery(
     new List<GraphQLField> { countriesNode, continentsNode }
 );
 

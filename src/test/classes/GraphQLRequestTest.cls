@@ -52,7 +52,7 @@ private class GraphQLRequestTest {
 
     @IsTest
     private static void requestWithoutOperationTest() {
-        GraphQLQueryNode node = new GraphQLQueryNode(new List<String> { 'field1', 'field2' });
+        GraphQLQuery node = new GraphQLQuery(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node);
 
@@ -65,7 +65,7 @@ private class GraphQLRequestTest {
     private static void requestWithIncorrectRootNodeTypeNegativeTest() {
         Exception error;
         try {
-            new GraphQLRequest(new GraphQLSubscriptionNode());
+            new GraphQLRequest(new GraphQLSubscription());
         } catch (Exception err) {
             error = err;
         }
@@ -76,7 +76,7 @@ private class GraphQLRequestTest {
 
     @IsTest
     private static void requestWithOperationTest() {
-        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
+        GraphQLMutation node = new GraphQLMutation(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node);
 
@@ -88,7 +88,7 @@ private class GraphQLRequestTest {
     @IsTest
     private static void requestWithHeaderTest() {
         GraphQLOperationType operation = GraphQLOperationType.Mutation;
-        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
+        GraphQLMutation node = new GraphQLMutation(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node).withHeader('Authorization', 'token');
 
@@ -99,7 +99,7 @@ private class GraphQLRequestTest {
     @IsTest
     private static void requestWithTimeoutTest() {
         GraphQLOperationType operation = GraphQLOperationType.Mutation;
-        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
+        GraphQLMutation node = new GraphQLMutation(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node).withTimeout(10000);
 
@@ -109,7 +109,7 @@ private class GraphQLRequestTest {
     @IsTest
     private static void requestWithVariableTest() {
         GraphQLOperationType operation = GraphQLOperationType.Mutation;
-        GraphQLMutationNode node = new GraphQLMutationNode(new List<String> { 'field1', 'field2' });
+        GraphQLMutation node = new GraphQLMutation(new List<String> { 'field1', 'field2' });
 
         GraphQLRequest request = new GraphQLRequest(node).withVariable('param', 'value');
 

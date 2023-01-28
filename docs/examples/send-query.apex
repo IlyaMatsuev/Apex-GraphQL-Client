@@ -23,7 +23,7 @@ GraphQLField citiesNode = new GraphQLField('cities')
     .withArgument('limit', '$limit')
     .withField('name');
 
-GraphQLQueryNode query = new GraphQLQueryNode('CountriesQuery', new List<GraphQLField> { countriesNode, citiesNode })
+GraphQLQuery query = new GraphQLQuery('CountriesQuery', new List<GraphQLField> { countriesNode, citiesNode })
     // Define variable for the query
     .defineVariable('limit', 'Int');
 

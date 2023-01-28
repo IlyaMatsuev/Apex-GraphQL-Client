@@ -20,7 +20,7 @@ GraphQLField countriesNode = new GraphQLField('countries')
     // Use inline fragment fields for the capital node
     .withNode(new GraphQLField('capital').withInlineFragment(cityFieldsFragment));
 
-GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLField> { countriesNode, citiesNode });
+GraphQLQuery query = new GraphQLQuery(new List<GraphQLField> { countriesNode, citiesNode });
 
 GraphQLRequest request = query.asRequest();
 

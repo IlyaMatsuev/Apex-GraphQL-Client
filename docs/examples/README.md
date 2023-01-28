@@ -28,7 +28,7 @@ GraphQLField countriesNode = new GraphQLField('countries')
 Then you should create the query instance itself:
 
 ```java
-GraphQLQueryNode query = new GraphQLQueryNode('CountriesQuery', countriesNode);
+GraphQLQuery query = new GraphQLQuery('CountriesQuery', countriesNode);
 ```
 
 Now you can create request and send it. In this example we use the url `https://simple-gql-server.herokuapp.com/gql`. If you try to access your own GraphQL server, please use your url.
