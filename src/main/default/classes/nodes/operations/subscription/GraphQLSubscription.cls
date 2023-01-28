@@ -107,7 +107,7 @@ global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Add a fragment definition for the current subscription node
      * @param fragment The fragment definition to add
-     * @throws GraphQLOperationNodeException If the provided fragment is inline
+     * @throws GraphQLOperationException If the provided fragment is inline
      * @return The instance of the current `GraphQLSubscription` class
      */
     global GraphQLSubscription defineFragment(GraphQLFragment fragment) {
@@ -117,7 +117,7 @@ global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Add multiple fragment definitions for the current subscription node
      * @param fragments The list of fragment definitions to add
-     * @throws GraphQLOperationNodeException If some of the provided fragments are inline
+     * @throws GraphQLOperationException If some of the provided fragments are inline
      * @return The instance of the current `GraphQLSubscription` class
      */
     global GraphQLSubscription defineFragments(GraphQLFragment[] fragments) {
@@ -136,11 +136,11 @@ global class GraphQLSubscription extends GraphQLOperation {
 
     /**
      * @description Create a GraphQL request from the current subscription node
-     * @throws GraphQLOperationNodeException The subscription requests are not supported yet
+     * @throws GraphQLOperationException The subscription requests are not supported yet
      * @return The instance of the `GraphQLRequest` class
      */
     global override GraphQLRequest asRequest() {
-        throw new GraphQLOperationNodeException('The subscription requests are not supported yet');
+        throw new GraphQLOperationException('The subscription requests are not supported yet');
     }
 
     /**

@@ -29,6 +29,12 @@ Public classes:
 -   `GraphQLConfigManager` --> `GraphQLConfigs`
 -   `GraphQLConfig` --> `GraphQLConfigs.Option`
 
+Exceptions:
+
+-   `GraphQLBaseNodeException` --> `GraphQLNodeException`
+-   `GraphQLOperationNodeException` --> `GraphQLOperationException`
+-   `GraphQLConfigManagerException` --> `GraphQLConfigsException`
+
 Tests:
 
 -   `GraphQLNodeTest` --> `GraphQLFieldTest`
@@ -44,7 +50,7 @@ This was made in order to be aligned with the terms (such as "field") provided b
 
 ### Opportunity to add inline fragments to nodes
 
-There two new methods for `GraphQLNode` and `GraphQLFragment` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
+There two new methods for `GraphQLField` and `GraphQLFragment` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
 
 Example:
 
@@ -69,16 +75,16 @@ query {
 Apex equivalent:
 
 ```java
-GraphQLNode profiles = new GraphQLNode('profiles')
+GraphQLField profiles = new GraphQLField('profiles')
   .withField('name')
   .withInlineFragment(
     new GraphQLFragment('User').withNode(
-        new GraphQLNode('friends').withField('count')
+        new GraphQLField('friends').withField('count')
     )
   )
   .withInlineFragment(
     new GraphQLFragment('Page').withNode(
-        new GraphQLNode('likers').withField('count')
+        new GraphQLField('likers').withField('count')
     )
   );
 
@@ -102,7 +108,7 @@ query ($expandedInfo: Boolean) {
 ```
 
 ```java
-GraphQLNode userNode = new GraphQLNode('user')
+GraphQLField userNode = new GraphQLField('user')
   .withField('name')
   .withInlineFragment(
     new GraphQLFragment()
@@ -133,7 +139,7 @@ testNode(newArg: ENUM_VALUE) {
 Apex equivalent:
 
 ```java
-GraphQLNode node = new GraphQLNode('testNode', new List<String> { 'field1', 'field2' });
+GraphQLField node = new GraphQLField('testNode', new List<String> { 'field1', 'field2' });
 node.withArgument(new GraphQLArgument('newArg', 'ENUM_VALUE').asEnum());
 System.debug(node.build(true));
 ```
@@ -152,11 +158,11 @@ This custom metadata record was not really necessary and could cause confusion.
 
 These interfaces have been deleted from the package as they were not useful and did not serve any purpose. Hope this makes the code more clean and easy to understand!
 
-### Child nodes are now of type `GraphQLBaseNode` instead of `GraphQLNode`
+### Child nodes are now of type `GraphQLNode` instead of `GraphQLField`
 
-Which allows more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragment`). To determine what child nodes are fields and what are inline fragments there are two new methods:
+Which adds more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragment`). To determine what child nodes are fields and what are inline fragments there are two new methods:
 
-`isFieldNode()` - True if the instance is `GraphQLNode`
+`isFieldNode()` - True if the instance is `GraphQLField`
 `isFragmentNode()` - True if the instance is `GraphQLFragment`
 
 Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
@@ -172,7 +178,7 @@ Generally, this change should not affect you as all other method signatures like
 Was:
 
 ```java
-GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+GraphQLField node = new GraphQLField('getCities').withArgument('limit', '$limit').withFragment('CityFields');
 
 GraphQLQuery query = new GraphQLQuery()
   .withNode(node)
@@ -185,7 +191,7 @@ System.debug(query.build(true));
 Now:
 
 ```java
-GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+GraphQLField node = new GraphQLField('getCities').withArgument('limit', '$limit').withFragment('CityFields');
 
 GraphQLQuery query = new GraphQLQuery()
   .withNode(node)
@@ -195,9 +201,9 @@ GraphQLQuery query = new GraphQLQuery()
 System.debug(query.build(true));
 ```
 
-### Directives are available for both `GraphQLNode` and `GraphQLFragment`
+### Directives are available for both `GraphQLField` and `GraphQLFragment`
 
-Previously, directives have been presented only on `GraphQLNode` as a Map with the directive types as a key. Now the directives field is moved to `GraphQLBaseNode`. It's also not a map anymore but just a list of `GraphQLDirective`. Map has been removed just because it wasn't really helpful.
+Previously, directives have been presented only on `GraphQLField` as a Map with the directive types as a key. Now the directives field is moved to `GraphQLNode`. It's also not a map anymore but just a list of `GraphQLDirective`. Map has been removed just because it wasn't really helpful.
 
 ### Refactoring of the `GraphQLRequest` class
 
@@ -461,7 +467,7 @@ Now you can use fragments for your queries/mutations to make your GraphQL reques
 
 ```java
 // Create fragment instance passing its name and type it's referring to
-GraphQLFragment cityFieldsFragment = new GraphQLFragment('CityFields', 'City')
+GraphQLFragmentNode cityFieldsFragment = new GraphQLFragmentNode('CityFields', 'City')
     .withField('id')
     .withField('name');
 

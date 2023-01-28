@@ -139,7 +139,7 @@ private class GraphQLQueryTest {
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLOperation.GraphQLOperationNodeException);
+        System.assert(error instanceof GraphQLOperation.GraphQLOperationException);
     }
 
     @IsTest

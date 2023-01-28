@@ -157,7 +157,7 @@ private class GraphQLFieldTest {
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLNode.GraphQLBaseNodeException);
+        System.assert(error instanceof GraphQLNode.GraphQLNodeException);
     }
 
     @IsTest
@@ -475,7 +475,7 @@ private class GraphQLFieldTest {
         }
 
         System.assert(error != null);
-        System.assert(error instanceof GraphQLNode.GraphQLBaseNodeException);
+        System.assert(error instanceof GraphQLNode.GraphQLNodeException);
     }
 
     private class TestNode extends GraphQLNode {

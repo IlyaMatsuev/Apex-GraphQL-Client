@@ -109,7 +109,7 @@ global abstract class GraphQLNode {
     }
 
     public virtual GraphQLParser getParser() {
-        throw new GraphQLBaseNodeException('No parser implementation found for this node');
+        throw new GraphQLNodeException('No parser implementation found for this node');
     }
 
     protected virtual GraphQLNode addFields(String[] fields) {
@@ -140,7 +140,7 @@ global abstract class GraphQLNode {
     protected virtual GraphQLNode addInlineFragments(GraphQLFragment[] fragments) {
         for (GraphQLFragment fragment : fragments) {
             if (!fragment.isInline()) {
-                throw new GraphQLBaseNodeException('Not possible to add non-inline fragment: ' + fragment.name);
+                throw new GraphQLNodeException('Not possible to add non-inline fragment: ' + fragment.name);
             }
         }
         nodes.addAll(fragments);
@@ -153,5 +153,5 @@ global abstract class GraphQLNode {
     }
 
     @TestVisible
-    private class GraphQLBaseNodeException extends Exception {}
+    private class GraphQLNodeException extends Exception {}
 }

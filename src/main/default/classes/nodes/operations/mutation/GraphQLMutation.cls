@@ -107,7 +107,7 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Add a fragment definition for the current mutation node
      * @param fragment The fragment definition to add
-     * @throws GraphQLOperationNodeException If the provided fragment is inline
+     * @throws GraphQLOperationException If the provided fragment is inline
      * @return The instance of the current `GraphQLMutation` class
      */
     global GraphQLMutation defineFragment(GraphQLFragment fragment) {
@@ -117,7 +117,7 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Add multiple fragment definitions for the current mutation node
      * @param fragments The list of fragment definitions to add
-     * @throws GraphQLOperationNodeException If some of the provided fragments are inline
+     * @throws GraphQLOperationException If some of the provided fragments are inline
      * @return The instance of the current `GraphQLMutation` class
      */
     global GraphQLMutation defineFragments(GraphQLFragment[] fragments) {

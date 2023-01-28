@@ -57,7 +57,7 @@ global abstract class GraphQLOperation extends GraphQLNode {
     protected GraphQLOperation addFragments(List<GraphQLFragment> fragments) {
         for (GraphQLFragment fragment : fragments) {
             if (fragment.isInline()) {
-                throw new GraphQLOperationNodeException(
+                throw new GraphQLOperationException(
                     'Not possible to add an inline fragment to the operation node: ' + fragment.name
                 );
             }
@@ -71,5 +71,5 @@ global abstract class GraphQLOperation extends GraphQLNode {
         return this;
     }
 
-    public class GraphQLOperationNodeException extends Exception {}
+    public class GraphQLOperationException extends Exception {}
 }

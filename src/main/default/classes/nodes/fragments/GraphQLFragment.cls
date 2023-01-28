@@ -136,7 +136,7 @@ global class GraphQLFragment extends GraphQLNode {
      * @description Add an inline fragment to the current fragment
      * @param fragment The instance of the `GraphQLFragment`. Should be inline fragment without a name
      * @return The current instance of `GraphQLFragment`
-     * @throws GraphQLBaseNodeException If the passed fragment is not inline
+     * @throws GraphQLNodeException If the passed fragment is not inline
      */
     global GraphQLFragment withInlineFragment(GraphQLFragment fragment) {
         return withInlineFragments(new List<GraphQLFragment> { fragment });
@@ -146,7 +146,7 @@ global class GraphQLFragment extends GraphQLNode {
      * @description Add inline fragments to the current fragment
      * @param fragment The instances of the `GraphQLFragment`. Should be inline fragments without names
      * @return The current instance of `GraphQLFragment`
-     * @throws GraphQLBaseNodeException If some of the passed fragments are not inline
+     * @throws GraphQLNodeException If some of the passed fragments are not inline
      */
     global GraphQLFragment withInlineFragments(GraphQLFragment[] fragments) {
         return (GraphQLFragment) addInlineFragments(fragments);

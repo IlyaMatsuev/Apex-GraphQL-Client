@@ -22,7 +22,7 @@ public class GraphQLConfigs {
 
     private static String get(String configName) {
         if (String.isBlank(configName) || !configsByName.containsKey(configName)) {
-            throw new GraphQLConfigManagerException('There is no such configuration entry: ' + configName);
+            throw new GraphQLConfigsException('There is no such configuration entry: ' + configName);
         }
         return configsByName.get(configName).Value__c;
     }
@@ -48,5 +48,5 @@ public class GraphQLConfigs {
         SendPrettyQuery
     }
 
-    private class GraphQLConfigManagerException extends Exception {}
+    private class GraphQLConfigsException extends Exception {}
 }
