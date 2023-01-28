@@ -16,7 +16,7 @@ global abstract class GraphQLOperationNode extends GraphQLNode {
         super(alias, fields);
     }
 
-    protected GraphQLOperationNode(String alias, List<GraphQLFieldNode> nodes) {
+    protected GraphQLOperationNode(String alias, List<GraphQLField> nodes) {
         super(alias, nodes);
     }
 

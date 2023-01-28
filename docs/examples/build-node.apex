@@ -13,14 +13,14 @@
 }
 */
 
-GraphQLFieldNode countriesNode = new GraphQLFieldNode('countries')
+GraphQLField countriesNode = new GraphQLField('countries')
     .withArgument('filter', 'Bel')
     .withField('name')
-    .withNode(new GraphQLFieldNode('capital', new List<String> { 'id', 'name' }));
+    .withNode(new GraphQLField('capital', new List<String> { 'id', 'name' }));
 
-GraphQLFieldNode citiesNode = new GraphQLFieldNode('cities').withArgument('limit', 10).withField('name');
+GraphQLField citiesNode = new GraphQLField('cities').withArgument('limit', 10).withField('name');
 
-GraphQLFieldNode rootNode = new GraphQLFieldNode(new List<GraphQLFieldNode> { countriesNode, citiesNode });
+GraphQLField rootNode = new GraphQLField(new List<GraphQLField> { countriesNode, citiesNode });
 
 // Will output a well-formatted node like on the example at the top of the file
 System.debug(rootNode.build(true));

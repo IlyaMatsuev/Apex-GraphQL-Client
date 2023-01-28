@@ -20,7 +20,7 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void emptySubscriptionWithChildNodeTest() {
-        GraphQLFieldNode childNode = new GraphQLFieldNode('node1');
+        GraphQLField childNode = new GraphQLField('node1');
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(childNode);
 
@@ -30,9 +30,9 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void emptySubscriptionWithChildNodesTest() {
-        List<GraphQLFieldNode> childNodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('node1'),
-            new GraphQLFieldNode('node2')
+        List<GraphQLField> childNodes = new List<GraphQLField> {
+            new GraphQLField('node1'),
+            new GraphQLField('node2')
         };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(childNodes);
@@ -45,7 +45,7 @@ private class GraphQLSubscriptionNodeTest {
     private static void namedSubscriptionWithChildNodeTest() {
         String nodeName = 'Test';
 
-        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, new GraphQLFieldNode('node1'));
+        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, new GraphQLField('node1'));
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(1, node.nodes.size());
@@ -54,9 +54,9 @@ private class GraphQLSubscriptionNodeTest {
     @IsTest
     private static void namedSubscriptionWithChildNodesTest() {
         String nodeName = 'Test';
-        List<GraphQLFieldNode> childNodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('node1'),
-            new GraphQLFieldNode('node2')
+        List<GraphQLField> childNodes = new List<GraphQLField> {
+            new GraphQLField('node1'),
+            new GraphQLField('node2')
         };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode(nodeName, childNodes);
@@ -137,7 +137,7 @@ private class GraphQLSubscriptionNodeTest {
     private static void subscriptionWithNodeTest() {
         String nodeName = 'node1';
 
-        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withNode(new GraphQLFieldNode(nodeName));
+        GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withNode(new GraphQLField(nodeName));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(nodeName, node.nodes.get(0).name);
@@ -145,9 +145,9 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void subscriptionWithNodesTest() {
-        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('node1'),
-            new GraphQLFieldNode('node2')
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('node1'),
+            new GraphQLField('node2')
         };
 
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode().withNodes(nodes);
@@ -160,7 +160,7 @@ private class GraphQLSubscriptionNodeTest {
     @IsTest
     private static void subscriptionWithVariableDefinitionTest() {
         GraphQLSubscriptionNode node = new GraphQLSubscriptionNode()
-            .withNode(new GraphQLFieldNode('node'))
+            .withNode(new GraphQLField('node'))
             .defineVariable('newVariable', '[Int]! = 0');
 
         System.assertEquals(1, node.variables.size());
@@ -185,9 +185,9 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void buildSubscriptionPositiveTest() {
-        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('field1'),
-            new GraphQLFieldNode('field2')
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('field1'),
+            new GraphQLField('field2')
         };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
@@ -206,9 +206,9 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void buildSubscriptionWithVariableDefinitionsPositiveTest() {
-        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('node1').withArgument('arg', '$param1'),
-            new GraphQLFieldNode('node2')
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('node1').withArgument('arg', '$param1'),
+            new GraphQLField('node2')
         };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
@@ -233,13 +233,13 @@ private class GraphQLSubscriptionNodeTest {
 
     @IsTest
     private static void buildSubscriptionWithChildNodesPositiveTest() {
-        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('field1'),
-            new GraphQLFieldNode(
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('field1'),
+            new GraphQLField(
                 'field2',
-                new List<GraphQLFieldNode> { new GraphQLFieldNode('field21'), new GraphQLFieldNode('field22') }
+                new List<GraphQLField> { new GraphQLField('field21'), new GraphQLField('field22') }
             ),
-            new GraphQLFieldNode('field3')
+            new GraphQLField('field3')
         };
 
         GraphQLSubscriptionNode subscription = new GraphQLSubscriptionNode('TestSubscription', nodes)

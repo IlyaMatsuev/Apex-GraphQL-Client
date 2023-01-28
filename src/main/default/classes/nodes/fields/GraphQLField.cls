@@ -1,7 +1,7 @@
 /**
  * @description The GraphQL node that can be a part of a GraphQL operation
  */
-global class GraphQLFieldNode extends GraphQLNode {
+global class GraphQLField extends GraphQLNode {
     /**
      * @description The alias of the GraphQL node. Can be null
      */
@@ -13,49 +13,49 @@ global class GraphQLFieldNode extends GraphQLNode {
     global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
 
     /**
-     * @description Create an instance of `GraphQLFieldNode` with the empty name
+     * @description Create an instance of `GraphQLField` with the empty name
      */
-    global GraphQLFieldNode() {
+    global GraphQLField() {
         this(GraphQLConstants.EMPTY);
     }
 
     /**
-     * @description Create an instance of `GraphQLFieldNode` with the provided name
+     * @description Create an instance of `GraphQLField` with the provided name
      * @param name The new node's name
      */
-    global GraphQLFieldNode(String name) {
+    global GraphQLField(String name) {
         this(name, new List<String>());
     }
 
     /**
-     * @description Create an instance of `GraphQLFieldNode` with an empty name and child nodes
+     * @description Create an instance of `GraphQLField` with an empty name and child nodes
      * @param nodes The list of the child nodes
      */
-    global GraphQLFieldNode(List<GraphQLFieldNode> nodes) {
+    global GraphQLField(List<GraphQLField> nodes) {
         this(GraphQLConstants.EMPTY, nodes);
     }
 
     /**
-     * @description Create an instance of `GraphQLFieldNode` with an empty name and child fields
+     * @description Create an instance of `GraphQLField` with an empty name and child fields
      * @param fields The list of the child fields
      */
-    global GraphQLFieldNode(List<String> fields) {
+    global GraphQLField(List<String> fields) {
         this(GraphQLConstants.EMPTY, fields);
     }
 
     /**
-     * @description Create an instance of `GraphQLFieldNode` with the provided name and child nodes
+     * @description Create an instance of `GraphQLField` with the provided name and child nodes
      * @param nodes The list of the child nodes
      */
-    global GraphQLFieldNode(String name, List<GraphQLFieldNode> nodes) {
+    global GraphQLField(String name, List<GraphQLField> nodes) {
         super(name, nodes);
     }
 
     /**
-     * @description Create an instance of `GraphQLFieldNode` with the provided name and child fields
+     * @description Create an instance of `GraphQLField` with the provided name and child fields
      * @param fields The list of the child fields
      */
-    global GraphQLFieldNode(String name, List<String> fields) {
+    global GraphQLField(String name, List<String> fields) {
         super(name, fields);
     }
 
@@ -70,9 +70,9 @@ global class GraphQLFieldNode extends GraphQLNode {
     /**
      * @description Add an alias to the current node
      * @param alias The node's alias name
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode byAlias(String alias) {
+    global GraphQLField byAlias(String alias) {
         this.alias = alias;
         return this;
     }
@@ -80,18 +80,18 @@ global class GraphQLFieldNode extends GraphQLNode {
     /**
      * @description Add a child field to the current node
      * @param field The field name to be added
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withField(String field) {
+    global GraphQLField withField(String field) {
         return withFields(new List<String> { field });
     }
 
     /**
      * @description Add multiple child fields to the current node
      * @param fields The list of field names to be added
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withFields(String[] fields) {
+    global GraphQLField withFields(String[] fields) {
         addFields(fields);
         return this;
     }
@@ -99,84 +99,84 @@ global class GraphQLFieldNode extends GraphQLNode {
     /**
      * @description Add a child node to the current node
      * @param node The node to be added
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withNode(GraphQLFieldNode node) {
-        return withNodes(new List<GraphQLFieldNode> { node });
+    global GraphQLField withNode(GraphQLField node) {
+        return withNodes(new List<GraphQLField> { node });
     }
 
     /**
      * @description Add multiple child nodes to the current node
      * @param nodes The nodes to be added
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withNodes(GraphQLFieldNode[] nodes) {
-        return (GraphQLFieldNode) addNodes(nodes);
+    global GraphQLField withNodes(GraphQLField[] nodes) {
+        return (GraphQLField) addNodes(nodes);
     }
 
     /**
      * @description Add a fragment use to the current node
      * @param fragmentName The name of the fragment to be used
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withFragment(String fragmentName) {
+    global GraphQLField withFragment(String fragmentName) {
         return withFragments(new List<String> { fragmentName });
     }
 
     /**
      * @description Add multiple fragment uses to the current node
      * @param fragmentNames The list of names of the fragments to be used
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withFragments(String[] fragmentNames) {
-        return (GraphQLFieldNode) addFragments(fragmentNames);
+    global GraphQLField withFragments(String[] fragmentNames) {
+        return (GraphQLField) addFragments(fragmentNames);
     }
 
     /**
      * @description Add an inline fragment to the current node
      * @param fragment The instance of the `GraphQLFragmentNode`. Should be inline fragment without a name
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      * @throws GraphQLBaseNodeException If the passed fragment is not inline
      */
-    global GraphQLFieldNode withInlineFragment(GraphQLFragmentNode fragment) {
+    global GraphQLField withInlineFragment(GraphQLFragmentNode fragment) {
         return withInlineFragments(new List<GraphQLFragmentNode> { fragment });
     }
 
     /**
      * @description Add inline fragments to the current node
      * @param fragment The instances of the `GraphQLFragmentNode`. Should be inline fragments without names
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      * @throws GraphQLBaseNodeException If some of the passed fragments are not inline
      */
-    global GraphQLFieldNode withInlineFragments(GraphQLFragmentNode[] fragments) {
-        return (GraphQLFieldNode) addInlineFragments(fragments);
+    global GraphQLField withInlineFragments(GraphQLFragmentNode[] fragments) {
+        return (GraphQLField) addInlineFragments(fragments);
     }
 
     /**
      * @description Add an argument to the current node
      * @param key The argument name
      * @param value The argument value. Use string with the `$` sign for variable referencing
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withArgument(String key, Object value) {
+    global GraphQLField withArgument(String key, Object value) {
         return withArgument(new GraphQLArgument(key, value));
     }
 
     /**
      * @description Add an argument to the current node
      * @param argument The argument to be added
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withArgument(GraphQLArgument argument) {
+    global GraphQLField withArgument(GraphQLArgument argument) {
         return withArguments(new List<GraphQLArgument> { argument });
     }
 
     /**
      * @description Add multiple arguments to the current node
      * @param arguments The list of arguments to be added
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode withArguments(GraphQLArgument[] arguments) {
+    global GraphQLField withArguments(GraphQLArgument[] arguments) {
         for (GraphQLArgument argument : arguments) {
             this.arguments.put(argument.key, argument);
         }
@@ -186,37 +186,37 @@ global class GraphQLFieldNode extends GraphQLNode {
     /**
      * @description Add the standard `includeIf` directive to the current node
      * @param condition The boolean condition for the directive
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode includeIf(Boolean condition) {
-        return (GraphQLFieldNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, condition));
+    global GraphQLField includeIf(Boolean condition) {
+        return (GraphQLField) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, condition));
     }
 
     /**
      * @description Add the standard `includeIf` directive to the current node
      * @param variable The variable reference for the directive. The `$` sign is not required
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode includeIf(String variable) {
-        return (GraphQLFieldNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, variable));
+    global GraphQLField includeIf(String variable) {
+        return (GraphQLField) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, variable));
     }
 
     /**
      * @description Add the standard `skipIf` directive to the current node
      * @param condition The boolean condition for the directive
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode skipIf(Boolean condition) {
-        return (GraphQLFieldNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, condition));
+    global GraphQLField skipIf(Boolean condition) {
+        return (GraphQLField) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, condition));
     }
 
     /**
      * @description Add the standard `skipIf` directive to the current node
      * @param variable The variable reference for the directive. The `$` sign is not required
-     * @return The current instance of `GraphQLFieldNode`
+     * @return The current instance of `GraphQLField`
      */
-    global GraphQLFieldNode skipIf(String variable) {
-        return (GraphQLFieldNode) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, variable));
+    global GraphQLField skipIf(String variable) {
+        return (GraphQLField) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, variable));
     }
 
     /**
@@ -244,14 +244,14 @@ global class GraphQLFieldNode extends GraphQLNode {
     }
 
     public override GraphQLParser getParser() {
-        return new GraphQLNodeParser();
+        return new GraphQLFieldParser();
     }
 
-    private List<GraphQLFieldNode> getFieldNodes() {
-        List<GraphQLFieldNode> fieldNodes = new List<GraphQLFieldNode>();
+    private List<GraphQLField> getFieldNodes() {
+        List<GraphQLField> fieldNodes = new List<GraphQLField>();
         for (GraphQLNode node : this.nodes) {
             if (node.isFieldNode()) {
-                fieldNodes.add((GraphQLFieldNode) node);
+                fieldNodes.add((GraphQLField) node);
             }
         }
         return fieldNodes;

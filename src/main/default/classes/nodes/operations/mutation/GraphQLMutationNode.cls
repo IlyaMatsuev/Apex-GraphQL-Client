@@ -21,8 +21,8 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @description Create a new instance of the GraphQL mutation node with the provided child node
      * @param node The child node
      */
-    global GraphQLMutationNode(GraphQLFieldNode node) {
-        this(new List<GraphQLFieldNode> { node });
+    global GraphQLMutationNode(GraphQLField node) {
+        this(new List<GraphQLField> { node });
     }
 
     /**
@@ -37,7 +37,7 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @description Create a new instance of the GraphQL mutation node with the provided child nodes
      * @param nodes The child nodes
      */
-    global GraphQLMutationNode(List<GraphQLFieldNode> nodes) {
+    global GraphQLMutationNode(List<GraphQLField> nodes) {
         this(null, nodes);
     }
 
@@ -46,8 +46,8 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @param alias The mutation alias
      * @param node The child node
      */
-    global GraphQLMutationNode(String alias, GraphQLFieldNode node) {
-        this(alias, new List<GraphQLFieldNode> { node });
+    global GraphQLMutationNode(String alias, GraphQLField node) {
+        this(alias, new List<GraphQLField> { node });
     }
 
     /**
@@ -64,7 +64,7 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @param alias The mutation alias
      * @param nodes The child nodes
      */
-    global GraphQLMutationNode(String alias, List<GraphQLFieldNode> nodes) {
+    global GraphQLMutationNode(String alias, List<GraphQLField> nodes) {
         super(alias, nodes);
     }
 
@@ -91,8 +91,8 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @param node The node to add
      * @return The instance of the current `GraphQLMutationNode` class
      */
-    global GraphQLMutationNode withNode(GraphQLFieldNode node) {
-        return withNodes(new List<GraphQLFieldNode> { node });
+    global GraphQLMutationNode withNode(GraphQLField node) {
+        return withNodes(new List<GraphQLField> { node });
     }
 
     /**
@@ -100,7 +100,7 @@ global class GraphQLMutationNode extends GraphQLOperationNode {
      * @param nodes The list of nodes to add
      * @return The instance of the current `GraphQLMutationNode` class
      */
-    global GraphQLMutationNode withNodes(GraphQLFieldNode[] nodes) {
+    global GraphQLMutationNode withNodes(GraphQLField[] nodes) {
         return (GraphQLMutationNode) addNodes(nodes);
     }
 

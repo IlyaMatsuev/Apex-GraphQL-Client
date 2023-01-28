@@ -20,7 +20,7 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void emptyMutationWithChildNodeTest() {
-        GraphQLFieldNode childNode = new GraphQLFieldNode('node1');
+        GraphQLField childNode = new GraphQLField('node1');
 
         GraphQLMutationNode node = new GraphQLMutationNode(childNode);
 
@@ -30,10 +30,7 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void emptyMutationWithChildNodesTest() {
-        List<GraphQLFieldNode> childNodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('node1'),
-            new GraphQLFieldNode('node2')
-        };
+        List<GraphQLField> childNodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
         GraphQLMutationNode node = new GraphQLMutationNode(childNodes);
 
@@ -45,7 +42,7 @@ private class GraphQLMutationNodeTest {
     private static void namedMutationWithChildNodeTest() {
         String nodeName = 'Test';
 
-        GraphQLMutationNode node = new GraphQLMutationNode(nodeName, new GraphQLFieldNode('node1'));
+        GraphQLMutationNode node = new GraphQLMutationNode(nodeName, new GraphQLField('node1'));
 
         System.assertEquals(nodeName, node.name);
         System.assertEquals(1, node.nodes.size());
@@ -54,10 +51,7 @@ private class GraphQLMutationNodeTest {
     @IsTest
     private static void namedMutationWithChildNodesTest() {
         String nodeName = 'Test';
-        List<GraphQLFieldNode> childNodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('node1'),
-            new GraphQLFieldNode('node2')
-        };
+        List<GraphQLField> childNodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
         GraphQLMutationNode node = new GraphQLMutationNode(nodeName, childNodes);
 
@@ -137,7 +131,7 @@ private class GraphQLMutationNodeTest {
     private static void mutationWithNodeTest() {
         String nodeName = 'node1';
 
-        GraphQLMutationNode node = new GraphQLMutationNode().withNode(new GraphQLFieldNode(nodeName));
+        GraphQLMutationNode node = new GraphQLMutationNode().withNode(new GraphQLField(nodeName));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(nodeName, node.nodes.get(0).name);
@@ -145,10 +139,7 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void mutationWithNodesTest() {
-        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('node1'),
-            new GraphQLFieldNode('node2')
-        };
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
         GraphQLMutationNode node = new GraphQLMutationNode().withNodes(nodes);
 
@@ -160,7 +151,7 @@ private class GraphQLMutationNodeTest {
     @IsTest
     private static void mutationWithVariableDefinitionTest() {
         GraphQLMutationNode node = new GraphQLMutationNode()
-            .withNode(new GraphQLFieldNode('node'))
+            .withNode(new GraphQLField('node'))
             .defineVariable('var', '[String!]');
 
         System.assertEquals(1, node.variables.size());
@@ -181,10 +172,7 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void buildMutationPositiveTest() {
-        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('field1'),
-            new GraphQLFieldNode('field2')
-        };
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('field1'), new GraphQLField('field2') };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLMutationNode mutation = new GraphQLMutationNode()
@@ -202,10 +190,7 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void buildMutationWithVariableDefinitionPositiveTest() {
-        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('node1'),
-            new GraphQLFieldNode('node2')
-        };
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
         List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLMutationNode mutation = new GraphQLMutationNode()
@@ -225,13 +210,13 @@ private class GraphQLMutationNodeTest {
 
     @IsTest
     private static void buildMutationWithChildNodesPositiveTest() {
-        List<GraphQLFieldNode> nodes = new List<GraphQLFieldNode> {
-            new GraphQLFieldNode('field1'),
-            new GraphQLFieldNode(
+        List<GraphQLField> nodes = new List<GraphQLField> {
+            new GraphQLField('field1'),
+            new GraphQLField(
                 'field2',
-                new List<GraphQLFieldNode> { new GraphQLFieldNode('field21'), new GraphQLFieldNode('field22') }
+                new List<GraphQLField> { new GraphQLField('field21'), new GraphQLField('field22') }
             ),
-            new GraphQLFieldNode('field3')
+            new GraphQLField('field3')
         };
 
         GraphQLMutationNode mutation = new GraphQLMutationNode('TestMutation', nodes);

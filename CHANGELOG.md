@@ -5,7 +5,16 @@ Package Id:
 
 All information regarding the installation and usage is described on the [main repo page](https://github.com/IlyaMatsuev/Apex-GraphQL-Client).
 
-TODO: Add important note here about renaming `GraphQLNode` to `GraphQLFieldNode` and `GraphQLBaseNode` to `GraphQLNode`
+## Beaking changes
+
+### Package classes naming changes
+
+The name of the below classes have been changed:
+
+-   `GraphQLNode` --> `GraphQLField`
+-   `GraphQLBaseNode` --> `GraphQLNode`
+
+This was made in order to be aligned with the terms (such as "field") provided by the GraphQL specification. And also to make the names shorter for more convenient usage.
 
 ## What's new
 
