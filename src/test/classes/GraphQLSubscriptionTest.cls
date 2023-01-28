@@ -128,20 +128,20 @@ private class GraphQLSubscriptionTest {
     }
 
     @IsTest
-    private static void subscriptionWithNodeTest() {
+    private static void subscriptionWithFieldNodeTest() {
         String nodeName = 'node1';
 
-        GraphQLSubscription node = new GraphQLSubscription().withNode(new GraphQLField(nodeName));
+        GraphQLSubscription node = new GraphQLSubscription().withField(new GraphQLField(nodeName));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(nodeName, node.nodes.get(0).name);
     }
 
     @IsTest
-    private static void subscriptionWithNodesTest() {
+    private static void subscriptionWithFieldNodesTest() {
         List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLSubscription node = new GraphQLSubscription().withNodes(nodes);
+        GraphQLSubscription node = new GraphQLSubscription().withFields(nodes);
 
         System.assertEquals(nodes.size(), node.nodes.size());
         System.assertEquals('node1', node.nodes.get(0).name);
@@ -151,7 +151,7 @@ private class GraphQLSubscriptionTest {
     @IsTest
     private static void subscriptionWithVariableDefinitionTest() {
         GraphQLSubscription node = new GraphQLSubscription()
-            .withNode(new GraphQLField('node'))
+            .withField(new GraphQLField('node'))
             .defineVariable('newVariable', '[Int]! = 0');
 
         System.assertEquals(1, node.variables.size());
@@ -180,8 +180,8 @@ private class GraphQLSubscriptionTest {
         List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLSubscription subscription = new GraphQLSubscription()
-            .withNode(nodes.get(0))
-            .withNode(nodes.get(1))
+            .withField(nodes.get(0))
+            .withField(nodes.get(1))
             .withFields(fields)
             .withField('field3');
 
@@ -201,7 +201,7 @@ private class GraphQLSubscriptionTest {
         List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLSubscription subscription = new GraphQLSubscription()
-            .withNodes(nodes)
+            .withFields(nodes)
             .withFields(fields)
             .defineVariable('param1', 'Int!')
             .defineVariable('param2', 'String');

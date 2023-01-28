@@ -7,9 +7,9 @@ All information regarding the installation and usage is described on the [main r
 
 ## Beaking changes
 
-### Package classes naming changes
+### Package classes amd methods naming changes
 
-The name of the below classes have been changed:
+The names of the below classes have been changed:
 
 Global classes:
 
@@ -44,7 +44,67 @@ Tests:
 -   `GraphQLSubscriptionNodeTest` --> `GraphQLSubscriptionTest`
 -   `GraphQLConfigManagerTest` --> `GraphQLConfigsTest`
 
+The names of the below methods have been changed:
+
+For `GraphQLNode`:
+
+-   `hasNode(GraphQLField fieldNode)` --> `hasField(GraphQLField fieldNode)`
+
+For `GraphQLField`, `GraphQLFragment`, `GraphQLQuery`, `GraphQLMutation` and `GraphQLSubscription`:
+
+-   `withNode(GraphQLField fieldNode)` --> `withField(GraphQLField fieldNode)`
+-   `withNodes(GraphQLField[] fieldNodes)` --> `withFields(GraphQLField[] fieldNodes)`
+
+For `GraphQLQuery`, `GraphQLMutation` and `GraphQLSubscription`:
+
+-   `withFragment(GraphQLFragment fragment)` => `defineFragment(GraphQLFragment fragment)`
+-   `withFragments(GraphQLFragment[] fragments)` => `defineFragments(GraphQLFragment[] fragments)`
+-   `withVariable(String name, String typeDefinition)` => `defineVariable(String name, String typeDefinition)`
+
 This was made in order to be aligned with the terms (such as "field") provided by the GraphQL specification. And also to make the names shorter for more convenient usage.
+
+Here is an example of how this changes the usage of the package:
+
+Was:
+
+```java
+GraphQLNode node = new GraphQLNode('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQueryNode query = new GraphQLQueryNode()
+  .withNode(node)
+  .withFragment(new GraphQLFragmentNode('CityFields', 'City').withField('name'))
+  .withVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+Now:
+
+```java
+GraphQLField node = new GraphQLField('getCities').withArgument('limit', '$limit').withFragment('CityFields');
+
+GraphQLQuery query = new GraphQLQuery()
+  .withField(node)
+  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
+  .defineVariable('limit', 'Int!');
+
+System.debug(query.build(true));
+```
+
+### Unnecessary components have been removed
+
+Some of the classes and custom metadata records have been removed because they were not too much useful. Below is the list of deleted components:
+
+GraphQLConfig custom metadata records:
+
+-   `DefaultGraphQLEndpoint` - Wasn't really helpful. The GraphQL endpoint should be defined at the code level, not with the custom metadata.
+-   `RequestTimeout` - The timeout for the request can be set with `withTimeout` method on the `GraphQLRequest` class.
+
+Classes:
+
+-   `IGraphQLParser`
+-   `IGraphQLClient`
+-   `GraphQLConfig`
 
 ## What's new
 
@@ -78,17 +138,17 @@ Apex equivalent:
 GraphQLField profiles = new GraphQLField('profiles')
   .withField('name')
   .withInlineFragment(
-    new GraphQLFragment('User').withNode(
+    new GraphQLFragment('User').withField(
         new GraphQLField('friends').withField('count')
     )
   )
   .withInlineFragment(
-    new GraphQLFragment('Page').withNode(
+    new GraphQLFragment('Page').withField(
         new GraphQLField('likers').withField('count')
     )
   );
 
-GraphQLQuery query = new GraphQLQuery().withNode(profiles);
+GraphQLQuery query = new GraphQLQuery().withField(profiles);
 
 System.debug(query.build(true));
 ```
@@ -117,7 +177,7 @@ GraphQLField userNode = new GraphQLField('user')
   );
 
 GraphQLQuery query = new GraphQLQuery()
-  .withNode(userNode)
+  .withField(userNode)
   .defineVariable('expandedInfo', 'Boolean');
 
 System.debug(query.build(true));
@@ -150,14 +210,6 @@ Now, every global class, field, property, method has ApexDoc comments so that it
 
 ## What's changed
 
-### The `DefaultGraphQLEndpoint` custom metadata configuration has been deleted
-
-This custom metadata record was not really necessary and could cause confusion.
-
-### `IGraphQLParser` and `IGraphQLClient` interfaces have been deleted
-
-These interfaces have been deleted from the package as they were not useful and did not serve any purpose. Hope this makes the code more clean and easy to understand!
-
 ### Child nodes are now of type `GraphQLNode` instead of `GraphQLField`
 
 Which adds more flexibility as now the `nodes` field also stores inline fragments (`GraphQLFragment`). To determine what child nodes are fields and what are inline fragments there are two new methods:
@@ -165,41 +217,7 @@ Which adds more flexibility as now the `nodes` field also stores inline fragment
 `isFieldNode()` - True if the instance is `GraphQLField`
 `isFragmentNode()` - True if the instance is `GraphQLFragment`
 
-Generally, this change should not affect you as all other method signatures like `withNode()`, `withField()` and etc. remain the same.
-
-### Method renames in `GraphQLQuery`, `GraphQLMutation` and `GraphQLSubscription`
-
-3 methods have been renamed to prevent some confusion:
-
--   `withFragment()` => `defineFragment()`
--   `withFragments()` => `defineFragments()`
--   `withVariable()` => `defineVariable()`
-
-Was:
-
-```java
-GraphQLField node = new GraphQLField('getCities').withArgument('limit', '$limit').withFragment('CityFields');
-
-GraphQLQuery query = new GraphQLQuery()
-  .withNode(node)
-  .withFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
-  .withVariable('limit', 'Int!');
-
-System.debug(query.build(true));
-```
-
-Now:
-
-```java
-GraphQLField node = new GraphQLField('getCities').withArgument('limit', '$limit').withFragment('CityFields');
-
-GraphQLQuery query = new GraphQLQuery()
-  .withNode(node)
-  .defineFragment(new GraphQLFragment('CityFields', 'City').withField('name'))
-  .defineVariable('limit', 'Int!');
-
-System.debug(query.build(true));
-```
+Generally, this change should not affect you as all other method signatures like `withField()` and etc. remain the same.
 
 ### Directives are available for both `GraphQLField` and `GraphQLFragment`
 
@@ -239,10 +257,6 @@ request.withTimeout(10000);
 // Get timeout: 10000
 System.debug(request.timeout);
 ```
-
-### Remove the RequestTimeout configuration entry
-
-The `RequestTimeout` configuration metadata record has been removed because it didn't serve much purpose. Now, The timeout for the request can be set with `withTimeout` method on the `GraphQLRequest` class.
 
 ---
 

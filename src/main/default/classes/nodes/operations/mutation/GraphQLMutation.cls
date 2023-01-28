@@ -19,10 +19,10 @@ global class GraphQLMutation extends GraphQLOperation {
 
     /**
      * @description Create a new instance of the GraphQL mutation node with the provided child node
-     * @param node The child node
+     * @param fieldNode The child node
      */
-    global GraphQLMutation(GraphQLField node) {
-        this(new List<GraphQLField> { node });
+    global GraphQLMutation(GraphQLField fieldNode) {
+        this(new List<GraphQLField> { fieldNode });
     }
 
     /**
@@ -35,19 +35,19 @@ global class GraphQLMutation extends GraphQLOperation {
 
     /**
      * @description Create a new instance of the GraphQL mutation node with the provided child nodes
-     * @param nodes The child nodes
+     * @param fieldNodes The child nodes
      */
-    global GraphQLMutation(List<GraphQLField> nodes) {
-        this(null, nodes);
+    global GraphQLMutation(List<GraphQLField> fieldNodes) {
+        this(null, fieldNodes);
     }
 
     /**
      * @description Create a new instance of the GraphQL mutation node with the provided alias and child node
      * @param alias The mutation alias
-     * @param node The child node
+     * @param fieldNode The child node
      */
-    global GraphQLMutation(String alias, GraphQLField node) {
-        this(alias, new List<GraphQLField> { node });
+    global GraphQLMutation(String alias, GraphQLField fieldNode) {
+        this(alias, new List<GraphQLField> { fieldNode });
     }
 
     /**
@@ -62,10 +62,10 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Create a new instance of the GraphQL mutation node with the provided alias and child nodes
      * @param alias The mutation alias
-     * @param nodes The child nodes
+     * @param fieldNodes The child nodes
      */
-    global GraphQLMutation(String alias, List<GraphQLField> nodes) {
-        super(alias, nodes);
+    global GraphQLMutation(String alias, List<GraphQLField> fieldNodes) {
+        super(alias, fieldNodes);
     }
 
     /**
@@ -88,20 +88,20 @@ global class GraphQLMutation extends GraphQLOperation {
 
     /**
      * @description Add a child node to the current mutation node
-     * @param node The node to add
+     * @param fieldNode The node to add
      * @return The instance of the current `GraphQLMutation` class
      */
-    global GraphQLMutation withNode(GraphQLField node) {
-        return withNodes(new List<GraphQLField> { node });
+    global GraphQLMutation withField(GraphQLField fieldNode) {
+        return withFields(new List<GraphQLField> { fieldNode });
     }
 
     /**
      * @description Add multiple child nodes to the current mutation node
-     * @param nodes The list of nodes to add
+     * @param fieldNodes The list of nodes to add
      * @return The instance of the current `GraphQLMutation` class
      */
-    global GraphQLMutation withNodes(GraphQLField[] nodes) {
-        return (GraphQLMutation) addNodes(nodes);
+    global GraphQLMutation withFields(GraphQLField[] fieldNodes) {
+        return (GraphQLMutation) addFields(fieldNodes);
     }
 
     /**

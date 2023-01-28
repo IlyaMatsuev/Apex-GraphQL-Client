@@ -23,7 +23,7 @@ private class GraphQLHttpClientTest {
     private static void sendRequestSyncPositiveTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
         GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
-            .withNode(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
         GraphQLQuery query = new GraphQLQuery(heroNode);
         GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');
@@ -47,7 +47,7 @@ private class GraphQLHttpClientTest {
     private static void sendRequestSyncInvalidResponseFormatTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
         GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
-            .withNode(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
         GraphQLQuery query = new GraphQLQuery(heroNode);
         GraphQLRequest request = query.asRequest();
@@ -70,7 +70,7 @@ private class GraphQLHttpClientTest {
     private static void sendRequestAsyncPositiveTest() {
         GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
         GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
-            .withNode(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
         GraphQLQuery query = new GraphQLQuery(heroNode);
         GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');

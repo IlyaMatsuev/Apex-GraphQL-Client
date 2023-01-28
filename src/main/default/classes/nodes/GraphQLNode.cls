@@ -21,17 +21,14 @@ global abstract class GraphQLNode {
         this(name, new List<GraphQLField>(), fields);
     }
 
-    protected GraphQLNode(String name, List<GraphQLField> nodes) {
-        this(name, nodes, new List<String>());
+    protected GraphQLNode(String name, List<GraphQLField> fieldNodes) {
+        this(name, fieldNodes, new List<String>());
     }
 
-    protected GraphQLNode(String name, List<GraphQLField> nodes, List<String> fields) {
+    protected GraphQLNode(String name, List<GraphQLField> fieldNodes, List<String> fields) {
         this.name = name;
-        this.nodes.addAll(nodes);
-
-        if (!fields.isEmpty()) {
-            addFields(fields);
-        }
+        this.nodes.addAll(fieldNodes);
+        addFields(fields);
     }
 
     /**
@@ -51,25 +48,14 @@ global abstract class GraphQLNode {
     }
 
     /**
-     * @description Check if the provided node exists in the child nodes. Searches by the node's name
-     * @param node The target GraphQL node to search for
+     * @description Check if the provided field node exists in the child nodes. Searches by the field's name
+     * @param field The target GraphQL field node to search for
      * @return `true` if the node with the same name is found in child nodes. `false` otherwise
      */
-    global virtual Boolean hasNode(GraphQLField node) {
-        return hasNodes(new List<GraphQLField> { node });
-    }
-
-    /**
-     * @description Check if one of the provided nodes exist in the child nodes. Searches by the nodes` names
-     * @param nodes The target list of GraphQL node to search for
-     * @return `true` if one of the nodes with the same name is found in child nodes. `false` otherwise
-     */
-    global virtual Boolean hasNodes(GraphQLField[] nodes) {
-        for (GraphQLNode existingNode : this.nodes) {
-            for (GraphQLField node : nodes) {
-                if (existingNode.name == node.name) {
-                    return true;
-                }
+    global virtual Boolean hasField(GraphQLField field) {
+        for (GraphQLNode node : nodes) {
+            if (node.name == field.name) {
+                return true;
             }
         }
         return false;
@@ -117,13 +103,13 @@ global abstract class GraphQLNode {
         for (String field : fields) {
             nodes.add(new GraphQLField(field));
         }
-        return addNodes(nodes);
+        return addFields(nodes);
     }
 
-    protected virtual GraphQLNode addNodes(GraphQLField[] nodes) {
-        for (GraphQLField node : nodes) {
-            if (!hasNode(node)) {
-                this.nodes.add(node);
+    protected virtual GraphQLNode addFields(GraphQLField[] fields) {
+        for (GraphQLField field : fields) {
+            if (!hasField(field)) {
+                nodes.add(field);
             }
         }
         return this;

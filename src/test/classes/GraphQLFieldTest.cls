@@ -30,8 +30,8 @@ private class GraphQLFieldTest {
         System.assertEquals(GraphQLConstants.EMPTY, node.name);
         System.assertEquals(childNodes.size(), node.nodes.size());
         System.assertEquals(0, node.arguments.size());
-        System.assert(node.hasNode(childNodes.get(0)));
-        System.assert(!node.hasNode(new GraphQLField('node3')));
+        System.assert(node.hasField(childNodes.get(0)));
+        System.assert(!node.hasField(new GraphQLField('node3')));
     }
 
     @IsTest
@@ -161,20 +161,20 @@ private class GraphQLFieldTest {
     }
 
     @IsTest
-    private static void nodeWithNodeTest() {
+    private static void nodeWithFieldNodeTest() {
         String nodeName = 'node1';
 
-        GraphQLField node = new GraphQLField().withNode(new GraphQLField(nodeName));
+        GraphQLField node = new GraphQLField().withField(new GraphQLField(nodeName));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(nodeName, node.nodes.get(0).name);
     }
 
     @IsTest
-    private static void nodeWithNodesTest() {
+    private static void nodeWithFieldNodesTest() {
         List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLField node = new GraphQLField().withNodes(nodes);
+        GraphQLField node = new GraphQLField().withFields(nodes);
 
         System.assertEquals(nodes.size(), node.nodes.size());
         System.assertEquals('node1', node.nodes.get(0).name);
@@ -351,7 +351,7 @@ private class GraphQLFieldTest {
         GraphQLField firstNode = new GraphQLField(firstMethodName, firstMethodFields);
 
         GraphQLField secondNode = new GraphQLField(secondMethodName)
-            .withNode(new GraphQLField('field3', childrenNodeFields))
+            .withField(new GraphQLField('field3', childrenNodeFields))
             .withField('field4');
 
         List<GraphQLField> childrenNodes = new List<GraphQLField> { firstNode, secondNode };
@@ -387,7 +387,7 @@ private class GraphQLFieldTest {
             .withArgument('var2', 1)
             .withArgument('var3', new Map<String, Object> { 'f1' => 1, 'f2' => '2', 'f3' => '$ref' });
 
-        GraphQLField rootNode = new GraphQLField('root').withNode(node);
+        GraphQLField rootNode = new GraphQLField('root').withField(node);
 
         System.assert(node != null);
         System.assert(rootNode != null);
@@ -413,7 +413,7 @@ private class GraphQLFieldTest {
             .skipIf('test1')
             .withArgument('var1', '$test1');
 
-        GraphQLField rootNode = new GraphQLField('root').withNode(node);
+        GraphQLField rootNode = new GraphQLField('root').withField(node);
 
         System.assertEquals(
             'root{testMethod(var1:$test1) @include(if:true) @skip(if:$test1){field1,field2,field3}}',
@@ -435,7 +435,7 @@ private class GraphQLFieldTest {
             if (prevNode == null) {
                 prevNode = node;
             }
-            prevNode.withNode(newNode);
+            prevNode.withField(newNode);
             prevNode = newNode;
         }
 

@@ -71,11 +71,11 @@ private class GraphQLFragmentTest {
     }
 
     @IsTest
-    private static void fragmentWithNodeTest() {
+    private static void fragmentWithFieldNodeTest() {
         String name = 'Fields';
         String type = 'SomeType';
         GraphQLFragment fragment = new GraphQLFragment(name, type)
-            .withNode(new GraphQLField('node', new List<String> { 'field1', 'field2' }));
+            .withField(new GraphQLField('node', new List<String> { 'field1', 'field2' }));
 
         System.assertEquals(name, fragment.name);
         System.assertEquals(type, fragment.type);
@@ -138,7 +138,7 @@ private class GraphQLFragmentTest {
         String type = 'SomeType';
         GraphQLFragment fragment = new GraphQLFragment(name, type)
             .withFields(new List<String> { 'field1', 'field2' })
-            .withNode(new GraphQLField('node', new List<String> { 'field1', 'field2' }))
+            .withField(new GraphQLField('node', new List<String> { 'field1', 'field2' }))
             .withInlineFragment(new GraphQLFragment('SomeType2').withField('field11'))
             .withInlineFragment(new GraphQLFragment().includeIf('var').skipIf('var2').withField('field22'));
 

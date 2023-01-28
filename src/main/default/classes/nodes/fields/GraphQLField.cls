@@ -29,10 +29,10 @@ global class GraphQLField extends GraphQLNode {
 
     /**
      * @description Create an instance of `GraphQLField` with an empty name and child nodes
-     * @param nodes The list of the child nodes
+     * @param fieldNodes The list of the child nodes
      */
-    global GraphQLField(List<GraphQLField> nodes) {
-        this(GraphQLConstants.EMPTY, nodes);
+    global GraphQLField(List<GraphQLField> fieldNodes) {
+        this(GraphQLConstants.EMPTY, fieldNodes);
     }
 
     /**
@@ -45,10 +45,10 @@ global class GraphQLField extends GraphQLNode {
 
     /**
      * @description Create an instance of `GraphQLField` with the provided name and child nodes
-     * @param nodes The list of the child nodes
+     * @param fieldNodes The list of the child nodes
      */
-    global GraphQLField(String name, List<GraphQLField> nodes) {
-        super(name, nodes);
+    global GraphQLField(String name, List<GraphQLField> fieldNodes) {
+        super(name, fieldNodes);
     }
 
     /**
@@ -92,26 +92,25 @@ global class GraphQLField extends GraphQLNode {
      * @return The current instance of `GraphQLField`
      */
     global GraphQLField withFields(String[] fields) {
-        addFields(fields);
-        return this;
+        return (GraphQLField) addFields(fields);
     }
 
     /**
      * @description Add a child node to the current node
-     * @param node The node to be added
+     * @param fieldNode The field node to be added
      * @return The current instance of `GraphQLField`
      */
-    global GraphQLField withNode(GraphQLField node) {
-        return withNodes(new List<GraphQLField> { node });
+    global GraphQLField withField(GraphQLField fieldNode) {
+        return withFields(new List<GraphQLField> { fieldNode });
     }
 
     /**
      * @description Add multiple child nodes to the current node
-     * @param nodes The nodes to be added
+     * @param fieldNodes The field nodes to be added
      * @return The current instance of `GraphQLField`
      */
-    global GraphQLField withNodes(GraphQLField[] nodes) {
-        return (GraphQLField) addNodes(nodes);
+    global GraphQLField withFields(GraphQLField[] fieldNodes) {
+        return (GraphQLField) addFields(fieldNodes);
     }
 
     /**

@@ -128,20 +128,20 @@ private class GraphQLMutationTest {
     }
 
     @IsTest
-    private static void mutationWithNodeTest() {
+    private static void mutationWithFieldNodeTest() {
         String nodeName = 'node1';
 
-        GraphQLMutation node = new GraphQLMutation().withNode(new GraphQLField(nodeName));
+        GraphQLMutation node = new GraphQLMutation().withField(new GraphQLField(nodeName));
 
         System.assertEquals(1, node.nodes.size());
         System.assertEquals(nodeName, node.nodes.get(0).name);
     }
 
     @IsTest
-    private static void mutationWithNodesTest() {
+    private static void mutationWithFieldNodesTest() {
         List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('node1'), new GraphQLField('node2') };
 
-        GraphQLMutation node = new GraphQLMutation().withNodes(nodes);
+        GraphQLMutation node = new GraphQLMutation().withFields(nodes);
 
         System.assertEquals(nodes.size(), node.nodes.size());
         System.assertEquals('node1', node.nodes.get(0).name);
@@ -151,7 +151,7 @@ private class GraphQLMutationTest {
     @IsTest
     private static void mutationWithVariableDefinitionTest() {
         GraphQLMutation node = new GraphQLMutation()
-            .withNode(new GraphQLField('node'))
+            .withField(new GraphQLField('node'))
             .defineVariable('var', '[String!]');
 
         System.assertEquals(1, node.variables.size());
@@ -176,8 +176,8 @@ private class GraphQLMutationTest {
         List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLMutation mutation = new GraphQLMutation()
-            .withNode(nodes.get(0))
-            .withNode(nodes.get(1))
+            .withField(nodes.get(0))
+            .withField(nodes.get(1))
             .withField(fields.get(0))
             .withField(fields.get(1));
 
@@ -194,7 +194,7 @@ private class GraphQLMutationTest {
         List<String> fields = new List<String> { 'field3', 'field4' };
 
         GraphQLMutation mutation = new GraphQLMutation()
-            .withNodes(nodes)
+            .withFields(nodes)
             .withFields(fields)
             .defineVariable('model', 'InputType!');
 
