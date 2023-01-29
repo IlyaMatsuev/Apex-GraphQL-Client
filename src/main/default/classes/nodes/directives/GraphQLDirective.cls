@@ -1,40 +1,50 @@
 /**
- * @description Represents an entry of a GraphQL argument in a node
+ * @description Represents a GraphQL directive
  */
 global class GraphQLDirective {
-    private static final String IF_ARG_NAME = 'if';
-
-    private final GraphQLDirectiveType type;
-    private final GraphQLArgument ifArgument;
+    /**
+     * @description The directive's name followed after the `@` sign
+     */
+    global final String name;
+    /**
+     * @description The list of arguments added to the directive
+     */
+    global final List<GraphQLArgument> arguments = new List<GraphQLArgument>();
 
     /**
-     * @description Create an instance of a directive by the provided type and value
-     * @param type The directive standard type
-     * @param ifArgumentValue The reference to a boolean variable. The `$` sign is not required
-     * @throws GraphQLDirectiveException If the provided argument value is `null`
+     * @description Creates an instance of a directive by the provided name
+     * @param name The directive's name. E.g. `include` or `skip`
      */
-    global GraphQLDirective(GraphQLDirectiveType type, String ifArgumentValue) {
-        this(type, (Object) ifArgumentValue);
+    global GraphQLDirective(String name) {
+        this.name = name;
     }
 
     /**
-     * @description Create an instance of a directive by the provided type and value
-     * @param type The directive standard type
-     * @param ifArgumentValue The boolean condition for the directive
-     * @throws GraphQLDirectiveException If the provided argument value is `null`
+     * @description Check if the directive contains any arguments
+     * @return `true` if there are any arguments. `false` otherwise
      */
-    global GraphQLDirective(GraphQLDirectiveType type, Boolean ifArgumentValue) {
-        this(type, (Object) ifArgumentValue);
+    global Boolean hasArguments() {
+        return !arguments.isEmpty();
     }
 
-    private GraphQLDirective(GraphQLDirectiveType type, Object ifArgumentValue) {
-        if (ifArgumentValue == null) {
-            throw new GraphQLDirectiveException(
-                'Directive argument value cannot be null. It should be either Boolean or variable'
-            );
-        }
-        this.type = type;
-        this.ifArgument = new GraphQLArgument(IF_ARG_NAME, toVariableIfPossible(ifArgumentValue));
+    /**
+     * @description Add an argument to the current directive
+     * @param key The argument name
+     * @param value The argument value. Use string with the `$` sign for variable referencing
+     * @return The current instance of `GraphQLDirective`
+     */
+    global GraphQLDirective withArgument(String key, Object value) {
+        return withArgument(new GraphQLArgument(key, value));
+    }
+
+    /**
+     * @description Add an argument to the current directive
+     * @param argument The argument to be added
+     * @return The current instance of `GraphQLDirective`
+     */
+    global GraphQLDirective withArgument(GraphQLArgument argument) {
+        arguments.add(argument);
+        return this;
     }
 
     public override String toString() {
@@ -42,20 +52,17 @@ global class GraphQLDirective {
     }
 
     public String toString(Boolean pretty) {
-        return GraphQLConstants.AT +
-            type.name().toLowerCase() +
-            GraphQLConstants.PARENTHESE_LEFT +
-            ifArgument.toString(pretty) +
-            GraphQLConstants.PARENTHESE_RIGHT;
-    }
-
-    private Object toVariableIfPossible(Object argument) {
-        if (argument instanceof String && !((String) argument).startsWith(GraphQLConstants.DOLLAR)) {
-            return GraphQLConstants.DOLLAR + argument;
+        String definition = GraphQLConstants.AT + name;
+        if (hasArguments()) {
+            List<String> rawArguments = new List<String>();
+            for (GraphQLArgument argument : arguments) {
+                rawArguments.add(argument.toString(pretty));
+            }
+            definition +=
+                GraphQLConstants.PARENTHESE_LEFT +
+                String.join(rawArguments, GraphQLConstants.COMMA + GraphQLParser.getSmallIndent(pretty)) +
+                GraphQLConstants.PARENTHESE_RIGHT;
         }
-        return argument;
+        return definition;
     }
-
-    @TestVisible
-    private class GraphQLDirectiveException extends Exception {}
 }

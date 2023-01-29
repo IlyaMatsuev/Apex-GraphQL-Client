@@ -105,6 +105,15 @@ global class GraphQLSubscription extends GraphQLOperation {
     }
 
     /**
+     * @description Add a custom directive to the current subscription node
+     * @param directive The directive to be added
+     * @return The current instance of `GraphQLSubscription`
+     */
+    global GraphQLSubscription withDirective(GraphQLDirective directive) {
+        return (GraphQLSubscription) addDirective(directive);
+    }
+
+    /**
      * @description Add a fragment definition for the current subscription node
      * @param fragment The fragment definition to add
      * @throws GraphQLOperationException If the provided fragment is inline

@@ -105,6 +105,15 @@ global class GraphQLMutation extends GraphQLOperation {
     }
 
     /**
+     * @description Add a custom directive to the current mutation node
+     * @param directive The directive to be added
+     * @return The current instance of `GraphQLMutation`
+     */
+    global GraphQLMutation withDirective(GraphQLDirective directive) {
+        return (GraphQLMutation) addDirective(directive);
+    }
+
+    /**
      * @description Add a fragment definition for the current mutation node
      * @param fragment The fragment definition to add
      * @throws GraphQLOperationException If the provided fragment is inline

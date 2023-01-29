@@ -128,6 +128,17 @@ private class GraphQLSubscriptionTest {
     }
 
     @IsTest
+    private static void subscriptionWithDirectiveTest() {
+        GraphQLSubscription subscription = new GraphQLSubscription()
+            .withDirective(new GraphQLDirective('test'))
+            .withField('field');
+
+        System.assertEquals(1, subscription.directives.size());
+        System.assertEquals('subscription@test{field}', subscription.build());
+        System.assertEquals('subscription @test {\n  field\n}', subscription.build(true));
+    }
+
+    @IsTest
     private static void subscriptionWithFieldNodeTest() {
         String nodeName = 'node1';
 

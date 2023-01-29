@@ -183,12 +183,21 @@ global class GraphQLField extends GraphQLNode {
     }
 
     /**
+     * @description Add a custom directive to the current node
+     * @param directive The directive to be added
+     * @return The current instance of `GraphQLField`
+     */
+    global GraphQLField withDirective(GraphQLDirective directive) {
+        return (GraphQLField) addDirective(directive);
+    }
+
+    /**
      * @description Add the standard `includeIf` directive to the current node
      * @param condition The boolean condition for the directive
      * @return The current instance of `GraphQLField`
      */
     global GraphQLField includeIf(Boolean condition) {
-        return (GraphQLField) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, condition));
+        return (GraphQLField) addStandardDirective('include', condition);
     }
 
     /**
@@ -197,7 +206,7 @@ global class GraphQLField extends GraphQLNode {
      * @return The current instance of `GraphQLField`
      */
     global GraphQLField includeIf(String variable) {
-        return (GraphQLField) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, variable));
+        return (GraphQLField) addStandardDirective('include', variable);
     }
 
     /**
@@ -206,7 +215,7 @@ global class GraphQLField extends GraphQLNode {
      * @return The current instance of `GraphQLField`
      */
     global GraphQLField skipIf(Boolean condition) {
-        return (GraphQLField) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, condition));
+        return (GraphQLField) addStandardDirective('skip', condition);
     }
 
     /**
@@ -215,7 +224,7 @@ global class GraphQLField extends GraphQLNode {
      * @return The current instance of `GraphQLField`
      */
     global GraphQLField skipIf(String variable) {
-        return (GraphQLField) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, variable));
+        return (GraphQLField) addStandardDirective('skip', variable);
     }
 
     /**

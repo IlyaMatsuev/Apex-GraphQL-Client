@@ -151,12 +151,21 @@ global class GraphQLFragment extends GraphQLNode {
     }
 
     /**
+     * @description Add a custom directive to the current fragment
+     * @param directive The directive to be added
+     * @return The current instance of `GraphQLFragment`
+     */
+    global GraphQLFragment withDirective(GraphQLDirective directive) {
+        return (GraphQLFragment) addDirective(directive);
+    }
+
+    /**
      * @description Add the standard `includeIf` directive to the current fragment
      * @param condition The boolean condition for the directive
      * @return The current instance of `GraphQLFragment`
      */
     global GraphQLFragment includeIf(Boolean condition) {
-        return (GraphQLFragment) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, condition));
+        return (GraphQLFragment) addStandardDirective('include', condition);
     }
 
     /**
@@ -165,7 +174,7 @@ global class GraphQLFragment extends GraphQLNode {
      * @return The current instance of `GraphQLFragment`
      */
     global GraphQLFragment includeIf(String variable) {
-        return (GraphQLFragment) addDirective(new GraphQLDirective(GraphQLDirectiveType.Include, variable));
+        return (GraphQLFragment) addStandardDirective('include', variable);
     }
 
     /**
@@ -174,7 +183,7 @@ global class GraphQLFragment extends GraphQLNode {
      * @return The current instance of `GraphQLFragment`
      */
     global GraphQLFragment skipIf(Boolean condition) {
-        return (GraphQLFragment) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, condition));
+        return (GraphQLFragment) addStandardDirective('skip', condition);
     }
 
     /**
@@ -183,6 +192,6 @@ global class GraphQLFragment extends GraphQLNode {
      * @return The current instance of `GraphQLFragment`
      */
     global GraphQLFragment skipIf(String variable) {
-        return (GraphQLFragment) addDirective(new GraphQLDirective(GraphQLDirectiveType.Skip, variable));
+        return (GraphQLFragment) addStandardDirective('skip', variable);
     }
 }

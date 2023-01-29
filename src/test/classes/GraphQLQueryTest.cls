@@ -128,6 +128,15 @@ private class GraphQLQueryTest {
     }
 
     @IsTest
+    private static void queryWithDirectiveTest() {
+        GraphQLQuery query = new GraphQLQuery().withDirective(new GraphQLDirective('test')).withField('field');
+
+        System.assertEquals(1, query.directives.size());
+        System.assertEquals('query@test{field}', query.build());
+        System.assertEquals('query @test {\n  field\n}', query.build(true));
+    }
+
+    @IsTest
     private static void queryWithInlineFragmentDefinitionNegativeTest() {
         GraphQLFragment fragment = new GraphQLFragment('Type1');
 
@@ -187,6 +196,24 @@ private class GraphQLQueryTest {
 
     @IsTest
     private static void buildQueryPositiveTest() {
+        List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('field1'), new GraphQLField('field2') };
+        List<String> fields = new List<String> { 'field3', 'field4' };
+
+        GraphQLQuery query = new GraphQLQuery()
+            .withField(nodes.get(0))
+            .withField(nodes.get(1))
+            .withFields(fields)
+            .withField('field3');
+
+        System.assert(query != null);
+        System.assert(String.isBlank(query.name));
+        System.assertEquals(nodes.size() + fields.size(), query.nodes.size());
+        System.assertEquals('query{field1,field2,field3,field4}', query.build());
+        System.assertEquals('query {\n  field1\n  field2\n  field3\n  field4\n}', query.build(true));
+    }
+
+    @IsTest
+    private static void buildQueryWithDirectivePositiveTest() {
         List<GraphQLField> nodes = new List<GraphQLField> { new GraphQLField('field1'), new GraphQLField('field2') };
         List<String> fields = new List<String> { 'field3', 'field4' };
 

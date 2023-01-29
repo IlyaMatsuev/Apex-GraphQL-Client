@@ -96,6 +96,30 @@ private class GraphQLFragmentTest {
     }
 
     @IsTest
+    private static void fragmentWithCustomDirectivesTest() {
+        String name = 'Fields';
+        String type = 'SomeType';
+        GraphQLFragment fragment = new GraphQLFragment(name, type)
+            .withField('field1')
+            .withField('field2')
+            .withDirective(new GraphQLDirective('include').withArgument('if', true))
+            .withDirective(new GraphQLDirective('skip').withArgument('if', false));
+
+        System.assert(fragment.hasNodes());
+        System.assert(fragment.hasDirectives());
+        System.assertEquals(2, fragment.nodes.size());
+        System.assertEquals(2, fragment.directives.size());
+        System.assertEquals(
+            'fragment Fields on SomeType@include(if:true) @skip(if:false){field1,field2}',
+            fragment.build()
+        );
+        System.assertEquals(
+            'fragment Fields on SomeType @include(if: true) @skip(if: false) {\n  field1\n  field2\n}',
+            fragment.build(true)
+        );
+    }
+
+    @IsTest
     private static void fragmentWithDirectivesTest() {
         String name = 'Fields';
         String type = 'SomeType';
@@ -110,7 +134,7 @@ private class GraphQLFragmentTest {
         System.assertEquals(2, fragment.nodes.size());
         System.assertEquals(2, fragment.directives.size());
         System.assertEquals(
-            'fragment Fields on SomeType @include(if:true) @skip(if:false){field1,field2}',
+            'fragment Fields on SomeType@include(if:true) @skip(if:false){field1,field2}',
             fragment.build()
         );
         System.assertEquals(
@@ -143,7 +167,7 @@ private class GraphQLFragmentTest {
             .withInlineFragment(new GraphQLFragment().includeIf('var').skipIf('var2').withField('field22'));
 
         System.assertEquals(
-            'fragment Fields on SomeType{field1,field2,node{field1,field2},... on SomeType2{field11},... @include(if:$var) @skip(if:$var2){field22}}',
+            'fragment Fields on SomeType{field1,field2,node{field1,field2},... on SomeType2{field11},...@include(if:$var) @skip(if:$var2){field22}}',
             fragment.build()
         );
         System.assertEquals(
