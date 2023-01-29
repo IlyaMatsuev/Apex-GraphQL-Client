@@ -8,7 +8,7 @@ global class GraphQLVariable {
     global String name {
         get;
         private set {
-            String newName = value;
+            String newName = value.trim();
             if (newName.startsWith(GraphQLConstants.DOLLAR)) {
                 newName = newName.substringAfter(GraphQLConstants.DOLLAR);
             }
@@ -17,12 +17,12 @@ global class GraphQLVariable {
     }
 
     /**
-     * @description The variable definition type without the `!` sign. If it's non-null type, the `isNonNull` variabel should be `true`
+     * @description The variable definition type without the `!` sign. If it's non-null type, the `isNonNull` variable should be `true`
      */
     global String type {
         get;
         private set {
-            String newType = value;
+            String newType = value.trim();
             if (newType.endsWith(GraphQLConstants.EXCLAMATION)) {
                 asNonNull();
                 newType = newType.substringBeforeLast(GraphQLConstants.EXCLAMATION);
@@ -93,7 +93,7 @@ global class GraphQLVariable {
     }
 
     /**
-     * @description Represent the current variable default value as a GraphQL enum value
+     * @description Represents the current variable default value as a GraphQL enum value
      * @throws GraphQLVariableException If the doesn't have any default value set yet
      * @throws GraphQLArgumentException If the default value is not String or if it's a variable reference
      * @return The current instance of the variable definition

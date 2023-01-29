@@ -108,7 +108,36 @@ Classes:
 
 ## What's new
 
-### Opportunity to add inline fragments to nodes
+### A builder for GraphQL variables in the operations
+
+Now, a complex variable for the operation can be defined with the builder-like class called `GraphQLVariable`. It allows you to set up name, type, nullability and default value of the variable.
+
+Example:
+
+```gql
+query ($var1: Int! = 1, $var2: SomeType! = { key: "value" }) {
+    profiles {
+        name
+    }
+}
+```
+
+Apex equivalent:
+
+```java
+GraphQLQuery query = new GraphQLQuery()
+  .defineVariable(new GraphQLVariable('var1', 'Int!').withDefault(1))
+  .defineVariable(
+    new GraphQLVariable('var2', 'SomeType')
+      .asNonNull()
+      .withDefault(new Map<String, Object> { 'key' => 'value' })
+  )
+  .withField(new GraphQLField('profiles').withField('name'));
+
+System.debug(query.build(true));
+```
+
+### Add inline fragments to nodes
 
 There two new methods for `GraphQLField` and `GraphQLFragment` that will allow you to use inline fragments. Read more about inline fragments [here](https://spec.graphql.org/June2018/#sec-Inline-Fragments).
 

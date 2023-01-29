@@ -58,7 +58,7 @@ global class GraphQLArgument {
     }
 
     /**
-     * @description Represent the current argument as a GraphQL enum value
+     * @description Represents the current argument as a GraphQL enum value
      * @throws GraphQLArgumentException If the current argument value is not String or if it's a variable reference
      * @return The current instance of `GraphQLArgument`
      */
