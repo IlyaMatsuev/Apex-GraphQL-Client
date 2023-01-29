@@ -24,6 +24,12 @@ private class GraphQLArgumentTest {
     }
 
     @IsTest
+    private static void stringifyIntegerArgumentWithoutKeyTest() {
+        GraphQLArgument argument = new GraphQLArgument(null, 123);
+        System.assertEquals('123', argument.toString());
+    }
+
+    @IsTest
     private static void stringifyLongArgumentTest() {
         String key = 'key';
         Long value = 1111111111;
@@ -158,6 +164,24 @@ private class GraphQLArgumentTest {
         // Fields order is reversed
         System.assertEquals(
             'key: { key4: { key42: "value:\\"$var2\\"     !", key41: $var2 }, key3: 2, key2: $var, key1: "value" }',
+            argument.toString(true)
+        );
+    }
+
+    @IsTest
+    private static void stringifyObjectArgumentWithoutKeyTest() {
+        Map<String, Object> value = new Map<String, Object> {
+            'key1' => 'value',
+            'key2' => '$var',
+            'key3' => 2,
+            'key4' => new Map<String, Object> { 'key41' => '$var2', 'key42' => 'value:"$var2"     !' }
+        };
+
+        GraphQLArgument argument = new GraphQLArgument(null, value);
+
+        // Fields order is reversed
+        System.assertEquals(
+            '{ key4: { key42: "value:\\"$var2\\"     !", key41: $var2 }, key3: 2, key2: $var, key1: "value" }',
             argument.toString(true)
         );
     }

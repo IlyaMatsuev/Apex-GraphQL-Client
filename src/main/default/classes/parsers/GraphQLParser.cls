@@ -4,6 +4,10 @@ public abstract class GraphQLParser {
     protected final Integer maxQueryDepth = GraphQLConfigs.getInteger(GraphQLConfigs.Option.MaxQueryDepth);
     protected final Integer defaultIndent = GraphQLConfigs.getInteger(GraphQLConfigs.Option.QueryIndentSize);
 
+    public static String getSmallIndent(Boolean pretty) {
+        return pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY;
+    }
+
     public String parse(GraphQLNode node, Boolean pretty) {
         return parse(node, INITIAL_DEPTH, pretty);
     }
@@ -46,10 +50,6 @@ public abstract class GraphQLParser {
             return GraphQLConstants.EMPTY;
         }
         return GraphQLConstants.SPACE.repeat(depth * defaultIndent);
-    }
-
-    protected String getSmallIndent(Boolean pretty) {
-        return pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY;
     }
 
     protected String getLineBreak(Boolean pretty) {

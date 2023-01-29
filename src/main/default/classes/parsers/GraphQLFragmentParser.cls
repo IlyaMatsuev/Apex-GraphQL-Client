@@ -21,7 +21,7 @@ public class GraphQLFragmentParser extends GraphQLParser {
         return getIndent(depth, pretty) +
             spread +
             parseDirectives(fragment, pretty) +
-            getSmallIndent(pretty) +
+            GraphQLParser.getSmallIndent(pretty) +
             parseChildNodes(fragment, depth, pretty);
     }
 
@@ -34,7 +34,7 @@ public class GraphQLFragmentParser extends GraphQLParser {
             GraphQLConstants.SPACE +
             fragment.type +
             parseDirectives(fragment, pretty) +
-            getSmallIndent(pretty) +
+            GraphQLParser.getSmallIndent(pretty) +
             parseChildNodes(fragment, depth, pretty);
     }
 }

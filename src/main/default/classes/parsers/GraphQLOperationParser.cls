@@ -11,7 +11,7 @@ public class GraphQLOperationParser extends GraphQLParser {
             parseDirectives(node, pretty);
 
         if (String.isNotBlank(operationNameAndVars) && !operationNameAndVars.endsWith(GraphQLConstants.SPACE)) {
-            operationNameAndVars += getSmallIndent(pretty);
+            operationNameAndVars += GraphQLParser.getSmallIndent(pretty);
         }
         return operationNameAndVars + parseChildNodes(node, depth, pretty) + parseFragmentDefinitions(node, pretty);
     }
@@ -21,7 +21,9 @@ public class GraphQLOperationParser extends GraphQLParser {
     }
 
     private String parseName(GraphQLOperation node, Boolean pretty) {
-        return String.isNotBlank(node.name) ? (GraphQLConstants.SPACE + node.name) : getSmallIndent(pretty);
+        return String.isNotBlank(node.name)
+            ? (GraphQLConstants.SPACE + node.name)
+            : GraphQLParser.getSmallIndent(pretty);
     }
 
     private String parseVariableDefinitions(GraphQLOperation node, Boolean pretty) {
@@ -35,15 +37,15 @@ public class GraphQLOperationParser extends GraphQLParser {
                 GraphQLConstants.DOLLAR +
                 name +
                 GraphQLConstants.COLON +
-                getSmallIndent(pretty) +
+                GraphQLParser.getSmallIndent(pretty) +
                 node.variables.get(name)
             );
         }
 
         return GraphQLConstants.PARENTHESE_LEFT +
-            String.join(rawVariableDefinitions, GraphQLConstants.COMMA + getSmallIndent(pretty)) +
+            String.join(rawVariableDefinitions, GraphQLConstants.COMMA + GraphQLParser.getSmallIndent(pretty)) +
             GraphQLConstants.PARENTHESE_RIGHT +
-            getSmallIndent(pretty);
+            GraphQLParser.getSmallIndent(pretty);
     }
 
     private String parseFragmentDefinitions(GraphQLOperation node, Boolean pretty) {
