@@ -131,7 +131,16 @@ global class GraphQLMutation extends GraphQLOperation {
      * @return The instance of the current `GraphQLMutation` class
      */
     global GraphQLMutation defineVariable(String name, String typeDefinition) {
-        return (GraphQLMutation) addVariable(name, typeDefinition);
+        return defineVariable(new GraphQLVariable(name, typeDefinition));
+    }
+
+    /**
+     * @description Add a variable definition for the current mutation node
+     * @param variable The variable definition to add
+     * @return The instance of the current `GraphQLMutation` class
+     */
+    global GraphQLMutation defineVariable(GraphQLVariable variable) {
+        return (GraphQLMutation) addVariable(variable);
     }
 
     /**

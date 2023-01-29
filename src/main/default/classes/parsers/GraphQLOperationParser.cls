@@ -31,19 +31,13 @@ public class GraphQLOperationParser extends GraphQLParser {
             return GraphQLConstants.EMPTY;
         }
 
-        List<String> rawVariableDefinitions = new List<String>();
-        for (String name : node.variables.keySet()) {
-            rawVariableDefinitions.add(
-                GraphQLConstants.DOLLAR +
-                name +
-                GraphQLConstants.COLON +
-                GraphQLParser.getSmallIndent(pretty) +
-                node.variables.get(name)
-            );
+        List<String> rawVariables = new List<String>();
+        for (GraphQLVariable variable : node.variables) {
+            rawVariables.add(variable.toString(pretty));
         }
 
         return GraphQLConstants.PARENTHESE_LEFT +
-            String.join(rawVariableDefinitions, GraphQLConstants.COMMA + GraphQLParser.getSmallIndent(pretty)) +
+            String.join(rawVariables, GraphQLConstants.COMMA + GraphQLParser.getSmallIndent(pretty)) +
             GraphQLConstants.PARENTHESE_RIGHT +
             GraphQLParser.getSmallIndent(pretty);
     }

@@ -131,7 +131,16 @@ global class GraphQLSubscription extends GraphQLOperation {
      * @return The instance of the current `GraphQLSubscription` class
      */
     global GraphQLSubscription defineVariable(String name, String typeDefinition) {
-        return (GraphQLSubscription) addVariable(name, typeDefinition);
+        return defineVariable(new GraphQLVariable(name, typeDefinition));
+    }
+
+    /**
+     * @description Add a variable definition for the current subscription node
+     * @param variable The variable definition to add
+     * @return The instance of the current `GraphQLSubscription` class
+     */
+    global GraphQLSubscription defineVariable(GraphQLVariable variable) {
+        return (GraphQLSubscription) addVariable(variable);
     }
 
     /**

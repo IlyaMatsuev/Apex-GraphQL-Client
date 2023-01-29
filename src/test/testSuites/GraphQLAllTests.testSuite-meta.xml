@@ -3,6 +3,7 @@
     <testClassName>GraphQLArgumentTest</testClassName>
     <testClassName>GraphQLDirectiveTest</testClassName>
     <testClassName>GraphQLFragmentTest</testClassName>
+    <testClassName>GraphQLVariableTest</testClassName>
     <testClassName>GraphQLMutationTest</testClassName>
     <testClassName>GraphQLFieldTest</testClassName>
     <testClassName>GraphQLQueryTest</testClassName>

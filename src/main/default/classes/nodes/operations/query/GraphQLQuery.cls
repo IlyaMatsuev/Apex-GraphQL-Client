@@ -131,7 +131,16 @@ global class GraphQLQuery extends GraphQLOperation {
      * @return The instance of the current `GraphQLQuery` class
      */
     global GraphQLQuery defineVariable(String name, String typeDefinition) {
-        return (GraphQLQuery) addVariable(name, typeDefinition);
+        return defineVariable(new GraphQLVariable(name, typeDefinition));
+    }
+
+    /**
+     * @description Add a variable definition for the current query node
+     * @param variable The variable definition to add
+     * @return The instance of the current `GraphQLQuery` class
+     */
+    global GraphQLQuery defineVariable(GraphQLVariable variable) {
+        return (GraphQLQuery) addVariable(variable);
     }
 
     /**
