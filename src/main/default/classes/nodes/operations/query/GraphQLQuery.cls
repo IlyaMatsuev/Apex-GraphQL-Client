@@ -105,6 +105,15 @@ global class GraphQLQuery extends GraphQLOperation {
     }
 
     /**
+     * @description Add a custom directive to the current query node
+     * @param directive The directive to be added
+     * @return The current instance of `GraphQLQuery`
+     */
+    global GraphQLQuery withDirective(GraphQLDirective directive) {
+        return (GraphQLQuery) addDirective(directive);
+    }
+
+    /**
      * @description Add a fragment definition for the current query node
      * @param fragment The fragment definition to add
      * @throws GraphQLOperationException If the provided fragment is inline

@@ -10,10 +10,10 @@ public class GraphQLOperationParser extends GraphQLParser {
             parseVariableDefinitions(node, pretty) +
             parseDirectives(node, pretty);
 
-        if (String.isNotBlank(operationNameAndVars) && !operationNameAndVars.endsWith(GraphQLConstants.SPACE)) {
-            operationNameAndVars += GraphQLParser.getSmallIndent(pretty);
-        }
-        return operationNameAndVars + parseChildNodes(node, depth, pretty) + parseFragmentDefinitions(node, pretty);
+        return operationNameAndVars.trim().normalizeSpace() +
+            GraphQLParser.getSmallIndent(pretty) +
+            parseChildNodes(node, depth, pretty) +
+            parseFragmentDefinitions(node, pretty);
     }
 
     private String parseOperation(GraphQLOperation node) {

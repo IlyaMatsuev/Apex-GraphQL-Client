@@ -7,14 +7,14 @@ The package for Salesforce that aimed to provide a convenient way to communicate
 
 What is supported:
 
--   Building particular string nodes (if you want to send requests yourself)
 -   Building queries, mutations and subscriptions
+-   Building graphql nodes (fields). If you want to send requests yourself
 -   Passing arguments to the graphql nodes (fields)
--   Passing arguments to the graphql queries and mutations from request
--   Sync and async graphql HTTP service for sending requests (with callback implementation for async calls)
--   Functionality for handling GraphQL responses
--   Using fragments for graphql requests
--   Using `@include` and `@skip` directives for graphql nodes (fields)
+-   Passing variables to the graphql operations from request
+-   Passing directives to the graphql operations and nodes
+-   Using fragments for graphql requests. Inline fragments are supported as well.
+-   Sync and async graphql HTTP client for sending requests (with callback implementation for async calls)
+-   Handling responses in GraphQL format
 
 What is NOT supported:
 

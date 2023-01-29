@@ -204,6 +204,18 @@ private class GraphQLFieldTest {
     }
 
     @IsTest
+    private static void nodeWithDirectiveTest() {
+        GraphQLField node = new GraphQLField('node')
+            .withDirective(new GraphQLDirective('test').withArgument('var', true))
+            .withField('field1');
+
+        System.assert(node.hasDirectives());
+        System.assertEquals(1, node.directives.size());
+        System.assertEquals('node@test(var:true){field1}', node.build());
+        System.assertEquals('node @test(var: true) {\n  field1\n}', node.build(true));
+    }
+
+    @IsTest
     private static void nodeIncludeIfConditionAndVariableTest() {
         GraphQLField node = new GraphQLField().includeIf(false).includeIf('var');
 
@@ -228,7 +240,7 @@ private class GraphQLFieldTest {
         System.assertEquals('Test', query.name);
         System.assertEquals(nodes.size(), query.nodes.size());
         System.assertEquals(0, query.variables.size());
-        System.assertEquals('query Test{node1,node2}', query.build());
+        System.assertEquals('query Test{node1,node2}', query.toString());
     }
 
     @IsTest
@@ -240,7 +252,7 @@ private class GraphQLFieldTest {
         System.assertEquals('Test', mutation.name);
         System.assertEquals(nodes.size(), mutation.nodes.size());
         System.assertEquals(0, mutation.variables.size());
-        System.assertEquals('mutation Test{node1,node2}', mutation.build());
+        System.assertEquals('mutation Test{node1,node2}', mutation.toString());
     }
 
     @IsTest
@@ -252,7 +264,7 @@ private class GraphQLFieldTest {
         System.assertEquals('Test', subscription.name);
         System.assertEquals(nodes.size(), subscription.nodes.size());
         System.assertEquals(0, subscription.variables.size());
-        System.assertEquals('subscription Test{node1,node2}', subscription.build());
+        System.assertEquals('subscription Test{node1,node2}', subscription.toString());
     }
 
     /**
@@ -416,7 +428,7 @@ private class GraphQLFieldTest {
         GraphQLField rootNode = new GraphQLField('root').withField(node);
 
         System.assertEquals(
-            'root{testMethod(var1:$test1) @include(if:true) @skip(if:$test1){field1,field2,field3}}',
+            'root{testMethod(var1:$test1)@include(if:true) @skip(if:$test1){field1,field2,field3}}',
             rootNode.build()
         );
         System.assertEquals(

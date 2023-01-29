@@ -142,6 +142,13 @@ global abstract class GraphQLNode {
         return this;
     }
 
+    protected virtual GraphQLNode addStandardDirective(String name, Object value) {
+        if (value instanceof String) {
+            value = GraphQLConstants.DOLLAR + value;
+        }
+        return addDirective(new GraphQLDirective(name).withArgument('if', value));
+    }
+
     @TestVisible
     private class GraphQLNodeException extends Exception {}
 }

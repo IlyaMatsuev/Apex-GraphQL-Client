@@ -104,9 +104,42 @@ Classes:
 
 -   `IGraphQLParser`
 -   `IGraphQLClient`
+-   `GraphQLDirectiveType`
 -   `GraphQLConfig`
 
 ## What's new
+
+### Add custom directives to operations and nodes
+
+Previously, it was only possible to add `include` and `skip` directives to the nodes. Now you can add custom directives to the operations, fragments and fields with the help of `GraphQLDirective` class and `withDirective()` method.
+
+Example:
+
+```gql
+query @auth(username: "John", password: "Wick") {
+    profiles @test {
+        name
+    }
+}
+```
+
+Apex equivalent:
+
+```java
+GraphQLQuery query = new GraphQLQuery()
+  .withDirective(
+    new GraphQLDirective('auth')
+      .withArgument('username', 'John')
+      .withArgument('password', 'Wick')
+  )
+  .withField(
+    new GraphQLField('profiles')
+      .withField('name')
+      .withDirective(new GraphQLDirective('test'))
+  );
+
+System.debug(query.build(true));
+```
 
 ### A builder for GraphQL variables in the operations
 

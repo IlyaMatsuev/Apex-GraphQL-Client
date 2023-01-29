@@ -128,6 +128,15 @@ private class GraphQLMutationTest {
     }
 
     @IsTest
+    private static void mutationWithDirectiveTest() {
+        GraphQLMutation mutation = new GraphQLMutation().withDirective(new GraphQLDirective('test')).withField('field');
+
+        System.assertEquals(1, mutation.directives.size());
+        System.assertEquals('mutation@test{field}', mutation.build());
+        System.assertEquals('mutation @test {\n  field\n}', mutation.build(true));
+    }
+
+    @IsTest
     private static void mutationWithFieldNodeTest() {
         String nodeName = 'node1';
 

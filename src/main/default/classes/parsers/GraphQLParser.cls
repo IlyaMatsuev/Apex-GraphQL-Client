@@ -42,7 +42,7 @@ public abstract class GraphQLParser {
             rawDirectives.add(directive.toString(pretty));
         }
 
-        return GraphQLConstants.SPACE + String.join(rawDirectives, GraphQLConstants.SPACE);
+        return getSmallIndent(pretty) + String.join(rawDirectives, GraphQLConstants.SPACE);
     }
 
     protected String getIndent(Integer depth, Boolean pretty) {

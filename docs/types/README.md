@@ -20,7 +20,6 @@
 ### Enums:
 
 -   [GraphQLArgumentType](#graphqlargumenttype)
--   [GraphQLDirectiveType](#graphqldirectivetype)
 -   [GraphQLOperationType](#graphqloperationtype)
 
 ### Interfaces:
@@ -377,9 +376,21 @@ This class is used for passing directives to GraphQL nodes.
 
 ### Constructors
 
-`GraphQLDirective(GraphQLDirectiveType type, String ifArgumentValue)` - Creates a new instance of the GraphQLDirective with provided directive type and variable name.
+`GraphQLDirective(String name)` - Creates an instance of a directive by the provided name.
 
-`GraphQLDirective(GraphQLDirectiveType type, Boolean ifArgumentValue)` - Creates a new instance of the GraphQLDirective with provided directive type and if condition.
+### Fields & Properties
+
+`String name` - The directive's name followed after the `@` sign.
+
+`List<GraphQLArgument> arguments` - The list of arguments added to the directive
+
+### Methods
+
+`Boolean hasArguments()` - Returns true if there is at least one argument in the directive. Otherwise returns false.
+
+`GraphQLDirective withArgument(String key, Object value)` - Adds a new argument for the directive. If the provided value is a string that starts with `$` it will be handled as a variable reference.
+
+`GraphQLDirective withArgument(GraphQLArgument argument)` - Adds a new argument for the directive.
 
 ---
 
@@ -490,17 +501,6 @@ This is an enum type representing available GraphQL scalar (and a couple of othe
 `x_Null` - Null GraphQL type.  
 `x_Enum` - GraphQL enum value type.
 `x_Object` - Any other type that needs to be passed to arguments (e.g. any custom type or input).
-
----
-
-## GraphQLDirectiveType
-
-This is an enum type representing standard GraphQL directives: include and skip.
-
-### Values
-
-`Include` - Defines if we need to include a node (field).  
-`Skip` - Defines if we need to NOT include a node (field).
 
 ---
 
