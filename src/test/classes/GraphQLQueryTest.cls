@@ -214,7 +214,7 @@ private class GraphQLQueryTest {
         GraphQLQuery query = new GraphQLQuery()
             .withFields(nodes)
             .withFields(fields)
-            .defineVariable('param1', 'Int!')
+            .defineVariable(new GraphQLVariable('param1', 'Int').asNonNull())
             .defineVariable('param2', 'String');
 
         System.assert(query != null);

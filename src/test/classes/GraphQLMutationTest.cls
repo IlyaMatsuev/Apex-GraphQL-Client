@@ -196,14 +196,14 @@ private class GraphQLMutationTest {
         GraphQLMutation mutation = new GraphQLMutation()
             .withFields(nodes)
             .withFields(fields)
-            .defineVariable('model', 'InputType!');
+            .defineVariable(new GraphQLVariable('model', 'InputType!').withDefault('hello world!'));
 
         System.assert(mutation != null);
         System.assert(String.isBlank(mutation.name));
         System.assertEquals(nodes.size() + fields.size(), mutation.nodes.size());
-        System.assertEquals('mutation($model:InputType!){node1,node2,field3,field4}', mutation.build());
+        System.assertEquals('mutation($model:InputType!="hello world!"){node1,node2,field3,field4}', mutation.build());
         System.assertEquals(
-            'mutation ($model: InputType!) {\n  node1\n  node2\n  field3\n  field4\n}',
+            'mutation ($model: InputType! = "hello world!") {\n  node1\n  node2\n  field3\n  field4\n}',
             mutation.build(true)
         );
     }

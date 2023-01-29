@@ -98,6 +98,10 @@ global abstract class GraphQLNode {
         throw new GraphQLNodeException('No parser implementation found for this node');
     }
 
+    public override String toString() {
+        return build();
+    }
+
     protected virtual GraphQLNode addFields(String[] fields) {
         List<GraphQLField> nodes = new List<GraphQLField>();
         for (String field : fields) {

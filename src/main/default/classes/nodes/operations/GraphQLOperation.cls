@@ -3,9 +3,9 @@
  */
 global abstract class GraphQLOperation extends GraphQLNode {
     /**
-     * @description The Map of defined variables for the operation
+     * @description The list of variable definitions added to the operation
      */
-    global final Map<String, String> variables = new Map<String, String>();
+    global final List<GraphQLVariable> variables = new List<GraphQLVariable>();
 
     /**
      * @description The list of fragment definitions added to the operation
@@ -66,8 +66,8 @@ global abstract class GraphQLOperation extends GraphQLNode {
         return this;
     }
 
-    protected virtual GraphQLOperation addVariable(String name, String typeDefinition) {
-        this.variables.put(name, typeDefinition);
+    protected virtual GraphQLOperation addVariable(GraphQLVariable variable) {
+        variables.add(variable);
         return this;
     }
 

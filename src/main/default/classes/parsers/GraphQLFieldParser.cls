@@ -18,7 +18,7 @@ public class GraphQLFieldParser extends GraphQLParser {
             parseDirectives(node, pretty);
 
         if (String.isNotBlank(nodeNameAndArgs) && node.hasNodes()) {
-            nodeNameAndArgs += getSmallIndent(pretty);
+            nodeNameAndArgs += GraphQLParser.getSmallIndent(pretty);
         }
 
         return nodeNameAndArgs + parseChildNodes(node, depth, pretty);
@@ -32,7 +32,7 @@ public class GraphQLFieldParser extends GraphQLParser {
         if (String.isBlank(node.alias)) {
             return GraphQLConstants.EMPTY;
         }
-        return node.alias + GraphQLConstants.COLON + getSmallIndent(pretty);
+        return node.alias + GraphQLConstants.COLON + GraphQLParser.getSmallIndent(pretty);
     }
 
     private String parseArguments(GraphQLField node, Boolean pretty) {
@@ -46,7 +46,7 @@ public class GraphQLFieldParser extends GraphQLParser {
         }
 
         return GraphQLConstants.PARENTHESE_LEFT +
-            String.join(rawArguments, GraphQLConstants.COMMA + getSmallIndent(pretty)) +
+            String.join(rawArguments, GraphQLConstants.COMMA + GraphQLParser.getSmallIndent(pretty)) +
             GraphQLConstants.PARENTHESE_RIGHT;
     }
 

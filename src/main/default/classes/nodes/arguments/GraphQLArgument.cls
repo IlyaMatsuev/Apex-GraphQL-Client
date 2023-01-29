@@ -58,7 +58,7 @@ global class GraphQLArgument {
     }
 
     /**
-     * @description Represent the current argument as a GraphQL enum value
+     * @description Represents the current argument as a GraphQL enum value
      * @throws GraphQLArgumentException If the current argument value is not String or if it's a variable reference
      * @return The current instance of `GraphQLArgument`
      */
@@ -77,10 +77,10 @@ global class GraphQLArgument {
     }
 
     public String toString(Boolean pretty) {
-        return key +
-            GraphQLConstants.COLON +
-            (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) +
-            valueToString(pretty);
+        if (String.isBlank(key)) {
+            return valueToString(pretty);
+        }
+        return key + GraphQLConstants.COLON + GraphQLParser.getSmallIndent(pretty) + valueToString(pretty);
     }
 
     // There is no way to get an object's type yet
@@ -149,7 +149,7 @@ global class GraphQLArgument {
             .replaceAll(
                 REPLACE_JSON_VARIABLE_REFS_REGEXP,
                 GraphQLConstants.COLON +
-                (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) +
+                GraphQLParser.getSmallIndent(pretty) +
                 FIRST_REGEX_MATCH_GROUP
             );
     }

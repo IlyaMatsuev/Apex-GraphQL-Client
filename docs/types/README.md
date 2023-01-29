@@ -10,6 +10,7 @@
         -   [GraphQLMutation](#graphqlmutation)
         -   [GraphQLSubscription](#graphqlsubscription)
 -   [GraphQLArgument](#graphqlargument)
+-   [GraphQLVariable](#graphqlvariable)
 -   [GraphQLDirective](#graphqldirective)
 -   [GraphQLRequest](#graphqlrequest)
 -   [GraphQLResponse](#graphqlresponse)
@@ -184,7 +185,7 @@ Extends `GraphQLNode`. The abstract class representing the GraphQL operation nod
 
 `List<GraphQLFragment> fragments` - The list of fragment node definitions.
 
-`Map<String, String> variables` - Variable names mapped to their type definitions. E.g. `(varName: Int! = 1)`.
+`List<GraphQLVariable> variables` - The list of variable definitions added to the operation.
 
 ### Methods
 
@@ -232,6 +233,8 @@ Extends GraphQLOperation. This class is used for building queries.
 
 `GraphQLQuery defineVariable(String name, String typeDefinition)` - Defines a new variable for the query with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
+`GraphQLQuery defineVariable(GraphQLVariable variable)` - Defines a new variable for the query.
+
 ---
 
 ## GraphQLMutation
@@ -269,6 +272,8 @@ Extends GraphQLOperation. This class is used for building mutations.
 `GraphQLMutation defineFragments(GraphQLFragment[] fragments)` - Defines multiple fragments for the mutation.
 
 `GraphQLMutation defineVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
+
+`GraphQLMutation defineVariable(GraphQLVariable variable)` - Defines a new variable for the mutation.
 
 ---
 
@@ -308,6 +313,8 @@ Extends GraphQLOperation. This class is used for building subscriptions. It's no
 
 `GraphQLSubscription defineVariable(String name, String typeDefinition)` - Defines a new variable for the mutation with the name provided as the first parameter (name is specified without a dollar `$` sign). The second parameter contains type definition of the variable as a string.
 
+`GraphQLSubscription defineVariable(GraphQLVariable variable)` - Defines a new variable for the subscription.
+
 ---
 
 ## GraphQLArgument
@@ -331,6 +338,36 @@ This class is used for passing arguments to GraphQL nodes.
 `Boolean isVariable()` - Returns true if the value of the argument references a variable. Otherwise, returns false. The value is considered as a variable if it starts with the dollar `$` sign.
 
 `GraphQLArgument asEnum()` - Represent the current argument as a GraphQL enum value.
+
+---
+
+## GraphQLVariable
+
+This class is used for passing variable definitions to GraphQL operations.
+
+### Constructors
+
+`GraphQLVariable(String name, String type)` - Creates a variable definition by the provided name and type.
+
+### Fields & Properties
+
+`String name` - The variable definition name without the `$` sign.
+
+`String type` - The variable definition type without the `!` sign. If it's non-null type, the `isNonNull` variable should be true.
+
+`Boolean isNonNull` - Flag that shows if the variable value is non-null for the request.
+
+`Object defaultValue` - The variable definition default value.
+
+### Methods
+
+`GraphQLVariable asNonNull()` - Marks the current variable definition as the non-null type.
+
+`GraphQLVariable asNonNull(Boolean isNonNull)` - Marks the current variable definition as the non-null or optional type.
+
+`GraphQLVariable withDefault(Object defaultValue)` - Adds a default value to the variable definition.
+
+`GraphQLVariable asEnum()` - Represents the current variable default value as a GraphQL enum value.
 
 ---
 
