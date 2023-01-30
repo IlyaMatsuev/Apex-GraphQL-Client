@@ -3,34 +3,24 @@ query CountriesQuery {
   countries {
     name
     capital {
-      ...CityFields
+      ... on City {
+        id
+        name
+      }
     }
   }
-  cities {
-    ...CityFields
-  }
-}
-fragment CityFields on City {
-    id
-    name
 }
 */
 
-// Create fragment instance passing its name and type it's referring to
-GraphQLFragment cityFieldsFragment = new GraphQLFragment('CityFields', 'City').withField('id').withField('name');
+// Create fragment instance passing the type name it's referring to. If we don't provide fragment name it's evaluated as inline fragment
+GraphQLFragment cityFieldsFragment = new GraphQLFragment('City').withField('id').withField('name');
 
 GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
-    // Use fragment fields for the capital node
-    .withField(new GraphQLField('capital').withFragment(cityFieldsFragment.name));
+    // Use inline fragment fields for the capital node
+    .withField(new GraphQLField('capital').withInlineFragment(cityFieldsFragment));
 
-GraphQLField citiesNode = new GraphQLField('cities')
-    // Use fragment fields for the cities node
-    .withFragment(cityFieldsFragment.name);
-
-GraphQLQuery query = new GraphQLQuery(new List<GraphQLField> { countriesNode, citiesNode })
-    // Define fragment for the query
-    .defineFragment(cityFieldsFragment);
+GraphQLQuery query = new GraphQLQuery(new List<GraphQLField> { countriesNode, citiesNode });
 
 GraphQLRequest request = query.asRequest();
 
@@ -43,7 +33,6 @@ if (response.hasErrors()) {
 } else {
     // Handling response as you wish, same as in other examples
     Map<String, Object> dataMap = response.getData();
-    List<Object> cities = (List<Object>) response.getDataNode('cities');
     DataWrapper data = (DataWrapper) response.getDataAs(DataWrapper.class);
     List<Country> countries = (List<Country>) response.getDataNodeAs('countries', List<Country>.class);
 }
@@ -52,7 +41,6 @@ if (response.hasErrors()) {
 
 public class DataWrapper {
     public List<Country> countries;
-    public List<City> cities;
 }
 
 public class Country {

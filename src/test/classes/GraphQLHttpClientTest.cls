@@ -1,23 +1,18 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLHttpClientTest {
     private static final String TEST_GQL_ENDPOINT = 'https://test.gql.endpoint.com';
 
     @IsTest
     private static void createClientWithoutEndpointNegativeTest() {
-        IGraphQLClient client;
         Exception error;
         try {
-            client = new GraphQLHttpClient();
+            new GraphQLHttpClient('');
         } catch (Exception ex) {
             error = ex;
         }
 
-        System.assert(client == null);
         System.assert(error != null);
-        System.assertEquals(
-            'GraphQL endpoint cannot be empty. Provide valid endpoint URL or specify default endpoint in the custom metadata',
-            error.getMessage()
-        );
+        System.assert(error instanceof GraphQLHttpClient.GraphQLHttpClientException);
     }
 
     /**
@@ -26,12 +21,12 @@ private class GraphQLHttpClientTest {
 
     @IsTest
     private static void sendRequestSyncPositiveTest() {
-        IGraphQLClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String>{ 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String>{ 'id', 'name' }));
+        GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
+        GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
-        GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
-        GraphQLRequest request = query.buildRequest().withHeader('Authorization', 'token');
+        GraphQLQuery query = new GraphQLQuery(heroNode);
+        GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock());
         Test.startTest();
@@ -50,12 +45,12 @@ private class GraphQLHttpClientTest {
 
     @IsTest
     private static void sendRequestSyncInvalidResponseFormatTest() {
-        IGraphQLClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String>{ 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String>{ 'id', 'name' }));
+        GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
+        GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
-        GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
-        GraphQLRequest request = query.buildRequest();
+        GraphQLQuery query = new GraphQLQuery(heroNode);
+        GraphQLRequest request = query.asRequest();
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock().withInvalidFormat());
         Test.startTest();
@@ -73,12 +68,12 @@ private class GraphQLHttpClientTest {
 
     @IsTest
     private static void sendRequestAsyncPositiveTest() {
-        IGraphQLClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
-        GraphQLNode heroNode = new GraphQLNode('hero', new List<String>{ 'name' })
-            .withNode(new GraphQLNode('heroFriends', new List<String>{ 'id', 'name' }));
+        GraphQLHttpClient client = new GraphQLHttpClient(TEST_GQL_ENDPOINT);
+        GraphQLField heroNode = new GraphQLField('hero', new List<String> { 'name' })
+            .withField(new GraphQLField('heroFriends', new List<String> { 'id', 'name' }));
 
-        GraphQLQueryNode query = new GraphQLQueryNode(heroNode);
-        GraphQLRequest request = query.buildRequest().withHeader('Authorization', 'token');
+        GraphQLQuery query = new GraphQLQuery(heroNode);
+        GraphQLRequest request = query.asRequest().withHeader('Authorization', 'token');
 
         Test.setMock(HttpCalloutMock.class, new CalloutMock());
         Test.startTest();
@@ -109,13 +104,13 @@ private class GraphQLHttpClientTest {
     }
 
     private class CalloutMock implements HttpCalloutMock {
-        private final Map<String, Object> responseBody = new Map<String, Object>{
-            'data' => new Map<String, Object>{
-                'hero' => new Map<String, Object>{
+        private final Map<String, Object> responseBody = new Map<String, Object> {
+            'data' => new Map<String, Object> {
+                'hero' => new Map<String, Object> {
                     'name' => 'R2-D2',
-                    'heroFriends' => new List<Object>{
-                        new Map<String, Object>{ 'id' => '1000', 'name' => 'Luke Skywalker' },
-                        new Map<String, Object>{ 'id' => '1003', 'name' => 'Leia Organa' }
+                    'heroFriends' => new List<Object> {
+                        new Map<String, Object> { 'id' => '1000', 'name' => 'Luke Skywalker' },
+                        new Map<String, Object> { 'id' => '1003', 'name' => 'Leia Organa' }
                     }
                 }
             }

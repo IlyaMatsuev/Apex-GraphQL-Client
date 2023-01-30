@@ -1,4 +1,4 @@
-@IsTest(IsParallel=true)
+@IsTest(IsParallel = true)
 private class GraphQLArgumentTest {
     @IsTest
     private static void createArgumentTest() {
@@ -20,7 +20,13 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('111', argument.toString());
+        System.assertEquals('key:111', argument.toString());
+    }
+
+    @IsTest
+    private static void stringifyIntegerArgumentWithoutKeyTest() {
+        GraphQLArgument argument = new GraphQLArgument(null, 123);
+        System.assertEquals('123', argument.toString());
     }
 
     @IsTest
@@ -30,7 +36,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('1111111111', argument.toString());
+        System.assertEquals('key:1111111111', argument.toString());
     }
 
     @IsTest
@@ -40,7 +46,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('111.11', argument.toString());
+        System.assertEquals('key:111.11', argument.toString());
     }
 
     @IsTest
@@ -50,7 +56,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('111.11', argument.toString());
+        System.assertEquals('key:111.11', argument.toString());
     }
 
     @IsTest
@@ -60,7 +66,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals('true', argument.toString());
+        System.assertEquals('key:true', argument.toString());
     }
 
     @IsTest
@@ -70,12 +76,17 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            value +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"qqqq"', argument.toString());
+    }
+
+    @IsTest
+    private static void stringifyEnumArgumentTest() {
+        String key = 'key';
+        String value = 'VALUE';
+
+        GraphQLArgument argument = new GraphQLArgument(key, value).asEnum();
+
+        System.assertEquals('key:VALUE', argument.toString());
     }
 
     @IsTest
@@ -85,7 +96,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(value, argument.toString());
+        System.assertEquals('key:$variableName', argument.toString());
     }
 
     @IsTest
@@ -95,12 +106,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            UserInfo.getUserId() +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"' + value + '"', argument.toString());
     }
 
     @IsTest
@@ -110,12 +116,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            value +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"' + value + '"', argument.toString());
     }
 
     @IsTest
@@ -126,12 +127,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            dateValue.format('MM/dd/yyyy') +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"' + dateValue.format('MM/dd/yyyy') + '"', argument.toString());
     }
 
     @IsTest
@@ -141,12 +137,7 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assertEquals(
-            GraphQLConstants.DOUBLE_QUOTES +
-            String.valueOf(value) +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.toString()
-        );
+        System.assertEquals('key:"' + String.valueOf(value) + '"', argument.toString());
     }
 
     @IsTest
@@ -155,20 +146,38 @@ private class GraphQLArgumentTest {
 
         GraphQLArgument argument = new GraphQLArgument(key, null);
 
-        System.assertEquals(((String) null), argument.toString());
+        System.assertEquals('key:null', argument.toString());
     }
 
     @IsTest
     private static void stringifyObjectArgumentTest() {
         String key = 'key';
-        Map<String, Object> value = new Map<String, Object>{
+        Map<String, Object> value = new Map<String, Object> {
             'key1' => 'value',
             'key2' => '$var',
             'key3' => 2,
-            'key4' => new Map<String, Object>{ 'key41' => '$var2', 'key42' => 'value:"$var2"     !' }
+            'key4' => new Map<String, Object> { 'key41' => '$var2', 'key42' => 'value:"$var2"     !' }
         };
 
         GraphQLArgument argument = new GraphQLArgument(key, value);
+
+        // Fields order is reversed
+        System.assertEquals(
+            'key: { key4: { key42: "value:\\"$var2\\"     !", key41: $var2 }, key3: 2, key2: $var, key1: "value" }',
+            argument.toString(true)
+        );
+    }
+
+    @IsTest
+    private static void stringifyObjectArgumentWithoutKeyTest() {
+        Map<String, Object> value = new Map<String, Object> {
+            'key1' => 'value',
+            'key2' => '$var',
+            'key3' => 2,
+            'key4' => new Map<String, Object> { 'key41' => '$var2', 'key42' => 'value:"$var2"     !' }
+        };
+
+        GraphQLArgument argument = new GraphQLArgument(null, value);
 
         // Fields order is reversed
         System.assertEquals(
@@ -178,28 +187,18 @@ private class GraphQLArgumentTest {
     }
 
     @IsTest
-    private static void parseStringArgumentTest() {
+    private static void asEnumWithVariableFailureTest() {
         String key = 'key';
-        String value = 'value';
+        String value = '$var';
 
-        GraphQLArgument argument = new GraphQLArgument(key, value);
+        Exception error;
+        try {
+            new GraphQLArgument(key, value).asEnum();
+        } catch (Exception ex) {
+            error = ex;
+        }
 
-        System.assertEquals(
-            key +
-            GraphQLConstants.COLON +
-            GraphQLConstants.DOUBLE_QUOTES +
-            value +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.parse(null, false)
-        );
-        System.assertEquals(
-            key +
-            GraphQLConstants.COLON +
-            GraphQLConstants.SPACE +
-            GraphQLConstants.DOUBLE_QUOTES +
-            value +
-            GraphQLConstants.DOUBLE_QUOTES,
-            argument.parse(null, true)
-        );
+        System.assert(error != null);
+        System.assert(error instanceof GraphQLArgument.GraphQLArgumentException);
     }
 }

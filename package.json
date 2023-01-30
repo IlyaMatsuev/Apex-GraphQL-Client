@@ -1,18 +1,18 @@
 {
-  "name": "graphql-apex-client",
+  "name": "gql-apex-client",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "graphql-apex-client",
   "scripts": {
     "prettier": "prettier --write",
-    "prettier:verify": "prettier --list-different \"**/*.{cls,trigger,md,xml,yaml,yml,json}\""
+    "prettier:verify": "prettier --list-different"
   },
   "devDependencies": {
+    "@ilyamatsuev/prettier-plugin-apex": "^2.0.3",
     "@prettier/plugin-xml": "^0.12.0",
     "husky": "^4.2.1",
     "lint-staged": "^10.0.7",
-    "prettier": "^2.7.1",
-    "prettier-plugin-apex": "^1.10.0"
+    "prettier": "^2.8.3"
   },
   "husky": {
     "hooks": {
@@ -21,7 +21,7 @@
   },
   "lint-staged": {
     "**/*.{cls,trigger,md,xml,yaml,yml,json}": [
-      "prettier"
+      "npm run prettier"
     ]
   }
 }

@@ -11,6 +11,7 @@ public class GraphQLConstants {
     public static final String EXCLAMATION = '!';
     public static final String DOLLAR = '$';
     public static final String AT = '@';
+    public static final String ASSIGN = '=';
 
     public static final String BRACE_LEFT = '{';
     public static final String BRACE_RIGHT = '}';

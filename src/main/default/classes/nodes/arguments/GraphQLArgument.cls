@@ -1,20 +1,34 @@
-global class GraphQLArgument implements IGraphQLParser {
+/**
+ * @description Represents an entry of a GraphQL argument in a node
+ */
+global class GraphQLArgument {
     // Searches for all JSON property names. Needed to escape properties' double quotes
     private static final String REPLACE_JSON_PROPS_REGEXP = '"(\\w+)"\\s*:';
     // Searches for all JSON values that are strings starting from '$'. Needed to escape variables' ref double quotes
     private static final String REPLACE_JSON_VARIABLE_REFS_REGEXP = ':\\s*"(\\$\\w+)"';
     private static final String FIRST_REGEX_MATCH_GROUP = '$1';
 
-    private static final String DATE_VALUE_FORMAT = GraphQLConfigManager.getString(GraphQLConfig.DateArgumentFormat);
-    private static final String DATE_TIME_VALUE_FORMAT = GraphQLConfigManager.getString(
-        GraphQLConfig.DateTimeArgumentFormat
+    private static final String DATE_VALUE_FORMAT = GraphQLConfigs.getString(GraphQLConfigs.Option.DateArgumentFormat);
+    private static final String DATE_TIME_VALUE_FORMAT = GraphQLConfigs.getString(
+        GraphQLConfigs.Option.DateTimeArgumentFormat
     );
-    private static final Boolean SUPPRESS_NULLS = GraphQLConfigManager.getBoolean(
-        GraphQLConfig.SupressNullsForObjectArguments
+    private static final Boolean SUPPRESS_NULLS = GraphQLConfigs.getBoolean(
+        GraphQLConfigs.Option.SupressNullsForObjectArguments
     );
 
+    /**
+     * @description The argument name
+     */
     global final String key;
+
+    /**
+     * @description The argument value
+     */
     global final Object value;
+
+    /**
+     * @description The argument GraphQL type
+     */
     global GraphQLArgumentType type {
         get {
             if (type == null) {
@@ -25,50 +39,48 @@ global class GraphQLArgument implements IGraphQLParser {
         private set;
     }
 
+    /**
+     * @description Create an instance of an argument by the provided name and value
+     * @param key The argument name
+     * @param value The argument value
+     */
     global GraphQLArgument(String key, Object value) {
         this.key = key;
         this.value = value;
     }
 
+    /**
+     * @description Check if the current argument references a variable
+     * @return `true` if the current argument references a variable. `false` otherwise
+     */
     global Boolean isVariable() {
         return value instanceof String && value != null && ((String) value).startsWith(GraphQLConstants.DOLLAR);
     }
 
-    global override String toString() {
+    /**
+     * @description Represents the current argument as a GraphQL enum value
+     * @throws GraphQLArgumentException If the current argument value is not String or if it's a variable reference
+     * @return The current instance of `GraphQLArgument`
+     */
+    global GraphQLArgument asEnum() {
+        if (!(value instanceof String) || isVariable()) {
+            throw new GraphQLArgumentException(
+                'Impossible to cast GraphQL argument as enum. The value type must be String and must not be a variable reference.'
+            );
+        }
+        type = GraphQLArgumentType.x_Enum;
+        return this;
+    }
+
+    public override String toString() {
         return toString(false);
     }
 
-    global String toString(Boolean pretty) {
-        switch on type {
-            when x_Integer, x_Float, x_Boolean, x_Null {
-                return String.valueOf(value);
-            }
-            when x_String {
-                return isVariable()
-                    ? (String) value
-                    : GraphQLConstants.DOUBLE_QUOTES + value + GraphQLConstants.DOUBLE_QUOTES;
-            }
-            when x_DateTime {
-                return GraphQLConstants.DOUBLE_QUOTES +
-                    ((DateTime) value).format(DATE_TIME_VALUE_FORMAT) +
-                    GraphQLConstants.DOUBLE_QUOTES;
-            }
-            when x_Date {
-                return GraphQLConstants.DOUBLE_QUOTES +
-                    dateToDateTime((Date) value).format(DATE_VALUE_FORMAT) +
-                    GraphQLConstants.DOUBLE_QUOTES;
-            }
-            when else {
-                return objectToString(value, pretty);
-            }
+    public String toString(Boolean pretty) {
+        if (String.isBlank(key)) {
+            return valueToString(pretty);
         }
-    }
-
-    public String parse(GraphQLBaseNode node, Boolean pretty) {
-        return key +
-            GraphQLConstants.COLON +
-            (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) +
-            toString(pretty);
+        return key + GraphQLConstants.COLON + GraphQLParser.getSmallIndent(pretty) + valueToString(pretty);
     }
 
     // There is no way to get an object's type yet
@@ -92,6 +104,32 @@ global class GraphQLArgument implements IGraphQLParser {
         }
     }
 
+    private String valueToString(Boolean pretty) {
+        switch on type {
+            when x_Integer, x_Float, x_Boolean, x_Null, x_Enum {
+                return String.valueOf(value);
+            }
+            when x_String {
+                return isVariable()
+                    ? (String) value
+                    : GraphQLConstants.DOUBLE_QUOTES + value + GraphQLConstants.DOUBLE_QUOTES;
+            }
+            when x_DateTime {
+                return GraphQLConstants.DOUBLE_QUOTES +
+                    ((DateTime) value).format(DATE_TIME_VALUE_FORMAT) +
+                    GraphQLConstants.DOUBLE_QUOTES;
+            }
+            when x_Date {
+                return GraphQLConstants.DOUBLE_QUOTES +
+                    dateToDateTime((Date) value).format(DATE_VALUE_FORMAT) +
+                    GraphQLConstants.DOUBLE_QUOTES;
+            }
+            when else {
+                return objectToString(value, pretty);
+            }
+        }
+    }
+
     private DateTime dateToDateTime(Date dateValue) {
         return DateTime.newInstance(dateValue.year(), dateValue.month(), dateValue.day());
     }
@@ -111,8 +149,11 @@ global class GraphQLArgument implements IGraphQLParser {
             .replaceAll(
                 REPLACE_JSON_VARIABLE_REFS_REGEXP,
                 GraphQLConstants.COLON +
-                (pretty ? GraphQLConstants.SPACE : GraphQLConstants.EMPTY) +
+                GraphQLParser.getSmallIndent(pretty) +
                 FIRST_REGEX_MATCH_GROUP
             );
     }
+
+    @TestVisible
+    private class GraphQLArgumentException extends Exception {}
 }

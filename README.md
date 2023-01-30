@@ -7,14 +7,14 @@ The package for Salesforce that aimed to provide a convenient way to communicate
 
 What is supported:
 
--   Building particular string nodes (if you want to send requests yourself)
 -   Building queries, mutations and subscriptions
+-   Building graphql nodes (fields). If you want to send requests yourself
 -   Passing arguments to the graphql nodes (fields)
--   Passing arguments to the graphql queries and mutations from request
--   Sync and async graphql HTTP service for sending requests (with callback implementation for async calls)
--   Functionality for handling GraphQL responses
--   Using fragments for graphql requests
--   Using `@include` and `@skip` directives for graphql nodes (fields)
+-   Passing variables to the graphql operations from request
+-   Passing directives to the graphql operations and nodes
+-   Using fragments for graphql requests. Inline fragments are supported as well.
+-   Sync and async graphql HTTP client for sending requests (with callback implementation for async calls)
+-   Handling responses in GraphQL format
 
 What is NOT supported:
 
@@ -42,15 +42,15 @@ continents {
 Equivalent Apex code:
 
 ```java
-GraphQLNode continentsNode = new GraphQLNode('continents')
+GraphQLField continents = new GraphQLField('continents')
     .withField('name')
-    .withNode(new GraphQLNode(
+    .withField(new GraphQLField(
         'countries',
         new List<String> { 'name', 'capital', 'currency' }
     ));
 
 // Will print a well-formatted node just like on the example above
-System.debug(continentsNode.build(true));
+System.debug(continents.build(true));
 ```
 
 ### Create a query GraphQL request
@@ -73,20 +73,20 @@ query {
 Equivalent Apex code:
 
 ```java
-GraphQLNode countriesNode = new GraphQLNode(
+GraphQLField countries = new GraphQLField(
     'countries',
     new List<String> { 'name', 'capital', 'currency' }
 )
     .withArgument('filter', 'Bel')
     .withArgument('count', 1);
 
-GraphQLNode continentsNode = new GraphQLNode(
+GraphQLField continents = new GraphQLField(
     'continents',
     new List<String> { 'name' }
 );
 
-GraphQLQueryNode query = new GraphQLQueryNode(
-    new List<GraphQLNode> { countriesNode, continentsNode }
+GraphQLQuery query = new GraphQLQuery(
+    new List<GraphQLField> { countries, continents }
 );
 
 System.debug(query.build(true));
@@ -96,7 +96,7 @@ After you created a query or mutation you can send it to the GraphQL endpoint:
 
 ```java
 ...
-GraphQLRequest request = query.buildRequest();
+GraphQLRequest request = query.asRequest();
 
 // Add custom header if needed
 request.withHeader('Authorization', 'Bearer token');
@@ -137,12 +137,12 @@ All examples can be found [here](docs/examples/).
 
 ### From Unmanaged Package
 
-You can just install the package by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001wNVYQA2) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001wNVYQA2).
+You can just install the package by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001zNZLQA2) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t5Y000001zNZLQA2).
 
 If you prefer using salesforce CLI you can simply run:
 
 ```bash
-sfdx force:package:install -p 04t5Y000001wNVYQA2 -w 10 -b 10 -u <username>
+sfdx force:package:install -p 04t5Y000001zNZLQA2 -w 10 -b 10 -u <username>
 ```
 
 ### From Source

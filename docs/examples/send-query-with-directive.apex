@@ -14,24 +14,24 @@ query CountriesQuery($withCities: Boolean!) {
 }
 */
 
-GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
-    .withNode(new GraphQLNode('capital', new List<String>{ 'id', 'name' }));
+    .withField(new GraphQLField('capital', new List<String> { 'id', 'name' }));
 
-GraphQLNode citiesNode = new GraphQLNode('cities', new List<String>{ 'id', 'name' })
+GraphQLField citiesNode = new GraphQLField('cities', new List<String> { 'id', 'name' })
     // Indicate that we want to include this node only if the variable $withCities equals true
     // You can also use .skipIf() method
     .includeIf('withCities');
 
-GraphQLQueryNode query = new GraphQLQueryNode(new List<GraphQLNode>{ countriesNode, citiesNode })
+GraphQLQuery query = new GraphQLQuery(new List<GraphQLField> { countriesNode, citiesNode })
     // Define our $withCities variable. Note that it needs to be marked as required in order to use it in directives
-    .withVariable('withCities', 'Boolean!');
+    .defineVariable('withCities', 'Boolean!');
 
-GraphQLRequest request = query.buildRequest()
+GraphQLRequest request = query.asRequest()
     // Pass the $withCities variable value to the request
     .withVariable('withCities', false);
 
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 GraphQLResponse response = client.send(request);
 

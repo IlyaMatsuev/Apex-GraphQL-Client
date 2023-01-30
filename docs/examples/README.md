@@ -19,23 +19,23 @@ query CountriesQuery {
 First, you need to build the `countries` node:
 
 ```java
-GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLField countriesNode = new GraphQLField('countries')
     .withField('name')
     // We have the child node "capital" in this example
-    .withNode(new GraphQLNode('capital', new List<String> { 'id', 'name' }));
+    .withField(new GraphQLField('capital', new List<String> { 'id', 'name' }));
 ```
 
 Then you should create the query instance itself:
 
 ```java
-GraphQLQueryNode query = new GraphQLQueryNode('CountriesQuery', countriesNode);
+GraphQLQuery query = new GraphQLQuery('CountriesQuery', countriesNode);
 ```
 
 Now you can create request and send it. In this example we use the url `https://simple-gql-server.herokuapp.com/gql`. If you try to access your own GraphQL server, please use your url.
 
 ```java
-GraphQLRequest request = query.buildRequest();
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLRequest request = query.asRequest();
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 GraphQLResponse response = client.send(request);
 ```
 

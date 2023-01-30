@@ -1,126 +1,154 @@
-global class GraphQLNode extends GraphQLBaseNode {
-    global String alias { get; private set; }
-    global final Map<String, GraphQLArgument> arguments = new Map<String, GraphQLArgument>();
-    global final Map<GraphQLDirectiveType, GraphQLDirective> directives = new Map<GraphQLDirectiveType, GraphQLDirective>();
+/**
+ * @description Defines the base properties and methods for every GraphQL node
+ */
+global abstract class GraphQLNode {
+    /**
+     * @description The GraphQL node name. Can be empty but cannot be `null`
+     */
+    global final String name;
 
-    global GraphQLNode() {
-        this(GraphQLConstants.EMPTY);
+    /**
+     * @description The list of child nodes
+     */
+    global final List<GraphQLNode> nodes = new List<GraphQLNode>();
+
+    /**
+     * @description The list of directives attached to the node
+     */
+    global final List<GraphQLDirective> directives = new List<GraphQLDirective>();
+
+    protected GraphQLNode(String name, List<String> fields) {
+        this(name, new List<GraphQLField>(), fields);
     }
 
-    global GraphQLNode(String name) {
-        this(name, new List<String>());
+    protected GraphQLNode(String name, List<GraphQLField> fieldNodes) {
+        this(name, fieldNodes, new List<String>());
     }
 
-    global GraphQLNode(List<GraphQLNode> nodes) {
-        this(GraphQLConstants.EMPTY, nodes);
+    protected GraphQLNode(String name, List<GraphQLField> fieldNodes, List<String> fields) {
+        this.name = name;
+        this.nodes.addAll(fieldNodes);
+        addFields(fields);
     }
 
-    global GraphQLNode(List<String> fields) {
-        this(GraphQLConstants.EMPTY, fields);
+    /**
+     * @description Check if the current node is an instance of `GraphQLField`
+     * @return `true` if the current instance is `GraphQLField`
+     */
+    global Boolean isFieldNode() {
+        return this instanceof GraphQLField;
     }
 
-    global GraphQLNode(String name, List<GraphQLNode> nodes) {
-        super(name, nodes);
+    /**
+     * @description Check if the current node is an instance of `GraphQLFragment`
+     * @return `true` if the current instance is `GraphQLFragment`
+     */
+    global Boolean isFragmentNode() {
+        return this instanceof GraphQLFragment;
     }
 
-    global GraphQLNode(String name, List<String> fields) {
-        super(name, fields);
+    /**
+     * @description Check if the provided field node exists in the child nodes. Searches by the field's name
+     * @param field The target GraphQL field node to search for
+     * @return `true` if the node with the same name is found in child nodes. `false` otherwise
+     */
+    global virtual Boolean hasField(GraphQLField field) {
+        for (GraphQLNode node : nodes) {
+            if (node.name == field.name) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    global Boolean hasArguments() {
-        return !arguments.isEmpty();
+    /**
+     * @description Check if there are any child nodes
+     * @return `true` if the child nodes list is not empty. `false` otherwise
+     */
+    global Boolean hasNodes() {
+        return !nodes.isEmpty();
     }
 
+    /**
+     * @description Check if the current node contains any directives
+     * @return `true` if there are any directives. `false` otherwise
+     */
     global Boolean hasDirectives() {
         return !directives.isEmpty();
     }
 
-    global GraphQLNode byAlias(String alias) {
-        this.alias = alias;
-        return this;
+    /**
+     * @description Parse the node as a string
+     * @return String representation of the node
+     */
+    global String build() {
+        return build(false);
     }
 
-    global GraphQLNode withField(String field) {
-        return withFields(new List<String>{ field });
+    /**
+     * @description Parse the node as a string
+     * @param pretty Prettify the output if the value is `true`
+     * @return String representation of the node
+     */
+    global String build(Boolean pretty) {
+        return getParser().parse(this, pretty);
     }
 
-    global GraphQLNode withFields(String[] fields) {
-        addFields(fields);
-        return this;
+    public virtual GraphQLParser getParser() {
+        throw new GraphQLNodeException('No parser implementation found for this node');
     }
 
-    global GraphQLNode withNode(GraphQLNode node) {
-        return withNodes(new List<GraphQLNode>{ node });
+    public override String toString() {
+        return build();
     }
 
-    global GraphQLNode withNodes(GraphQLNode[] nodes) {
-        addNodes(nodes);
-        return this;
+    protected virtual GraphQLNode addFields(String[] fields) {
+        List<GraphQLField> nodes = new List<GraphQLField>();
+        for (String field : fields) {
+            nodes.add(new GraphQLField(field));
+        }
+        return addFields(nodes);
     }
 
-    global GraphQLNode withFragment(String fragmentName) {
-        return withFragments(new List<String>{ fragmentName });
-    }
-
-    global GraphQLNode withFragments(String[] fragmentNames) {
-        addFragments(fragmentNames);
-        return this;
-    }
-
-    global GraphQLNode withArgument(String key, Object value) {
-        return withArgument(new GraphQLArgument(key, value));
-    }
-
-    global GraphQLNode withArgument(GraphQLArgument argument) {
-        return withArguments(new List<GraphQLArgument>{ argument });
-    }
-
-    global GraphQLNode withArguments(GraphQLArgument[] arguments) {
-        for (GraphQLArgument argument : arguments) {
-            this.arguments.put(argument.key, argument);
+    protected virtual GraphQLNode addFields(GraphQLField[] fields) {
+        for (GraphQLField field : fields) {
+            if (!hasField(field)) {
+                nodes.add(field);
+            }
         }
         return this;
     }
 
-    global GraphQLNode includeIf(Boolean condition) {
-        return withDirective(GraphQLDirectiveType.Include, condition);
+    protected virtual GraphQLNode addFragments(String[] fragmentNames) {
+        List<String> fields = new List<String>();
+        for (String fragmentName : fragmentNames) {
+            fields.add(GraphQLConstants.DOT.repeat(3) + fragmentName);
+        }
+        return addFields(fields);
     }
 
-    global GraphQLNode includeIf(String variable) {
-        return withDirective(GraphQLDirectiveType.Include, variable);
-    }
-
-    global GraphQLNode skipIf(Boolean condition) {
-        return withDirective(GraphQLDirectiveType.Skip, condition);
-    }
-
-    global GraphQLNode skipIf(String variable) {
-        return withDirective(GraphQLDirectiveType.Skip, variable);
-    }
-
-    global GraphQLQueryNode asQuery() {
-        return new GraphQLQueryNode(this.name, this.nodes);
-    }
-
-    global GraphQLMutationNode asMutation() {
-        return new GraphQLMutationNode(this.name, this.nodes);
-    }
-
-    global GraphQLSubscriptionNode asSubscription() {
-        return new GraphQLSubscriptionNode(this.name, this.nodes);
-    }
-
-    global override IGraphQLParser getParser() {
-        return new GraphQLNodeParser();
-    }
-
-    private GraphQLNode withDirective(GraphQLDirectiveType type, Boolean ifArgumentValue) {
-        this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
+    protected virtual GraphQLNode addInlineFragments(GraphQLFragment[] fragments) {
+        for (GraphQLFragment fragment : fragments) {
+            if (!fragment.isInline()) {
+                throw new GraphQLNodeException('Not possible to add non-inline fragment: ' + fragment.name);
+            }
+        }
+        nodes.addAll(fragments);
         return this;
     }
 
-    private GraphQLNode withDirective(GraphQLDirectiveType type, String ifArgumentValue) {
-        this.directives.put(type, new GraphQLDirective(type, ifArgumentValue));
+    protected virtual GraphQLNode addDirective(GraphQLDirective directive) {
+        directives.add(directive);
         return this;
     }
+
+    protected virtual GraphQLNode addStandardDirective(String name, Object value) {
+        if (value instanceof String) {
+            value = GraphQLConstants.DOLLAR + value;
+        }
+        return addDirective(new GraphQLDirective(name).withArgument('if', value));
+    }
+
+    @TestVisible
+    private class GraphQLNodeException extends Exception {}
 }

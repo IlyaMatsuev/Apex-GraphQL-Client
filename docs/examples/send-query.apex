@@ -13,28 +13,28 @@ query CountriesQuery($limit: Int) {
 }
 */
 
-GraphQLNode countriesNode = new GraphQLNode('countries')
+GraphQLField countriesNode = new GraphQLField('countries')
     .withArgument('filter', 'Bel')
     .withField('name')
-    .withNode(new GraphQLNode('capital', new List<String>{ 'id', 'name' }));
+    .withField(new GraphQLField('capital', new List<String> { 'id', 'name' }));
 
-GraphQLNode citiesNode = new GraphQLNode('cities')
+GraphQLField citiesNode = new GraphQLField('cities')
     // Point the argument to the $limit variable
     .withArgument('limit', '$limit')
     .withField('name');
 
-GraphQLQueryNode query = new GraphQLQueryNode('CountriesQuery', new List<GraphQLNode>{ countriesNode, citiesNode })
+GraphQLQuery query = new GraphQLQuery('CountriesQuery', new List<GraphQLField> { countriesNode, citiesNode })
     // Define variable for the query
-    .withVariable('limit', 'Int');
+    .defineVariable('limit', 'Int');
 
-GraphQLRequest request = query.buildRequest()
+GraphQLRequest request = query.asRequest()
     // You can add additional HTTP headers if you need
     .withHeader('Authorization', 'Bearer token')
     // Set value for the variable in the request
     .withVariable('limit', 10);
 
 // Provide GraphQL endpoint to the client constructor
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 GraphQLResponse response = client.send(request);
 

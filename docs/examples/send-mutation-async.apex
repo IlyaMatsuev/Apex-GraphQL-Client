@@ -12,19 +12,19 @@ country.name = 'Belarus';
 country.capital = 'Minsk';
 country.population = 9000000;
 
-GraphQLNode createCountryNode = new GraphQLNode('createCountry')
+GraphQLField createCountryNode = new GraphQLField('createCountry')
     .withArgument('country', country)
     .withField('id')
     .withField('name');
 
-GraphQLMutationNode mutation = new GraphQLMutationNode('CreateCountry', createCountryNode);
+GraphQLMutation mutation = new GraphQLMutation('CreateCountry', createCountryNode);
 
-GraphQLRequest request = mutation.buildRequest()
+GraphQLRequest request = mutation.asRequest()
     // You can add additional HTTP headers if you need
     .withHeader('Authorization', 'Bearer token');
 
 // Provide GraphQL endpoint to the client constructor
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 // Send the request async and provide a callback implementation (can be null)
 Id jobId = client.sendAsync(request, new CountryMutationCallback());

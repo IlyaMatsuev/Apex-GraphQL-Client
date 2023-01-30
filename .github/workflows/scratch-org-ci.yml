@@ -1,6 +1,11 @@
 name: Scratch org CI
 
 on:
+  # Needed keep Codecove reports up to date for the target branches
+  push:
+    branches:
+      - main
+      - dev
   pull_request:
     branches:
       - main
@@ -28,7 +33,7 @@ jobs:
         run: npm i
 
       - name: 'Code formatting verification with Prettier'
-        run: npm run prettier:verify
+        run: npm run prettier:verify ./
 
   scratch-org-test:
     runs-on: ubuntu-latest

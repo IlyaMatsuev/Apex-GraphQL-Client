@@ -7,15 +7,15 @@ mutation CreateCountry($country: NewCountryInput!) {
 }
 */
 
-GraphQLNode createCountryNode = new GraphQLNode('createCountry')
+GraphQLField createCountryNode = new GraphQLField('createCountry')
     // Point the argument to the $country variable
     .withArgument('country', '$country')
     .withField('id')
     .withField('name');
 
-GraphQLMutationNode mutation = new GraphQLMutationNode('CreateCountry', createCountryNode)
+GraphQLMutation mutation = new GraphQLMutation('CreateCountry', createCountryNode)
     // Define variable for the mutation
-    .withVariable('country', 'NewCountryInput!');
+    .defineVariable('country', 'NewCountryInput!');
 
 // Create our input object
 Country country = new Country();
@@ -23,14 +23,14 @@ country.name = 'Belarus';
 country.capital = 'Minsk';
 country.population = 9000000;
 
-GraphQLRequest request = mutation.buildRequest()
+GraphQLRequest request = mutation.asRequest()
     // You can add additional HTTP headers if you need
     .withHeader('Authorization', 'Bearer token')
     // Set value for the variable in the request
     .withVariable('country', country);
 
 // Provide GraphQL endpoint to the client constructor
-IGraphQLClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
+GraphQLHttpClient client = new GraphQLHttpClient('https://simple-gql-server.herokuapp.com/gql');
 
 GraphQLResponse response = client.send(request);
 
