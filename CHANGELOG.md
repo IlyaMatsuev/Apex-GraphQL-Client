@@ -1,7 +1,7 @@
-# Unreleased
+# Version 2.0
 
-SFDX package name and version:
-Package Id:
+SFDX package name and version: gql-apex-client@2.0.0
+Package Id: 04t5Y000001zNZLQA2
 
 All information regarding the installation and usage is described on the [main repo page](https://github.com/IlyaMatsuev/Apex-GraphQL-Client).
 
