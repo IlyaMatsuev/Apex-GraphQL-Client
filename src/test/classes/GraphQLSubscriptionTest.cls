@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLSubscriptionTest {
     @IsTest
     private static void emptySubscriptionTest() {

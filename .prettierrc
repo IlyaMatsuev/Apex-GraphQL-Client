@@ -1,35 +1,29 @@
 {
-  "tabWidth": 4,
-  "printWidth": 120,
-  "singleQuote": true,
-  "apexInsertFinalNewline": true,
-  "apexFormatAnnotations": true,
-  "apexAnnotationsArgsSpacing": true,
-  "apexFormatStandardTypes": true,
-  "apexFormatInlineComments": true,
-  "apexEmptyBlockBracketLine": true,
-  "apexExpandOneLineProperties": false,
-  "apexExplicitAccessModifier": true,
-  "apexSortModifiers": true,
-  "overrides": [
-    {
-      "files": "*.xml",
-      "options": {
-        "printWidth": 240,
-        "bracketSameLine": true
-      }
-    },
-    {
-      "files": ["*.yml", "*.yaml", "*.json", ".prettierrc"],
-      "options": {
-        "tabWidth": 2
-      }
-    },
-    {
-      "files": "*.trigger",
-      "options": {
-        "apexExplicitAccessModifier": false
-      }
-    }
-  ]
+    "tabWidth": 4,
+    "printWidth": 120,
+    "singleQuote": true,
+    "apexInsertFinalNewline": true,
+    "apexFormatAnnotations": true,
+    "apexFormatStandardTypes": true,
+    "apexFormatInlineComments": "spaced",
+    "apexEmptyBlockBracketLine": true,
+    "apexExpandOneLineProperties": false,
+    "apexExplicitAccessModifier": true,
+    "apexSortModifiers": true,
+    "apexForceCurly": true,
+    "overrides": [
+        {
+            "files": "*.xml",
+            "options": {
+                "printWidth": 240,
+                "bracketSameLine": true
+            }
+        },
+        {
+            "files": ["*.yml", "*.yaml"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }

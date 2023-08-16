@@ -46,9 +46,7 @@ global class GraphQLHttpClient {
             gqlResponse = new GraphQLResponse(
                 putError(
                     error,
-                    'Got invalid response format from the server' +
-                    GraphQLConstants.LINE_BREAK +
-                    response.getBody()
+                    'Got invalid response format from the server' + GraphQLConstants.LINE_BREAK + response.getBody()
                 )
             );
         } catch (Exception error) {
@@ -79,9 +77,7 @@ global class GraphQLHttpClient {
     private GraphQLResponseError putError(Exception error, String message) {
         System.debug(
             LoggingLevel.ERROR,
-            error.getMessage() +
-            GraphQLConstants.LINE_BREAK +
-            error.getStackTraceString()
+            error.getMessage() + GraphQLConstants.LINE_BREAK + error.getStackTraceString()
         );
         return new GraphQLResponseError(message);
     }

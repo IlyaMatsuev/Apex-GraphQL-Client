@@ -148,9 +148,7 @@ global class GraphQLArgument {
             .replaceAll(REPLACE_JSON_PROPS_REGEXP, FIRST_REGEX_MATCH_GROUP + GraphQLConstants.COLON)
             .replaceAll(
                 REPLACE_JSON_VARIABLE_REFS_REGEXP,
-                GraphQLConstants.COLON +
-                GraphQLParser.getSmallIndent(pretty) +
-                FIRST_REGEX_MATCH_GROUP
+                GraphQLConstants.COLON + GraphQLParser.getSmallIndent(pretty) + FIRST_REGEX_MATCH_GROUP
             );
     }
 

@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLVariableTest {
     @IsTest
     private static void createVariableTest() {

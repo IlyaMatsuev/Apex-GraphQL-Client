@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLFieldTest {
     @IsTest
     private static void emptyNodeTest() {

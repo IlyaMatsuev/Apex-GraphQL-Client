@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLHttpClientTest {
     private static final String TEST_GQL_ENDPOINT = 'https://test.gql.endpoint.com';
 

@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLFragmentTest {
     @IsTest
     private static void emptyFragmentTest() {
