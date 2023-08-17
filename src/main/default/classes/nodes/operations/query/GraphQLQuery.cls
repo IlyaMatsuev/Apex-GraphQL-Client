@@ -1,5 +1,6 @@
 /**
  * @description The GraphQL query node
+ * @group Operations
  */
 global class GraphQLQuery extends GraphQLOperation {
     /**

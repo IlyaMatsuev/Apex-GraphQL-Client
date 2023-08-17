@@ -1,5 +1,6 @@
 /**
  * @description Represents the GraphQL response error entry for the client
+ * @group Client
  */
 global class GraphQLResponseError {
     /**

@@ -161,7 +161,9 @@ Second is for creating a new configured scratch org:
 
 ## Documentation
 
-The documentation describes all Apex types and usage cases for them. Please see it [here](docs).
+For more detailed information about the content of the repository and the package, please visit [the documentation page](https://ilyamatsuev.github.io/Apex-GraphQL-Client/).
+
+The changelog is [here](https://ilyamatsuev.github.io/Apex-GraphQL-Client/#/changelog).
 
 ## Questions
 

@@ -1,5 +1,6 @@
 /**
  * @description The GraphQL operation node, eathier Query, Mutation or Subscription
+ * @group Operations
  */
 global abstract class GraphQLOperation extends GraphQLNode {
     /**

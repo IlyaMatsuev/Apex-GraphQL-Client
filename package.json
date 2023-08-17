@@ -8,7 +8,7 @@
         "prettier:verify": "prettier --list-different",
         "docs:types:refresh": "npm run docs:types:clean && npm run docs:types:generate && npm run prettier ./docs/types",
         "docs:types:clean": "shx rm -r ./docs/types",
-        "docs:types:generate": "apexdocs-generate -s ./src/main -t ./docs/types --documentationRootDir '/types' -p global -g docsify --defaultGroupName Classes --title 'Type Definitions'"
+        "docs:types:generate": "apexdocs-generate -s ./src/main -t ./docs/types --documentationRootDir '/types' -p global -g docsify --defaultGroupName Query --title 'Type Definitions'"
     },
     "devDependencies": {
         "@cparra/apexdocs": "^2.17.0",

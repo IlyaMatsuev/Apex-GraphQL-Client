@@ -1,5 +1,6 @@
 /**
  * @description Represents the GraphQL response for the client
+ * @group Client
  */
 global class GraphQLResponse {
     private static final String ERRORS_FIELD = 'errors';

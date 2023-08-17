@@ -1,5 +1,6 @@
 /**
  * @description The client that can be used to send and receive GraphQL requests and responses
+ * @group Client
  */
 global class GraphQLHttpClient {
     private final String endpoint;

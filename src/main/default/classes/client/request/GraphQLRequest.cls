@@ -1,5 +1,6 @@
 /**
  * @description Represents the GraphQL request for the client
+ * @group Client
  */
 global class GraphQLRequest {
     @TestVisible

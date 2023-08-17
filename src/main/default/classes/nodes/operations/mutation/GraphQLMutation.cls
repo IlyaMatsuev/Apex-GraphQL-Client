@@ -1,5 +1,6 @@
 /**
  * @description The GraphQL mutation node
+ * @group Operations
  */
 global class GraphQLMutation extends GraphQLOperation {
     /**

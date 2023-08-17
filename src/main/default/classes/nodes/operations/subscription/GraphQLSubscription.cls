@@ -1,5 +1,6 @@
 /**
  * @description The GraphQL subscription node
+ * @group Operations
  */
 global class GraphQLSubscription extends GraphQLOperation {
     /**
