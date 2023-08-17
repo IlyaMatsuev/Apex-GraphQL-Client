@@ -60,7 +60,7 @@ global class GraphQLArgument {
     /**
      * @description Represents the current argument as a GraphQL enum value
      * @throws GraphQLArgumentException If the current argument value is not String or if it's a variable reference
-     * @return The current instance of `GraphQLArgument`
+     * @return The current instance of <<GraphQLArgument>>
      */
     global GraphQLArgument asEnum() {
         if (!(value instanceof String) || isVariable()) {

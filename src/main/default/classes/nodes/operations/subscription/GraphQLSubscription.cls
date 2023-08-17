@@ -72,7 +72,7 @@ global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Add a child field to the current subscription node
      * @param field The field to add
-     * @return The instance of the current `GraphQLSubscription` class
+     * @return The instance of the current <<GraphQLSubscription>> class
      */
     global GraphQLSubscription withField(String field) {
         return withFields(new List<String> { field });
@@ -81,7 +81,7 @@ global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Add multiple child fields to the current subscription node
      * @param fields The list of fields to add
-     * @return The instance of the current `GraphQLSubscription` class
+     * @return The instance of the current <<GraphQLSubscription>> class
      */
     global GraphQLSubscription withFields(String[] fields) {
         return (GraphQLSubscription) addFields(fields);
@@ -90,7 +90,7 @@ global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Add a child node to the current subscription node
      * @param fieldNode The node to add
-     * @return The instance of the current `GraphQLSubscription` class
+     * @return The instance of the current <<GraphQLSubscription>> class
      */
     global GraphQLSubscription withField(GraphQLField fieldNode) {
         return withFields(new List<GraphQLField> { fieldNode });
@@ -99,7 +99,7 @@ global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Add multiple child nodes to the current subscription node
      * @param nodes The list of nodes to add
-     * @return The instance of the current `GraphQLSubscription` class
+     * @return The instance of the current <<GraphQLSubscription>> class
      */
     global GraphQLSubscription withFields(GraphQLField[] fieldNodes) {
         return (GraphQLSubscription) addFields(fieldNodes);
@@ -108,7 +108,7 @@ global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Add a custom directive to the current subscription node
      * @param directive The directive to be added
-     * @return The current instance of `GraphQLSubscription`
+     * @return The current instance of <<GraphQLSubscription>>
      */
     global GraphQLSubscription withDirective(GraphQLDirective directive) {
         return (GraphQLSubscription) addDirective(directive);
@@ -118,7 +118,7 @@ global class GraphQLSubscription extends GraphQLOperation {
      * @description Add a fragment definition for the current subscription node
      * @param fragment The fragment definition to add
      * @throws GraphQLOperationException If the provided fragment is inline
-     * @return The instance of the current `GraphQLSubscription` class
+     * @return The instance of the current <<GraphQLSubscription>> class
      */
     global GraphQLSubscription defineFragment(GraphQLFragment fragment) {
         return defineFragments(new List<GraphQLFragment> { fragment });
@@ -128,7 +128,7 @@ global class GraphQLSubscription extends GraphQLOperation {
      * @description Add multiple fragment definitions for the current subscription node
      * @param fragments The list of fragment definitions to add
      * @throws GraphQLOperationException If some of the provided fragments are inline
-     * @return The instance of the current `GraphQLSubscription` class
+     * @return The instance of the current <<GraphQLSubscription>> class
      */
     global GraphQLSubscription defineFragments(GraphQLFragment[] fragments) {
         return (GraphQLSubscription) addFragments(fragments);
@@ -138,7 +138,7 @@ global class GraphQLSubscription extends GraphQLOperation {
      * @description Add a variable definition for the current subscription node
      * @param name The variable name
      * @param typeDefinition The variable type definition
-     * @return The instance of the current `GraphQLSubscription` class
+     * @return The instance of the current <<GraphQLSubscription>> class
      */
     global GraphQLSubscription defineVariable(String name, String typeDefinition) {
         return defineVariable(new GraphQLVariable(name, typeDefinition));
@@ -147,7 +147,7 @@ global class GraphQLSubscription extends GraphQLOperation {
     /**
      * @description Add a variable definition for the current subscription node
      * @param variable The variable definition to add
-     * @return The instance of the current `GraphQLSubscription` class
+     * @return The instance of the current <<GraphQLSubscription>> class
      */
     global GraphQLSubscription defineVariable(GraphQLVariable variable) {
         return (GraphQLSubscription) addVariable(variable);

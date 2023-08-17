@@ -72,7 +72,7 @@ global class GraphQLQuery extends GraphQLOperation {
     /**
      * @description Add a child field to the current query node
      * @param field The field to add
-     * @return The instance of the current `GraphQLQuery` class
+     * @return The instance of the current <<GraphQLQuery>> class
      */
     global GraphQLQuery withField(String field) {
         return withFields(new List<String> { field });
@@ -81,7 +81,7 @@ global class GraphQLQuery extends GraphQLOperation {
     /**
      * @description Add multiple child fields to the current query node
      * @param fields The list of fields to add
-     * @return The instance of the current `GraphQLQuery` class
+     * @return The instance of the current <<GraphQLQuery>> class
      */
     global GraphQLQuery withFields(String[] fields) {
         return (GraphQLQuery) addFields(fields);
@@ -90,7 +90,7 @@ global class GraphQLQuery extends GraphQLOperation {
     /**
      * @description Add a child node to the current query node
      * @param fieldNode The node to add
-     * @return The instance of the current `GraphQLQuery` class
+     * @return The instance of the current <<GraphQLQuery>> class
      */
     global GraphQLQuery withField(GraphQLField fieldNode) {
         return withFields(new List<GraphQLField> { fieldNode });
@@ -99,7 +99,7 @@ global class GraphQLQuery extends GraphQLOperation {
     /**
      * @description Add multiple child nodes to the current query node
      * @param fieldNodes The list of nodes to add
-     * @return The instance of the current `GraphQLQuery` class
+     * @return The instance of the current <<GraphQLQuery>> class
      */
     global GraphQLQuery withFields(GraphQLField[] fieldNodes) {
         return (GraphQLQuery) addFields(fieldNodes);
@@ -108,7 +108,7 @@ global class GraphQLQuery extends GraphQLOperation {
     /**
      * @description Add a custom directive to the current query node
      * @param directive The directive to be added
-     * @return The current instance of `GraphQLQuery`
+     * @return The current instance of <<GraphQLQuery>>
      */
     global GraphQLQuery withDirective(GraphQLDirective directive) {
         return (GraphQLQuery) addDirective(directive);
@@ -118,7 +118,7 @@ global class GraphQLQuery extends GraphQLOperation {
      * @description Add a fragment definition for the current query node
      * @param fragment The fragment definition to add
      * @throws GraphQLOperationException If the provided fragment is inline
-     * @return The instance of the current `GraphQLQuery` class
+     * @return The instance of the current <<GraphQLQuery>> class
      */
     global GraphQLQuery defineFragment(GraphQLFragment fragment) {
         return defineFragments(new List<GraphQLFragment> { fragment });
@@ -128,7 +128,7 @@ global class GraphQLQuery extends GraphQLOperation {
      * @description Add multiple fragment definitions for the current query node
      * @param fragments The list of fragment definitions to add
      * @throws GraphQLOperationException If some of the provided fragments are inline
-     * @return The instance of the current `GraphQLQuery` class
+     * @return The instance of the current <<GraphQLQuery>> class
      */
     global GraphQLQuery defineFragments(GraphQLFragment[] fragments) {
         return (GraphQLQuery) addFragments(fragments);
@@ -138,7 +138,7 @@ global class GraphQLQuery extends GraphQLOperation {
      * @description Add a variable definition for the current query node
      * @param name The variable name
      * @param typeDefinition The variable type definition
-     * @return The instance of the current `GraphQLQuery` class
+     * @return The instance of the current <<GraphQLQuery>> class
      */
     global GraphQLQuery defineVariable(String name, String typeDefinition) {
         return defineVariable(new GraphQLVariable(name, typeDefinition));
@@ -147,7 +147,7 @@ global class GraphQLQuery extends GraphQLOperation {
     /**
      * @description Add a variable definition for the current query node
      * @param variable The variable definition to add
-     * @return The instance of the current `GraphQLQuery` class
+     * @return The instance of the current <<GraphQLQuery>> class
      */
     global GraphQLQuery defineVariable(GraphQLVariable variable) {
         return (GraphQLQuery) addVariable(variable);

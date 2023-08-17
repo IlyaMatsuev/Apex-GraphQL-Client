@@ -74,7 +74,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add a field to the current fragment
      * @param field The field name to be added
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment withField(String field) {
         return withFields(new List<String> { field });
@@ -83,7 +83,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add multiple fields to the current fragment
      * @param fields The list of the field names to be added
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment withFields(String[] fields) {
         return (GraphQLFragment) addFields(fields);
@@ -92,7 +92,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add a node to the current fragment
      * @param fieldNode The field node instance to be added
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment withField(GraphQLField fieldNode) {
         return withFields(new List<GraphQLField> { fieldNode });
@@ -101,7 +101,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add multiple nodes to the current fragment
      * @param fieldNodes The list of node instances to be added
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment withFields(GraphQLField[] fieldNodes) {
         return (GraphQLFragment) addFields(fieldNodes);
@@ -110,7 +110,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add another fragment reference to the current fragment
      * @param fragmentName The fragment name to be used
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment withFragment(String fragmentName) {
         return withFragments(new List<String> { fragmentName });
@@ -119,7 +119,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add other fragment references to the current fragment
      * @param fragmentNames The list of fragment names to be used
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment withFragments(String[] fragmentNames) {
         addFragments(fragmentNames);
@@ -132,8 +132,8 @@ global class GraphQLFragment extends GraphQLNode {
 
     /**
      * @description Add an inline fragment to the current fragment
-     * @param fragment The instance of the `GraphQLFragment`. Should be inline fragment without a name
-     * @return The current instance of `GraphQLFragment`
+     * @param fragment The instance of the <<GraphQLFragment>>. Should be inline fragment without a name
+     * @return The current instance of <<GraphQLFragment>>
      * @throws GraphQLNodeException If the passed fragment is not inline
      */
     global GraphQLFragment withInlineFragment(GraphQLFragment fragment) {
@@ -142,8 +142,8 @@ global class GraphQLFragment extends GraphQLNode {
 
     /**
      * @description Add inline fragments to the current fragment
-     * @param fragment The instances of the `GraphQLFragment`. Should be inline fragments without names
-     * @return The current instance of `GraphQLFragment`
+     * @param fragment The instances of the <<GraphQLFragment>>. Should be inline fragments without names
+     * @return The current instance of <<GraphQLFragment>>
      * @throws GraphQLNodeException If some of the passed fragments are not inline
      */
     global GraphQLFragment withInlineFragments(GraphQLFragment[] fragments) {
@@ -153,7 +153,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add a custom directive to the current fragment
      * @param directive The directive to be added
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment withDirective(GraphQLDirective directive) {
         return (GraphQLFragment) addDirective(directive);
@@ -162,7 +162,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add the standard `includeIf` directive to the current fragment
      * @param condition The boolean condition for the directive
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment includeIf(Boolean condition) {
         return (GraphQLFragment) addStandardDirective('include', condition);
@@ -171,7 +171,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add the standard `includeIf` directive to the current fragment
      * @param variable The variable reference for the directive. The `$` sign is not required
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment includeIf(String variable) {
         return (GraphQLFragment) addStandardDirective('include', variable);
@@ -180,7 +180,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add the standard `skipIf` directive to the current fragment
      * @param condition The boolean condition for the directive
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment skipIf(Boolean condition) {
         return (GraphQLFragment) addStandardDirective('skip', condition);
@@ -189,7 +189,7 @@ global class GraphQLFragment extends GraphQLNode {
     /**
      * @description Add the standard `skipIf` directive to the current fragment
      * @param variable The variable reference for the directive. The `$` sign is not required
-     * @return The current instance of `GraphQLFragment`
+     * @return The current instance of <<GraphQLFragment>>
      */
     global GraphQLFragment skipIf(String variable) {
         return (GraphQLFragment) addStandardDirective('skip', variable);

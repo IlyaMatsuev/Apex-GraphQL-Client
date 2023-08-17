@@ -36,7 +36,7 @@ global class GraphQLResponse {
 
     /**
      * @description Get the list of errors in the response
-     * @return The list of `GraphQLResponseError` instances if there are any errors. Returns an empty list otherwise
+     * @return The list of <<GraphQLResponseError>> instances if there are any errors. Returns an empty list otherwise
      */
     global List<GraphQLResponseError> getErrors() {
         if (hasErrors()) {

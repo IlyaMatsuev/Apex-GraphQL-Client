@@ -45,9 +45,9 @@ global class GraphQLRequest {
 
     /**
      * @description Create an instance using a GraphQL node for a specific GraphQL operation (Query or Mutation)
-     * @param operation The instance of the `GraphQLOperationType` enum (`Query` or `Mutation`)
-     * @param node The instance of the Graph operation node (`GraphQLQuery` or `GraphQLMutation`)
-     * @throws GraphQLRequestException If the provided instance is neither `GraphQLQuery` nor `GraphQLMutation`
+     * @param operation The instance of the <<GraphQLOperationType>> enum (`Query` or `Mutation`)
+     * @param node The instance of the Graph operation node (<<GraphQLQuery>> or <<GraphQLMutation>>)
+     * @throws GraphQLRequestException If the provided instance is neither <<GraphQLQuery>> nor <GraphQLMutation>>
      */
     global GraphQLRequest(GraphQLOperation node) {
         this.operation = node.getOperation();
@@ -62,7 +62,7 @@ global class GraphQLRequest {
      * @description Add a custom header to the request. For example `Authorization`
      * @param key The header key
      * @param value The header string value
-     * @return The current `GraphQLRequest` instance
+     * @return The current <<GraphQLRequest>> instance
      */
     global GraphQLRequest withHeader(String key, String value) {
         return withHeaders(new Map<String, String> { key => value });
@@ -71,7 +71,7 @@ global class GraphQLRequest {
     /**
      * @description Add multiple custom headers to the request. For example `Authorization`
      * @param headers The Map of headers
-     * @return The current `GraphQLRequest` instance
+     * @return The current <<GraphQLRequest>> instance
      */
     global GraphQLRequest withHeaders(Map<String, String> headers) {
         this.headers.putAll(headers);
@@ -81,7 +81,7 @@ global class GraphQLRequest {
     /**
      * @description Set a timeout for the GraphQL request
      * @param timeout The timeout in milliseconds
-     * @return The current `GraphQLRequest` instance
+     * @return The current <<GraphQLRequest>> instance
      */
     global GraphQLRequest withTimeout(Integer timeout) {
         this.timeout = timeout;
@@ -92,7 +92,7 @@ global class GraphQLRequest {
      * @description Add a variable definition value to the request
      * @param name The varibale name
      * @param value The varibale actual value
-     * @return The current `GraphQLRequest` instance
+     * @return The current <<GraphQLRequest>> instance
      */
     global GraphQLRequest withVariable(String name, Object value) {
         return withVariables(new Map<String, Object> { name => value });
@@ -101,7 +101,7 @@ global class GraphQLRequest {
     /**
      * @description Add multiple variable definition values to the request
      * @param variables The Map of varibales
-     * @return The current `GraphQLRequest` instance
+     * @return The current <<GraphQLRequest>> instance
      */
     global GraphQLRequest withVariables(Map<String, Object> variables) {
         if (this.variables == null) {

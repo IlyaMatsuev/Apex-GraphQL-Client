@@ -72,7 +72,7 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Add a child field to the current mutation node
      * @param field The field to add
-     * @return The instance of the current `GraphQLMutation` class
+     * @return The instance of the current <<GraphQLMutation>> class
      */
     global GraphQLMutation withField(String field) {
         return withFields(new List<String> { field });
@@ -81,7 +81,7 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Add multiple child fields to the current mutation node
      * @param fields The list of fields to add
-     * @return The instance of the current `GraphQLMutation` class
+     * @return The instance of the current <<GraphQLMutation>> class
      */
     global GraphQLMutation withFields(String[] fields) {
         return (GraphQLMutation) addFields(fields);
@@ -90,7 +90,7 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Add a child node to the current mutation node
      * @param fieldNode The node to add
-     * @return The instance of the current `GraphQLMutation` class
+     * @return The instance of the current <<GraphQLMutation>> class
      */
     global GraphQLMutation withField(GraphQLField fieldNode) {
         return withFields(new List<GraphQLField> { fieldNode });
@@ -99,7 +99,7 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Add multiple child nodes to the current mutation node
      * @param fieldNodes The list of nodes to add
-     * @return The instance of the current `GraphQLMutation` class
+     * @return The instance of the current <<GraphQLMutation>> class
      */
     global GraphQLMutation withFields(GraphQLField[] fieldNodes) {
         return (GraphQLMutation) addFields(fieldNodes);
@@ -108,7 +108,7 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Add a custom directive to the current mutation node
      * @param directive The directive to be added
-     * @return The current instance of `GraphQLMutation`
+     * @return The current instance of <<GraphQLMutation>>
      */
     global GraphQLMutation withDirective(GraphQLDirective directive) {
         return (GraphQLMutation) addDirective(directive);
@@ -118,7 +118,7 @@ global class GraphQLMutation extends GraphQLOperation {
      * @description Add a fragment definition for the current mutation node
      * @param fragment The fragment definition to add
      * @throws GraphQLOperationException If the provided fragment is inline
-     * @return The instance of the current `GraphQLMutation` class
+     * @return The instance of the current <<GraphQLMutation>> class
      */
     global GraphQLMutation defineFragment(GraphQLFragment fragment) {
         return defineFragments(new List<GraphQLFragment> { fragment });
@@ -128,7 +128,7 @@ global class GraphQLMutation extends GraphQLOperation {
      * @description Add multiple fragment definitions for the current mutation node
      * @param fragments The list of fragment definitions to add
      * @throws GraphQLOperationException If some of the provided fragments are inline
-     * @return The instance of the current `GraphQLMutation` class
+     * @return The instance of the current <<GraphQLMutation>> class
      */
     global GraphQLMutation defineFragments(GraphQLFragment[] fragments) {
         return (GraphQLMutation) addFragments(fragments);
@@ -138,7 +138,7 @@ global class GraphQLMutation extends GraphQLOperation {
      * @description Add a variable definition for the current mutation node
      * @param name The variable name
      * @param typeDefinition The variable type definition
-     * @return The instance of the current `GraphQLMutation` class
+     * @return The instance of the current <<GraphQLMutation>> class
      */
     global GraphQLMutation defineVariable(String name, String typeDefinition) {
         return defineVariable(new GraphQLVariable(name, typeDefinition));
@@ -147,7 +147,7 @@ global class GraphQLMutation extends GraphQLOperation {
     /**
      * @description Add a variable definition for the current mutation node
      * @param variable The variable definition to add
-     * @return The instance of the current `GraphQLMutation` class
+     * @return The instance of the current <<GraphQLMutation>> class
      */
     global GraphQLMutation defineVariable(GraphQLVariable variable) {
         return (GraphQLMutation) addVariable(variable);

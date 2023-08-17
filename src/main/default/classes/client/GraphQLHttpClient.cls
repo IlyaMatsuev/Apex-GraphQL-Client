@@ -22,7 +22,7 @@ global class GraphQLHttpClient {
     /**
      * @description Send GraphQL request (Query or Mutation) and wait for the response
      * @param request The instance of request to be send
-     * @return The `GraphQLResponse` instance containing parsed GraphQL response
+     * @return The <<GraphQLResponse>> instance containing parsed GraphQL response
      */
     global GraphQLResponse send(GraphQLRequest request) {
         return send(new RequestWrapper(request));
@@ -31,7 +31,7 @@ global class GraphQLHttpClient {
     /**
      * @description Send GraphQL request (Query or Mutation) without awaiting the response or passing the callback that will be executed when the response is received
      * @param request The instance of request to be send
-     * @param callback The instance of `IGraphQLResponseCallback` implementing the callback method. Can be null
+     * @param callback The instance of <<IGraphQLResponseCallback>> implementing the callback method. Can be null
      * @return The id of the `Queueable` Apex job
      */
     global Id sendAsync(GraphQLRequest request, IGraphQLResponseCallback callback) {
