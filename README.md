@@ -7,22 +7,22 @@ The package for Salesforce that aimed to provide a convenient way to communicate
 
 What is supported:
 
--   Building queries, mutations and subscriptions
--   Building graphql nodes (fields). If you want to send requests yourself
--   Passing arguments to the graphql nodes (fields)
--   Passing variables to the graphql operations from request
--   Passing directives to the graphql operations and nodes
--   Using fragments for graphql requests. Inline fragments are supported as well.
--   Sync and async graphql HTTP client for sending requests (with callback implementation for async calls)
--   Handling responses in GraphQL format
+-   ✅ Building queries, mutations and subscriptions
+-   ✅ Building graphql nodes (fields). If you want to send requests yourself
+-   ✅ Passing arguments to the graphql nodes (fields)
+-   ✅ Passing variables to the graphql operations from request
+-   ✅ Passing directives to the graphql operations and nodes
+-   ✅ Using fragments for graphql requests. Inline fragments are supported as well.
+-   ✅ Sync and async graphql HTTP client for sending requests (with callback implementation for async calls)
+-   ✅ Handling responses in GraphQL format
 
 What is NOT supported:
 
--   Sending subscription requests (WebSocket protocol is not supported by Apex)
+-   ❌ Sending subscription requests (WebSocket protocol is not supported by Apex)
 
 If you think there is something that is not implemented yet as for GraphQL client I'd appreciate if you open an issue/discussion in this repository.
 
-## Overview
+## 🔍 Overview
 
 ### Generate a GraphQL node
 
@@ -133,7 +133,7 @@ GraphQLResponse response = client.send(request);
 
 All examples can be found [here](docs/examples/).
 
-## Installation
+## 🚀 Installation
 
 ### From Unmanaged Package
 
@@ -159,7 +159,7 @@ Second is for creating a new configured scratch org:
 ./scripts/pkg-from-scratch.sh <devhub_username> <scratch_username>
 ```
 
-## Documentation
+## 📝 Documentation
 
 For more detailed information about the content of the repository and the package, please visit [the documentation page](https://ilyamatsuev.github.io/Apex-GraphQL-Client/).
 
@@ -167,11 +167,11 @@ There is also a nice article on [medium.com](https://medium.com) by [Justin Will
 
 The changelog is [here](https://ilyamatsuev.github.io/Apex-GraphQL-Client/#/changelog).
 
-## Questions
+## ❓ Questions
 
 If you have any questions you can start a discussion. If you think something works not as expected you can create an issue. If you want to request a new feature you can create an issue with the appropriate template selected.
 
-## Contributing
+## 🤝 Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate.
