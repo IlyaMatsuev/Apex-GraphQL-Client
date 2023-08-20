@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLConfigsTest {
     @IsTest
     private static void getString_shouldReturnStringConfig() {

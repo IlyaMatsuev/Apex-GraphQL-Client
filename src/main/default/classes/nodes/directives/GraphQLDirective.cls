@@ -31,7 +31,7 @@ global class GraphQLDirective {
      * @description Add an argument to the current directive
      * @param key The argument name
      * @param value The argument value. Use string with the `$` sign for variable referencing
-     * @return The current instance of `GraphQLDirective`
+     * @return The current instance of <<GraphQLDirective>>
      */
     global GraphQLDirective withArgument(String key, Object value) {
         return withArgument(new GraphQLArgument(key, value));
@@ -40,7 +40,7 @@ global class GraphQLDirective {
     /**
      * @description Add an argument to the current directive
      * @param argument The argument to be added
-     * @return The current instance of `GraphQLDirective`
+     * @return The current instance of <<GraphQLDirective>>
      */
     global GraphQLDirective withArgument(GraphQLArgument argument) {
         arguments.add(argument);

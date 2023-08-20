@@ -1,5 +1,6 @@
 /**
  * @description The client that can be used to send and receive GraphQL requests and responses
+ * @group Client
  */
 global class GraphQLHttpClient {
     private final String endpoint;
@@ -21,7 +22,7 @@ global class GraphQLHttpClient {
     /**
      * @description Send GraphQL request (Query or Mutation) and wait for the response
      * @param request The instance of request to be send
-     * @return The `GraphQLResponse` instance containing parsed GraphQL response
+     * @return The <<GraphQLResponse>> instance containing parsed GraphQL response
      */
     global GraphQLResponse send(GraphQLRequest request) {
         return send(new RequestWrapper(request));
@@ -30,7 +31,7 @@ global class GraphQLHttpClient {
     /**
      * @description Send GraphQL request (Query or Mutation) without awaiting the response or passing the callback that will be executed when the response is received
      * @param request The instance of request to be send
-     * @param callback The instance of `IGraphQLResponseCallback` implementing the callback method. Can be null
+     * @param callback The instance of <<IGraphQLResponseCallback>> implementing the callback method. Can be null
      * @return The id of the `Queueable` Apex job
      */
     global Id sendAsync(GraphQLRequest request, IGraphQLResponseCallback callback) {
@@ -46,9 +47,7 @@ global class GraphQLHttpClient {
             gqlResponse = new GraphQLResponse(
                 putError(
                     error,
-                    'Got invalid response format from the server' +
-                    GraphQLConstants.LINE_BREAK +
-                    response.getBody()
+                    'Got invalid response format from the server' + GraphQLConstants.LINE_BREAK + response.getBody()
                 )
             );
         } catch (Exception error) {
@@ -79,9 +78,7 @@ global class GraphQLHttpClient {
     private GraphQLResponseError putError(Exception error, String message) {
         System.debug(
             LoggingLevel.ERROR,
-            error.getMessage() +
-            GraphQLConstants.LINE_BREAK +
-            error.getStackTraceString()
+            error.getMessage() + GraphQLConstants.LINE_BREAK + error.getStackTraceString()
         );
         return new GraphQLResponseError(message);
     }

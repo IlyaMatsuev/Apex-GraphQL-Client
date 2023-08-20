@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLRequestTest {
     @IsTest
     private static void requestAsStringNodeQueryPositiveTest() {

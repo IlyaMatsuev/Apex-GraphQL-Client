@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLResponseTest {
     @IsTest
     private static void responseWithErrorOnlyTest() {

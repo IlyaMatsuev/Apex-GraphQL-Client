@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLQueryTest {
     @IsTest
     private static void emptyQueryTest() {
@@ -295,14 +295,14 @@ private class GraphQLQueryTest {
 
         System.assertEquals(
             'query{node1{...Fields1},node2{...Fields2}}' +
-            'fragment Fields1 on Type1{f1,f2}' +
-            'fragment Fields2 on Type2{f3,f4}',
+                'fragment Fields1 on Type1{f1,f2}' +
+                'fragment Fields2 on Type2{f3,f4}',
             query.build()
         );
         System.assertEquals(
             'query {\n  node1 {\n    ...Fields1\n  }\n  node2 {\n    ...Fields2\n  }\n}\n' +
-            'fragment Fields1 on Type1 {\n  f1\n  f2\n}\n' +
-            'fragment Fields2 on Type2 {\n  f3\n  f4\n}',
+                'fragment Fields1 on Type1 {\n  f1\n  f2\n}\n' +
+                'fragment Fields2 on Type2 {\n  f3\n  f4\n}',
             query.build(true)
         );
     }

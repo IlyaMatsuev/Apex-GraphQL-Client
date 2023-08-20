@@ -1,27 +1,33 @@
 {
-  "name": "gql-apex-client",
-  "private": true,
-  "version": "2.0.0",
-  "description": "graphql-apex-client",
-  "scripts": {
-    "prettier": "prettier --write",
-    "prettier:verify": "prettier --list-different"
-  },
-  "devDependencies": {
-    "@ilyamatsuev/prettier-plugin-apex": "^2.0.3",
-    "@prettier/plugin-xml": "^0.12.0",
-    "husky": "^4.2.1",
-    "lint-staged": "^10.0.7",
-    "prettier": "^2.8.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
+    "name": "gql-apex-client",
+    "private": true,
+    "version": "2.0.0",
+    "description": "graphql-apex-client",
+    "scripts": {
+        "prettier": "prettier --write",
+        "prettier:verify": "prettier --list-different",
+        "docs:types:refresh": "npm run docs:types:clean && npm run docs:types:generate && npm run prettier ./docs/types",
+        "docs:types:clean": "shx rm -r ./docs/types",
+        "docs:types:generate": "apexdocs-generate -s ./src/main -t ./docs/types --documentationRootDir '/types' -p global -g docsify --defaultGroupName Query --title 'Type Definitions'"
+    },
+    "devDependencies": {
+        "@cparra/apexdocs": "^2.17.0",
+        "@ilyamatsuev/prettier-plugin-apex": "2.2.0",
+        "@prettier/plugin-xml": "^0.12.0",
+        "docsify-cli": "^4.4.4",
+        "husky": "^4.2.1",
+        "lint-staged": "^10.0.7",
+        "prettier": "^2.8.8",
+        "shx": "^0.3.4"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "**/*.{cls,trigger,md,xml,yaml,yml,json}": [
+            "npm run prettier"
+        ]
     }
-  },
-  "lint-staged": {
-    "**/*.{cls,trigger,md,xml,yaml,yml,json}": [
-      "npm run prettier"
-    ]
-  }
 }

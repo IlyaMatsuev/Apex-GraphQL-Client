@@ -1,5 +1,6 @@
 /**
  * @description The callback interface that is used for async requests for the client
+ * @group Client
  */
 global interface IGraphQLResponseCallback {
     /**

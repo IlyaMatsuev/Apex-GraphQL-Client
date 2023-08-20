@@ -1,5 +1,6 @@
 /**
  * @description The GraphQL operation node, eathier Query, Mutation or Subscription
+ * @group Operations
  */
 global abstract class GraphQLOperation extends GraphQLNode {
     /**
@@ -42,7 +43,7 @@ global abstract class GraphQLOperation extends GraphQLNode {
 
     /**
      * @description Create a GraphQL request from the current operation node
-     * @return The instance of the `GraphQLRequest` class
+     * @return The instance of the <<GraphQLRequest>> class
      */
     global virtual GraphQLRequest asRequest() {
         return new GraphQLRequest(this);
@@ -50,7 +51,7 @@ global abstract class GraphQLOperation extends GraphQLNode {
 
     /**
      * @description Get the GraphQL operation type of the current node
-     * @return The instance of the `GraphQLOperationType` enum
+     * @return The instance of the <<GraphQLOperationType>> enum
      */
     global abstract GraphQLOperationType getOperation();
 

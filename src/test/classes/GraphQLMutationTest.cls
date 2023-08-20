@@ -1,4 +1,4 @@
-@IsTest(IsParallel = true)
+@IsTest(isParallel = true)
 private class GraphQLMutationTest {
     @IsTest
     private static void emptyMutationTest() {

@@ -2,11 +2,17 @@
 
 ## Examples
 
-Please take a look at the [examples folder](examples) to know what is possible to do with this package, and how to do it.
+Please take a look at the [examples page](examples) to know what is possible to do with this package, and how to do it.
+
+There is also a nice article on [medium.com](https://medium.com) by [Justin Wills](https://medium.com/@justin.wills_27437) about how to use this library with the Shopify integration. He has also posted [a video on YouTube](https://www.youtube.com/watch?v=KfooQmDCGnk&t=6s) for the same topic.
+
+## Changelog
+
+Check out the [changelog](changelog) to see the latest changes in the project.
 
 ## Type Definitions
 
-All classes available for use can be found [here](types). There is also a short description of their purposes, constructors, and class members.
+All classes available for use can be found [here](types). There is also a short description of their purpose and class members.
 
 ## Package Configuration
 

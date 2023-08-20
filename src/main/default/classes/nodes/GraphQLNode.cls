@@ -32,16 +32,16 @@ global abstract class GraphQLNode {
     }
 
     /**
-     * @description Check if the current node is an instance of `GraphQLField`
-     * @return `true` if the current instance is `GraphQLField`
+     * @description Check if the current node is an instance of <<GraphQLField>>
+     * @return `true` if the current instance is <<GraphQLField>>
      */
     global Boolean isFieldNode() {
         return this instanceof GraphQLField;
     }
 
     /**
-     * @description Check if the current node is an instance of `GraphQLFragment`
-     * @return `true` if the current instance is `GraphQLFragment`
+     * @description Check if the current node is an instance of <<GraphQLFragment>>
+     * @return `true` if the current instance is <<GraphQLFragment>>
      */
     global Boolean isFragmentNode() {
         return this instanceof GraphQLFragment;

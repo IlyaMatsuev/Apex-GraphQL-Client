@@ -1,5 +1,6 @@
 /**
  * @description Represents a GraphQL variable definition
+ * @group Client
  */
 global class GraphQLVariable {
     /**
