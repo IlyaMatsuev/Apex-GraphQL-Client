@@ -163,7 +163,7 @@ Second is for creating a new configured scratch org:
 
 For more detailed information about the content of the repository and the package, please visit [the documentation page](https://ilyamatsuev.github.io/Apex-GraphQL-Client/).
 
-There is also a nice article on [medium.com](https://medium.com) by [Justin Wills](https://medium.com/@justin.wills_27437) about how to use this library with the Shopify integration. He has also posted [a video on YouTube](https://www.youtube.com/watch?v=KfooQmDCGnk&t=6s) for the same topic.
+There is also a nice article on [medium.com](https://medium.com/@justin.wills_27437/intro-to-graphql-in-apex-salesforce-ccedb514d3c5) by [Justin Wills](https://medium.com/@justin.wills_27437) about how to use this library with the Shopify integration. He has also posted [a video on YouTube](https://www.youtube.com/watch?v=KfooQmDCGnk&t=6s) for the same topic.
 
 The changelog is [here](https://ilyamatsuev.github.io/Apex-GraphQL-Client/#/changelog).
 
