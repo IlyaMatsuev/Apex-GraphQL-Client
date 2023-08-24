@@ -49,7 +49,7 @@ private class GraphQLVariableTest {
     }
 
     @IsTest
-    private static void createVariableWithWithDefaultStringValueTest() {
+    private static void createVariableWithDefaultStringValueTest() {
         GraphQLVariable variable = new GraphQLVariable('$key', 'String').withDefault('hello world!');
 
         System.assertEquals('key', variable.name);
@@ -61,27 +61,27 @@ private class GraphQLVariableTest {
     }
 
     @IsTest
-    private static void createVariableWithWithDefaultEnumValueTest() {
-        GraphQLVariable variable = new GraphQLVariable('$key', 'SomeEnum').withDefault('ENUM_VAL').asEnum();
+    private static void createVariableWithDefaultEnumValueTest() {
+        GraphQLVariable variable = new GraphQLVariable('$key', 'SomeEnum').withDefault(new GraphQLEnum('ENUM_VAL'));
 
-        System.assertEquals('key', variable.name);
-        System.assertEquals('SomeEnum', variable.type);
-        System.assertEquals('ENUM_VAL', variable.defaultValue);
-        System.assert(!variable.isNonNull);
-        System.assertEquals('$key:SomeEnum=ENUM_VAL', variable.toString());
-        System.assertEquals('$key: SomeEnum = ENUM_VAL', variable.toString(true));
+        Assert.areEqual('key', variable.name);
+        Assert.areEqual('SomeEnum', variable.type);
+        Assert.areEqual('ENUM_VAL', variable.defaultValue?.toString());
+        Assert.isFalse(variable.isNonNull);
+        Assert.areEqual('$key:SomeEnum=ENUM_VAL', variable.toString());
+        Assert.areEqual('$key: SomeEnum = ENUM_VAL', variable.toString(true));
     }
 
     @IsTest
-    private static void asEnumWithoutDefaultValueNegativeTest() {
-        Exception error;
-        try {
-            new GraphQLVariable('$key', 'SomeEnum').asEnum();
-        } catch (Exception ex) {
-            error = ex;
-        }
+    private static void createVariableWithDefaultEnumListValueTest() {
+        GraphQLVariable variable = new GraphQLVariable('$key', 'SomeEnum')
+            .withDefault(new List<GraphQLEnum> { new GraphQLEnum('ENUM_VAL1'), new GraphQLEnum('ENUM_VAL2') });
 
-        System.assert(error != null);
-        System.assert(error instanceof GraphQLVariable.GraphQLVariableException);
+        Assert.areEqual('key', variable.name);
+        Assert.areEqual('SomeEnum', variable.type);
+        Assert.isInstanceOfType(variable.defaultValue, List<Object>.class);
+        Assert.isFalse(variable.isNonNull);
+        Assert.areEqual('$key:SomeEnum=[ENUM_VAL1,ENUM_VAL2]', variable.toString());
+        Assert.areEqual('$key: SomeEnum = [ ENUM_VAL1, ENUM_VAL2 ]', variable.toString(true));
     }
 }

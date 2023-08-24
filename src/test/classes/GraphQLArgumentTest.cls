@@ -80,16 +80,6 @@ private class GraphQLArgumentTest {
     }
 
     @IsTest
-    private static void stringifyEnumArgumentTest() {
-        String key = 'key';
-        String value = 'VALUE';
-
-        GraphQLArgument argument = new GraphQLArgument(key, value).asEnum();
-
-        System.assertEquals('key:VALUE', argument.toString());
-    }
-
-    @IsTest
     private static void stringifyVariableArgumentTest() {
         String key = 'key';
         String value = '$variableName';
@@ -187,18 +177,37 @@ private class GraphQLArgumentTest {
     }
 
     @IsTest
-    private static void asEnumWithVariableFailureTest() {
+    private static void stringifyEnumArgumentTest() {
         String key = 'key';
-        String value = '$var';
+        GraphQLEnum value = new GraphQLEnum('VALUE');
 
-        Exception error;
-        try {
-            new GraphQLArgument(key, value).asEnum();
-        } catch (Exception ex) {
-            error = ex;
-        }
+        GraphQLArgument argument = new GraphQLArgument(key, value);
 
-        System.assert(error != null);
-        System.assert(error instanceof GraphQLArgument.GraphQLArgumentException);
+        Assert.areEqual('key:VALUE', argument.toString());
+        Assert.areEqual(argument.type, GraphQLArgumentType.x_Enum);
+    }
+
+    @IsTest
+    private static void stringifyEnumArrayArgumentTest() {
+        String key = 'key';
+        List<GraphQLEnum> value = new List<GraphQLEnum> { new GraphQLEnum('VALUE1'), new GraphQLEnum('VALUE2') };
+
+        GraphQLArgument argument = new GraphQLArgument(key, value);
+
+        Assert.areEqual('key:[VALUE1,VALUE2]', argument.toString());
+        Assert.areEqual('key: [ VALUE1, VALUE2 ]', argument.toString(true));
+        Assert.areEqual(argument.type, GraphQLArgumentType.x_List);
+    }
+
+    @IsTest
+    private static void stringifyStringArrayArgumentTest() {
+        String key = 'key';
+        List<String> value = new List<String> { 'value1', 'value2' };
+
+        GraphQLArgument argument = new GraphQLArgument(key, value);
+
+        Assert.areEqual('key:["value1","value2"]', argument.toString());
+        Assert.areEqual('key: [ "value1", "value2" ]', argument.toString(true));
+        Assert.areEqual(argument.type, GraphQLArgumentType.x_List);
     }
 }
