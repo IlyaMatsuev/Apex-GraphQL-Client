@@ -29,15 +29,7 @@ global class GraphQLArgument {
     /**
      * @description The argument GraphQL type
      */
-    global GraphQLArgumentType type {
-        get {
-            if (type == null) {
-                type = getArgumentTypeByValue(value);
-            }
-            return type;
-        }
-        private set;
-    }
+    global final GraphQLArgumentType type;
 
     /**
      * @description Create an instance of an argument by the provided name and value
@@ -47,6 +39,7 @@ global class GraphQLArgument {
     global GraphQLArgument(String key, Object value) {
         this.key = key;
         this.value = value;
+        this.type = getArgumentTypeByValue(value);
     }
 
     /**
@@ -57,55 +50,19 @@ global class GraphQLArgument {
         return value instanceof String && value != null && ((String) value).startsWith(GraphQLConstants.DOLLAR);
     }
 
-    /**
-     * @description Represents the current argument as a GraphQL enum value
-     * @throws GraphQLArgumentException If the current argument value is not String or if it's a variable reference
-     * @return The current instance of <<GraphQLArgument>>
-     */
-    global GraphQLArgument asEnum() {
-        if (!(value instanceof String) || isVariable()) {
-            throw new GraphQLArgumentException(
-                'Impossible to cast GraphQL argument as enum. The value type must be String and must not be a variable reference.'
-            );
-        }
-        type = GraphQLArgumentType.x_Enum;
-        return this;
-    }
-
     public override String toString() {
         return toString(false);
     }
 
     public String toString(Boolean pretty) {
         if (String.isBlank(key)) {
-            return valueToString(pretty);
+            return valueToString(value, pretty);
         }
-        return key + GraphQLConstants.COLON + GraphQLParser.getSmallIndent(pretty) + valueToString(pretty);
+        return key + GraphQLConstants.COLON + GraphQLParser.getSmallIndent(pretty) + valueToString(value, pretty);
     }
 
-    // There is no way to get an object's type yet
-    private GraphQLArgumentType getArgumentTypeByValue(Object value) {
-        if (value instanceof Integer || value instanceof Long) {
-            return GraphQLArgumentType.x_Integer;
-        } else if (value instanceof String || value instanceof Blob || value instanceof Id) {
-            return GraphQLArgumentType.x_String;
-        } else if (value instanceof Double || value instanceof Decimal) {
-            return GraphQLArgumentType.x_Float;
-        } else if (value instanceof Boolean) {
-            return GraphQLArgumentType.x_Boolean;
-        } else if (value instanceof Date) {
-            return GraphQLArgumentType.x_Date;
-        } else if (value instanceof DateTime || value instanceof Time) {
-            return GraphQLArgumentType.x_DateTime;
-        } else if (value == null) {
-            return GraphQLArgumentType.x_Null;
-        } else {
-            return GraphQLArgumentType.x_Object;
-        }
-    }
-
-    private String valueToString(Boolean pretty) {
-        switch on type {
+    private String valueToString(Object value, Boolean pretty) {
+        switch on getArgumentTypeByValue(value) {
             when x_Integer, x_Float, x_Boolean, x_Null, x_Enum {
                 return String.valueOf(value);
             }
@@ -124,14 +81,56 @@ global class GraphQLArgument {
                     dateToDateTime((Date) value).format(DATE_VALUE_FORMAT) +
                     GraphQLConstants.DOUBLE_QUOTES;
             }
+            when x_List {
+                return listToString((List<Object>) value, pretty);
+            }
             when else {
                 return objectToString(value, pretty);
             }
         }
     }
 
+    // There is no way to get an object's type yet
+    private GraphQLArgumentType getArgumentTypeByValue(Object value) {
+        if (value instanceof Integer || value instanceof Long) {
+            return GraphQLArgumentType.x_Integer;
+        } else if (value instanceof String || value instanceof Blob || value instanceof Id) {
+            return GraphQLArgumentType.x_String;
+        } else if (value instanceof Double || value instanceof Decimal) {
+            return GraphQLArgumentType.x_Float;
+        } else if (value instanceof Boolean) {
+            return GraphQLArgumentType.x_Boolean;
+        } else if (value instanceof Date) {
+            return GraphQLArgumentType.x_Date;
+        } else if (value instanceof DateTime || value instanceof Time) {
+            return GraphQLArgumentType.x_DateTime;
+        } else if (value instanceof GraphQLEnum) {
+            return GraphQLArgumentType.x_Enum;
+        } else if (value == null) {
+            return GraphQLArgumentType.x_Null;
+        } else if (value instanceof List<Object>) {
+            return GraphQLArgumentType.x_List;
+        } else {
+            return GraphQLArgumentType.x_Object;
+        }
+    }
+
     private DateTime dateToDateTime(Date dateValue) {
         return DateTime.newInstance(dateValue.year(), dateValue.month(), dateValue.day());
+    }
+
+    private String listToString(List<Object> elements, Boolean pretty) {
+        List<String> parsedElements = new List<String>();
+
+        for (Object element : elements) {
+            parsedElements.add(valueToString(element, pretty));
+        }
+
+        return GraphQLConstants.SQUARE_BRACE_LEFT +
+            GraphQLParser.getSmallIndent(pretty) +
+            String.join(parsedElements, GraphQLConstants.COMMA + GraphQLParser.getSmallIndent(pretty)) +
+            GraphQLParser.getSmallIndent(pretty) +
+            GraphQLConstants.SQUARE_BRACE_RIGHT;
     }
 
     private String objectToString(Object value, Boolean pretty) {
@@ -151,7 +150,4 @@ global class GraphQLArgument {
                 GraphQLConstants.COLON + GraphQLParser.getSmallIndent(pretty) + FIRST_REGEX_MATCH_GROUP
             );
     }
-
-    @TestVisible
-    private class GraphQLArgumentException extends Exception {}
 }
