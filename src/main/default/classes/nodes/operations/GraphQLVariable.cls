@@ -93,20 +93,6 @@ global class GraphQLVariable {
         return this;
     }
 
-    /**
-     * @description Represents the current variable default value as a GraphQL enum value
-     * @throws GraphQLVariableException If the doesn't have any default value set yet
-     * @throws GraphQLArgumentException If the default value is not String or if it's a variable reference
-     * @return The current instance of the variable definition
-     */
-    global GraphQLVariable asEnum() {
-        if (defaultValueArgument == null) {
-            throw new GraphQLVariableException('The default value was not set for the variable yet');
-        }
-        defaultValueArgument.asEnum();
-        return this;
-    }
-
     public override String toString() {
         return toString(false);
     }
