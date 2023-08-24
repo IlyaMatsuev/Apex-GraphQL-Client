@@ -4,60 +4,60 @@ private class GraphQLVariableTest {
     private static void createVariableTest() {
         GraphQLVariable variable = new GraphQLVariable('key', 'Int');
 
-        System.assertEquals('key', variable.name);
-        System.assertEquals('Int', variable.type);
-        System.assertEquals(null, variable.defaultValue);
-        System.assert(!variable.isNonNull);
-        System.assertEquals('$key:Int', variable.toString());
-        System.assertEquals('$key: Int', variable.toString(true));
+        Assert.areEqual('key', variable.name);
+        Assert.areEqual('Int', variable.type);
+        Assert.isNull(variable.defaultValue);
+        Assert.isFalse(variable.isNonNull);
+        Assert.areEqual('$key:Int', variable.toString());
+        Assert.areEqual('$key: Int', variable.toString(true));
     }
 
     @IsTest
     private static void createVariableAsNonNullTest() {
         GraphQLVariable variable = new GraphQLVariable('key', 'Int').asNonNull();
 
-        System.assertEquals('key', variable.name);
-        System.assertEquals('Int', variable.type);
-        System.assertEquals(null, variable.defaultValue);
-        System.assert(variable.isNonNull);
-        System.assertEquals('$key:Int!', variable.toString());
-        System.assertEquals('$key: Int!', variable.toString(true));
+        Assert.areEqual('key', variable.name);
+        Assert.areEqual('Int', variable.type);
+        Assert.isNull(variable.defaultValue);
+        Assert.isTrue(variable.isNonNull);
+        Assert.areEqual('$key:Int!', variable.toString());
+        Assert.areEqual('$key: Int!', variable.toString(true));
     }
 
     @IsTest
     private static void createNonNullVariableTest() {
         GraphQLVariable variable = new GraphQLVariable('key', 'Int!');
 
-        System.assertEquals('key', variable.name);
-        System.assertEquals('Int', variable.type);
-        System.assertEquals(null, variable.defaultValue);
-        System.assert(variable.isNonNull);
-        System.assertEquals('$key:Int!', variable.toString());
-        System.assertEquals('$key: Int!', variable.toString(true));
+        Assert.areEqual('key', variable.name);
+        Assert.areEqual('Int', variable.type);
+        Assert.isNull(variable.defaultValue);
+        Assert.isTrue(variable.isNonNull);
+        Assert.areEqual('$key:Int!', variable.toString());
+        Assert.areEqual('$key: Int!', variable.toString(true));
     }
 
     @IsTest
     private static void createNonNullVariableWithDollarNameTest() {
         GraphQLVariable variable = new GraphQLVariable('$key', 'Int!');
 
-        System.assertEquals('key', variable.name);
-        System.assertEquals('Int', variable.type);
-        System.assertEquals(null, variable.defaultValue);
-        System.assert(variable.isNonNull);
-        System.assertEquals('$key:Int!', variable.toString());
-        System.assertEquals('$key: Int!', variable.toString(true));
+        Assert.areEqual('key', variable.name);
+        Assert.areEqual('Int', variable.type);
+        Assert.isNull(variable.defaultValue);
+        Assert.isTrue(variable.isNonNull);
+        Assert.areEqual('$key:Int!', variable.toString());
+        Assert.areEqual('$key: Int!', variable.toString(true));
     }
 
     @IsTest
     private static void createVariableWithDefaultStringValueTest() {
         GraphQLVariable variable = new GraphQLVariable('$key', 'String').withDefault('hello world!');
 
-        System.assertEquals('key', variable.name);
-        System.assertEquals('String', variable.type);
-        System.assertEquals('hello world!', variable.defaultValue);
-        System.assert(!variable.isNonNull);
-        System.assertEquals('$key:String="hello world!"', variable.toString());
-        System.assertEquals('$key: String = "hello world!"', variable.toString(true));
+        Assert.areEqual('key', variable.name);
+        Assert.areEqual('String', variable.type);
+        Assert.areEqual('hello world!', variable.defaultValue);
+        Assert.isTrue(!variable.isNonNull);
+        Assert.areEqual('$key:String="hello world!"', variable.toString());
+        Assert.areEqual('$key: String = "hello world!"', variable.toString(true));
     }
 
     @IsTest

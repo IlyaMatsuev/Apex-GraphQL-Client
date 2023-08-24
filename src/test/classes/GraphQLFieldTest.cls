@@ -4,10 +4,10 @@ private class GraphQLFieldTest {
     private static void emptyNodeTest() {
         GraphQLField node = new GraphQLField();
 
-        System.assert(node.isFieldNode());
-        System.assertEquals(GraphQLConstants.EMPTY, node.name);
-        System.assertEquals(0, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
+        Assert.isTrue(node.isFieldNode());
+        Assert.areEqual(GraphQLConstants.EMPTY, node.name);
+        Assert.areEqual(0, node.nodes.size());
+        Assert.areEqual(0, node.arguments.size());
     }
 
     @IsTest
@@ -16,9 +16,9 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField(nodeName);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(0, node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(0, node.nodes.size());
+        Assert.areEqual(0, node.arguments.size());
     }
 
     @IsTest
@@ -27,11 +27,11 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField(childNodes);
 
-        System.assertEquals(GraphQLConstants.EMPTY, node.name);
-        System.assertEquals(childNodes.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
-        System.assert(node.hasField(childNodes.get(0)));
-        System.assert(!node.hasField(new GraphQLField('node3')));
+        Assert.areEqual(GraphQLConstants.EMPTY, node.name);
+        Assert.areEqual(childNodes.size(), node.nodes.size());
+        Assert.areEqual(0, node.arguments.size());
+        Assert.isTrue(node.hasField(childNodes.get(0)));
+        Assert.isFalse(node.hasField(new GraphQLField('node3')));
     }
 
     @IsTest
@@ -41,9 +41,9 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField(nodeName, childNodes);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(childNodes.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(childNodes.size(), node.nodes.size());
+        Assert.areEqual(0, node.arguments.size());
     }
 
     @IsTest
@@ -52,9 +52,9 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField(fields);
 
-        System.assertEquals(GraphQLConstants.EMPTY, node.name);
-        System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
+        Assert.areEqual(GraphQLConstants.EMPTY, node.name);
+        Assert.areEqual(fields.size(), node.nodes.size());
+        Assert.areEqual(0, node.arguments.size());
     }
 
     @IsTest
@@ -64,9 +64,9 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField(nodeName, fields);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(0, node.arguments.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(fields.size(), node.nodes.size());
+        Assert.areEqual(0, node.arguments.size());
     }
 
     @IsTest
@@ -75,8 +75,8 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withField(fieldName);
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals(fieldName, node.nodes.get(0).name);
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual(fieldName, node.nodes.get(0).name);
     }
 
     @IsTest
@@ -85,9 +85,9 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withFields(fields);
 
-        System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals('field1', node.nodes.get(0).name);
-        System.assertEquals('field2', node.nodes.get(1).name);
+        Assert.areEqual(fields.size(), node.nodes.size());
+        Assert.areEqual('field1', node.nodes.get(0).name);
+        Assert.areEqual('field2', node.nodes.get(1).name);
     }
 
     @IsTest
@@ -96,8 +96,8 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withFragment(fragmentName);
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals(GraphQLConstants.DOT.repeat(3) + fragmentName, node.nodes.get(0).name);
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual(GraphQLConstants.DOT.repeat(3) + fragmentName, node.nodes.get(0).name);
     }
 
     @IsTest
@@ -106,9 +106,9 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withFragments(fragments);
 
-        System.assertEquals(fragments.size(), node.nodes.size());
-        System.assertEquals(GraphQLConstants.DOT.repeat(3) + 'FieldSet1', node.nodes.get(0).name);
-        System.assertEquals(GraphQLConstants.DOT.repeat(3) + 'FieldSet12', node.nodes.get(1).name);
+        Assert.areEqual(fragments.size(), node.nodes.size());
+        Assert.areEqual(GraphQLConstants.DOT.repeat(3) + 'FieldSet1', node.nodes.get(0).name);
+        Assert.areEqual(GraphQLConstants.DOT.repeat(3) + 'FieldSet12', node.nodes.get(1).name);
     }
 
     @IsTest
@@ -117,9 +117,9 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withInlineFragment(fragment);
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals('{... on SomeType{field1}}', node.build());
-        System.assertEquals('{\n  ... on SomeType {\n    field1\n  }\n}', node.build(true));
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual('{... on SomeType{field1}}', node.build());
+        Assert.areEqual('{\n  ... on SomeType {\n    field1\n  }\n}', node.build(true));
     }
 
     @IsTest
@@ -131,8 +131,8 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withInlineFragments(fragments);
 
-        System.assertEquals(2, node.nodes.size());
-        System.assertEquals('{... on SomeType{field1},... on SomeType2{field11}}', node.build());
+        Assert.areEqual(2, node.nodes.size());
+        Assert.areEqual('{... on SomeType{field1},... on SomeType2{field11}}', node.build());
     }
 
     @IsTest
@@ -140,9 +140,9 @@ private class GraphQLFieldTest {
         GraphQLField node = new GraphQLField()
             .withInlineFragment(new GraphQLFragment().withField('field1').withField('field2'));
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals('{...{field1,field2}}', node.build());
-        System.assertEquals('{\n  ... {\n    field1\n    field2\n  }\n}', node.build(true));
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual('{...{field1,field2}}', node.build());
+        Assert.areEqual('{\n  ... {\n    field1\n    field2\n  }\n}', node.build(true));
     }
 
     @IsTest
@@ -156,8 +156,8 @@ private class GraphQLFieldTest {
             error = ex;
         }
 
-        System.assert(error != null);
-        System.assert(error instanceof GraphQLNode.GraphQLNodeException);
+        Assert.isNotNull(error);
+        Assert.isInstanceOfType(error, GraphQLNode.GraphQLNodeException.class);
     }
 
     @IsTest
@@ -166,8 +166,8 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withField(new GraphQLField(nodeName));
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals(nodeName, node.nodes.get(0).name);
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual(nodeName, node.nodes.get(0).name);
     }
 
     @IsTest
@@ -176,17 +176,17 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withFields(nodes);
 
-        System.assertEquals(nodes.size(), node.nodes.size());
-        System.assertEquals('node1', node.nodes.get(0).name);
-        System.assertEquals('node2', node.nodes.get(1).name);
+        Assert.areEqual(nodes.size(), node.nodes.size());
+        Assert.areEqual('node1', node.nodes.get(0).name);
+        Assert.areEqual('node2', node.nodes.get(1).name);
     }
 
     @IsTest
     private static void nodeWithArgumentTest() {
         GraphQLField node = new GraphQLField().withArgument('key', 'value');
 
-        System.assertEquals(1, node.arguments.size());
-        System.assertEquals('value', node.arguments.get('key').value);
+        Assert.areEqual(1, node.arguments.size());
+        Assert.areEqual('value', node.arguments.get('key').value);
     }
 
     @IsTest
@@ -198,9 +198,9 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withArguments(arguments);
 
-        System.assertEquals(arguments.size(), node.arguments.size());
-        System.assertEquals('value1', node.arguments.get('key1').value);
-        System.assertEquals('value2', node.arguments.get('key2').value);
+        Assert.areEqual(arguments.size(), node.arguments.size());
+        Assert.areEqual('value1', node.arguments.get('key1').value);
+        Assert.areEqual('value2', node.arguments.get('key2').value);
     }
 
     @IsTest
@@ -209,26 +209,26 @@ private class GraphQLFieldTest {
             .withDirective(new GraphQLDirective('test').withArgument('var', true))
             .withField('field1');
 
-        System.assert(node.hasDirectives());
-        System.assertEquals(1, node.directives.size());
-        System.assertEquals('node@test(var:true){field1}', node.build());
-        System.assertEquals('node @test(var: true) {\n  field1\n}', node.build(true));
+        Assert.isTrue(node.hasDirectives());
+        Assert.areEqual(1, node.directives.size());
+        Assert.areEqual('node@test(var:true){field1}', node.build());
+        Assert.areEqual('node @test(var: true) {\n  field1\n}', node.build(true));
     }
 
     @IsTest
     private static void nodeIncludeIfConditionAndVariableTest() {
         GraphQLField node = new GraphQLField().includeIf(false).includeIf('var');
 
-        System.assert(node.hasDirectives());
-        System.assertEquals(2, node.directives.size());
+        Assert.isTrue(node.hasDirectives());
+        Assert.areEqual(2, node.directives.size());
     }
 
     @IsTest
     private static void nodeSkipIfConditionAndVariableTest() {
         GraphQLField node = new GraphQLField().skipIf(false).skipIf('var');
 
-        System.assert(node.hasDirectives());
-        System.assertEquals(2, node.directives.size());
+        Assert.isTrue(node.hasDirectives());
+        Assert.areEqual(2, node.directives.size());
     }
 
     @IsTest
@@ -237,10 +237,10 @@ private class GraphQLFieldTest {
 
         GraphQLQuery query = new GraphQLField('Test', nodes).asQuery();
 
-        System.assertEquals('Test', query.name);
-        System.assertEquals(nodes.size(), query.nodes.size());
-        System.assertEquals(0, query.variables.size());
-        System.assertEquals('query Test{node1,node2}', query.toString());
+        Assert.areEqual('Test', query.name);
+        Assert.areEqual(nodes.size(), query.nodes.size());
+        Assert.areEqual(0, query.variables.size());
+        Assert.areEqual('query Test{node1,node2}', query.toString());
     }
 
     @IsTest
@@ -249,10 +249,10 @@ private class GraphQLFieldTest {
 
         GraphQLMutation mutation = new GraphQLField('Test', nodes).asMutation();
 
-        System.assertEquals('Test', mutation.name);
-        System.assertEquals(nodes.size(), mutation.nodes.size());
-        System.assertEquals(0, mutation.variables.size());
-        System.assertEquals('mutation Test{node1,node2}', mutation.toString());
+        Assert.areEqual('Test', mutation.name);
+        Assert.areEqual(nodes.size(), mutation.nodes.size());
+        Assert.areEqual(0, mutation.variables.size());
+        Assert.areEqual('mutation Test{node1,node2}', mutation.toString());
     }
 
     @IsTest
@@ -261,10 +261,10 @@ private class GraphQLFieldTest {
 
         GraphQLSubscription subscription = new GraphQLField('Test', nodes).asSubscription();
 
-        System.assertEquals('Test', subscription.name);
-        System.assertEquals(nodes.size(), subscription.nodes.size());
-        System.assertEquals(0, subscription.variables.size());
-        System.assertEquals('subscription Test{node1,node2}', subscription.toString());
+        Assert.areEqual('Test', subscription.name);
+        Assert.areEqual(nodes.size(), subscription.nodes.size());
+        Assert.areEqual(0, subscription.variables.size());
+        Assert.areEqual('subscription Test{node1,node2}', subscription.toString());
     }
 
     /**
@@ -277,9 +277,8 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField(new List<GraphQLField> { childNode });
 
-        System.assert(node != null);
-        System.assertEquals('{ctrs:countries{name,code}}', node.build());
-        System.assertEquals('{\n  ctrs: countries {\n    name\n    code\n  }\n}', node.build(true));
+        Assert.areEqual('{ctrs:countries{name,code}}', node.build());
+        Assert.areEqual('{\n  ctrs: countries {\n    name\n    code\n  }\n}', node.build(true));
     }
 
     @IsTest
@@ -288,11 +287,10 @@ private class GraphQLFieldTest {
 
         GraphQLField node = new GraphQLField().withFields(fields).withFragment('SomeFields');
 
-        System.assert(node != null);
-        System.assertEquals(GraphQLConstants.EMPTY, node.name);
-        System.assertEquals(fields.size() + 1, node.nodes.size());
-        System.assertEquals('{field1,field2,field3,...SomeFields}', node.build());
-        System.assertEquals('{\n  field1\n  field2\n  field3\n  ...SomeFields\n}', node.build(true));
+        Assert.areEqual(GraphQLConstants.EMPTY, node.name);
+        Assert.areEqual(fields.size() + 1, node.nodes.size());
+        Assert.areEqual('{field1,field2,field3,...SomeFields}', node.build());
+        Assert.areEqual('{\n  field1\n  field2\n  field3\n  ...SomeFields\n}', node.build(true));
     }
 
     @IsTest
@@ -304,10 +302,9 @@ private class GraphQLFieldTest {
             .withFragment('SomeFields')
             .withInlineFragment(inlineFragment);
 
-        System.assert(node != null);
-        System.assertEquals(3, node.nodes.size());
-        System.assertEquals('{field1,...SomeFields,... on SomeType{field11}}', node.build());
-        System.assertEquals('{\n  field1\n  ...SomeFields\n  ... on SomeType {\n    field11\n  }\n}', node.build(true));
+        Assert.areEqual(3, node.nodes.size());
+        Assert.areEqual('{field1,...SomeFields,... on SomeType{field11}}', node.build());
+        Assert.areEqual('{\n  field1\n  ...SomeFields\n  ... on SomeType {\n    field11\n  }\n}', node.build(true));
     }
 
     @IsTest
@@ -316,11 +313,10 @@ private class GraphQLFieldTest {
 
         GraphQLQuery query = new GraphQLField().withFields(fields).withArgument('arg', 'value').asQuery();
 
-        System.assert(query != null);
-        System.assert(String.isBlank(query.name));
-        System.assertEquals(fields.size(), query.nodes.size());
-        System.assertEquals('query{field1,field2,field3}', query.build());
-        System.assertEquals('query {\n  field1\n  field2\n  field3\n}', query.build(true));
+        Assert.isTrue(String.isBlank(query.name));
+        Assert.areEqual(fields.size(), query.nodes.size());
+        Assert.areEqual('query{field1,field2,field3}', query.build());
+        Assert.areEqual('query {\n  field1\n  field2\n  field3\n}', query.build(true));
     }
 
     @IsTest
@@ -329,11 +325,10 @@ private class GraphQLFieldTest {
 
         GraphQLMutation mutation = new GraphQLField().withFields(fields).withArgument('arg', 'value').asMutation();
 
-        System.assert(mutation != null);
-        System.assert(String.isBlank(mutation.name));
-        System.assertEquals(fields.size(), mutation.nodes.size());
-        System.assertEquals('mutation{field1,field2,field3}', mutation.build());
-        System.assertEquals('mutation {\n  field1\n  field2\n  field3\n}', mutation.build(true));
+        Assert.isTrue(String.isBlank(mutation.name));
+        Assert.areEqual(fields.size(), mutation.nodes.size());
+        Assert.areEqual('mutation{field1,field2,field3}', mutation.build());
+        Assert.areEqual('mutation {\n  field1\n  field2\n  field3\n}', mutation.build(true));
     }
 
     @IsTest
@@ -345,11 +340,10 @@ private class GraphQLFieldTest {
             .withArgument('arg', 'value')
             .asSubscription();
 
-        System.assert(subscription != null);
-        System.assert(String.isBlank(subscription.name));
-        System.assertEquals(fields.size(), subscription.nodes.size());
-        System.assertEquals('subscription{field1,field2,field3}', subscription.build());
-        System.assertEquals('subscription {\n  field1\n  field2\n  field3\n}', subscription.build(true));
+        Assert.isTrue(String.isBlank(subscription.name));
+        Assert.areEqual(fields.size(), subscription.nodes.size());
+        Assert.areEqual('subscription{field1,field2,field3}', subscription.build());
+        Assert.areEqual('subscription {\n  field1\n  field2\n  field3\n}', subscription.build(true));
     }
 
     @IsTest
@@ -370,20 +364,14 @@ private class GraphQLFieldTest {
 
         GraphQLField rootNode = new GraphQLField(childrenNodes);
 
-        System.assert(firstNode != null);
-        System.assert(secondNode != null);
-        System.assert(rootNode != null);
-        System.assertEquals(firstMethodName, firstNode.name);
-        System.assertEquals(secondMethodName, secondNode.name);
-        System.assertEquals(GraphQLConstants.EMPTY, rootNode.name);
-        System.assertEquals(firstMethodFields.size(), firstNode.nodes.size());
-        System.assertEquals(secondMethodFields.size(), secondNode.nodes.size());
-        System.assertEquals(childrenNodes.size(), rootNode.nodes.size());
-        System.assertEquals(
-            '{testMethod1{field1,field2},testMethod2{field3{field11,field22},field4}}',
-            rootNode.build()
-        );
-        System.assertEquals(
+        Assert.areEqual(firstMethodName, firstNode.name);
+        Assert.areEqual(secondMethodName, secondNode.name);
+        Assert.areEqual(GraphQLConstants.EMPTY, rootNode.name);
+        Assert.areEqual(firstMethodFields.size(), firstNode.nodes.size());
+        Assert.areEqual(secondMethodFields.size(), secondNode.nodes.size());
+        Assert.areEqual(childrenNodes.size(), rootNode.nodes.size());
+        Assert.areEqual('{testMethod1{field1,field2},testMethod2{field3{field11,field22},field4}}', rootNode.build());
+        Assert.areEqual(
             '{\n  testMethod1 {\n    field1\n    field2\n  }\n  testMethod2 {\n    field3 {\n      field11\n      field22\n    }\n    field4\n  }\n}',
             rootNode.build(true)
         );
@@ -401,15 +389,13 @@ private class GraphQLFieldTest {
 
         GraphQLField rootNode = new GraphQLField('root').withField(node);
 
-        System.assert(node != null);
-        System.assert(rootNode != null);
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals(
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(fields.size(), node.nodes.size());
+        Assert.areEqual(
             'root{testMethod(var1:"test1",var2:1,var3:{f3:$ref,f2:"2",f1:1}){field1,field2,field3}}',
             rootNode.build()
         );
-        System.assertEquals(
+        Assert.areEqual(
             'root {\n  testMethod(var1: "test1", var2: 1, var3: { f3: $ref, f2: "2", f1: 1 }) {\n    field1\n    field2\n    field3\n  }\n}',
             rootNode.build(true)
         );
@@ -427,11 +413,11 @@ private class GraphQLFieldTest {
 
         GraphQLField rootNode = new GraphQLField('root').withField(node);
 
-        System.assertEquals(
+        Assert.areEqual(
             'root{testMethod(var1:$test1)@include(if:true) @skip(if:$test1){field1,field2,field3}}',
             rootNode.build()
         );
-        System.assertEquals(
+        Assert.areEqual(
             'root {\n  testMethod(var1: $test1) @include(if: true) @skip(if: $test1) {\n    field1\n    field2\n    field3\n  }\n}',
             rootNode.build(true)
         );
@@ -458,8 +444,8 @@ private class GraphQLFieldTest {
             error = err;
         }
 
-        System.assert(error != null);
-        System.assert(error.getMessage().startsWith('Maximum request depth level is'));
+        Assert.isNotNull(error);
+        Assert.isTrue(error.getMessage().startsWith('Maximum request depth level is'));
     }
 
     @IsTest
@@ -473,8 +459,8 @@ private class GraphQLFieldTest {
             error = err;
         }
 
-        System.assert(error != null);
-        System.assertEquals('Cannot parse an empty node without any child nodes', error.getMessage());
+        Assert.isNotNull(error);
+        Assert.areEqual('Cannot parse an empty node without any child nodes', error.getMessage());
     }
 
     @IsTest
@@ -486,8 +472,8 @@ private class GraphQLFieldTest {
             error = ex;
         }
 
-        System.assert(error != null);
-        System.assert(error instanceof GraphQLNode.GraphQLNodeException);
+        Assert.isNotNull(error);
+        Assert.isInstanceOfType(error, GraphQLNode.GraphQLNodeException.class);
     }
 
     private class TestNode extends GraphQLNode {

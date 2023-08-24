@@ -10,8 +10,8 @@ private class GraphQLConfigsTest {
 
         String configValue = GraphQLConfigs.getString(config);
 
-        System.assert(configValue != null);
-        System.assertEquals('MM/dd/yyyy', configValue);
+        Assert.isNotNull(configValue);
+        Assert.areEqual('MM/dd/yyyy', configValue);
     }
 
     @IsTest
@@ -26,7 +26,7 @@ private class GraphQLConfigsTest {
             error = ex;
         }
 
-        System.assert(error != null);
-        System.assert(error.getMessage().startsWith('There is no such configuration entry'));
+        Assert.isNotNull(error != null);
+        Assert.isTrue(error.getMessage().startsWith('There is no such configuration entry'));
     }
 }

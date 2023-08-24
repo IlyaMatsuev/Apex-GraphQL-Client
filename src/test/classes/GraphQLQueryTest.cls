@@ -4,8 +4,8 @@ private class GraphQLQueryTest {
     private static void emptyQueryTest() {
         GraphQLQuery node = new GraphQLQuery();
 
-        System.assert(String.isBlank(node.name));
-        System.assertEquals(0, node.nodes.size());
+        Assert.isTrue(String.isBlank(node.name));
+        Assert.areEqual(0, node.nodes.size());
     }
 
     @IsTest
@@ -14,8 +14,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery(nodeName);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(0, node.nodes.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(0, node.nodes.size());
     }
 
     @IsTest
@@ -24,8 +24,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery(childNode);
 
-        System.assert(String.isBlank(node.name));
-        System.assertEquals(1, node.nodes.size());
+        Assert.isTrue(String.isBlank(node.name));
+        Assert.areEqual(1, node.nodes.size());
     }
 
     @IsTest
@@ -34,8 +34,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery(childNodes);
 
-        System.assert(String.isBlank(node.name));
-        System.assertEquals(childNodes.size(), node.nodes.size());
+        Assert.isTrue(String.isBlank(node.name));
+        Assert.areEqual(childNodes.size(), node.nodes.size());
     }
 
     @IsTest
@@ -44,8 +44,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery(nodeName, new GraphQLField('node1'));
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(1, node.nodes.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(1, node.nodes.size());
     }
 
     @IsTest
@@ -55,8 +55,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery(nodeName, childNodes);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(childNodes.size(), node.nodes.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(childNodes.size(), node.nodes.size());
     }
 
     @IsTest
@@ -65,8 +65,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery(fields);
 
-        System.assert(String.isBlank(node.name));
-        System.assertEquals(fields.size(), node.nodes.size());
+        Assert.isTrue(String.isBlank(node.name));
+        Assert.areEqual(fields.size(), node.nodes.size());
     }
 
     @IsTest
@@ -76,8 +76,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery(nodeName, fields);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(fields.size(), node.nodes.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(fields.size(), node.nodes.size());
     }
 
     @IsTest
@@ -86,8 +86,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery().withField(fieldName);
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals(fieldName, node.nodes.get(0).name);
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual(fieldName, node.nodes.get(0).name);
     }
 
     @IsTest
@@ -96,9 +96,9 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery().withFields(fields);
 
-        System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals('field1', node.nodes.get(0).name);
-        System.assertEquals('field2', node.nodes.get(1).name);
+        Assert.areEqual(fields.size(), node.nodes.size());
+        Assert.areEqual('field1', node.nodes.get(0).name);
+        Assert.areEqual('field2', node.nodes.get(1).name);
     }
 
     @IsTest
@@ -107,9 +107,9 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery().defineFragment(fragment);
 
-        System.assert(node.hasFragments());
-        System.assertEquals(1, node.fragments.size());
-        System.assertEquals(fragment.name, node.fragments.get(0).name);
+        Assert.isTrue(node.hasFragments());
+        Assert.areEqual(1, node.fragments.size());
+        Assert.areEqual(fragment.name, node.fragments.get(0).name);
     }
 
     @IsTest
@@ -121,19 +121,19 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery().defineFragments(fragments);
 
-        System.assert(node.hasFragments());
-        System.assertEquals(fragments.size(), node.fragments.size());
-        System.assertEquals('fragment1', node.fragments.get(0).name);
-        System.assertEquals('fragment2', node.fragments.get(1).name);
+        Assert.isTrue(node.hasFragments());
+        Assert.areEqual(fragments.size(), node.fragments.size());
+        Assert.areEqual('fragment1', node.fragments.get(0).name);
+        Assert.areEqual('fragment2', node.fragments.get(1).name);
     }
 
     @IsTest
     private static void queryWithDirectiveTest() {
         GraphQLQuery query = new GraphQLQuery().withDirective(new GraphQLDirective('test')).withField('field');
 
-        System.assertEquals(1, query.directives.size());
-        System.assertEquals('query@test{field}', query.build());
-        System.assertEquals('query @test {\n  field\n}', query.build(true));
+        Assert.areEqual(1, query.directives.size());
+        Assert.areEqual('query@test{field}', query.build());
+        Assert.areEqual('query @test {\n  field\n}', query.build(true));
     }
 
     @IsTest
@@ -147,8 +147,8 @@ private class GraphQLQueryTest {
             error = ex;
         }
 
-        System.assert(error != null);
-        System.assert(error instanceof GraphQLOperation.GraphQLOperationException);
+        Assert.isNotNull(error);
+        Assert.isInstanceOfType(error, GraphQLOperation.GraphQLOperationException.class);
     }
 
     @IsTest
@@ -157,8 +157,8 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery().withField(new GraphQLField(nodeName));
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals(nodeName, node.nodes.get(0).name);
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual(nodeName, node.nodes.get(0).name);
     }
 
     @IsTest
@@ -167,9 +167,9 @@ private class GraphQLQueryTest {
 
         GraphQLQuery node = new GraphQLQuery().withFields(nodes);
 
-        System.assertEquals(nodes.size(), node.nodes.size());
-        System.assertEquals('node1', node.nodes.get(0).name);
-        System.assertEquals('node2', node.nodes.get(1).name);
+        Assert.areEqual(nodes.size(), node.nodes.size());
+        Assert.areEqual('node1', node.nodes.get(0).name);
+        Assert.areEqual('node2', node.nodes.get(1).name);
     }
 
     @IsTest
@@ -178,16 +178,16 @@ private class GraphQLQueryTest {
             .withField(new GraphQLField('node'))
             .defineVariable('newVariable', '[Int]! = 0');
 
-        System.assertEquals(1, node.variables.size());
+        Assert.areEqual(1, node.variables.size());
     }
 
     @IsTest
     private static void queryBuildRequestTest() {
         GraphQLRequest request = new GraphQLQuery(new List<String> { 'field1' }).asRequest();
 
-        System.assertEquals(GraphQLOperationType.Query, request.operation);
-        System.assertEquals('{"query":"query{field1}"}', request.toString());
-        System.assertEquals('{\n  "query" : "query {\\n  field1\\n}"\n}', request.toString(true));
+        Assert.areEqual(GraphQLOperationType.Query, request.operation);
+        Assert.areEqual('{"query":"query{field1}"}', request.toString());
+        Assert.areEqual('{\n  "query" : "query {\\n  field1\\n}"\n}', request.toString(true));
     }
 
     /**
@@ -205,11 +205,10 @@ private class GraphQLQueryTest {
             .withFields(fields)
             .withField('field3');
 
-        System.assert(query != null);
-        System.assert(String.isBlank(query.name));
-        System.assertEquals(nodes.size() + fields.size(), query.nodes.size());
-        System.assertEquals('query{field1,field2,field3,field4}', query.build());
-        System.assertEquals('query {\n  field1\n  field2\n  field3\n  field4\n}', query.build(true));
+        Assert.isTrue(String.isBlank(query.name));
+        Assert.areEqual(nodes.size() + fields.size(), query.nodes.size());
+        Assert.areEqual('query{field1,field2,field3,field4}', query.build());
+        Assert.areEqual('query {\n  field1\n  field2\n  field3\n  field4\n}', query.build(true));
     }
 
     @IsTest
@@ -223,11 +222,10 @@ private class GraphQLQueryTest {
             .withFields(fields)
             .withField('field3');
 
-        System.assert(query != null);
-        System.assert(String.isBlank(query.name));
-        System.assertEquals(nodes.size() + fields.size(), query.nodes.size());
-        System.assertEquals('query{field1,field2,field3,field4}', query.build());
-        System.assertEquals('query {\n  field1\n  field2\n  field3\n  field4\n}', query.build(true));
+        Assert.isTrue(String.isBlank(query.name));
+        Assert.areEqual(nodes.size() + fields.size(), query.nodes.size());
+        Assert.areEqual('query{field1,field2,field3,field4}', query.build());
+        Assert.areEqual('query {\n  field1\n  field2\n  field3\n  field4\n}', query.build(true));
     }
 
     @IsTest
@@ -244,14 +242,10 @@ private class GraphQLQueryTest {
             .defineVariable(new GraphQLVariable('param1', 'Int').asNonNull())
             .defineVariable('param2', 'String');
 
-        System.assert(query != null);
-        System.assert(String.isBlank(query.name));
-        System.assertEquals(nodes.size() + fields.size(), query.nodes.size());
-        System.assertEquals(
-            'query($param1:Int!,$param2:String){node1(arg:$param1),node2,field3,field4}',
-            query.build()
-        );
-        System.assertEquals(
+        Assert.isTrue(String.isBlank(query.name));
+        Assert.areEqual(nodes.size() + fields.size(), query.nodes.size());
+        Assert.areEqual('query($param1:Int!,$param2:String){node1(arg:$param1),node2,field3,field4}', query.build());
+        Assert.areEqual(
             'query ($param1: Int!, $param2: String) {\n  node1(arg: $param1)\n  node2\n  field3\n  field4\n}',
             query.build(true)
         );
@@ -270,11 +264,10 @@ private class GraphQLQueryTest {
 
         GraphQLQuery query = new GraphQLQuery('TestQuery', nodes).withField('field1');
 
-        System.assert(query != null);
-        System.assertEquals('TestQuery', query.name);
-        System.assertEquals(nodes.size(), query.nodes.size());
-        System.assertEquals('query TestQuery{field1,field2{field21,field22},field3}', query.build());
-        System.assertEquals(
+        Assert.areEqual('TestQuery', query.name);
+        Assert.areEqual(nodes.size(), query.nodes.size());
+        Assert.areEqual('query TestQuery{field1,field2{field21,field22},field3}', query.build());
+        Assert.areEqual(
             'query TestQuery {\n  field1\n  field2 {\n    field21\n    field22\n  }\n  field3\n}',
             query.build(true)
         );
@@ -293,13 +286,13 @@ private class GraphQLQueryTest {
 
         GraphQLQuery query = new GraphQLQuery().withFields(nodes).defineFragments(fragments);
 
-        System.assertEquals(
+        Assert.areEqual(
             'query{node1{...Fields1},node2{...Fields2}}' +
                 'fragment Fields1 on Type1{f1,f2}' +
                 'fragment Fields2 on Type2{f3,f4}',
             query.build()
         );
-        System.assertEquals(
+        Assert.areEqual(
             'query {\n  node1 {\n    ...Fields1\n  }\n  node2 {\n    ...Fields2\n  }\n}\n' +
                 'fragment Fields1 on Type1 {\n  f1\n  f2\n}\n' +
                 'fragment Fields2 on Type2 {\n  f3\n  f4\n}',

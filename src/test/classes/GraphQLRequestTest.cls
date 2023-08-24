@@ -6,10 +6,10 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(stringNode);
 
-        System.assertEquals(GraphQLRequest.DEFAULT_REQUEST_TIMEOUT, request.timeout);
-        System.assertEquals(GraphQLOperationType.Query, request.operation);
-        System.assertEquals('{"query":"query{field1, field2}"}', request.toString());
-        System.assertEquals('{\n  "query" : "query{field1, field2}"\n}', request.toString(true));
+        Assert.areEqual(GraphQLRequest.DEFAULT_REQUEST_TIMEOUT, request.timeout);
+        Assert.areEqual(GraphQLOperationType.Query, request.operation);
+        Assert.areEqual('{"query":"query{field1, field2}"}', request.toString());
+        Assert.areEqual('{\n  "query" : "query{field1, field2}"\n}', request.toString(true));
     }
 
     @IsTest
@@ -18,9 +18,9 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(stringNode);
 
-        System.assertEquals(GraphQLOperationType.Mutation, request.operation);
-        System.assertEquals('{"query":"mutation{field1, field2}"}', request.toString());
-        System.assertEquals('{\n  "query" : "mutation{field1, field2}"\n}', request.toString(true));
+        Assert.areEqual(GraphQLOperationType.Mutation, request.operation);
+        Assert.areEqual('{"query":"mutation{field1, field2}"}', request.toString());
+        Assert.areEqual('{\n  "query" : "mutation{field1, field2}"\n}', request.toString(true));
     }
 
     @IsTest
@@ -32,8 +32,8 @@ private class GraphQLRequestTest {
             error = ex;
         }
 
-        System.assert(error != null);
-        System.assertEquals('The provided string node is empty or in invalid format', error.getMessage());
+        Assert.isNotNull(error);
+        Assert.areEqual('The provided string node is empty or in invalid format', error.getMessage());
     }
 
     @IsTest
@@ -46,8 +46,8 @@ private class GraphQLRequestTest {
             error = ex;
         }
 
-        System.assert(error != null);
-        System.assertEquals('This operation is not allowed for GraphQL request', error.getMessage());
+        Assert.isNotNull(error);
+        Assert.areEqual('This operation is not allowed for GraphQL request', error.getMessage());
     }
 
     @IsTest
@@ -56,9 +56,9 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(node);
 
-        System.assertEquals(GraphQLOperationType.Query, request.operation);
-        System.assertEquals('{"query":"query{field1,field2}"}', request.toString());
-        System.assertEquals('{\n  "query" : "query {\\n  field1\\n  field2\\n}"\n}', request.toString(true));
+        Assert.areEqual(GraphQLOperationType.Query, request.operation);
+        Assert.areEqual('{"query":"query{field1,field2}"}', request.toString());
+        Assert.areEqual('{\n  "query" : "query {\\n  field1\\n  field2\\n}"\n}', request.toString(true));
     }
 
     @IsTest
@@ -70,8 +70,8 @@ private class GraphQLRequestTest {
             error = err;
         }
 
-        System.assert(error != null);
-        System.assertEquals('The request node should be an either a Query or Mutation node', error.getMessage());
+        Assert.isNotNull(error);
+        Assert.areEqual('The request node should be an either a Query or Mutation node', error.getMessage());
     }
 
     @IsTest
@@ -80,9 +80,9 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(node);
 
-        System.assertEquals(GraphQLOperationType.Mutation, request.operation);
-        System.assertEquals('{"query":"mutation{field1,field2}"}', request.toString());
-        System.assertEquals('{\n  "query" : "mutation {\\n  field1\\n  field2\\n}"\n}', request.toString(true));
+        Assert.areEqual(GraphQLOperationType.Mutation, request.operation);
+        Assert.areEqual('{"query":"mutation{field1,field2}"}', request.toString());
+        Assert.areEqual('{\n  "query" : "mutation {\\n  field1\\n  field2\\n}"\n}', request.toString(true));
     }
 
     @IsTest
@@ -92,8 +92,8 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(node).withHeader('Authorization', 'token');
 
-        System.assertEquals(1, request.headers.size());
-        System.assertEquals('token', request.headers.get('Authorization'));
+        Assert.areEqual(1, request.headers.size());
+        Assert.areEqual('token', request.headers.get('Authorization'));
     }
 
     @IsTest
@@ -103,7 +103,7 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(node).withTimeout(10000);
 
-        System.assertEquals(10000, request.timeout);
+        Assert.areEqual(10000, request.timeout);
     }
 
     @IsTest
@@ -113,6 +113,6 @@ private class GraphQLRequestTest {
 
         GraphQLRequest request = new GraphQLRequest(node).withVariable('param', 'value');
 
-        System.assertEquals('{"variables":{"param":"value"},"query":"mutation{field1,field2}"}', request.toString());
+        Assert.areEqual('{"variables":{"param":"value"},"query":"mutation{field1,field2}"}', request.toString());
     }
 }
