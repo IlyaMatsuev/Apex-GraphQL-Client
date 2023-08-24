@@ -34,10 +34,10 @@ then
 fi
 
 info "Creating scratch..."
-sfdx force:org:create -f ./config/project-scratch-def.json -v "$devhub_alias" -a "$scratch_alias" -d "$days" \
+sfdx org:create:scratch -f ./config/project-scratch-def.json -v "$devhub_alias" -a "$scratch_alias" -y "$days" \
     || (\
-        sfdx force:auth:web:login -a "$devhub_alias" \
-        && sfdx force:org:create -f ./config/project-scratch-def.json -v "$devhub_alias" -a "$scratch_alias" -d "$days"\
+        sfdx org:login:web -a "$devhub_alias" \
+        && sfdx org:create:scratch -f ./config/project-scratch-def.json -v "$devhub_alias" -a "$scratch_alias" -y "$days"\
     ) || { exit 1; }
 
 sh ./scripts/pkg-deploy.sh "$scratch_alias"
