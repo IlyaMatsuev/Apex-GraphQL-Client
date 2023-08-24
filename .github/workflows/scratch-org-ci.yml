@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout source code'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: 'Restore node_modules cache'
         id: cache-npm
@@ -48,7 +48,7 @@ jobs:
           ~/sfdx/bin/sfdx version
 
       - name: 'Checkout source code'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: 'Populate auth file with DEVHUB_SFDX_URL secret'
         shell: bash
