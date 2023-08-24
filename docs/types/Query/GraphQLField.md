@@ -12,11 +12,11 @@ GraphQLField
 
 ### `global GraphQLField()`
 
-Create an instance of `GraphQLField` with the empty name
+Create an instance of [GraphQLField](/types/Query/GraphQLField.md) with the empty name
 
 ### `global GraphQLField(String name)`
 
-Create an instance of `GraphQLField` with the provided name
+Create an instance of [GraphQLField](/types/Query/GraphQLField.md) with the provided name
 
 #### Parameters
 
@@ -26,7 +26,7 @@ Create an instance of `GraphQLField` with the provided name
 
 ### `global GraphQLField(List<GraphQLField> fieldNodes)`
 
-Create an instance of `GraphQLField` with an empty name and child nodes
+Create an instance of [GraphQLField](/types/Query/GraphQLField.md) with an empty name and child nodes
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Create an instance of `GraphQLField` with an empty name and child nodes
 
 ### `global GraphQLField(List<String> fields)`
 
-Create an instance of `GraphQLField` with an empty name and child fields
+Create an instance of [GraphQLField](/types/Query/GraphQLField.md) with an empty name and child fields
 
 #### Parameters
 
@@ -46,7 +46,7 @@ Create an instance of `GraphQLField` with an empty name and child fields
 
 ### `global GraphQLField(String name, List<GraphQLField> fieldNodes)`
 
-Create an instance of `GraphQLField` with the provided name and child nodes
+Create an instance of [GraphQLField](/types/Query/GraphQLField.md) with the provided name and child nodes
 
 #### Parameters
 
@@ -56,7 +56,7 @@ Create an instance of `GraphQLField` with the provided name and child nodes
 
 ### `global GraphQLField(String name, List<String> fields)`
 
-Create an instance of `GraphQLField` with the provided name and child fields
+Create an instance of [GraphQLField](/types/Query/GraphQLField.md) with the provided name and child fields
 
 #### Parameters
 
@@ -124,9 +124,9 @@ Add an alias to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withField(String field)`
 
@@ -140,9 +140,9 @@ Add a child field to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withFields(String fields)`
 
@@ -156,9 +156,9 @@ Add multiple child fields to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withField(GraphQLField fieldNode)`
 
@@ -172,9 +172,9 @@ Add a child node to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withFields(GraphQLField fieldNodes)`
 
@@ -188,9 +188,9 @@ Add multiple child nodes to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withFragment(String fragmentName)`
 
@@ -204,9 +204,9 @@ Add a fragment use to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withFragments(String fragmentNames)`
 
@@ -220,9 +220,9 @@ Add multiple fragment uses to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withInlineFragment(GraphQLFragment fragment)`
 
@@ -230,15 +230,15 @@ Add an inline fragment to the current node
 
 #### Parameters
 
-| Param      | Description                                                                     |
-| ---------- | ------------------------------------------------------------------------------- |
-| `fragment` | The instance of the `GraphQLFragment`. Should be inline fragment without a name |
+| Param      | Description                                                                                                      |
+| ---------- | ---------------------------------------------------------------------------------------------------------------- |
+| `fragment` | The instance of the [GraphQLFragment](/types/Query/GraphQLFragment.md). Should be inline fragment without a name |
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 #### Throws
 
@@ -252,15 +252,15 @@ Add inline fragments to the current node
 
 #### Parameters
 
-| Param      | Description                                                                      |
-| ---------- | -------------------------------------------------------------------------------- |
-| `fragment` | The instances of the `GraphQLFragment`. Should be inline fragments without names |
+| Param      | Description                                                                                                       |
+| ---------- | ----------------------------------------------------------------------------------------------------------------- |
+| `fragment` | The instances of the [GraphQLFragment](/types/Query/GraphQLFragment.md). Should be inline fragments without names |
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 #### Throws
 
@@ -281,9 +281,9 @@ Add an argument to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withArgument(GraphQLArgument argument)`
 
@@ -297,9 +297,9 @@ Add an argument to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withArguments(GraphQLArgument arguments)`
 
@@ -313,9 +313,9 @@ Add multiple arguments to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField withDirective(GraphQLDirective directive)`
 
@@ -329,9 +329,9 @@ Add a custom directive to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField includeIf(Boolean condition)`
 
@@ -345,9 +345,9 @@ Add the standard `includeIf` directive to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField includeIf(String variable)`
 
@@ -361,9 +361,9 @@ Add the standard `includeIf` directive to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField skipIf(Boolean condition)`
 
@@ -377,9 +377,9 @@ Add the standard `skipIf` directive to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLField skipIf(String variable)`
 
@@ -393,9 +393,9 @@ Add the standard `skipIf` directive to the current node
 
 #### Returns
 
-| Type         | Description                            |
-| ------------ | -------------------------------------- |
-| GraphQLField | The current instance of `GraphQLField` |
+| Type         | Description                                                          |
+| ------------ | -------------------------------------------------------------------- |
+| GraphQLField | The current instance of [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global GraphQLQuery asQuery()`
 
@@ -403,9 +403,9 @@ Convert the current node to the Query node. The arguments and directives are not
 
 #### Returns
 
-| Type         | Description                     |
-| ------------ | ------------------------------- |
-| GraphQLQuery | The new `GraphQLQuery` instance |
+| Type         | Description                                                        |
+| ------------ | ------------------------------------------------------------------ |
+| GraphQLQuery | The new [GraphQLQuery](/types/Operations/GraphQLQuery.md) instance |
 
 ### `global GraphQLMutation asMutation()`
 
@@ -413,9 +413,9 @@ Convert the current node to the Mutation node. The arguments and directives are 
 
 #### Returns
 
-| Type            | Description                        |
-| --------------- | ---------------------------------- |
-| GraphQLMutation | The new `GraphQLMutation` instance |
+| Type            | Description                                                              |
+| --------------- | ------------------------------------------------------------------------ |
+| GraphQLMutation | The new [GraphQLMutation](/types/Operations/GraphQLMutation.md) instance |
 
 ### `global GraphQLSubscription asSubscription()`
 
@@ -423,33 +423,33 @@ Convert the current node to the Subscription node. The arguments and directives 
 
 #### Returns
 
-| Type                | Description                            |
-| ------------------- | -------------------------------------- |
-| GraphQLSubscription | The new `GraphQLSubscription` instance |
+| Type                | Description                                                                      |
+| ------------------- | -------------------------------------------------------------------------------- |
+| GraphQLSubscription | The new [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) instance |
 
 ### `global Boolean isFieldNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLField`
+Check if the current node is an instance of [GraphQLField](/types/Query/GraphQLField.md)
 
 #### Returns
 
-| Type    | Description                                      |
-| ------- | ------------------------------------------------ |
-| Boolean | `true` if the current instance is `GraphQLField` |
+| Type    | Description                                                                    |
+| ------- | ------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global Boolean isFragmentNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLFragment`
+Check if the current node is an instance of [GraphQLFragment](/types/Query/GraphQLFragment.md)
 
 #### Returns
 
-| Type    | Description                                         |
-| ------- | --------------------------------------------------- |
-| Boolean | `true` if the current instance is `GraphQLFragment` |
+| Type    | Description                                                                          |
+| ------- | ------------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global Boolean hasField(GraphQLField field)`
 

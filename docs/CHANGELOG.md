@@ -1,3 +1,32 @@
+# Version 2.1
+
+## Breaking changes
+
+### `asEnum()` method is deleted for `GraphQLArgument` and `GraphQLVariable` classes
+
+That was done because these methods are not needed anymore with introduction of the new `GraphQLEnum` class, which can be used for passing enum values into arguments and variable default values.
+
+Example:
+
+```gql
+{
+    countryByCode(code: CODE_NL) {
+        name
+    }
+}
+```
+
+Apex equivalent:
+
+```java
+GraphQLField countryByCode = new GraphQLField('countryByCode')
+    .withField('name')
+    .withArgument('code', new GraphQLEnum('CODE_NL'));
+
+GraphQLQuery query = new GraphQLQuery(countryByCode);
+System.debug(query.build(true));
+```
+
 # Version 2.0
 
 SFDX package name and version: gql-apex-client@2.0.0
@@ -5,7 +34,7 @@ Package Id: 04t5Y000001zNZLQA2
 
 All information regarding the installation and usage is described on the [main repo page](https://github.com/IlyaMatsuev/Apex-GraphQL-Client).
 
-## Beaking changes
+## Breaking changes
 
 ### Package classes amd methods naming changes
 

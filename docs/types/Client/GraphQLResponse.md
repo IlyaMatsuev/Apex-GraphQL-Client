@@ -32,9 +32,9 @@ Get the list of errors in the response
 
 #### Returns
 
-| Type                       | Description                                                                                           |
-| -------------------------- | ----------------------------------------------------------------------------------------------------- |
-| List<GraphQLResponseError> | The list of `GraphQLResponseError` instances if there are any errors. Returns an empty list otherwise |
+| Type                       | Description                                                                                                                                  |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| List<GraphQLResponseError> | The list of [GraphQLResponseError](/types/Client/GraphQLResponseError.md) instances if there are any errors. Returns an empty list otherwise |
 
 ### `global Map getData()`
 

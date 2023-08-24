@@ -28,16 +28,16 @@ Create an instance using a GraphQL node for a specific GraphQL operation (Query 
 
 #### Parameters
 
-| Param       | Description                                                                    |
-| ----------- | ------------------------------------------------------------------------------ |
-| `operation` | The instance of the `GraphQLOperationType` enum (`Query` or `Mutation`)        |
-| `node`      | The instance of the Graph operation node (`GraphQLQuery` or `GraphQLMutation`) |
+| Param       | Description                                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operation` | The instance of the [GraphQLOperationType](/types/Operations/GraphQLOperationType.md) enum (`Query` or `Mutation`)                                      |
+| `node`      | The instance of the Graph operation node ([GraphQLQuery](/types/Operations/GraphQLQuery.md) or [GraphQLMutation](/types/Operations/GraphQLMutation.md)) |
 
 #### Throws
 
-| Exception                 | Description                                                              |
-| ------------------------- | ------------------------------------------------------------------------ |
-| `GraphQLRequestException` | If the provided instance is neither `GraphQLQuery` nor `GraphQLMutation` |
+| Exception                 | Description                                                                                                  |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `GraphQLRequestException` | If the provided instance is neither [GraphQLQuery](/types/Operations/GraphQLQuery.md) nor <GraphQLMutation>> |
 
 ---
 
@@ -76,9 +76,9 @@ Add a custom header to the request. For example `Authorization`
 
 #### Returns
 
-| Type           | Description                           |
-| -------------- | ------------------------------------- |
-| GraphQLRequest | The current `GraphQLRequest` instance |
+| Type           | Description                                                            |
+| -------------- | ---------------------------------------------------------------------- |
+| GraphQLRequest | The current [GraphQLRequest](/types/Client/GraphQLRequest.md) instance |
 
 ### `global GraphQLRequest withHeaders(Map<String,String> headers)`
 
@@ -92,9 +92,9 @@ Add multiple custom headers to the request. For example `Authorization`
 
 #### Returns
 
-| Type           | Description                           |
-| -------------- | ------------------------------------- |
-| GraphQLRequest | The current `GraphQLRequest` instance |
+| Type           | Description                                                            |
+| -------------- | ---------------------------------------------------------------------- |
+| GraphQLRequest | The current [GraphQLRequest](/types/Client/GraphQLRequest.md) instance |
 
 ### `global GraphQLRequest withTimeout(Integer timeout)`
 
@@ -108,9 +108,9 @@ Set a timeout for the GraphQL request
 
 #### Returns
 
-| Type           | Description                           |
-| -------------- | ------------------------------------- |
-| GraphQLRequest | The current `GraphQLRequest` instance |
+| Type           | Description                                                            |
+| -------------- | ---------------------------------------------------------------------- |
+| GraphQLRequest | The current [GraphQLRequest](/types/Client/GraphQLRequest.md) instance |
 
 ### `global GraphQLRequest withVariable(String name, Object value)`
 
@@ -125,9 +125,9 @@ Add a variable definition value to the request
 
 #### Returns
 
-| Type           | Description                           |
-| -------------- | ------------------------------------- |
-| GraphQLRequest | The current `GraphQLRequest` instance |
+| Type           | Description                                                            |
+| -------------- | ---------------------------------------------------------------------- |
+| GraphQLRequest | The current [GraphQLRequest](/types/Client/GraphQLRequest.md) instance |
 
 ### `global GraphQLRequest withVariables(Map<String,Object> variables)`
 
@@ -141,9 +141,9 @@ Add multiple variable definition values to the request
 
 #### Returns
 
-| Type           | Description                           |
-| -------------- | ------------------------------------- |
-| GraphQLRequest | The current `GraphQLRequest` instance |
+| Type           | Description                                                            |
+| -------------- | ---------------------------------------------------------------------- |
+| GraphQLRequest | The current [GraphQLRequest](/types/Client/GraphQLRequest.md) instance |
 
 ### `global override String toString()`
 

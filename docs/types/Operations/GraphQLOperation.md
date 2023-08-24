@@ -68,9 +68,9 @@ Create a GraphQL request from the current operation node
 
 #### Returns
 
-| Type           | Description                                |
-| -------------- | ------------------------------------------ |
-| GraphQLRequest | The instance of the `GraphQLRequest` class |
+| Type           | Description                                                                 |
+| -------------- | --------------------------------------------------------------------------- |
+| GraphQLRequest | The instance of the [GraphQLRequest](/types/Client/GraphQLRequest.md) class |
 
 ### `global GraphQLOperationType getOperation()`
 
@@ -78,33 +78,33 @@ Get the GraphQL operation type of the current node
 
 #### Returns
 
-| Type                 | Description                                     |
-| -------------------- | ----------------------------------------------- |
-| GraphQLOperationType | The instance of the `GraphQLOperationType` enum |
+| Type                 | Description                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------ |
+| GraphQLOperationType | The instance of the [GraphQLOperationType](/types/Operations/GraphQLOperationType.md) enum |
 
 ### `global Boolean isFieldNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLField`
+Check if the current node is an instance of [GraphQLField](/types/Query/GraphQLField.md)
 
 #### Returns
 
-| Type    | Description                                      |
-| ------- | ------------------------------------------------ |
-| Boolean | `true` if the current instance is `GraphQLField` |
+| Type    | Description                                                                    |
+| ------- | ------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global Boolean isFragmentNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLFragment`
+Check if the current node is an instance of [GraphQLFragment](/types/Query/GraphQLFragment.md)
 
 #### Returns
 
-| Type    | Description                                         |
-| ------- | --------------------------------------------------- |
-| Boolean | `true` if the current instance is `GraphQLFragment` |
+| Type    | Description                                                                          |
+| ------- | ------------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global Boolean hasField(GraphQLField field)`
 

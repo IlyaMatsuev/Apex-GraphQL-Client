@@ -124,9 +124,9 @@ Add a field to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment withFields(String fields)`
 
@@ -140,9 +140,9 @@ Add multiple fields to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment withField(GraphQLField fieldNode)`
 
@@ -156,9 +156,9 @@ Add a node to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment withFields(GraphQLField fieldNodes)`
 
@@ -172,9 +172,9 @@ Add multiple nodes to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment withFragment(String fragmentName)`
 
@@ -188,9 +188,9 @@ Add another fragment reference to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment withFragments(String fragmentNames)`
 
@@ -204,9 +204,9 @@ Add other fragment references to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment withInlineFragment(GraphQLFragment fragment)`
 
@@ -214,15 +214,15 @@ Add an inline fragment to the current fragment
 
 #### Parameters
 
-| Param      | Description                                                                     |
-| ---------- | ------------------------------------------------------------------------------- |
-| `fragment` | The instance of the `GraphQLFragment`. Should be inline fragment without a name |
+| Param      | Description                                                                                                      |
+| ---------- | ---------------------------------------------------------------------------------------------------------------- |
+| `fragment` | The instance of the [GraphQLFragment](/types/Query/GraphQLFragment.md). Should be inline fragment without a name |
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 #### Throws
 
@@ -236,15 +236,15 @@ Add inline fragments to the current fragment
 
 #### Parameters
 
-| Param      | Description                                                                      |
-| ---------- | -------------------------------------------------------------------------------- |
-| `fragment` | The instances of the `GraphQLFragment`. Should be inline fragments without names |
+| Param      | Description                                                                                                       |
+| ---------- | ----------------------------------------------------------------------------------------------------------------- |
+| `fragment` | The instances of the [GraphQLFragment](/types/Query/GraphQLFragment.md). Should be inline fragments without names |
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 #### Throws
 
@@ -264,9 +264,9 @@ Add a custom directive to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment includeIf(Boolean condition)`
 
@@ -280,9 +280,9 @@ Add the standard `includeIf` directive to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment includeIf(String variable)`
 
@@ -296,9 +296,9 @@ Add the standard `includeIf` directive to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment skipIf(Boolean condition)`
 
@@ -312,9 +312,9 @@ Add the standard `skipIf` directive to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global GraphQLFragment skipIf(String variable)`
 
@@ -328,33 +328,33 @@ Add the standard `skipIf` directive to the current fragment
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLFragment | The current instance of `GraphQLFragment` |
+| Type            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| GraphQLFragment | The current instance of [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global Boolean isFieldNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLField`
+Check if the current node is an instance of [GraphQLField](/types/Query/GraphQLField.md)
 
 #### Returns
 
-| Type    | Description                                      |
-| ------- | ------------------------------------------------ |
-| Boolean | `true` if the current instance is `GraphQLField` |
+| Type    | Description                                                                    |
+| ------- | ------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global Boolean isFragmentNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLFragment`
+Check if the current node is an instance of [GraphQLFragment](/types/Query/GraphQLFragment.md)
 
 #### Returns
 
-| Type    | Description                                         |
-| ------- | --------------------------------------------------- |
-| Boolean | `true` if the current instance is `GraphQLFragment` |
+| Type    | Description                                                                          |
+| ------- | ------------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global Boolean hasField(GraphQLField field)`
 

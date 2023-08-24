@@ -141,9 +141,9 @@ Add a child field to the current subscription node
 
 #### Returns
 
-| Type                | Description                                             |
-| ------------------- | ------------------------------------------------------- |
-| GraphQLSubscription | The instance of the current `GraphQLSubscription` class |
+| Type                | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The instance of the current [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) class |
 
 ### `global GraphQLSubscription withFields(String fields)`
 
@@ -157,9 +157,9 @@ Add multiple child fields to the current subscription node
 
 #### Returns
 
-| Type                | Description                                             |
-| ------------------- | ------------------------------------------------------- |
-| GraphQLSubscription | The instance of the current `GraphQLSubscription` class |
+| Type                | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The instance of the current [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) class |
 
 ### `global GraphQLSubscription withField(GraphQLField fieldNode)`
 
@@ -173,9 +173,9 @@ Add a child node to the current subscription node
 
 #### Returns
 
-| Type                | Description                                             |
-| ------------------- | ------------------------------------------------------- |
-| GraphQLSubscription | The instance of the current `GraphQLSubscription` class |
+| Type                | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The instance of the current [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) class |
 
 ### `global GraphQLSubscription withFields(GraphQLField fieldNodes)`
 
@@ -189,9 +189,9 @@ Add multiple child nodes to the current subscription node
 
 #### Returns
 
-| Type                | Description                                             |
-| ------------------- | ------------------------------------------------------- |
-| GraphQLSubscription | The instance of the current `GraphQLSubscription` class |
+| Type                | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The instance of the current [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) class |
 
 ### `global GraphQLSubscription withDirective(GraphQLDirective directive)`
 
@@ -205,9 +205,9 @@ Add a custom directive to the current subscription node
 
 #### Returns
 
-| Type                | Description                                   |
-| ------------------- | --------------------------------------------- |
-| GraphQLSubscription | The current instance of `GraphQLSubscription` |
+| Type                | Description                                                                             |
+| ------------------- | --------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The current instance of [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) |
 
 ### `global GraphQLSubscription defineFragment(GraphQLFragment fragment)`
 
@@ -221,9 +221,9 @@ Add a fragment definition for the current subscription node
 
 #### Returns
 
-| Type                | Description                                             |
-| ------------------- | ------------------------------------------------------- |
-| GraphQLSubscription | The instance of the current `GraphQLSubscription` class |
+| Type                | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The instance of the current [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) class |
 
 #### Throws
 
@@ -243,9 +243,9 @@ Add multiple fragment definitions for the current subscription node
 
 #### Returns
 
-| Type                | Description                                             |
-| ------------------- | ------------------------------------------------------- |
-| GraphQLSubscription | The instance of the current `GraphQLSubscription` class |
+| Type                | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The instance of the current [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) class |
 
 #### Throws
 
@@ -266,9 +266,9 @@ Add a variable definition for the current subscription node
 
 #### Returns
 
-| Type                | Description                                             |
-| ------------------- | ------------------------------------------------------- |
-| GraphQLSubscription | The instance of the current `GraphQLSubscription` class |
+| Type                | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The instance of the current [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) class |
 
 ### `global GraphQLSubscription defineVariable(GraphQLVariable variable)`
 
@@ -282,9 +282,9 @@ Add a variable definition for the current subscription node
 
 #### Returns
 
-| Type                | Description                                             |
-| ------------------- | ------------------------------------------------------- |
-| GraphQLSubscription | The instance of the current `GraphQLSubscription` class |
+| Type                | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| GraphQLSubscription | The instance of the current [GraphQLSubscription](/types/Operations/GraphQLSubscription.md) class |
 
 ### `global override GraphQLRequest asRequest()`
 
@@ -340,25 +340,25 @@ Check the current operation node has any defined fragments
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLField`
+Check if the current node is an instance of [GraphQLField](/types/Query/GraphQLField.md)
 
 #### Returns
 
-| Type    | Description                                      |
-| ------- | ------------------------------------------------ |
-| Boolean | `true` if the current instance is `GraphQLField` |
+| Type    | Description                                                                    |
+| ------- | ------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global Boolean isFragmentNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLFragment`
+Check if the current node is an instance of [GraphQLFragment](/types/Query/GraphQLFragment.md)
 
 #### Returns
 
-| Type    | Description                                         |
-| ------- | --------------------------------------------------- |
-| Boolean | `true` if the current instance is `GraphQLFragment` |
+| Type    | Description                                                                          |
+| ------- | ------------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global Boolean hasField(GraphQLField field)`
 

@@ -22,23 +22,23 @@ The list of child nodes
 
 ### `global Boolean isFieldNode()`
 
-Check if the current node is an instance of `GraphQLField`
+Check if the current node is an instance of [GraphQLField](/types/Query/GraphQLField.md)
 
 #### Returns
 
-| Type    | Description                                      |
-| ------- | ------------------------------------------------ |
-| Boolean | `true` if the current instance is `GraphQLField` |
+| Type    | Description                                                                    |
+| ------- | ------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global Boolean isFragmentNode()`
 
-Check if the current node is an instance of `GraphQLFragment`
+Check if the current node is an instance of [GraphQLFragment](/types/Query/GraphQLFragment.md)
 
 #### Returns
 
-| Type    | Description                                         |
-| ------- | --------------------------------------------------- |
-| Boolean | `true` if the current instance is `GraphQLFragment` |
+| Type    | Description                                                                          |
+| ------- | ------------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global Boolean hasField(GraphQLField field)`
 

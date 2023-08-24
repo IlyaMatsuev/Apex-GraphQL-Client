@@ -141,9 +141,9 @@ Add a child field to the current mutation node
 
 #### Returns
 
-| Type            | Description                                         |
-| --------------- | --------------------------------------------------- |
-| GraphQLMutation | The instance of the current `GraphQLMutation` class |
+| Type            | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| GraphQLMutation | The instance of the current [GraphQLMutation](/types/Operations/GraphQLMutation.md) class |
 
 ### `global GraphQLMutation withFields(String fields)`
 
@@ -157,9 +157,9 @@ Add multiple child fields to the current mutation node
 
 #### Returns
 
-| Type            | Description                                         |
-| --------------- | --------------------------------------------------- |
-| GraphQLMutation | The instance of the current `GraphQLMutation` class |
+| Type            | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| GraphQLMutation | The instance of the current [GraphQLMutation](/types/Operations/GraphQLMutation.md) class |
 
 ### `global GraphQLMutation withField(GraphQLField fieldNode)`
 
@@ -173,9 +173,9 @@ Add a child node to the current mutation node
 
 #### Returns
 
-| Type            | Description                                         |
-| --------------- | --------------------------------------------------- |
-| GraphQLMutation | The instance of the current `GraphQLMutation` class |
+| Type            | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| GraphQLMutation | The instance of the current [GraphQLMutation](/types/Operations/GraphQLMutation.md) class |
 
 ### `global GraphQLMutation withFields(GraphQLField fieldNodes)`
 
@@ -189,9 +189,9 @@ Add multiple child nodes to the current mutation node
 
 #### Returns
 
-| Type            | Description                                         |
-| --------------- | --------------------------------------------------- |
-| GraphQLMutation | The instance of the current `GraphQLMutation` class |
+| Type            | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| GraphQLMutation | The instance of the current [GraphQLMutation](/types/Operations/GraphQLMutation.md) class |
 
 ### `global GraphQLMutation withDirective(GraphQLDirective directive)`
 
@@ -205,9 +205,9 @@ Add a custom directive to the current mutation node
 
 #### Returns
 
-| Type            | Description                               |
-| --------------- | ----------------------------------------- |
-| GraphQLMutation | The current instance of `GraphQLMutation` |
+| Type            | Description                                                                     |
+| --------------- | ------------------------------------------------------------------------------- |
+| GraphQLMutation | The current instance of [GraphQLMutation](/types/Operations/GraphQLMutation.md) |
 
 ### `global GraphQLMutation defineFragment(GraphQLFragment fragment)`
 
@@ -221,9 +221,9 @@ Add a fragment definition for the current mutation node
 
 #### Returns
 
-| Type            | Description                                         |
-| --------------- | --------------------------------------------------- |
-| GraphQLMutation | The instance of the current `GraphQLMutation` class |
+| Type            | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| GraphQLMutation | The instance of the current [GraphQLMutation](/types/Operations/GraphQLMutation.md) class |
 
 #### Throws
 
@@ -243,9 +243,9 @@ Add multiple fragment definitions for the current mutation node
 
 #### Returns
 
-| Type            | Description                                         |
-| --------------- | --------------------------------------------------- |
-| GraphQLMutation | The instance of the current `GraphQLMutation` class |
+| Type            | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| GraphQLMutation | The instance of the current [GraphQLMutation](/types/Operations/GraphQLMutation.md) class |
 
 #### Throws
 
@@ -266,9 +266,9 @@ Add a variable definition for the current mutation node
 
 #### Returns
 
-| Type            | Description                                         |
-| --------------- | --------------------------------------------------- |
-| GraphQLMutation | The instance of the current `GraphQLMutation` class |
+| Type            | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| GraphQLMutation | The instance of the current [GraphQLMutation](/types/Operations/GraphQLMutation.md) class |
 
 ### `global GraphQLMutation defineVariable(GraphQLVariable variable)`
 
@@ -282,9 +282,9 @@ Add a variable definition for the current mutation node
 
 #### Returns
 
-| Type            | Description                                         |
-| --------------- | --------------------------------------------------- |
-| GraphQLMutation | The instance of the current `GraphQLMutation` class |
+| Type            | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| GraphQLMutation | The instance of the current [GraphQLMutation](/types/Operations/GraphQLMutation.md) class |
 
 ### `global override GraphQLOperationType getOperation()`
 
@@ -328,33 +328,33 @@ Create a GraphQL request from the current operation node
 
 #### Returns
 
-| Type           | Description                                |
-| -------------- | ------------------------------------------ |
-| GraphQLRequest | The instance of the `GraphQLRequest` class |
+| Type           | Description                                                                 |
+| -------------- | --------------------------------------------------------------------------- |
+| GraphQLRequest | The instance of the [GraphQLRequest](/types/Client/GraphQLRequest.md) class |
 
 ### `global Boolean isFieldNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLField`
+Check if the current node is an instance of [GraphQLField](/types/Query/GraphQLField.md)
 
 #### Returns
 
-| Type    | Description                                      |
-| ------- | ------------------------------------------------ |
-| Boolean | `true` if the current instance is `GraphQLField` |
+| Type    | Description                                                                    |
+| ------- | ------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLField](/types/Query/GraphQLField.md) |
 
 ### `global Boolean isFragmentNode()`
 
 _Inherited_
 
-Check if the current node is an instance of `GraphQLFragment`
+Check if the current node is an instance of [GraphQLFragment](/types/Query/GraphQLFragment.md)
 
 #### Returns
 
-| Type    | Description                                         |
-| ------- | --------------------------------------------------- |
-| Boolean | `true` if the current instance is `GraphQLFragment` |
+| Type    | Description                                                                          |
+| ------- | ------------------------------------------------------------------------------------ |
+| Boolean | `true` if the current instance is [GraphQLFragment](/types/Query/GraphQLFragment.md) |
 
 ### `global Boolean hasField(GraphQLField field)`
 
