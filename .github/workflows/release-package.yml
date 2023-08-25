@@ -1,0 +1,63 @@
+name: Release Package
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+
+  packaging:
+    name: 'Create and release a new package version'
+    runs-on: ubuntu-latest
+    env:
+      SFDX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+      DEVHUB_ALIAS: devhub
+    steps:
+      - name: 'Install jq'
+        run: apt update && apt -y install jq
+
+      - name: 'Install Salesforce CLI'
+        run: |
+          wget ${{ env.SFDX_CLI_URL }}
+          mkdir ~/sfdx
+          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+          ~/sfdx/bin/sfdx version
+
+      - name: 'Checkout source code'
+        uses: actions/checkout@v3
+
+      - name: 'Authenticate Dev Hub'
+        shell: bash
+        run: |
+          echo ${{ secrets.DEVHUB_SFDX_URL }} > ./DEVHUB_SFDX_URL.txt
+          secretFileSize=$(wc -c "./DEVHUB_SFDX_URL.txt" | awk '{print $1}')
+          if [ $secretFileSize == 1 ]; then
+            echo "Missing DEVHUB_SFDX_URL secret. Is this workflow running on a fork?";
+            exit 1;
+          fi
+          sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a ${{ env.DEVHUB_ALIAS }} -d
+
+      - name: 'Define release version'
+        run: |
+          cat sfdx-project.json | jq '.packageDirectories[] | select(.default == true) | { name: .package, version: .versionNumber, path: .path }' > release-definition.json
+          echo "PACKAGE_NAME=$(cat release-definition.json | jq .name -r)" >> $GITHUB_ENV
+          echo "PACKAGE_PATH=$(cat release-definition.json | jq .path -r)" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$(cat release-definition.json | jq .version -r)" >> $GITHUB_ENV
+          echo "PACKAGE_FULL_NAME=$(echo '${{ env.PACKAGE_NAME }}@${{ env.RELEASE_VERSION }}')" >> $GITHUB_ENV
+          echo "Preparing release for ${{ env.PACKAGE_FULL_NAME }} at '${{ env.PACKAGE_PATH }}'"
+
+      # TODO: Try to create a package with this command and check if I get the new package Id
+      - name: 'Create package version'
+        run: |
+          sfdx package:version:create -p ${{ env.PACKAGE_NAME }} -d ${{ env.PACKAGE_PATH }} -x -w 10 -c -v ${{ env.DEVHUB_ALIAS }} --json > package-create-result.txt
+          cat package_create_result.txt
+          export CREATED_PACKAGE_VERSION_ID=$(cat package_create_result.txt | jq ".result.Id" -r)
+          echo $CREATED_PACKAGE_VERSION_ID
+
+      - name: 'Promote package version'
+        run: |
+          sfdx package:version:promote -p ${{ env.PACKAGE_FULL_NAME }} -v ${{ env.DEVHUB_ALIAS }}
+
+      # TODO: Need to update package Id references everywhere in README and other docs (if needed)
