@@ -17,6 +17,8 @@ public class GraphQLConstants {
     public static final String BRACE_RIGHT = '}';
     public static final String PARENTHESE_LEFT = '(';
     public static final String PARENTHESE_RIGHT = ')';
+    public static final String SQUARE_BRACE_LEFT = '[';
+    public static final String SQUARE_BRACE_RIGHT = ']';
 
     public static final Integer FIRST_ELEMENT = 0;
 

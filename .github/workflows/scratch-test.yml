@@ -1,22 +1,36 @@
-name: Scratch org CI
+name: Scratch Test
 
 on:
-  # Needed keep Codecove reports up to date for the target branches
+  # Push and PR on main are enabled to keep Codecove reports up to date
   push:
     branches:
       - main
       - dev
+    paths:
+      - 'src/**'
+      - 'scripts/**'
   pull_request:
     branches:
       - main
       - dev
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+
+env:
+  SFDX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+  DEVHUB_ALIAS: devhub
+  SCRATCH_ALIAS: scratch-org
+  CODE_COVERAGE_DIR_PATH: ./coverage/apex
+  CODE_COVERAGE_FILE_PATH: ./coverage/apex/test-result-codecoverage.json
 
 jobs:
   formatting:
+    name: 'Verify source code formatting'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout source code'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: 'Restore node_modules cache'
         id: cache-npm
@@ -32,25 +46,26 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm i
 
-      - name: 'Code formatting verification with Prettier'
+      - name: 'Verificaty formatting'
         run: npm run prettier:verify ./
 
-  scratch-org-test:
+  scratch-testing:
+    name: 'Create a new scratch org and run Unit Tests'
     runs-on: ubuntu-latest
     needs: formatting
     steps:
       - name: 'Install Salesforce CLI'
         run: |
-          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+          wget ${{ env.SFDX_CLI_URL }}
           mkdir ~/sfdx
           tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
           echo "$HOME/sfdx/bin" >> $GITHUB_PATH
           ~/sfdx/bin/sfdx version
 
       - name: 'Checkout source code'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: 'Populate auth file with DEVHUB_SFDX_URL secret'
+      - name: 'Authenticate Dev Hub'
         shell: bash
         run: |
           echo ${{ secrets.DEVHUB_SFDX_URL }} > ./DEVHUB_SFDX_URL.txt
@@ -59,25 +74,23 @@ jobs:
             echo "Missing DEVHUB_SFDX_URL secret. Is this workflow running on a fork?";
             exit 1;
           fi
+          sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a ${{ env.DEVHUB_ALIAS }} -d
 
-      - name: 'Authenticate Dev Hub'
-        run: sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d
-
-      - name: 'Create scratch org'
-        run: sh ./scripts/pkg-from-scratch.sh devhub scratch-org
+      - name: 'Create a scratch org'
+        run: sh ./scripts/pkg-from-scratch.sh ${{ env.DEVHUB_ALIAS }} ${{ env.SCRATCH_ALIAS }}
 
       - name: 'Run Apex Tests'
-        run: sfdx force:apex:test:run -c -r human -d ./coverage/apex -w 20 -u scratch-org
+        run: sfdx apex:run:test -c -r human -d ${{ env.CODE_COVERAGE_DIR_PATH }} -w 20 -o ${{ env.SCRATCH_ALIAS }}
 
       - name: 'Upload Test Coverage'
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/apex/test-result-codecoverage.json
+          files: ${{ env.CODE_COVERAGE_FILE_PATH }}
           fail_ci_if_error: true
           flags: Apex,unittests
           verbose: true
 
       - name: 'Delete scratch org'
         if: always()
-        run: sfdx force:org:delete -p -u scratch-org
+        run: sfdx org:delete:scratch -p -o ${{ env.SCRATCH_ALIAS }}

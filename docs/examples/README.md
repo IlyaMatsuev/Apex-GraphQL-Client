@@ -9,6 +9,7 @@
 -   [Using directives](#using-directives)
 -   [Using fragments](#using-fragments)
 -   [Using inline fragments](#using-inline-fragments)
+-   [Using enums](#using-enums)
 
 ## Building a node
 
@@ -409,6 +410,8 @@ GraphQLQuery query = new GraphQLQuery(new List<GraphQLField> { countriesNode, ci
 
 That is it, the fragment is added to the query. The rest of the steps about sending request and receiving response are the same as in [this example](#sending-a-query).
 
+---
+
 ## Using inline fragments
 
 Inline fragments are similar to the regular ones but they have different purpose. Inline fragments are not added on the query level. They are needed to define a subset of fields for a node depending on the type of the result of this node (e.g. if the node return type is an interface).
@@ -452,3 +455,78 @@ GraphQLField countriesNode = new GraphQLField('countries')
 ```
 
 Done! Now you can create a query and send it. The rest of the steps about sending request and receiving response are the same as in [this example](#sending-a-query).
+
+---
+
+## Using enums
+
+To use GraphQL enums in arguments or variables you will need to utilize the `GraphQLEnum` class. It is basically a wrapper around the regular string that tells the parser that this string must not have quotes around when placed as an argument or default value for a variable.
+
+Let's say you want to send a query like this:
+
+```gql
+{
+    countryByCode(code: CODE_NL) {
+        name
+    }
+}
+```
+
+This is how you build it:
+
+```java
+GraphQLField countryByCode = new GraphQLField('countryByCode')
+    .withField('name')
+    .withArgument('code', new GraphQLEnum('CODE_NL'));
+
+GraphQLQuery query = new GraphQLQuery(countryByCode);
+```
+
+If you want to have it as a variable, you can build a query as you would usually do and provide a simple string to the request variable value:
+
+```gql
+query ($code: CountryCode) {
+    countryByCode(code: $code) {
+        name
+    }
+}
+```
+
+You would do:
+
+```java
+GraphQLField countryByCode = new GraphQLField('countryByCode')
+    .withField('name')
+    .withArgument('code', 'code');
+
+GraphQLQuery query = new GraphQLQuery(countryByCode)
+    .defineVariable('code', 'CountryCode');
+
+GraphQLRequest request = query.asRequest().withVariable('code', 'CODE_NL');   // <-- Here you can simply pass the enum value as a string
+```
+
+You can use a simple string value above because when the request is parsed it serializes key-value map into JSON.
+
+On the other hand, if you would have to define a default value for a variable, you would again need to use the `GraphQLEnum` class:
+
+```gql
+query ($code: CountryCode = CODE_NL) {
+    countryByCode(code: $code) {
+        name
+    }
+}
+```
+
+Then during variable definition:
+
+```java
+// ...
+GraphQLQuery query = new GraphQLQuery(countryByCode)
+    .defineVariable(
+        new GraphQLVariable('code', 'CountryCode')
+            // Providing a default value as enum
+            .withDefault(new GraphQLEnum('CODE_NL'))
+    );
+
+// Proceed with request creation and assigning a variable value...
+```

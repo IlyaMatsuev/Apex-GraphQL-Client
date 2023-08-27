@@ -9,6 +9,7 @@ global enum GraphQLArgumentType {
     x_DateTime,
     x_Date,
     x_Null,
+    x_List,
     x_Object,
     x_Enum
 }

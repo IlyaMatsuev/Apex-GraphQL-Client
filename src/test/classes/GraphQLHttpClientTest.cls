@@ -11,8 +11,8 @@ private class GraphQLHttpClientTest {
             error = ex;
         }
 
-        System.assert(error != null);
-        System.assert(error instanceof GraphQLHttpClient.GraphQLHttpClientException);
+        Assert.isNotNull(error);
+        Assert.isInstanceOfType(error, GraphQLHttpClient.GraphQLHttpClientException.class);
     }
 
     /**
@@ -33,14 +33,14 @@ private class GraphQLHttpClientTest {
         GraphQLResponse response = client.send(request);
         Test.stopTest();
 
-        System.assert(!response.hasErrors());
-        System.assert(response.hasData());
+        Assert.isFalse(response.hasErrors());
+        Assert.isTrue(response.hasData());
 
         HeroWrapper hero = (HeroWrapper) response.getDataNodeAs('hero', HeroWrapper.class);
 
-        System.assertEquals(null, hero.id);
-        System.assertEquals('R2-D2', hero.name);
-        System.assertEquals(2, hero.heroFriends.size());
+        Assert.isNull(hero.id);
+        Assert.areEqual('R2-D2', hero.name);
+        Assert.areEqual(2, hero.heroFriends.size());
     }
 
     @IsTest
@@ -57,13 +57,13 @@ private class GraphQLHttpClientTest {
         GraphQLResponse response = client.send(request);
         Test.stopTest();
 
-        System.assert(response.hasErrors());
-        System.assert(!response.hasData());
+        Assert.isTrue(response.hasErrors());
+        Assert.isFalse(response.hasData());
 
         List<GraphQLResponseError> errors = response.getErrors();
 
-        System.assertEquals(1, errors.size());
-        System.assert(errors.get(0).message.startsWith('Got invalid response format from the server'));
+        Assert.areEqual(1, errors.size());
+        Assert.isTrue(errors.get(0).message.startsWith('Got invalid response format from the server'));
     }
 
     @IsTest
@@ -80,7 +80,7 @@ private class GraphQLHttpClientTest {
         Id jobId = client.sendAsync(request, new AsyncResponseCallback());
         Test.stopTest();
 
-        System.assert(jobId != null);
+        Assert.isNotNull(jobId);
     }
 
     private class HeroWrapper {
@@ -91,15 +91,15 @@ private class GraphQLHttpClientTest {
 
     private class AsyncResponseCallback implements IGraphQLResponseCallback {
         public void received(GraphQLResponse response) {
-            System.assert(response != null);
-            System.assert(!response.hasErrors());
-            System.assert(response.hasData());
+            Assert.isNotNull(response);
+            Assert.isFalse(response.hasErrors());
+            Assert.isTrue(response.hasData());
 
             HeroWrapper hero = (HeroWrapper) response.getDataNodeAs('hero', HeroWrapper.class);
 
-            System.assertEquals(null, hero.id);
-            System.assertEquals('R2-D2', hero.name);
-            System.assertEquals(2, hero.heroFriends.size());
+            Assert.isNull(hero.id);
+            Assert.areEqual('R2-D2', hero.name);
+            Assert.areEqual(2, hero.heroFriends.size());
         }
     }
 

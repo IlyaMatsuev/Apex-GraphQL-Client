@@ -14,6 +14,10 @@ The list of all available types for GraphQL arguments
 
 Represents a GraphQL directive
 
+### [GraphQLEnum](/types/Query/GraphQLEnum.md)
+
+Represents an enum value used in arguments and variables
+
 ### [GraphQLField](/types/Query/GraphQLField.md)
 
 The GraphQL node that can be a part of a GraphQL operation

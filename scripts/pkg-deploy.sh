@@ -25,14 +25,14 @@ then
 fi
 
 info "Deploying components..."
-sfdx force:source:deploy -u "$org_alias" -p ./src \
+sfdx project:deploy:start -o "$org_alias" -d ./src \
     || (\
         info "Please login to the org" \
-        && sfdx force:auth:web:login -a "$org_alias" \
-        && sfdx force:source:deploy -u "$org_alias" -p ./src \
+        && sfdx org:login:web -a "$org_alias" \
+        && sfdx project:deploy:start -o "$org_alias" -d ./src \
     ) || { exit 1; }
 
 info "Assigning permissions..."
-sfdx force:user:permset:assign -n GraphQLApexClientUser -u "$org_alias"
+sfdx user:permset:assign -n GraphQLApexClientUser -u "$org_alias"
 
-info "Deployment has been finished.\\nOpen the org with 'sfdx force:org:open -u $org_alias'"
+info "Deployment has been finished.\\nOpen the org with 'sfdx org:open -o $org_alias'"

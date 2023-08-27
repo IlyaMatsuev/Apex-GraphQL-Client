@@ -53,9 +53,9 @@ Add an argument to the current directive
 
 #### Returns
 
-| Type             | Description                                |
-| ---------------- | ------------------------------------------ |
-| GraphQLDirective | The current instance of `GraphQLDirective` |
+| Type             | Description                                                                  |
+| ---------------- | ---------------------------------------------------------------------------- |
+| GraphQLDirective | The current instance of [GraphQLDirective](/types/Query/GraphQLDirective.md) |
 
 ### `global GraphQLDirective withArgument(GraphQLArgument argument)`
 
@@ -69,8 +69,8 @@ Add an argument to the current directive
 
 #### Returns
 
-| Type             | Description                                |
-| ---------------- | ------------------------------------------ |
-| GraphQLDirective | The current instance of `GraphQLDirective` |
+| Type             | Description                                                                  |
+| ---------------- | ---------------------------------------------------------------------------- |
+| GraphQLDirective | The current instance of [GraphQLDirective](/types/Query/GraphQLDirective.md) |
 
 ---

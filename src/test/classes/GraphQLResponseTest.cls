@@ -5,39 +5,39 @@ private class GraphQLResponseTest {
         String message = 'Error!';
         GraphQLResponseError error = new GraphQLResponseError(message);
         GraphQLResponse response = new GraphQLResponse(error);
-        System.assert(response.hasErrors());
-        System.assert(!response.hasData());
+        Assert.isTrue(response.hasErrors());
+        Assert.isFalse(response.hasData());
         List<GraphQLResponseError> responseErrors = response.getErrors();
-        System.assertEquals(1, responseErrors.size());
-        System.assertEquals(message, responseErrors.get(0).message);
-        System.assert(responseErrors.get(0).locations == null);
-        System.assert(responseErrors.get(0).path == null);
-        System.assert(responseErrors.get(0).extensions == null);
+        Assert.areEqual(1, responseErrors.size());
+        Assert.areEqual(message, responseErrors.get(0).message);
+        Assert.isNull(responseErrors.get(0).locations);
+        Assert.isNull(responseErrors.get(0).path);
+        Assert.isNull(responseErrors.get(0).extensions);
     }
 
     @IsTest
     private static void parseFromResponseJsonTest() {
         GraphQLResponse response = prepareErrorResponse();
-        System.assert(response.hasErrors());
-        System.assert(response.hasData());
+        Assert.isTrue(response.hasErrors());
+        Assert.isTrue(response.hasData());
         Map<String, Object> responseData = response.getData();
         Map<String, Object> hero = (Map<String, Object>) response.getDataNode('hero');
         List<GraphQLResponseError> responseErrors = response.getErrors();
-        System.assertEquals(1, responseErrors.size());
-        System.assert(String.isNotBlank(responseErrors.get(0).message));
-        System.assertEquals(1, responseErrors.get(0).locations.size());
-        System.assertEquals(6, responseErrors.get(0).locations.get(0).line);
-        System.assertEquals(7, responseErrors.get(0).locations.get(0).column);
-        System.assertEquals(4, responseErrors.get(0).path.size());
-        System.assertEquals('hero', responseErrors.get(0).path.get(0));
-        System.assertEquals('heroFriends', responseErrors.get(0).path.get(1));
-        System.assertEquals(1, (Integer) responseErrors.get(0).path.get(2));
-        System.assertEquals('name', responseErrors.get(0).path.get(3));
-        System.assertEquals(2, responseErrors.get(0).extensions.size());
-        System.assertEquals(200, (Integer) responseErrors.get(0).extensions.get('code'));
-        System.assertEquals('Test!', responseErrors.get(0).extensions.get('customField'));
-        System.assert(responseData.containsKey('hero'));
-        System.assertEquals('R2-D2', (String) hero.get('name'));
+        Assert.areEqual(1, responseErrors.size());
+        Assert.isTrue(String.isNotBlank(responseErrors.get(0).message));
+        Assert.areEqual(1, responseErrors.get(0).locations.size());
+        Assert.areEqual(6, responseErrors.get(0).locations.get(0).line);
+        Assert.areEqual(7, responseErrors.get(0).locations.get(0).column);
+        Assert.areEqual(4, responseErrors.get(0).path.size());
+        Assert.areEqual('hero', responseErrors.get(0).path.get(0));
+        Assert.areEqual('heroFriends', responseErrors.get(0).path.get(1));
+        Assert.areEqual(1, (Integer) responseErrors.get(0).path.get(2));
+        Assert.areEqual('name', responseErrors.get(0).path.get(3));
+        Assert.areEqual(2, responseErrors.get(0).extensions.size());
+        Assert.areEqual(200, (Integer) responseErrors.get(0).extensions.get('code'));
+        Assert.areEqual('Test!', responseErrors.get(0).extensions.get('customField'));
+        Assert.isTrue(responseData.containsKey('hero'));
+        Assert.areEqual('R2-D2', (String) hero.get('name'));
     }
 
     @IsTest
@@ -46,34 +46,34 @@ private class GraphQLResponseTest {
         GraphQLResponseError firstError = errors.get(0);
         ErrorExtensionsWrapper extensions = (ErrorExtensionsWrapper) firstError
             .getExtensionsAs(ErrorExtensionsWrapper.class);
-        System.assert(extensions != null);
-        System.assertEquals(200, extensions.code);
-        System.assertEquals('Test!', extensions.customField);
+        Assert.isNotNull(extensions);
+        Assert.areEqual(200, extensions.code);
+        Assert.areEqual('Test!', extensions.customField);
     }
 
     @IsTest
     private static void getDataAsTypeTest() {
         GraphQLResponse response = prepareNoErrorsResponse();
         DataWrapper responseData = (DataWrapper) response.getDataAs(DataWrapper.class);
-        System.assert(response.hasData());
-        System.assert(!response.hasErrors());
-        System.assertEquals(0, response.getErrors().size());
-        System.assert(responseData.hero != null);
-        System.assertEquals(null, responseData.hero.id);
-        System.assertEquals('R2-D2', responseData.hero.name);
-        System.assertEquals(2, responseData.hero.heroFriends.size());
+        Assert.isTrue(response.hasData());
+        Assert.isFalse(response.hasErrors());
+        Assert.areEqual(0, response.getErrors().size());
+        Assert.isNotNull(responseData.hero);
+        Assert.isNull(responseData.hero.id);
+        Assert.areEqual('R2-D2', responseData.hero.name);
+        Assert.areEqual(2, responseData.hero.heroFriends.size());
     }
 
     @IsTest
     private static void getDataNodeAsTypeTest() {
         GraphQLResponse response = prepareNoErrorsResponse();
         HeroWrapper hero = (HeroWrapper) response.getDataNodeAs('hero', HeroWrapper.class);
-        System.assert(response.hasData());
-        System.assert(!response.hasErrors());
-        System.assert(hero != null);
-        System.assertEquals(null, hero.id);
-        System.assertEquals('R2-D2', hero.name);
-        System.assertEquals(2, hero.heroFriends.size());
+        Assert.isTrue(response.hasData());
+        Assert.isFalse(response.hasErrors());
+        Assert.isNotNull(hero);
+        Assert.isNull(hero.id);
+        Assert.areEqual('R2-D2', hero.name);
+        Assert.areEqual(2, hero.heroFriends.size());
     }
 
     private static GraphQLResponse prepareNoErrorsResponse() {

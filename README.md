@@ -1,6 +1,6 @@
 # Saleforce Apex GraphQL Client
 
-[![CI](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml/badge.svg?branch=main)](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-org-ci.yml)
+[![CI](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-test.yml/badge.svg?branch=main)](https://github.com/IlyaMatsuev/Apex-GraphQL-Client/actions/workflows/scratch-test.yml)
 [![codecov](https://codecov.io/gh/IlyaMatsuev/Apex-GraphQL-Client/branch/main/graph/badge.svg?token=ZOSPAKZTGC)](https://codecov.io/gh/IlyaMatsuev/Apex-GraphQL-Client)
 
 The package for Salesforce that aimed to provide a convenient way to communicate with a GraphQL server via Apex.
@@ -142,7 +142,7 @@ You can just install the package by the link on a [sandbox](http://test.salesfor
 If you prefer using salesforce CLI you can simply run:
 
 ```bash
-sfdx force:package:install -p 04t5Y000001zNZLQA2 -w 10 -b 10 -u <username>
+sfdx package:install -p 04t5Y000001zNZLQA2 -w 10 -b 10 -u <username>
 ```
 
 ### From Source

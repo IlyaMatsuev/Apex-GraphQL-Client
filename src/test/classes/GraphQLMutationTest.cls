@@ -4,8 +4,8 @@ private class GraphQLMutationTest {
     private static void emptyMutationTest() {
         GraphQLMutation node = new GraphQLMutation();
 
-        System.assert(String.isBlank(node.name));
-        System.assertEquals(0, node.nodes.size());
+        Assert.isTrue(String.isBlank(node.name));
+        Assert.areEqual(0, node.nodes.size());
     }
 
     @IsTest
@@ -14,8 +14,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation(nodeName);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(0, node.nodes.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(0, node.nodes.size());
     }
 
     @IsTest
@@ -24,8 +24,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation(childNode);
 
-        System.assert(String.isBlank(node.name));
-        System.assertEquals(1, node.nodes.size());
+        Assert.isTrue(String.isBlank(node.name));
+        Assert.areEqual(1, node.nodes.size());
     }
 
     @IsTest
@@ -34,8 +34,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation(childNodes);
 
-        System.assert(String.isBlank(node.name));
-        System.assertEquals(childNodes.size(), node.nodes.size());
+        Assert.isTrue(String.isBlank(node.name));
+        Assert.areEqual(childNodes.size(), node.nodes.size());
     }
 
     @IsTest
@@ -44,8 +44,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation(nodeName, new GraphQLField('node1'));
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(1, node.nodes.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(1, node.nodes.size());
     }
 
     @IsTest
@@ -55,8 +55,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation(nodeName, childNodes);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(childNodes.size(), node.nodes.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(childNodes.size(), node.nodes.size());
     }
 
     @IsTest
@@ -65,8 +65,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation(fields);
 
-        System.assert(String.isBlank(node.name));
-        System.assertEquals(fields.size(), node.nodes.size());
+        Assert.isTrue(String.isBlank(node.name));
+        Assert.areEqual(fields.size(), node.nodes.size());
     }
 
     @IsTest
@@ -76,8 +76,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation(nodeName, fields);
 
-        System.assertEquals(nodeName, node.name);
-        System.assertEquals(fields.size(), node.nodes.size());
+        Assert.areEqual(nodeName, node.name);
+        Assert.areEqual(fields.size(), node.nodes.size());
     }
 
     @IsTest
@@ -86,8 +86,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation().withField(fieldName);
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals(fieldName, node.nodes.get(0).name);
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual(fieldName, node.nodes.get(0).name);
     }
 
     @IsTest
@@ -96,9 +96,9 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation().withFields(fields);
 
-        System.assertEquals(fields.size(), node.nodes.size());
-        System.assertEquals('field1', node.nodes.get(0).name);
-        System.assertEquals('field2', node.nodes.get(1).name);
+        Assert.areEqual(fields.size(), node.nodes.size());
+        Assert.areEqual('field1', node.nodes.get(0).name);
+        Assert.areEqual('field2', node.nodes.get(1).name);
     }
 
     @IsTest
@@ -107,9 +107,9 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation().defineFragment(fragment);
 
-        System.assert(node.hasFragments());
-        System.assertEquals(1, node.fragments.size());
-        System.assertEquals(fragment.name, node.fragments.get(0).name);
+        Assert.isTrue(node.hasFragments());
+        Assert.areEqual(1, node.fragments.size());
+        Assert.areEqual(fragment.name, node.fragments.get(0).name);
     }
 
     @IsTest
@@ -121,19 +121,19 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation().defineFragments(fragments);
 
-        System.assert(node.hasFragments());
-        System.assertEquals(fragments.size(), node.fragments.size());
-        System.assertEquals('fragment1', node.fragments.get(0).name);
-        System.assertEquals('fragment2', node.fragments.get(1).name);
+        Assert.isTrue(node.hasFragments());
+        Assert.areEqual(fragments.size(), node.fragments.size());
+        Assert.areEqual('fragment1', node.fragments.get(0).name);
+        Assert.areEqual('fragment2', node.fragments.get(1).name);
     }
 
     @IsTest
     private static void mutationWithDirectiveTest() {
         GraphQLMutation mutation = new GraphQLMutation().withDirective(new GraphQLDirective('test')).withField('field');
 
-        System.assertEquals(1, mutation.directives.size());
-        System.assertEquals('mutation@test{field}', mutation.build());
-        System.assertEquals('mutation @test {\n  field\n}', mutation.build(true));
+        Assert.areEqual(1, mutation.directives.size());
+        Assert.areEqual('mutation@test{field}', mutation.build());
+        Assert.areEqual('mutation @test {\n  field\n}', mutation.build(true));
     }
 
     @IsTest
@@ -142,8 +142,8 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation().withField(new GraphQLField(nodeName));
 
-        System.assertEquals(1, node.nodes.size());
-        System.assertEquals(nodeName, node.nodes.get(0).name);
+        Assert.areEqual(1, node.nodes.size());
+        Assert.areEqual(nodeName, node.nodes.get(0).name);
     }
 
     @IsTest
@@ -152,9 +152,9 @@ private class GraphQLMutationTest {
 
         GraphQLMutation node = new GraphQLMutation().withFields(nodes);
 
-        System.assertEquals(nodes.size(), node.nodes.size());
-        System.assertEquals('node1', node.nodes.get(0).name);
-        System.assertEquals('node2', node.nodes.get(1).name);
+        Assert.areEqual(nodes.size(), node.nodes.size());
+        Assert.areEqual('node1', node.nodes.get(0).name);
+        Assert.areEqual('node2', node.nodes.get(1).name);
     }
 
     @IsTest
@@ -163,16 +163,16 @@ private class GraphQLMutationTest {
             .withField(new GraphQLField('node'))
             .defineVariable('var', '[String!]');
 
-        System.assertEquals(1, node.variables.size());
+        Assert.areEqual(1, node.variables.size());
     }
 
     @IsTest
     private static void mutationBuildRequestTest() {
         GraphQLRequest request = new GraphQLMutation(new List<String> { 'field1' }).asRequest();
 
-        System.assertEquals(GraphQLOperationType.Mutation, request.operation);
-        System.assertEquals('{"query":"mutation{field1}"}', request.toString());
-        System.assertEquals('{\n  "query" : "mutation {\\n  field1\\n}"\n}', request.toString(true));
+        Assert.areEqual(GraphQLOperationType.Mutation, request.operation);
+        Assert.areEqual('{"query":"mutation{field1}"}', request.toString());
+        Assert.areEqual('{\n  "query" : "mutation {\\n  field1\\n}"\n}', request.toString(true));
     }
 
     /**
@@ -190,11 +190,10 @@ private class GraphQLMutationTest {
             .withField(fields.get(0))
             .withField(fields.get(1));
 
-        System.assert(mutation != null);
-        System.assert(String.isBlank(mutation.name));
-        System.assertEquals(nodes.size() + fields.size(), mutation.nodes.size());
-        System.assertEquals('mutation{field1,field2,field3,field4}', mutation.build());
-        System.assertEquals('mutation {\n  field1\n  field2\n  field3\n  field4\n}', mutation.build(true));
+        Assert.isTrue(String.isBlank(mutation.name));
+        Assert.areEqual(nodes.size() + fields.size(), mutation.nodes.size());
+        Assert.areEqual('mutation{field1,field2,field3,field4}', mutation.build());
+        Assert.areEqual('mutation {\n  field1\n  field2\n  field3\n  field4\n}', mutation.build(true));
     }
 
     @IsTest
@@ -207,11 +206,10 @@ private class GraphQLMutationTest {
             .withFields(fields)
             .defineVariable(new GraphQLVariable('model', 'InputType!').withDefault('hello world!'));
 
-        System.assert(mutation != null);
-        System.assert(String.isBlank(mutation.name));
-        System.assertEquals(nodes.size() + fields.size(), mutation.nodes.size());
-        System.assertEquals('mutation($model:InputType!="hello world!"){node1,node2,field3,field4}', mutation.build());
-        System.assertEquals(
+        Assert.isTrue(String.isBlank(mutation.name));
+        Assert.areEqual(nodes.size() + fields.size(), mutation.nodes.size());
+        Assert.areEqual('mutation($model:InputType!="hello world!"){node1,node2,field3,field4}', mutation.build());
+        Assert.areEqual(
             'mutation ($model: InputType! = "hello world!") {\n  node1\n  node2\n  field3\n  field4\n}',
             mutation.build(true)
         );
@@ -230,11 +228,10 @@ private class GraphQLMutationTest {
 
         GraphQLMutation mutation = new GraphQLMutation('TestMutation', nodes);
 
-        System.assert(mutation != null);
-        System.assertEquals('TestMutation', mutation.name);
-        System.assertEquals(nodes.size(), mutation.nodes.size());
-        System.assertEquals('mutation TestMutation{field1,field2{field21,field22},field3}', mutation.build());
-        System.assertEquals(
+        Assert.areEqual('TestMutation', mutation.name);
+        Assert.areEqual(nodes.size(), mutation.nodes.size());
+        Assert.areEqual('mutation TestMutation{field1,field2{field21,field22},field3}', mutation.build());
+        Assert.areEqual(
             'mutation TestMutation {\n  field1\n  field2 {\n    field21\n    field22\n  }\n  field3\n}',
             mutation.build(true)
         );

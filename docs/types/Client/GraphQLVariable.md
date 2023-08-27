@@ -81,21 +81,4 @@ Adds a default value to the variable definition
 | --------------- | ----------------------------------------------- |
 | GraphQLVariable | The current instance of the variable definition |
 
-### `global GraphQLVariable asEnum()`
-
-Represents the current variable default value as a GraphQL enum value
-
-#### Returns
-
-| Type            | Description                                     |
-| --------------- | ----------------------------------------------- |
-| GraphQLVariable | The current instance of the variable definition |
-
-#### Throws
-
-| Exception                  | Description                                                        |
-| -------------------------- | ------------------------------------------------------------------ |
-| `GraphQLVariableException` | If the doesn't have any default value set yet                      |
-| `GraphQLArgumentException` | If the default value is not String or if it's a variable reference |
-
 ---

@@ -38,9 +38,9 @@ Send GraphQL request (Query or Mutation) and wait for the response
 
 #### Returns
 
-| Type            | Description                                                       |
-| --------------- | ----------------------------------------------------------------- |
-| GraphQLResponse | The `GraphQLResponse` instance containing parsed GraphQL response |
+| Type            | Description                                                                                         |
+| --------------- | --------------------------------------------------------------------------------------------------- |
+| GraphQLResponse | The [GraphQLResponse](/types/Client/GraphQLResponse.md) instance containing parsed GraphQL response |
 
 ### `global Id sendAsync(GraphQLRequest request, IGraphQLResponseCallback callback)`
 
@@ -48,10 +48,10 @@ Send GraphQL request (Query or Mutation) without awaiting the response or passin
 
 #### Parameters
 
-| Param      | Description                                                                              |
-| ---------- | ---------------------------------------------------------------------------------------- |
-| `request`  | The instance of request to be send                                                       |
-| `callback` | The instance of `IGraphQLResponseCallback` implementing the callback method. Can be null |
+| Param      | Description                                                                                                                         |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `request`  | The instance of request to be send                                                                                                  |
+| `callback` | The instance of [IGraphQLResponseCallback](/types/Client/IGraphQLResponseCallback.md) implementing the callback method. Can be null |
 
 #### Returns
 
