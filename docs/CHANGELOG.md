@@ -1,4 +1,4 @@
-# Version 2.1
+# Unreleased
 
 ## Breaking changes
 
@@ -602,8 +602,6 @@ fragment CityFields on City {
 
 ---
 
-## What's changed
-
 ### GraphQLNode and GraphQL(Query/Mutation/Subscription)Node structure
 
 The above classes were refactored:
@@ -616,10 +614,3 @@ These changes were applied due to logical reasons: arguments can be only applied
 ---
 
 Please, open a discussion or issue if you face any problems with the package. Best regards!
-
-# Version 0.0
-
-SFDX package name and version: gql-apex-client@0.0.0-4
-Package Id: 04t5Y000001ELb9QAG
-
-All information regarding the installation and usage is described on the [main repo page](https://github.com/IlyaMatsuev/Apex-GraphQL-Client).
