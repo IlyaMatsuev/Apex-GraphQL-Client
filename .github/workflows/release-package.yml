@@ -7,15 +7,16 @@ on:
     paths:
       - 'src/**'
 
+env:
+  SFDX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+  DEVHUB_ALIAS: devhub
+
 jobs:
   packaging:
     name: 'Create and release a new package version'
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    env:
-      SFDX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-      DEVHUB_ALIAS: devhub
     steps:
       - name: 'Install jq'
         run: apt update && apt -y install jq

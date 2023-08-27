@@ -17,6 +17,13 @@ on:
       - 'src/**'
       - 'scripts/**'
 
+env:
+  SFDX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+  DEVHUB_ALIAS: devhub
+  SCRATCH_ALIAS: scratch-org
+  CODE_COVERAGE_DIR_PATH: ./coverage/apex
+  CODE_COVERAGE_FILE_PATH: ./coverage/apex/test-result-codecoverage.json
+
 jobs:
   formatting:
     name: 'Verify source code formatting'
@@ -46,12 +53,6 @@ jobs:
     name: 'Create a new scratch org and run Unit Tests'
     runs-on: ubuntu-latest
     needs: formatting
-    env:
-      SFDX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-      DEVHUB_ALIAS: devhub
-      SCRATCH_ALIAS: scratch-org
-      CODE_COVERAGE_DIR_PATH: ./coverage/apex
-      CODE_COVERAGE_FILE_PATH: ./coverage/apex/test-result-codecoverage.json
     steps:
       - name: 'Install Salesforce CLI'
         run: |
@@ -92,4 +93,4 @@ jobs:
 
       - name: 'Delete scratch org'
         if: always()
-        run: sfdx org:delete:scratch -p -o ${{ SCRATCH_ALIAS }}
+        run: sfdx org:delete:scratch -p -o ${{ env.SCRATCH_ALIAS }}
