@@ -1,6 +1,7 @@
 name: Release Package
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -19,7 +20,7 @@ jobs:
       contents: write
     steps:
       - name: 'Install jq'
-        run: apt update && apt -y install jq
+        run: sudo apt update && sudo apt -y install jq
 
       - name: 'Install Salesforce CLI'
         run: |
@@ -45,34 +46,33 @@ jobs:
 
       - name: 'Define release version'
         run: |
-          cat sfdx-project.json | jq '.packageDirectories[] | select(.default == true) | { name: .package, versionName: .versionName version: .versionNumber }' > release-definition.json
+          cat sfdx-project.json | jq '.packageDirectories[] | select(.default == true) | { name: .package, versionName: .versionName, version: .versionNumber }' > release-definition.json
           echo "PACKAGE_NAME=$(cat release-definition.json | jq .name -r)" >> $GITHUB_ENV
           echo "PACKAGE_RELEASE_VERSION=$(cat release-definition.json | jq .version -r)" >> $GITHUB_ENV
           echo "PACKAGE_RELEASE_VERSION_NAME=$(cat release-definition.json | jq .versionName -r)" >> $GITHUB_ENV
-          echo "PACKAGE_FULL_NAME=$(echo '${{ env.PACKAGE_NAME }}@${{ env.RELEASE_VERSION }}')" >> $GITHUB_ENV
-          echo "Preparing release for ${{ env.PACKAGE_FULL_NAME }}"
 
       - name: 'Create package version'
         run: |
+          echo "Preparing release for ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_RELEASE_VERSION }}"
           echo "CURRENT_PACKAGE_VERSION_ID=$(cat sfdx-project.json | jq '.packageAliases | to_entries | last.value' -r)" >> $GITHUB_ENV
           sfdx package:version:create -p ${{ env.PACKAGE_NAME }} -x -w 10 -c -v ${{ env.DEVHUB_ALIAS }} --json > package-create-result.txt
-          cat package_create_result.txt
-          echo "NEW_PACKAGE_VERSION_ID=$(cat package_create_result.txt | jq ".result.SubscriberPackageVersionId" -r)" >> $GITHUB_ENV
-          echo "Created a new package verion with Id: ${{ env.NEW_PACKAGE_VERSION_ID }}"
+          echo "NEW_PACKAGE_VERSION_ID=$(cat package-create-result.txt | jq ".result.SubscriberPackageVersionId" -r)" >> $GITHUB_ENV
 
       - name: 'Promote package version'
-        run: sfdx package:version:promote -p ${{ env.NEW_PACKAGE_VERSION_ID }} -v ${{ env.DEVHUB_ALIAS }} -n
+        run: |
+          echo "Created a new package verion with Id: ${{ env.NEW_PACKAGE_VERSION_ID }}"
+          sfdx package:version:promote -p ${{ env.NEW_PACKAGE_VERSION_ID }} -v ${{ env.DEVHUB_ALIAS }} -n
+
+      - name: 'Delete created package version'
+        if: ${{ (failure() || cancelled()) && env.NEW_PACKAGE_VERSION_ID != '' }}
+        run: sfdx package:version:delete -v ${{ env.DEVHUB_ALIAS }} -p ${{ env.NEW_PACKAGE_VERSION_ID }} -n
 
       - name: 'Update README and Docs with the new package version Id'
         run: |
-          sed -i 's/${{ env.CURRENT_PACKAGE_VERSION_ID }}/${{ env.NEW_PACKAGE_VERSION_ID }}/g'
-          sed -i 's/Unreleased$/${{ env.PACKAGE_RELEASE_VERSION_NAME }}\n\nSFDX package name and version: ${{ env.PACKAGE_FULL_NAME }}\nPackage Id: ${{ env.NEW_PACKAGE_VERSION_ID }}/' ./docs/CHANGELOG.md
+          sed -i 's/${{ env.CURRENT_PACKAGE_VERSION_ID }}/${{ env.NEW_PACKAGE_VERSION_ID }}/g' ./README.md
+          sed -i 's/Unreleased$/${{ env.PACKAGE_RELEASE_VERSION_NAME }}\n\nSFDX package name and version: ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_RELEASE_VERSION }}\nPackage Id: ${{ env.NEW_PACKAGE_VERSION_ID }}/' ./docs/CHANGELOG.md
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           file_pattern: '*.md ./docs/**.md'
           commit_message: Bump to v${{ env.PACKAGE_RELEASE_VERSION }}
-
-      - name: 'Delete created package version'
-        if: ${{ (failure() || cancelled()) && env.NEW_PACKAGE_VERSION_ID != '' }}
-        run: sfdx package:version:delete -v ${{ env.DEVHUB_ALIAS }} -p ${{ env.NEW_PACKAGE_VERSION_ID }} -n

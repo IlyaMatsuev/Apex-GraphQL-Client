@@ -1,6 +1,7 @@
 name: Scratch Test
 
 on:
+  workflow_dispatch:
   # Push and PR on main are enabled to keep Codecove reports up to date
   push:
     branches:
