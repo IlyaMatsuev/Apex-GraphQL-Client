@@ -19,6 +19,20 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: 'Restore node_modules cache'
+        id: cache-npm
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ env.cache-name }}-
+            npm-
+
+      - name: 'Install npm dependencies'
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm i
+
       - name: 'Install jq'
         run: sudo apt update && sudo apt -y install jq
 
@@ -55,8 +69,8 @@ jobs:
         run: |
           echo "Preparing release for ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_RELEASE_VERSION }}"
           echo "CURRENT_PACKAGE_VERSION_ID=$(cat sfdx-project.json | jq '.packageAliases | to_entries | last.value' -r)" >> $GITHUB_ENV
-          sfdx package:version:create -p ${{ env.PACKAGE_NAME }} -x -w 10 -c -v ${{ env.DEVHUB_ALIAS }} --json > package-create-result.txt
-          echo "NEW_PACKAGE_VERSION_ID=$(cat package-create-result.txt | jq ".result.SubscriberPackageVersionId" -r)" >> $GITHUB_ENV
+          sfdx package:version:create -p ${{ env.PACKAGE_NAME }} -x -w 10 -c -v ${{ env.DEVHUB_ALIAS }} --json > package-create-result.json
+          echo "NEW_PACKAGE_VERSION_ID=$(cat package-create-result.json | jq ".result.SubscriberPackageVersionId" -r)" >> $GITHUB_ENV
 
       - name: 'Promote package version'
         run: |
@@ -71,8 +85,9 @@ jobs:
         run: |
           sed -i 's/${{ env.CURRENT_PACKAGE_VERSION_ID }}/${{ env.NEW_PACKAGE_VERSION_ID }}/g' ./README.md
           sed -i 's/Unreleased$/${{ env.PACKAGE_RELEASE_VERSION_NAME }}\n\nSFDX package name and version: ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_RELEASE_VERSION }}\nPackage Id: ${{ env.NEW_PACKAGE_VERSION_ID }}/' ./docs/CHANGELOG.md
+          npm run prettier -- ./README.md ./docs/CHANGELOG.md ./sfdx-project.json
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          file_pattern: '*.md ./docs/**.md'
+          file_pattern: '*.md ./docs/**.md sfdx-project.json'
           commit_message: Bump to v${{ env.PACKAGE_RELEASE_VERSION }}
