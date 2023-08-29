@@ -63,6 +63,7 @@ jobs:
           cat sfdx-project.json | jq '.packageDirectories[] | select(.default == true) | { name: .package, versionName: .versionName, version: .versionNumber }' > release-definition.json
           echo "PACKAGE_NAME=$(cat release-definition.json | jq .name -r)" >> $GITHUB_ENV
           echo "PACKAGE_RELEASE_VERSION=$(cat release-definition.json | jq .version -r)" >> $GITHUB_ENV
+          echo "PACKAGE_RELEASE_VERSION_SHORT=$(cat release-definition.json | jq .version -r | cut -d '.' -f 1,2)" >> $GITHUB_ENV
           echo "PACKAGE_RELEASE_VERSION_NAME=$(cat release-definition.json | jq .versionName -r)" >> $GITHUB_ENV
 
       - name: 'Create package version'
@@ -91,3 +92,16 @@ jobs:
         with:
           file_pattern: '*.md ./docs/**.md sfdx-project.json'
           commit_message: Bump to v${{ env.PACKAGE_RELEASE_VERSION }}
+
+      - name: 'Generate GitHub release contents'
+        run: sed -n '/^# ${{ env.PACKAGE_RELEASE_VERSION_NAME }}$/,/^# Version/ { /^# Version/d; p; }' ./docs/CHANGELOG.md > release-description.md
+
+      - name: 'Create GitHub release'
+        uses: actions/create-release@v1
+        env:
+          # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.PACKAGE_RELEASE_VERSION_SHORT }}
+          release_name: ${{ env.PACKAGE_RELEASE_VERSION_NAME }}
+          body_path: ./release-description.md
