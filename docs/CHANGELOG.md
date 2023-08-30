@@ -1,7 +1,7 @@
 # Version 2.1
 
 SFDX package name and version: gql-apex-client@2.1.2.0
-Package Id: 04t5Y000001eVPaQAM
+Package Id: 04t7R000001dcReQAI
 
 ## Breaking changes
 
