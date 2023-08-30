@@ -142,7 +142,7 @@ You can just install the package by the link on a [sandbox](http://test.salesfor
 If you prefer using salesforce CLI you can simply run:
 
 ```bash
-sfdx package:install -p 04t7R000001dcReQAI -w 10 -b 10 -u <username>
+sfdx package:install -p 04t7R000001dcReQAI -w 10 -b 10 -o <username>
 ```
 
 ### From Source
