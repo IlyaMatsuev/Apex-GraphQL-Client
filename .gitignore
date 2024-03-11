@@ -1,5 +1,7 @@
 # IDE
 .idea/
+IlluminatedCloud/
+manifest/
 
 # Salesforce cache
 .sfdx/
