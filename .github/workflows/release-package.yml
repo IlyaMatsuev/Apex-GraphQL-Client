@@ -19,6 +19,9 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v3
+
       - name: 'Restore node_modules cache'
         id: cache-npm
         uses: actions/cache@v1
@@ -43,9 +46,6 @@ jobs:
           tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
           echo "$HOME/sfdx/bin" >> $GITHUB_PATH
           ~/sfdx/bin/sfdx version
-
-      - name: 'Checkout source code'
-        uses: actions/checkout@v3
 
       - name: 'Authenticate Dev Hub'
         shell: bash
