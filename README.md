@@ -137,12 +137,12 @@ All examples can be found [here](docs/examples/).
 
 ### From Unmanaged Package
 
-You can just install the package by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t7R000001dcReQAI) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t7R000001dcReQAI).
+You can just install the package by the link on a [sandbox](http://test.salesforce.com/packaging/installPackage.apexp?p0=04t7R000000FE1lQAG) or [dev org](http://login.salesforce.com/packaging/installPackage.apexp?p0=04t7R000000FE1lQAG).
 
 If you prefer using salesforce CLI you can simply run:
 
 ```bash
-sfdx package:install -p 04t7R000001dcReQAI -w 10 -b 10 -o <username>
+sfdx package:install -p 04t7R000000FE1lQAG -w 10 -b 10 -o <username>
 ```
 
 ### From Source
