@@ -2,6 +2,8 @@
  * @description Represents an entry of a GraphQL argument in a node
  */
 global class GraphQLArgument {
+    // Searches for all JSON-serialized `GraphQLEnum` instances. Needed to replace it in the output result with the actual enum value
+    private static final String REPLACE_JSON_GQL_ENUMS_REGEXP = '\\s*\\{\\s*"value"\\s*:\\s*"(\\w+)",\\s*"classType"\\s*:\\s*"GraphQLEnum"\\s*\\}';
     // Searches for all JSON property names. Needed to escape properties' double quotes
     private static final String REPLACE_JSON_PROPS_REGEXP = '"(\\w+)"\\s*:';
     // Searches for all JSON values that are strings starting from '$'. Needed to escape variables' ref double quotes
@@ -135,6 +137,11 @@ global class GraphQLArgument {
 
     private String objectToString(Object value, Boolean pretty) {
         String jsonValue = pretty ? JSON.serializePretty(value, SUPPRESS_NULLS) : JSON.serialize(value, SUPPRESS_NULLS);
+
+        jsonValue = jsonValue.replaceAll(
+            REPLACE_JSON_GQL_ENUMS_REGEXP,
+            GraphQLParser.getSmallIndent(pretty) + FIRST_REGEX_MATCH_GROUP
+        );
 
         if (pretty) {
             jsonValue = jsonValue
