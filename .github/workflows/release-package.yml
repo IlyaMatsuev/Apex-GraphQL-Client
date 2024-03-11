@@ -75,7 +75,7 @@ jobs:
 
       - name: 'Promote package version'
         run: |
-          echo "Created a new package verion with Id: ${{ env.NEW_PACKAGE_VERSION_ID }}"
+          echo "Created a new package version with Id: ${{ env.NEW_PACKAGE_VERSION_ID }}"
           sfdx package:version:promote -p ${{ env.NEW_PACKAGE_VERSION_ID }} -v ${{ env.DEVHUB_ALIAS }} -n
 
       - name: 'Delete created package version'

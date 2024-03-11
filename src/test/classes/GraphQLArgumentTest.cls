@@ -200,6 +200,22 @@ private class GraphQLArgumentTest {
     }
 
     @IsTest
+    private static void stringifyEnumInObjectArgumentTest() {
+        String key = 'key';
+        Map<String, Object> value = new Map<String, Object> {
+            'key3' => new GraphQLEnum('VALUE3'),
+            'key2' => new GraphQLEnum('VALUE2'),
+            'key1' => 'value1'
+        };
+
+        GraphQLArgument argument = new GraphQLArgument(key, value);
+
+        Assert.areEqual('key:{key1:"value1",key2:VALUE2,key3:VALUE3}', argument.toString());
+        Assert.areEqual('key: { key1: "value1", key2: VALUE2, key3: VALUE3 }', argument.toString(true));
+        Assert.areEqual(argument.type, GraphQLArgumentType.x_Object);
+    }
+
+    @IsTest
     private static void stringifyStringArrayArgumentTest() {
         String key = 'key';
         List<String> value = new List<String> { 'value1', 'value2' };
