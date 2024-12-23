@@ -25,14 +25,14 @@ then
 fi
 
 info "Deploying components..."
-sfdx project:deploy:start -o "$org_alias" -d ./src \
+sf project:deploy:start -o "$org_alias" -d ./src \
     || (\
         info "Please login to the org" \
-        && sfdx org:login:web -a "$org_alias" \
-        && sfdx project:deploy:start -o "$org_alias" -d ./src \
+        && sf org:login:web -a "$org_alias" \
+        && sf project:deploy:start -o "$org_alias" -d ./src \
     ) || { exit 1; }
 
 info "Assigning permissions..."
-sfdx user:permset:assign -n GraphQLApexClientUser -u "$org_alias"
+sf user:permset:assign -n GraphQLApexClientUser -u "$org_alias"
 
-info "Deployment has been finished.\\nOpen the org with 'sfdx org:open -o $org_alias'"
+info "Deployment has been finished.\\nOpen the org with 'sf org:open -o $org_alias'"
