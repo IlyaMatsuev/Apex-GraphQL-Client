@@ -3,6 +3,13 @@
 IlluminatedCloud/
 manifest/
 
+# Illuminated Cloud
+/out/
+target/
+/.illuminatedCloud/
+**/tsconfig*.json
+**/*.tsbuildinfo
+
 # Salesforce cache
 .sfdx/
 .sf/

@@ -19,7 +19,7 @@ on:
       - 'scripts/**'
 
 env:
-  SFDX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+  SF_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-x64.tar.xz
   DEVHUB_ALIAS: devhub
   SCRATCH_ALIAS: scratch-org
   CODE_COVERAGE_DIR_PATH: ./coverage/apex
@@ -47,7 +47,7 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm i
 
-      - name: 'Verificaty formatting'
+      - name: 'Verify formatting'
         run: npm run prettier:verify ./
 
   scratch-testing:
@@ -57,11 +57,11 @@ jobs:
     steps:
       - name: 'Install Salesforce CLI'
         run: |
-          wget ${{ env.SFDX_CLI_URL }}
-          mkdir ~/sfdx
-          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-          ~/sfdx/bin/sfdx version
+          wget ${{ env.SF_CLI_URL }}
+          mkdir ~/sf
+          tar xJf sf-linux-x64.tar.xz -C ~/sf --strip-components 1
+          echo "$HOME/sf/bin" >> $GITHUB_PATH
+          ~/sf/bin/sf version
 
       - name: 'Checkout source code'
         uses: actions/checkout@v3
@@ -75,13 +75,13 @@ jobs:
             echo "Missing DEVHUB_SFDX_URL secret. Is this workflow running on a fork?";
             exit 1;
           fi
-          sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a ${{ env.DEVHUB_ALIAS }} -d
+          sf org:login:sfdx-url -f ./DEVHUB_SFDX_URL.txt -a ${{ env.DEVHUB_ALIAS }} -d
 
       - name: 'Create a scratch org'
         run: sh ./scripts/pkg-from-scratch.sh ${{ env.DEVHUB_ALIAS }} ${{ env.SCRATCH_ALIAS }}
 
       - name: 'Run Apex Tests'
-        run: sfdx apex:run:test -c -r human -d ${{ env.CODE_COVERAGE_DIR_PATH }} -w 20 -o ${{ env.SCRATCH_ALIAS }}
+        run: sf apex:run:test -c -r human -d ${{ env.CODE_COVERAGE_DIR_PATH }} -w 20 -o ${{ env.SCRATCH_ALIAS }}
 
       - name: 'Upload Test Coverage'
         uses: codecov/codecov-action@v2
@@ -94,4 +94,4 @@ jobs:
 
       - name: 'Delete scratch org'
         if: always()
-        run: sfdx org:delete:scratch -p -o ${{ env.SCRATCH_ALIAS }}
+        run: sf org:delete:scratch -p -o ${{ env.SCRATCH_ALIAS }}

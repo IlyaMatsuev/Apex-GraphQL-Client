@@ -9,7 +9,7 @@ on:
       - 'src/**'
 
 env:
-  SFDX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+  SF_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-x64.tar.xz
   PROD_ORG_ALIAS: prod
 
 # Required secrets:
@@ -25,11 +25,11 @@ jobs:
 
       - name: 'Install Salesforce CLI'
         run: |
-          wget ${{ env.SFDX_CLI_URL }}
-          mkdir ~/sfdx
-          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-          ~/sfdx/bin/sfdx version
+          wget ${{ env.SF_CLI_URL }}
+          mkdir ~/sf
+          tar xJf sf-linux-x64.tar.xz -C ~/sf --strip-components 1
+          echo "$HOME/sf/bin" >> $GITHUB_PATH
+          ~/sf/bin/sf version
 
       - name: 'Checkout source code'
         uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
             echo "Missing PROD_SFDX_URL secret. Is this workflow running on a fork?";
             exit 1;
           fi
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a ${{ env.PROD_ORG_ALIAS }} -d
+          sf org:login:sfdx-url -f ./PROD_SFDX_URL.txt -a ${{ env.PROD_ORG_ALIAS }} -d
 
       - name: 'Fetch latest package version'
         run: echo "LATEST_PACKAGE_VERSION_ID=$(cat sfdx-project.json | jq '.packageAliases | to_entries | last.value' -r)" >> $GITHUB_ENV
