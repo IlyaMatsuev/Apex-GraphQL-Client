@@ -94,6 +94,9 @@ GraphQLHttpClient client = new GraphQLHttpClient('https://your-gql-endpoint-url.
 GraphQLResponse response = client.send(request);
 ```
 
+> Instead of hardcoding the endpoint and providing Authorization headers manually, you can also use named credentials like this:  
+> `GraphQLHttpClient client = new GraphQLHttpClient('callout:MyEndpointConnection');`
+
 The response can be handled multiple ways:
 
 -   get the `data` JSON node as an Apex Map and parse it yourself
